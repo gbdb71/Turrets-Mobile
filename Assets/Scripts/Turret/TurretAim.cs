@@ -14,17 +14,19 @@ public class TurretAim : MonoBehaviour
 
     [Header("Elevation")]
     [Tooltip("Speed at which the turret's guns elevate up and down.")]
-    private float ElevationSpeed = 50f;
+    [SerializeField]  private float ElevationSpeed = 50f;
 
     [Tooltip("Highest upwards elevation the turret's barrels can aim.")]
-    private float MaxElevation = 0f;
+    [Range(0, 90)]
+    [SerializeField] private float MaxElevation = 0f;
 
     [Tooltip("Lowest downwards elevation the turret's barrels can aim.")]
-    private float MaxDepression = 0f;
+    [Range(0, 90)]
+    [SerializeField]  private float MaxDepression = 0f;
 
     [Header("Traverse")]
     [Tooltip("Speed at which the turret can rotate left/right.")]
-    private float TraverseSpeed = 60f;
+    [SerializeField] private float TraverseSpeed = 60f;
 
     [Tooltip("When true, the turret can only rotate horizontally with the given limits.")]
     [SerializeField] private bool hasLimitedTraverse = false;
@@ -124,6 +126,8 @@ public class TurretAim : MonoBehaviour
 
             // Turret is considered "aimed" when it's pointed at the target.
             isAimed = angleToTarget < aimedThreshold;
+
+            Debug.Log(angleToTarget);
 
             isBarrelAtRest = false;
             isBaseAtRest = false;
