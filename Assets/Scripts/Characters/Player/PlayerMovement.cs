@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour
     private Joystick _joystick;
 	private CharacterController _cc;
 
+    public float MoveVelocity { get { return _cc.velocity.magnitude; } }
     public bool IsMove { get; private set; }
 
     [Inject]
@@ -41,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
 		moveDir.Set(_joystick.Horizontal, 0, _joystick.Vertical);
 		_cc.SimpleMove(moveDir * _speed);
 
-        IsMove = moveDir.magnitude > 0;
+        IsMove = moveDir.magnitude > 0 && _cc.isGrounded;
 	}
 
     private void Rotate()
@@ -64,4 +65,8 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            moveDir.y =
+            moveDir.y = Physics.gravity.y;
+        }
+    }
+}
+ 
