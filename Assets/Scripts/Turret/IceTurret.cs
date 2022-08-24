@@ -9,20 +9,30 @@ public class IceTurret : BaseTurret<Object>
     [SerializeField] protected float _attackRate = .1f;
     [SerializeField] protected VisualEffect _throwEffect;
 
+    public bool IsFire { get; private set; }
 
     protected void Start()
     {
         _throwEffect.SetFloat("Angle", _damageAngle);
     }
 
-    float fireTime = 0f;
+    float fireTime, attack = 0f;
     protected override void Fire()
     {
-        base.Fire();
-
-        _throwEffect.Play();
+        if (!IsFire)
+        {
+            IsFire = true;
+            _throwEffect.Play();
+        }
 
         fireTime += Time.deltaTime;
+        attack += Time.deltaTime;
+
+        if (attack >= _attackRate)
+        {
+            attack = 0f;
+            DamageArea();
+        }
 
         if (fireTime >= 1f)
         {
@@ -31,9 +41,32 @@ public class IceTurret : BaseTurret<Object>
         }
     }
 
+    private void DamageArea()
+    {
+        if (TargetPoint.FillBuffer(_shootPivot.position, _aim.AimDistance))
+        {
+            for (int i = 0; i < TargetPoint.BufferedCount; i++)
+            {
+                IDamagable damagable = TargetPoint.GetBuffered(i);
+
+                Vector3 targetDirection = damagable.Transform.position - _aim.ArcRoot.transform.position;
+                float angleBetween = Vector3.Angle(_aim.ArcRoot.transform.forward, targetDirection);
+
+                if (angleBetween <= _damageAngle)
+                {
+                    damagable.ApplyDamage(_damage);
+                }
+            }
+        }
+    }
+
     protected override void StopFire()
     {
-        _throwEffect.Stop();
+        if (IsFire)
+        {
+            IsFire = false;
+            _throwEffect.Stop();
+        }
     }
 
 #if UNITY_EDITOR
@@ -59,11 +92,11 @@ public class IceTurret : BaseTurret<Object>
 
             UnityEditor.Handles.DrawSolidArc(
                 _aim.ArcRoot.position, _aim.TurretBase.up,
-                transform.forward, _damageAngle,
+                 _aim.ArcRoot.transform.forward, _damageAngle,
                 kArcSize);
             UnityEditor.Handles.DrawSolidArc(
                 _aim.ArcRoot.position, _aim.TurretBase.up,
-                transform.forward, -_damageAngle,
+                 _aim.ArcRoot.transform.forward, -_damageAngle,
                 kArcSize);
         }
     }

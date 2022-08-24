@@ -472,7 +472,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32631c9c3a97d444987569d91cecf2a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 0
+  _damage: 3
   _fireDelay: 0.5
   _reloadTime: 2
   _shootPivot: {fileID: 3805081200559784805}
@@ -480,5 +480,5 @@ MonoBehaviour:
   _chargedAmmoMax: 6
   _ammoMax: 12
   _damageAngle: 30
-  _attackRate: 0.1
+  _attackRate: 0.5
   _throwEffect: {fileID: 2699958650359207781}
