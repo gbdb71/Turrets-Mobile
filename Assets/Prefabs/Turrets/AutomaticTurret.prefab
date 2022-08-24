@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1880167752}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Shoot Pivot
   m_TagString: Untagged
   m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 1006089489906741385}
   - component: {fileID: 1006089489906742133}
   - component: {fileID: 1006089489906742132}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: AutomaticTurret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -162,7 +162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9b651ef94780214ba228636ea2f382a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _aimDistance: 10
+  _aimDistance: 5
   turretBase: {fileID: 1006089491720327405}
   barrels: {fileID: 1006089491116807483}
   ElevationSpeed: 0
@@ -187,7 +187,7 @@ GameObject:
   - component: {fileID: 1006089491116807480}
   - component: {fileID: 1006089491116807481}
   - component: {fileID: 1006089491116807482}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -283,7 +283,7 @@ GameObject:
   - component: {fileID: 1006089491720327402}
   - component: {fileID: 1006089491720327403}
   - component: {fileID: 1006089491720327404}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}

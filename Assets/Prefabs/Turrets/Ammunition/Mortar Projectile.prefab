@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 7189264061927058552}
   - component: {fileID: 2107683015529253120}
   - component: {fileID: 6314001117089900343}
-  - component: {fileID: -4436015116509720468}
-  m_Layer: 0
-  m_Name: TurretBullet
+  - component: {fileID: 5558264920343970145}
+  m_Layer: 7
+  m_Name: Mortar Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 9152718626770039025}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.1, y: 0.02, z: 0.12}
+  m_LocalScale: {x: 0.1, y: 0.05, z: 0.12}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -114,7 +114,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &-4436015116509720468
+--- !u!114 &5558264920343970145
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -123,7 +123,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 9152718626770039025}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a03fd76a31a04443a6341ab3b7b35ef, type: 3}
+  m_Script: {fileID: 11500000, guid: f42f3682e16192c41b29ac07ee000ea6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _damage: 10
+  _damageDistance: 3

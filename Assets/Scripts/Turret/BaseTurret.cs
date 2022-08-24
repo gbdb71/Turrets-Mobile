@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(TurretAim))]
-public abstract class BaseTurret : MonoBehaviour
+public abstract class BaseTurret<T> : MonoBehaviour
 {
     [Header("Shooting")]
     [Range(.1f, 5f)]
@@ -14,7 +14,7 @@ public abstract class BaseTurret : MonoBehaviour
     [Space]
 
     [Header("Ammunition")]
-    [SerializeField] protected Rigidbody _ammunitionPrefab;
+    [SerializeField] protected T _projectilePrefab;
     [Range(1, 100)]
     [SerializeField] protected int _chargedAmmoMax;
     [Range(1, 100)]
@@ -110,7 +110,11 @@ public abstract class BaseTurret : MonoBehaviour
         IsReloading = false;
     }
 
-    protected abstract void Fire();
+    protected virtual void Fire()
+    {
+        _fireTimer = _fireDelay;
+        _chargedAmmo -= 1;
+    }
 
     protected virtual bool CanFire()
     {
@@ -119,23 +123,12 @@ public abstract class BaseTurret : MonoBehaviour
 
     protected IDamagable FindTarget()
     {
-        Collider[] colliders = Physics.OverlapSphere(transform.position, _aim.AimDistance, _mask);
-
-        IDamagable target = null;
-        float dist = Mathf.Infinity;
-
-        for (int i = 0; i < colliders.Length; i++)
+        if (TargetPoint.FillBuffer(transform.localPosition, _aim.AimDistance))
         {
-            if (colliders[i].TryGetComponent(out IDamagable damagable))
-            {
-                if (Vector3.Distance(transform.position, colliders[i].transform.position) < dist)
-                {
-                    target = damagable;
-                }
-            }
+           return TargetPoint.RandomBuffered;
         }
 
-        return target;
+        return null;
     }
 
 }
