@@ -6,8 +6,6 @@ public class MortarTurret : BaseTurret<MortarShell>
     [SerializeField] private Transform _mortar;
     [SerializeField, Range(0.5f, 3f)]
     private float _projectileRadius = 1f;
-    [SerializeField, Range(1f, 100f)]
-    private float _projectileDamage = 10f;
 
     private float _launchSpeed;
 
@@ -46,7 +44,7 @@ public class MortarTurret : BaseTurret<MortarShell>
         {
             MortarShell projectile = Instantiate(_projectilePrefab, _shootPivot.position, Quaternion.identity);
 
-            projectile.Initialize(launchPoint, new Vector3(s * cosTheta * dir.x, s * sinTheta, s * cosTheta * dir.y), _projectileRadius, _projectileDamage);
+            projectile.Initialize(launchPoint, new Vector3(s * cosTheta * dir.x, s * sinTheta, s * cosTheta * dir.y), _projectileRadius, _damage);
         }
     }
 }

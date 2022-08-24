@@ -93,7 +93,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 9a850ea70ee94b046b4f03d577362724, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -141,8 +141,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _aimDistance: 8
-  turretBase: {fileID: 7157497049122093682}
-  barrels: {fileID: 0}
+  _turretBase: {fileID: 7157497049122093682}
+  _barrels: {fileID: 7157497049122093682}
   ElevationSpeed: 0
   MaxElevation: 0
   MaxDepression: 0
@@ -165,18 +165,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3499ea574fa5f3a4486bed9e40690dd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _damage: 0
   _fireDelay: 0.1
   _reloadTime: 1
   _shootPivot: {fileID: 3642958238143821735}
   _projectilePrefab: {fileID: 5558264920343970145, guid: 699da27d33bc75e45ac0b5e8a9068378, type: 3}
   _chargedAmmoMax: 1
   _ammoMax: 3
-  _mask:
-    serializedVersion: 2
-    m_Bits: 4294967295
   _mortar: {fileID: 7157497049122093682}
   _projectileRadius: 1
-  _projectileDamage: 10
 --- !u!1 &7157497049122093681
 GameObject:
   m_ObjectHideFlags: 0
@@ -238,7 +235,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 703bfe526baa09f429c6527b55d64123, type: 2}
+  - {fileID: 2100000, guid: 22b9627892f7a1a42a8e4b540d0ae851, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
