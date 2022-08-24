@@ -7,14 +7,14 @@ public class TurretAim : MonoBehaviour
 
     [Header("Rotations")]
     [Tooltip("Transform of the turret's azimuthal rotations.")]
-    [SerializeField] private Transform turretBase = null;
+    [SerializeField] private Transform _turretBase = null;
 
     [Tooltip("Transform of the turret's elevation rotations. ")]
-    [SerializeField] private Transform barrels = null;
+    [SerializeField] private Transform _barrels = null;
 
     [Header("Elevation")]
     [Tooltip("Speed at which the turret's guns elevate up and down.")]
-    [SerializeField]  private float ElevationSpeed = 50f;
+    [SerializeField] private float ElevationSpeed = 50f;
 
     [Tooltip("Highest upwards elevation the turret's barrels can aim.")]
     [Range(0, 90)]
@@ -22,7 +22,7 @@ public class TurretAim : MonoBehaviour
 
     [Tooltip("Lowest downwards elevation the turret's barrels can aim.")]
     [Range(0, 90)]
-    [SerializeField]  private float MaxDepression = 0f;
+    [SerializeField] private float MaxDepression = 0f;
 
     [Header("Traverse")]
     [Tooltip("Speed at which the turret can rotate left/right.")]
@@ -80,6 +80,11 @@ public class TurretAim : MonoBehaviour
     /// </summary>
     public float AimDistance { get { return _aimDistance; } }
 
+    public Transform TurretBase { get { return _turretBase; } }
+    public Transform Barrels { get { return _barrels; } }
+
+    public Transform ArcRoot { get { return _barrels != null ? _barrels : _turretBase;  } }
+
     /// <summary>
     /// Return turret aim to base look
     /// </summary>
@@ -101,8 +106,8 @@ public class TurretAim : MonoBehaviour
 
     private void Awake()
     {
-        hasBarrels = barrels != null;
-        if (turretBase == null)
+        hasBarrels = _barrels != null;
+        if (_turretBase == null)
             Debug.LogError(name + ": TurretAim requires an assigned TurretBase!");
     }
 
@@ -138,17 +143,17 @@ public class TurretAim : MonoBehaviour
 
         if (hasBarrels)
         {
-            angle = Vector3.Angle(targetPosition - barrels.position, barrels.forward);
+            angle = Vector3.Angle(targetPosition - _barrels.position, _barrels.forward);
         }
         else
         {
             Vector3 flattenedTarget = Vector3.ProjectOnPlane(
-                targetPosition - turretBase.position,
-                turretBase.up);
+                targetPosition - _turretBase.position,
+                _turretBase.up);
 
             angle = Vector3.Angle(
-                flattenedTarget - turretBase.position,
-                turretBase.forward);
+                flattenedTarget - _turretBase.position,
+                _turretBase.forward);
         }
 
         return angle;
@@ -164,25 +169,25 @@ public class TurretAim : MonoBehaviour
                 TraverseSpeed * Time.deltaTime);
 
             if (Mathf.Abs(limitedTraverseAngle) > Mathf.Epsilon)
-                turretBase.localEulerAngles = Vector3.up * limitedTraverseAngle;
+                _turretBase.localEulerAngles = Vector3.up * limitedTraverseAngle;
             else
                 isBaseAtRest = true;
         }
         else
         {
-            turretBase.rotation = Quaternion.RotateTowards(
-                turretBase.rotation,
+            _turretBase.rotation = Quaternion.RotateTowards(
+                _turretBase.rotation,
                 transform.rotation,
                 TraverseSpeed * Time.deltaTime);
 
-            isBaseAtRest = Mathf.Abs(turretBase.localEulerAngles.y) < Mathf.Epsilon;
+            isBaseAtRest = Mathf.Abs(_turretBase.localEulerAngles.y) < Mathf.Epsilon;
         }
 
         if (hasBarrels)
         {
             elevation = Mathf.MoveTowards(elevation, 0f, ElevationSpeed * Time.deltaTime);
             if (Mathf.Abs(elevation) > Mathf.Epsilon)
-                barrels.localEulerAngles = Vector3.right * -elevation;
+                _barrels.localEulerAngles = Vector3.right * -elevation;
             else
                 isBarrelAtRest = true;
         }
@@ -192,7 +197,7 @@ public class TurretAim : MonoBehaviour
 
     private void RotateBarrelsToFaceTarget(Vector3 targetPosition)
     {
-        Vector3 localTargetPos = turretBase.InverseTransformDirection(targetPosition - barrels.position);
+        Vector3 localTargetPos = _turretBase.InverseTransformDirection(targetPosition - _barrels.position);
         Vector3 flattenedVecForBarrels = Vector3.ProjectOnPlane(localTargetPos, Vector3.up);
 
         float targetElevation = Vector3.Angle(flattenedVecForBarrels, localTargetPos);
@@ -202,11 +207,11 @@ public class TurretAim : MonoBehaviour
         elevation = Mathf.MoveTowards(elevation, targetElevation, ElevationSpeed * Time.deltaTime);
 
         if (Mathf.Abs(elevation) > Mathf.Epsilon)
-            barrels.localEulerAngles = Vector3.right * -elevation;
+            _barrels.localEulerAngles = Vector3.right * -elevation;
 
 #if UNITY_EDITOR
         if (DrawDebugRay)
-            Debug.DrawRay(barrels.position, barrels.forward * localTargetPos.magnitude, Color.red);
+            Debug.DrawRay(_barrels.position, _barrels.forward * localTargetPos.magnitude, Color.red);
 #endif
     }
 
@@ -214,7 +219,7 @@ public class TurretAim : MonoBehaviour
     {
         Vector3 turretUp = transform.up;
 
-        Vector3 vecToTarget = targetPosition - turretBase.position;
+        Vector3 vecToTarget = targetPosition - _turretBase.position;
         Vector3 flattenedVecForBase = Vector3.ProjectOnPlane(vecToTarget, turretUp);
 
         if (hasLimitedTraverse)
@@ -229,20 +234,20 @@ public class TurretAim : MonoBehaviour
                 TraverseSpeed * Time.deltaTime);
 
             if (Mathf.Abs(limitedTraverseAngle) > Mathf.Epsilon)
-                turretBase.localEulerAngles = Vector3.up * limitedTraverseAngle;
+                _turretBase.localEulerAngles = Vector3.up * limitedTraverseAngle;
         }
         else
         {
-            turretBase.rotation = Quaternion.RotateTowards(
-                Quaternion.LookRotation(turretBase.forward, turretUp),
+            _turretBase.rotation = Quaternion.RotateTowards(
+                Quaternion.LookRotation(_turretBase.forward, turretUp),
                 Quaternion.LookRotation(flattenedVecForBase, turretUp),
                 TraverseSpeed * Time.deltaTime);
         }
 
 #if UNITY_EDITOR
         if (DrawDebugRay && !hasBarrels)
-            Debug.DrawRay(turretBase.position,
-                turretBase.forward * flattenedVecForBase.magnitude,
+            Debug.DrawRay(_turretBase.position,
+                _turretBase.forward * flattenedVecForBase.magnitude,
                 Color.red);
 #endif
     }
@@ -255,7 +260,7 @@ public class TurretAim : MonoBehaviour
         if (!DrawDebugArcs)
             return;
 
-        if (turretBase != null)
+        if (_turretBase != null)
         {
             float kArcSize = _aimDistance;
 
@@ -263,43 +268,43 @@ public class TurretAim : MonoBehaviour
             Color colorElevation = new Color(.5f, 1f, .5f, .1f);
             Color colorDepression = new Color(.5f, .5f, 1f, .1f);
 
-            Transform arcRoot = barrels != null ? barrels : turretBase;
+            Transform arcRoot = _barrels != null ? _barrels : _turretBase;
 
             // Red traverse arc
             UnityEditor.Handles.color = colorTraverse;
             if (hasLimitedTraverse)
             {
                 UnityEditor.Handles.DrawSolidArc(
-                    arcRoot.position, turretBase.up,
+                    arcRoot.position, _turretBase.up,
                     transform.forward, RightLimit,
                     kArcSize);
                 UnityEditor.Handles.DrawSolidArc(
-                    arcRoot.position, turretBase.up,
+                    arcRoot.position, _turretBase.up,
                     transform.forward, -LeftLimit,
                     kArcSize);
             }
             else
             {
                 UnityEditor.Handles.DrawSolidArc(
-                    arcRoot.position, turretBase.up,
+                    arcRoot.position, _turretBase.up,
                     transform.forward, 360f,
                     kArcSize);
             }
 
-            if (barrels != null)
+            if (_barrels != null)
             {
                 // Green elevation arc
                 UnityEditor.Handles.color = colorElevation;
                 UnityEditor.Handles.DrawSolidArc(
-                    barrels.position, barrels.right,
-                    turretBase.forward, -MaxElevation,
+                    _barrels.position, _barrels.right,
+                    _turretBase.forward, -MaxElevation,
                     kArcSize);
 
                 // Blue depression arc
                 UnityEditor.Handles.color = colorDepression;
                 UnityEditor.Handles.DrawSolidArc(
-                    barrels.position, barrels.right,
-                    turretBase.forward, MaxDepression,
+                    _barrels.position, _barrels.right,
+                    _turretBase.forward, MaxDepression,
                     kArcSize);
             }
         }

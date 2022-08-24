@@ -6,6 +6,6 @@ public class Enemy : MonoBehaviour, IDamagable
 
     public void ApplyDamage(float damage)
     {
-        
+        Debug.Log("Taked damage: " + damage);
     }
 }

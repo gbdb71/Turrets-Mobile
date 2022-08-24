@@ -4,11 +4,12 @@ using UnityEngine;
 [RequireComponent(typeof(TurretAim))]
 public abstract class BaseTurret<T> : MonoBehaviour
 {
+    [Header("Damage")]
+    [SerializeField, Range(1, 200)] protected float _damage;
+    
     [Header("Shooting")]
-    [Range(.1f, 5f)]
-    [SerializeField] protected float _fireDelay;
-    [Range(.5f, 5f)]
-    [SerializeField] protected float _reloadTime;
+    [SerializeField, Range(.1f, 5f)] protected float _fireDelay;
+    [SerializeField, Range(.5f, 5f)] protected float _reloadTime;
     [SerializeField] protected Transform _shootPivot;
 
     [Space]
@@ -20,11 +21,6 @@ public abstract class BaseTurret<T> : MonoBehaviour
     [Range(1, 100)]
     [SerializeField] private int _ammoMax;
 
-    [Space]
-
-    [Header("Field Of View")]
-    [SerializeField] protected LayerMask _mask;
-
     protected TurretAim _aim;
     protected IDamagable _currentTarget;
 
@@ -35,7 +31,7 @@ public abstract class BaseTurret<T> : MonoBehaviour
 
     public bool IsReloading { get; private set; }
 
-    private void Awake()
+    protected virtual void Awake()
     {
         _aim = GetComponent<TurretAim>();
 
@@ -64,13 +60,17 @@ public abstract class BaseTurret<T> : MonoBehaviour
             }
             else
             {
+                StopFire();
+
                 _aim.SetIdle(true);
                 _currentTarget = FindTarget();
             }
         }
         else
         {
-            if(_ammo == 0)
+            StopFire();
+
+            if (_ammo == 0)
             {
                 _aim.SetIdle(true);
             }
@@ -83,6 +83,8 @@ public abstract class BaseTurret<T> : MonoBehaviour
         if (_fireTimer > 0f)
             _fireTimer -= Time.deltaTime;
     }
+
+    protected virtual void StopFire() { }
 
     protected virtual void Aim()
     {
@@ -125,7 +127,7 @@ public abstract class BaseTurret<T> : MonoBehaviour
     {
         if (TargetPoint.FillBuffer(transform.localPosition, _aim.AimDistance))
         {
-           return TargetPoint.RandomBuffered;
+            return TargetPoint.RandomBuffered;
         }
 
         return null;

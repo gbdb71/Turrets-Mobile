@@ -17,7 +17,7 @@ public class MortarShell : BaseProjectile
         this._damage = damage;
     }
 
-    float age, _blastRadius, _damage;
+    float age, _blastRadius;
     private void Update()
     {
         age += Time.deltaTime;

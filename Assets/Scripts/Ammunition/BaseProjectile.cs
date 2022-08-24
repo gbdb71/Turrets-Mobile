@@ -3,7 +3,7 @@ using UnityEngine;
 public class BaseProjectile : MonoBehaviour
 {
     [Range(1, 100f)]
-    [SerializeField] private float _damage = 10f;
+    [SerializeField] protected float _damage = 10f;
 
     private void OnCollisionEnter(Collision collision)
     {
