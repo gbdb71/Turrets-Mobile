@@ -1,8 +1,9 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(TurretAim))]
-public abstract class BaseTurret<T> : MonoBehaviour
+public abstract class BaseTurret : MonoBehaviour
 {
     [Header("Damage")]
     [SerializeField, Range(1, 200)] protected float _damage;
@@ -14,8 +15,14 @@ public abstract class BaseTurret<T> : MonoBehaviour
 
     [Space]
 
+    [Header("Take")]
+    [SerializeField] private Transform _indicatorTransform;
+    [SerializeField] private Image _indicatorFill;
+
+    [Space]
+
     [Header("Ammunition")]
-    [SerializeField] protected T _projectilePrefab;
+    [SerializeField] protected Rigidbody _projectilePrefab;
     [Range(1, 100)]
     [SerializeField] protected int _chargedAmmoMax;
     [Range(1, 100)]
@@ -29,7 +36,10 @@ public abstract class BaseTurret<T> : MonoBehaviour
     protected int _chargedAmmo = 0;
     protected int _ammo = 0;
 
+    public Transform IndicatorTransform => _indicatorTransform;
+    public Image IndicatorFill => _indicatorFill;
     public bool IsReloading { get; private set; }
+
 
     protected virtual void Awake()
     {
@@ -85,6 +95,11 @@ public abstract class BaseTurret<T> : MonoBehaviour
     }
 
     protected virtual void StopFire() { }
+
+    private void OnDisable()
+    {
+        _aim.SetIdle(true);
+    }
 
     protected virtual void Aim()
     {

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.VFX;
 
-public class IceTurret : BaseTurret<Object>
+public class IceTurret : BaseTurret
 {
     [Header("Throw Attack")]
     [Range(1, 180)]

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class MortarTurret : BaseTurret<MortarShell>
+public class MortarTurret : BaseTurret
 {
     [Header("Mortar")]
     [SerializeField] private Transform _mortar;
@@ -42,7 +42,7 @@ public class MortarTurret : BaseTurret<MortarShell>
 
         if (r >= 0)
         {
-            MortarShell projectile = Instantiate(_projectilePrefab, _shootPivot.position, Quaternion.identity);
+            MortarShell projectile = Instantiate(_projectilePrefab, _shootPivot.position, Quaternion.identity).GetComponent<MortarShell>();
 
             projectile.Initialize(launchPoint, new Vector3(s * cosTheta * dir.x, s * sinTheta, s * cosTheta * dir.y), _projectileRadius, _damage);
         }

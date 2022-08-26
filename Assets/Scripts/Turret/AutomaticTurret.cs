@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class AutomaticTurret : BaseTurret<Rigidbody>
+public class AutomaticTurret : BaseTurret
 {
     [Header("Bullet Settings")]
     [Range(2, 40)]
