@@ -5,9 +5,12 @@ using UnityEngine.UI;
 
 public class Headquarters : MonoBehaviour
 {
+    [Header("DATA Settings")]
     public UpgradesInfo upgradesInfo;
-
     public List<UpgradeButton> upgradeButtons = new List<UpgradeButton>();
+
+    [Header("Siew Settings")]
+    public CanvasGroup baseGroup;
 
     public void Awake()
     {
@@ -22,10 +25,12 @@ public class Headquarters : MonoBehaviour
                 upgradeButtons[i].Initialization(upgradesInfo.upgrades[i]);
             else
             {
-                upgradeButtons[i].gameObject.SetActive(false);
                 Debug.Log($"No More Upgrade Info {i}");
+                upgradeButtons[i].gameObject.SetActive(false);
                 break;
             }
         }
     }
+
+
 }
