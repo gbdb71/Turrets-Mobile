@@ -6,20 +6,26 @@ public class PlayerMovement : MonoBehaviour
 {
     [Range(5, 15f)]
     [SerializeField] private float _speed = 5f;
+    [Range(1, 15f)]
+    [SerializeField] private float _speedWithTurret = 2f;
+
+
     [Range(1, 20)]
     [SerializeField] private float _rotationPerFrame = 10f;
 
     
     private Joystick _joystick;
 	private CharacterController _cc;
+    private Player _player;
 
     public float MoveVelocity { get { return _cc.velocity.magnitude; } }
     public bool IsMove { get; private set; }
 
     [Inject]
-    public void Construct(Joystick joystick)
+    public void Construct(Joystick joystick, Player player)
     {
         _joystick = joystick;
+        _player = player;
     }
 
     private void Awake()
@@ -34,13 +40,13 @@ public class PlayerMovement : MonoBehaviour
 		Rotate();
 	}
 
-
-
     Vector3 moveDir;
 	private void Movement()
 	{
 		moveDir.Set(_joystick.Horizontal, 0, _joystick.Vertical);
-		_cc.SimpleMove(moveDir * _speed);
+
+        float speed = _player.Inventory.HasTurret ? _speedWithTurret : _speed; ;
+        _cc.SimpleMove(moveDir * speed);
 
         IsMove = moveDir.magnitude > 0 && _cc.isGrounded;
 	}
@@ -68,5 +74,7 @@ public class PlayerMovement : MonoBehaviour
             moveDir.y = Physics.gravity.y;
         }
     }
+
+
 }
  
