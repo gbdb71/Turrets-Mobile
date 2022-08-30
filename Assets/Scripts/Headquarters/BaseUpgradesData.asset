@@ -12,3 +12,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dc2a4f34f1abfe44ab809b74bd0796d, type: 3}
   m_Name: BaseUpgradesData
   m_EditorClassIdentifier: 
+  upgrades:
+  - name: 'Speed '
+    elementList:
+    - Value: 5
+      Cost: 10
+    - Value: 6
+      Cost: 20
+    - Value: 7
+      Cost: 30
+  - name: Speed With Turret
+    elementList:
+    - Value: 3
+      Cost: 10
+    - Value: 4
+      Cost: 20
+    - Value: 5
+      Cost: 30
+  - name: Ammo Count
+    elementList:
+    - Value: 1
+      Cost: 10
+    - Value: 2
+      Cost: 20
+    - Value: 3
+      Cost: 30

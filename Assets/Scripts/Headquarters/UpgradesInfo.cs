@@ -6,10 +6,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Base Upgrades", menuName = "Upgrade Info")]
 public class UpgradesInfo : ScriptableObject
 {
-    //public List<List<Upgrade>> upgradesData = new List<List<Upgrade>>(); 
     public List<UpgradeList> upgrades = new List<UpgradeList>();
-
 }
+
 [Serializable]
 public class UpgradeList
 {
@@ -21,5 +20,5 @@ public class UpgradeList
 public class Upgrade
 {
     public float Value;
-    public int Cost; 
+    public int Cost;
 }
