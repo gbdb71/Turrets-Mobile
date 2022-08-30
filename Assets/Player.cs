@@ -19,9 +19,4 @@ public class Player : MonoBehaviour
         _animation = GetComponent<PlayerAnimations>();
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        
-
-    }
 }

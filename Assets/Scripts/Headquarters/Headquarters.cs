@@ -14,6 +14,7 @@ public class Headquarters : MonoBehaviour
 
     public void Awake()
     {
+        baseGroup.alpha = 0;
         InitializationButtons();
     }
 
@@ -32,5 +33,32 @@ public class Headquarters : MonoBehaviour
         }
     }
 
+    public void OpenViewGroup()
+    {
+        baseGroup.alpha = 1;
+    }
 
+    public void ClosedViewGroup()
+    {
+        baseGroup.alpha = 0;
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player") && other.TryGetComponent(out PlayerInventory player))
+        {
+            Debug.Log(player);
+            if (!player.HasTurret)
+                OpenViewGroup();
+        }
+    }
+
+    public void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player") && other.TryGetComponent(out PlayerInventory player))
+        {
+            //if (!player.HasTurret)
+            ClosedViewGroup();
+        }
+    }
 }

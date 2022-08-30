@@ -30,7 +30,7 @@ public class PlayerInventory : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (_tempTurret == null && HasTurret) return;
+        if (_tempTurret == null || HasTurret) return;
 
         if (_tempTurret.gameObject == other.gameObject)
         {

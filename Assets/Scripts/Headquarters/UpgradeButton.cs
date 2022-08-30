@@ -22,7 +22,6 @@ public class UpgradeButton : MonoBehaviour
 
     public void Initialization(UpgradeList upgradeList)
     {
-        //button = GetComponentInChildren<Button>();
         currentUpgradeList = upgradeList;
         upgradeCount = 0;
 
