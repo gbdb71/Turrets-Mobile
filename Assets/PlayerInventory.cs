@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using DG.Tweening;
 
@@ -10,7 +9,8 @@ public class PlayerInventory : MonoBehaviour
 
     [SerializeField] private Vector3 _placeOffset;
 
-    private BaseTurret _turret;
+    private BaseTurret _tempTurret;
+    private BaseTurret _takedTurret;
 
     public bool HasTurret { get { return _turretSlot.childCount > 0; } }
 
@@ -23,74 +23,76 @@ public class PlayerInventory : MonoBehaviour
 
         if (other.CompareTag("Turret") && other.TryGetComponent(out BaseTurret turret))
         {
-            _turret = turret;
-            _turret.IndicatorTransform.gameObject.SetActive(true);
+            _tempTurret = turret;
+            _tempTurret.IndicatorTransform.gameObject.SetActive(true);
         }
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (_turret == null && HasTurret) return;
+        if (_tempTurret == null && HasTurret) return;
 
-        if (_turret.gameObject == other.gameObject)
+        if (_tempTurret.gameObject == other.gameObject)
         {
             _takeProgess += Time.deltaTime;
-            _turret.IndicatorFill.fillAmount = _takeProgess;
+            _tempTurret.IndicatorFill.fillAmount = _takeProgess;
 
             if (_takeProgess >= 1f)
             {
-                Take(_turret);
+                Take(_tempTurret);
             }
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (HasTurret)
-        {
-            ResetProgress(_turret);
-        }
+        if (_tempTurret != null)
+            ResetProgress(_tempTurret);
+
+        _tempTurret = null;
     }
 
     public void Place()
     {
-        if (_turret != null)
+        if (_takedTurret != null)
         {
-            _turret.enabled = true;
+            _takedTurret.enabled = true;
 
             RaycastHit hit;
 
-            if (Physics.Raycast(_turret.transform.position, -_turret.transform.up, out hit))
+            if (Physics.Raycast(_takedTurret.transform.position, -_takedTurret.transform.up, out hit))
             {
-                Vector3 targetPos = _turret.transform.position;
+                Vector3 targetPos = _takedTurret.transform.position;
                 targetPos.y = hit.point.y;
                 targetPos += _placeOffset;
 
-                _turret.transform.DOJump(targetPos, 1.5f, 1, .6f);
+                _takedTurret.transform.DOJump(targetPos, 1f, 1, .6f);
             }
-            _turret.transform.SetParent(null);
-            _turret = null;
+
+            _takedTurret.transform.SetParent(null);
+            _takedTurret = null;
         }
     }
 
     private void Take(BaseTurret turret)
     {
-        turret.transform.SetParent(_turretSlot);
+        _takedTurret = turret;
+        _takedTurret.transform.SetParent(_turretSlot);
 
-        turret.transform.DOMove(_turretSlot.transform.position, .25f).OnComplete(() =>
+        _takedTurret.transform.DOMove(_turretSlot.transform.position, .25f).OnComplete(() =>
         {
             turret.transform.localPosition = new Vector3();
             turret.transform.localRotation = Quaternion.identity;
         });
 
-        ResetProgress(turret);
+        _takedTurret.enabled = false;
+
+        ResetProgress(_takedTurret);
     }
 
     private void ResetProgress(BaseTurret turret)
     {
         turret.IndicatorTransform.gameObject.SetActive(false);
-        turret.enabled = false;
-
         _takeProgess = 0f;
     }
 }
