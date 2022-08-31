@@ -43,10 +43,10 @@ public class Headquarters : MonoBehaviour
             {
                 UpgradeList.UpgradeType type = _upgradeInfo.upgrades[i].Type;
 
-                int upgrade = int.Parse(_data[type.ToString()]);
-                _upgradeButtons[i].Initialization(_upgradeInfo.upgrades[i], upgrade, this);
+                int index = int.Parse(_data[type.ToString()]);
+                _upgradeButtons[i].Initialization(_upgradeInfo.upgrades[i], index, this);
 
-                ValuePassing(type, _upgradeInfo.upgrades[i].elementList[upgrade].Value);
+                ValuePassing(type, _upgradeInfo.upgrades[i].elementList[index].Value, index);
             }
             else
             {
@@ -57,18 +57,11 @@ public class Headquarters : MonoBehaviour
     }
 
 
-    public void ValuePassing(UpgradeList.UpgradeType type, float value)
+    public void ValuePassing(UpgradeList.UpgradeType type, float value, int index)
     {
-        string key = nameof(type);
+        string key = type.ToString();
 
-        if (_data.ContainsKey(key))
-        {
-            _data[key] = value.ToString();
-        }
-        else
-        {
-            _data.Add(key, value.ToString());
-        }
+        _data[key] = index.ToString();
 
         switch (type)
         {

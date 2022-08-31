@@ -34,9 +34,9 @@ public class UpgradeButton : MonoBehaviour
 
     public void ButtonPresed()
     {
-        _headquarters.ValuePassing(currentUpgradeList.Type, currentUpgradeList.elementList[_upgrade].Value);
-
         _upgrade++;
+        _headquarters.ValuePassing(currentUpgradeList.Type, currentUpgradeList.elementList[_upgrade].Value, _upgrade);
+
 
         CheckCount();
     }
@@ -51,12 +51,13 @@ public class UpgradeButton : MonoBehaviour
 
     public bool CheckCount()
     {
-        if (_upgrade < currentUpgradeList.elementList.Count)
+        UpdateButtonUI();
+
+        if (_upgrade < (currentUpgradeList.elementList.Count - 1))
         {
             canvasGroup.alpha = 1f;
             canvasGroup.interactable = true;
 
-            UpdateButtonUI();
             return true;
         }
         else
