@@ -6,14 +6,14 @@ using Zenject;
 public class Headquarters : MonoBehaviour
 {
     [Header("DATA Settings")]
-    private UpgradesInfo _upgradeInfo;
-    private List<UpgradeButton> _upgradeButtons = new List<UpgradeButton>();
+    [SerializeField] private UpgradesInfo _upgradeInfo;
+    [SerializeField] private List<UpgradeButton> _upgradeButtons = new List<UpgradeButton>();
 
     [Header("View Settings")]
-    private CanvasGroup _сanvasGroup;
+    [SerializeField] private CanvasGroup _сanvasGroup;
 
     [Inject]
-    [SerializeField] private Player _player;
+    private Player _player;
 
     private Dictionary<string, string> _data = new Dictionary<string, string>();
 
@@ -28,14 +28,24 @@ public class Headquarters : MonoBehaviour
     #region Buttons
     private void InitializationButtons()
     {
+        if (_upgradeInfo == null)
+        {
+            for (int i = 0; i < _upgradeButtons.Count; i++)
+            {
+                _upgradeButtons[i].gameObject.SetActive(false);
+            }
+            return;
+        }
+
         for (int i = 0; i < _upgradeButtons.Count; i++)
         {
             if (i < _upgradeInfo.upgrades.Count && _upgradeInfo.upgrades[i] != null)
             {
-                var type = _upgradeInfo.upgrades[i].Type;
+                UpgradeList.UpgradeType type = _upgradeInfo.upgrades[i].Type;
 
-                int upgrade = int.Parse(_data[nameof(type)]);
+                string typeName = nameof(type);
 
+                int upgrade = int.Parse(_data[typeName]);
                 _upgradeButtons[i].Initialization(_upgradeInfo.upgrades[i], upgrade, this);
             }
             else
