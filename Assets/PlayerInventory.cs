@@ -14,7 +14,6 @@ public class PlayerInventory : MonoBehaviour
 
     public bool HasTurret { get { return _turretSlot.childCount > 0; } }
 
-
     float _takeProgess = 0f;
 
     private void OnTriggerEnter(Collider other)

@@ -6,14 +6,15 @@ public class PlayerMovement : MonoBehaviour
 {
     [Range(5, 15f)]
     [SerializeField] private float _speed = 5f;
+    public float Speed { set { _speed = Mathf.Clamp(value, 1, 99); } }
+
     [Range(1, 15f)]
     [SerializeField] private float _speedWithTurret = 2f;
-
+    public float SpeedWithTurret {set { _speedWithTurret =Mathf.Clamp(value, 1, 99); } }
 
     [Range(1, 20)]
     [SerializeField] private float _rotationPerFrame = 10f;
 
-    
     private Joystick _joystick;
 	private CharacterController _cc;
     private Player _player;
@@ -45,7 +46,9 @@ public class PlayerMovement : MonoBehaviour
 	{
 		moveDir.Set(_joystick.Horizontal, 0, _joystick.Vertical);
 
-        float speed = _player.Inventory.HasTurret ? _speedWithTurret : _speed; ;
+        //float speed = _player.Inventory.HasTurret ? _speedWithTurret : _speed; ;
+        float speed = _player.Inventory.HasTurret ? _speedWithTurret : _speed; 
+
         _cc.SimpleMove(moveDir * speed);
 
         IsMove = moveDir.magnitude > 0 && _cc.isGrounded;

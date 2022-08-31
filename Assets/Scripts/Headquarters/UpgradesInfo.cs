@@ -13,6 +13,14 @@ public class UpgradesInfo : ScriptableObject
 public class UpgradeList
 {
     public string name;
+    public UpgradeType currentType;
+    public enum UpgradeType
+    {
+        Speed,
+        SpeedWithTurret,
+        AmmoCount
+    }
+
     public List<Upgrade> elementList;
 }
 

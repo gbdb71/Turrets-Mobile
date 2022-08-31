@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   upgrades:
   - name: 'Speed '
+    currentType: 0
     elementList:
     - Value: 5
       Cost: 10
@@ -22,14 +23,16 @@ MonoBehaviour:
     - Value: 7
       Cost: 30
   - name: Speed With Turret
+    currentType: 1
     elementList:
-    - Value: 3
+    - Value: 2
       Cost: 10
-    - Value: 4
+    - Value: 3
       Cost: 20
-    - Value: 5
+    - Value: 4
       Cost: 30
   - name: Ammo Count
+    currentType: 2
     elementList:
     - Value: 1
       Cost: 10

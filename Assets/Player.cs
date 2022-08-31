@@ -12,6 +12,9 @@ public class Player : MonoBehaviour
     public PlayerMovement Movement => _movement;
     public PlayerAnimations Animation => _animation;
 
+    //public float Speed;
+    //public float SpeedWithTurret;
+
     private void Awake()
     {
         _inventory = GetComponent<PlayerInventory>();

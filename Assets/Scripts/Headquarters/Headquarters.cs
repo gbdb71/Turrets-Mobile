@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 public class Headquarters : MonoBehaviour
 {
@@ -12,18 +13,27 @@ public class Headquarters : MonoBehaviour
     [Header("Siew Settings")]
     public CanvasGroup baseGroup;
 
+    [Inject]
+    [SerializeField] private Player _player;
+
     public void Awake()
     {
         baseGroup.alpha = 0;
+     //   InitializationButtons();
+    }
+
+    public void Start()
+    {
         InitializationButtons();
     }
 
+    #region Buttons
     private void InitializationButtons()
     {
         for (int i = 0; i < upgradeButtons.Count; i++)
         {
             if (i < upgradesInfo.upgrades.Count && upgradesInfo.upgrades[i] != null)
-                upgradeButtons[i].Initialization(upgradesInfo.upgrades[i]);
+                upgradeButtons[i].Initialization(upgradesInfo.upgrades[i], this);
             else
             {
                 Debug.Log($"No More Upgrade Info {i}");
@@ -33,6 +43,34 @@ public class Headquarters : MonoBehaviour
         }
     }
 
+    public void LoadData()
+    {
+        _player.Movement.Speed = PlayerPrefs.GetFloat($"Upgrade{UpgradeList.UpgradeType.Speed}"); ;
+        _player.Movement.SpeedWithTurret = PlayerPrefs.GetFloat($"Upgrade{UpgradeList.UpgradeType.SpeedWithTurret}"); ;
+    }
+
+    public void ValuePassing(UpgradeList.UpgradeType type, float value)
+    {
+        switch(type)
+        {
+            case UpgradeList.UpgradeType.Speed:
+                _player.Movement.Speed = value;
+                break;
+
+            case UpgradeList.UpgradeType.SpeedWithTurret:
+                _player.Movement.SpeedWithTurret = value;
+                break;
+
+            case UpgradeList.UpgradeType.AmmoCount:
+
+                break;
+
+        }
+    }
+
+    #endregion
+
+    #region View UI
     public void OpenViewGroup()
     {
         baseGroup.alpha = 1;
@@ -61,4 +99,5 @@ public class Headquarters : MonoBehaviour
             ClosedViewGroup();
         }
     }
+    #endregion
 }
