@@ -27,33 +27,31 @@ public class UpgradeButton : MonoBehaviour
         _headquarters = headquarters;
 
         _upgrade = upgrade;
-
-        CheckCount();
+        
+        UpdateButtonUI();
         button.onClick.AddListener(ButtonPresed);
     }
 
     public void ButtonPresed()
     {
-        _upgrade++;
+        _upgrade += 1;
         _headquarters.ValuePassing(currentUpgradeList.Type, currentUpgradeList.elementList[_upgrade].Value, _upgrade);
 
-
-        CheckCount();
+        UpdateButtonUI();
     }
 
     private void UpdateButtonUI()
     {
         titleText.text = currentUpgradeList.name;
-        costText.text = currentUpgradeList.elementList[_upgrade].Cost.ToString();
+        
+        costText.text = CheckCount() ? currentUpgradeList.elementList[_upgrade + 1].Cost.ToString() : "-";
         levelText.text = $"Lvl {(_upgrade + 1)}";
     }
 
 
     public bool CheckCount()
     {
-        UpdateButtonUI();
-
-        if (_upgrade < (currentUpgradeList.elementList.Count - 1))
+        if (_upgrade < currentUpgradeList.elementList.Count - 1)
         {
             canvasGroup.alpha = 1f;
             canvasGroup.interactable = true;
@@ -62,6 +60,8 @@ public class UpgradeButton : MonoBehaviour
         }
         else
         {
+            levelText.text = $"Max";
+            costText.text = "";
             canvasGroup.alpha = 0.5f;
             canvasGroup.interactable = false;
 

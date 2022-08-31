@@ -111,7 +111,11 @@ public class Headquarters : MonoBehaviour
         }
     }
 
-
+    [ContextMenu("Clear Data")]
+    public void ClearData()
+    {
+        PlayerPrefs.DeleteAll();
+    }
     #endregion
 
     #region View UI
