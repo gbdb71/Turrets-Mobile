@@ -43,10 +43,10 @@ public class Headquarters : MonoBehaviour
             {
                 UpgradeList.UpgradeType type = _upgradeInfo.upgrades[i].Type;
 
-                string typeName = nameof(type);
-
-                int upgrade = int.Parse(_data[typeName]);
+                int upgrade = int.Parse(_data[type.ToString()]);
                 _upgradeButtons[i].Initialization(_upgradeInfo.upgrades[i], upgrade, this);
+
+                ValuePassing(type, _upgradeInfo.upgrades[i].elementList[upgrade].Value);
             }
             else
             {
@@ -99,7 +99,7 @@ public class Headquarters : MonoBehaviour
         {
             foreach (var upgrade in _data)
             {
-                PlayerPrefs.SetString(nameof(upgrade.Key), upgrade.Value.ToString());
+                PlayerPrefs.SetString(upgrade.Key.ToString(), upgrade.Value.ToString());
             }
         }
 

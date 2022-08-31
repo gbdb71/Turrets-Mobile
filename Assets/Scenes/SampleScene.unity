@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0, g: 0.99999905, b: 0.99999905, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -211,13 +211,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af0b9f595cdbb884087482bf32dc7d27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  upgradesInfo: {fileID: 11400000, guid: 6501667c695beab40ae89defb0902824, type: 2}
-  upgradeButtons:
+  _upgradeInfo: {fileID: 11400000, guid: 6501667c695beab40ae89defb0902824, type: 2}
+  _upgradeButtons:
   - {fileID: 437881579}
   - {fileID: 1550319526}
   - {fileID: 1839246079}
   - {fileID: 547830168}
-  baseGroup: {fileID: 510420579}
+  "_\u0441anvasGroup": {fileID: 510420579}
 --- !u!4 &247182092
 Transform:
   m_ObjectHideFlags: 0
