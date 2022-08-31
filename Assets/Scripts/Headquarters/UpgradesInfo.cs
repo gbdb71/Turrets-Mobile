@@ -13,7 +13,7 @@ public class UpgradesInfo : ScriptableObject
 public class UpgradeList
 {
     public string name;
-    public UpgradeType currentType;
+    public UpgradeType Type;
     public enum UpgradeType
     {
         Speed,

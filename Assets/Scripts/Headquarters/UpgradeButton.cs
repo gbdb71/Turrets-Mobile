@@ -14,58 +14,47 @@ public class UpgradeButton : MonoBehaviour
 
     public UpgradeList currentUpgradeList;
 
-    [SerializeField] private bool buttonIsActive;
-    [SerializeField] private int upgradeCount;
+    [SerializeField] private int _upgrade;
 
     [Header("View Settings")]
     [SerializeField] private TextMeshProUGUI titleText;
     [SerializeField] private TextMeshProUGUI costText;
     [SerializeField] private TextMeshProUGUI levelText;
 
-    public void Initialization(UpgradeList upgradeList, Headquarters headquarters)
+    public void Initialization(UpgradeList upgradeList, int upgrade, Headquarters headquarters)
     {
         currentUpgradeList = upgradeList;
         _headquarters = headquarters;
 
-        upgradeCount = 0;
+        _upgrade = upgrade;
 
-        buttonIsActive = CheckCount();
-        button.onClick.AddListener(() => ButtonPresed());
-
-        OutputValue();
+        CheckCount();
+        button.onClick.AddListener(ButtonPresed);
     }
 
     public void ButtonPresed()
     {
-        if (buttonIsActive)
-        {
-            //DebugPressed(currentUpgradeList.elementList[upgradeCount].Value, currentUpgradeList.elementList[upgradeCount].Cost);
-            currentUpgradeList.elementList[upgradeCount].Debug();
-            OutputValue();
-            upgradeCount += 1;
-            CheckCount();
-        }
+        _headquarters.ValuePassing(currentUpgradeList.Type, currentUpgradeList.elementList[_upgrade].Value);
+
+        _upgrade++;
+
+        CheckCount();
     }
 
     private void UpdateButtonUI()
     {
         titleText.text = currentUpgradeList.name;
-        costText.text = currentUpgradeList.elementList[upgradeCount].Cost.ToString();
-    }
-
-    private void OutputValue()
-    {
-        _headquarters.ValuePassing(currentUpgradeList.currentType, currentUpgradeList.elementList[upgradeCount].Value);
+        costText.text = currentUpgradeList.elementList[_upgrade].Cost.ToString();
+        levelText.text = $"Lvl {(_upgrade + 1)}";
     }
 
 
     public bool CheckCount()
     {
-        if (upgradeCount < currentUpgradeList.elementList.Count)
+        if (_upgrade < currentUpgradeList.elementList.Count)
         {
             canvasGroup.alpha = 1f;
             canvasGroup.interactable = true;
-            levelText.text = "Lvl " + (upgradeCount + 1).ToString();
 
             UpdateButtonUI();
             return true;
@@ -77,15 +66,6 @@ public class UpgradeButton : MonoBehaviour
 
             return false;
         }
-    }
-}
-
-public static class Ectencion
-{
-    public static void Debug(this Upgrade upgrade)
-    {
-        //Debug.Log($"Upgrade - {currentUpgradeList.name} // Upgrade Level {upgrade.upgradeCount} // Value {upgrade.value} | Cost {cost}")
-        UnityEngine.Debug.Log($"Value {upgrade.Value} // Cost {upgrade.Cost}");
     }
 }
 
