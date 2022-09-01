@@ -48,7 +48,6 @@ public class UpgradeButton : MonoBehaviour
         levelText.text = $"Lvl {(_upgrade + 1)}";
     }
 
-
     public bool CheckCount()
     {
         if (_upgrade < currentUpgradeList.elementList.Count - 1)

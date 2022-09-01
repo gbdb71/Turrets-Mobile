@@ -7,6 +7,11 @@ public class PlayerInventory : MonoBehaviour
     [SerializeField] private float _turrelTakeTime = 1.5f;
     [SerializeField] private Transform _turretSlot;
 
+    [SerializeField] private int _ammoCount;
+    public int AmmoCount { set { _ammoCount = Mathf.Clamp(value, 1, 99); } }
+
+    [SerializeField] private Transform _ammoSlot;
+
     [SerializeField] private Vector3 _placeOffset;
 
     private BaseTurret _tempTurret;

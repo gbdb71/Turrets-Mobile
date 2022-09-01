@@ -17,7 +17,7 @@ MonoBehaviour:
     Type: 0
     elementList:
     - Value: 5
-      Cost: 10
+      Cost: 0
     - Value: 6
       Cost: 20
     - Value: 7
@@ -26,7 +26,7 @@ MonoBehaviour:
     Type: 1
     elementList:
     - Value: 2
-      Cost: 10
+      Cost: 0
     - Value: 3
       Cost: 20
     - Value: 4
@@ -35,7 +35,7 @@ MonoBehaviour:
     Type: 2
     elementList:
     - Value: 1
-      Cost: 10
+      Cost: 0
     - Value: 2
       Cost: 20
     - Value: 3

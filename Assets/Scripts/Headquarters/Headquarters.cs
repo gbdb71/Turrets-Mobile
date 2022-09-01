@@ -74,7 +74,7 @@ public class Headquarters : MonoBehaviour
                 break;
 
             case UpgradeList.UpgradeType.AmmoCount:
-
+                _player.Inventory.AmmoCount = (int)value;
                 break;
 
         }
@@ -89,12 +89,8 @@ public class Headquarters : MonoBehaviour
     private void SaveData()
     {
         if (_data != null)
-        {
-            foreach (var upgrade in _data)
-            {
-                PlayerPrefs.SetString(upgrade.Key.ToString(), upgrade.Value.ToString());
-            }
-        }
+            foreach (var itemData in _data)
+                PlayerPrefs.SetString(itemData.Key.ToString(), itemData.Value.ToString());
 
         PlayerPrefs.Save();
     }
