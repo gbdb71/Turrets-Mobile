@@ -7,13 +7,17 @@ public class PlayerInventory : MonoBehaviour
     [SerializeField] private float _turrelTakeTime = 1.5f;
     [SerializeField] private Transform _turretSlot;
 
+    [SerializeField] private int _ammoCount;
+    public int AmmoCount { set { _ammoCount = Mathf.Clamp(value, 1, 99); } }
+
+    [SerializeField] private Transform _ammoSlot;
+
     [SerializeField] private Vector3 _placeOffset;
 
     private BaseTurret _tempTurret;
     private BaseTurret _takedTurret;
 
     public bool HasTurret { get { return _turretSlot.childCount > 0; } }
-
 
     float _takeProgess = 0f;
 
@@ -30,7 +34,7 @@ public class PlayerInventory : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (_tempTurret == null && HasTurret) return;
+        if (_tempTurret == null || HasTurret) return;
 
         if (_tempTurret.gameObject == other.gameObject)
         {
