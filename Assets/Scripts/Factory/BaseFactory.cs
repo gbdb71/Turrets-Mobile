@@ -19,23 +19,17 @@ public class BaseFactory : MonoBehaviour, IInteractable
     [SerializeField] private float _timeToCreate = 0.75f;
     [SerializeField] private int _objectCost = 25;
 
-    private int curentCurrency;
-    private float timer;
+    private int _currencyAmount;
+    private float _intertactTimer;
+    private float _workTimer;
 
-    [Inject]
-    private Player _player;
+    [Inject] private Player _player;
 
-    //public int ObjectCost { set { _objectCost = Mathf.Clamp(value, 0, 999); } }
+    public bool IsWorking { get; private set; } = false;
 
     public void Awake()
     {
         plates.AddRange(GetComponentsInChildren<FactoryPlate>());
-    }
-
-    private IEnumerator Creating()
-    {
-        yield return new WaitForSeconds(_timeToCreate);
-        coroutine = null;
     }
 
     private Transform GetEmptyPlate()
@@ -50,16 +44,6 @@ public class BaseFactory : MonoBehaviour, IInteractable
         return tempTransform;
     }
 
-    private bool CheckReadinessForUse()
-    {
-        if (GetEmptyPlate() == null)
-            return false;
-
-        return true;
-    }
-
-    Coroutine coroutine;
-
     private void CreatingObject(Transform placeTransform)
     {
         if (placeTransform == null)
@@ -71,34 +55,46 @@ public class BaseFactory : MonoBehaviour, IInteractable
 
     private void Update()
     {
-       // if(coroutine == null)
+        Transform plate = GetEmptyPlate();
+
+        if (plate == null)
+            return;
+
+        if (IsWorking)
+        {
+            _workTimer += Time.deltaTime;
+
+            if(_workTimer >= _timeToCreate)
+            {
+                CreatingObject(plate);
+
+                _workTimer = 0;
+                IsWorking = false;
+            }
+
+            return;
+        }
+
+        if(_currencyAmount >= _objectCost)
+        {
+            IsWorking = true;
+            _currencyAmount -= _objectCost;
+        }
+
     }
 
     public void Interact(Player player)
     {
-        //if (!CheckReadinessForUse())
-        //    return;
+        _intertactTimer += Time.deltaTime;
+        if (_intertactTimer >= interactTime)
+        {
+            if (_player.Headquarters.ConstructionCurrency <= 0)
+                return;
 
-        //if (_costToCreate <= 0)
-        //{
-        //    _costToCreate = _objectCost;
-        //    CreatingObject(GetEmptyPlate());
-        //    return;
-        //}
-        //else
-        //{
-            timer += Time.deltaTime;
-            if (timer >= interactTime)
-            {
-                if (_player.Headquarters.ConstructionCurrency <= 0)
-                    return;
-
-                curentCurrency += 1;
-                _player.Headquarters.ConstructionCurrency -= 1;
-                timer = 0;
-            }
-
-        //}
+            _currencyAmount += 1;
+            _player.Headquarters.ConstructionCurrency -= 1;
+            _intertactTimer = 0;
+        }
     }
 
     public void OnEnter(Player player) { }
