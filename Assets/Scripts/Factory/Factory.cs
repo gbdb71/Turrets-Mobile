@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
+using DG.Tweening;
 
-public class BaseFactory : MonoBehaviour, IInteractable
+public class Factory : MonoBehaviour, IInteractable
 {
     [Header("Other Settings")]
     private List<FactoryPlate> plates = new List<FactoryPlate>();
