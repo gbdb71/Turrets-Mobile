@@ -15,23 +15,17 @@ public class PlayerMovement : MonoBehaviour
     [Range(1, 20)]
     [SerializeField] private float _rotationPerFrame = 10f;
 
-    private Joystick _joystick;
+    [Inject] private Joystick _joystick;
 	private CharacterController _cc;
     private Player _player;
 
     public float MoveVelocity { get { return _cc.velocity.magnitude; } }
     public bool IsMove { get; private set; }
 
-    [Inject]
-    public void Construct(Joystick joystick, Player player)
-    {
-        _joystick = joystick;
-        _player = player;
-    }
-
     private void Awake()
     {
         _cc = GetComponent<CharacterController>();
+        _player = GetComponent<Player>();
     }
 
     private void Update()
@@ -41,7 +35,8 @@ public class PlayerMovement : MonoBehaviour
 		Rotate();
 	}
 
-    Vector3 moveDir;
+
+    private Vector3 moveDir;
 	private void Movement()
 	{
 		moveDir.Set(_joystick.Horizontal, 0, _joystick.Vertical);
@@ -53,7 +48,6 @@ public class PlayerMovement : MonoBehaviour
 
         IsMove = moveDir.magnitude > 0 && _cc.isGrounded;
 	}
-
     private void Rotate()
     {
         if (moveDir.magnitude > 0)
@@ -64,7 +58,6 @@ public class PlayerMovement : MonoBehaviour
             transform.rotation = Quaternion.Slerp(currentRot, targetRot, _rotationPerFrame * Time.deltaTime);
         }
     }
-
     private void HandleGravity()
     {
         if(_cc.isGrounded)

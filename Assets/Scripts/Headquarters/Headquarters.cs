@@ -7,62 +7,48 @@ public class Headquarters : MonoBehaviour
 {
     [Header("DATA Settings")]
     [SerializeField] private UpgradesInfo _upgradeInfo;
-    [SerializeField] private List<UpgradeButton> _upgradeButtons = new List<UpgradeButton>();
+    private List<UpgradeButton> _upgradeButtons = new List<UpgradeButton>();
 
-    [SerializeField] private int _upgradeCurrency = 0;
-    [SerializeField] private int _constructionCurrency = 0;
-    public int ConstructionCurrency { get => _constructionCurrency; set { _constructionCurrency = Mathf.Clamp(value, 0, 9999); } }
-    
     [Header("View Settings")]
-    [SerializeField] private CanvasGroup _сanvasGroup;
+    [SerializeField] private CanvasGroup _interactGroupPrefab;
+    [SerializeField] private UpgradeButton _interactButtonPrefab;
 
-    [Inject]
-    private Player _player;
+    [Inject] private Player _player;
+    [Inject] private Canvas _canvas;
+
+    private CanvasGroup _interactGroup;
 
     private Dictionary<string, string> _data = new Dictionary<string, string>();
 
     public void Start()
     {
+        _interactGroup = Instantiate(_interactGroupPrefab, _canvas.transform);
+
         LoadData();
 
         ClosedViewGroup();
-        InitializationButtons();
     }
 
-    [ContextMenu("Add Currency")]
-    public void AddCurrency()
-    {
-        _upgradeCurrency += 100;
-        _constructionCurrency += 100;
-    }
 
     #region Buttons
     private void InitializationButtons()
     {
         if (_upgradeInfo == null)
-        {
-            for (int i = 0; i < _upgradeButtons.Count; i++)
-            {
-                _upgradeButtons[i].gameObject.SetActive(false);
-            }
             return;
-        }
 
-        for (int i = 0; i < _upgradeButtons.Count; i++)
+        for (int i = 0; i < _upgradeInfo.upgrades.Count; i++)
         {
-            if (i < _upgradeInfo.upgrades.Count && _upgradeInfo.upgrades[i] != null)
+            if (_upgradeInfo.upgrades[i] != null)
             {
                 UpgradeList.UpgradeType type = _upgradeInfo.upgrades[i].Type;
 
                 int index = int.Parse(_data[type.ToString()]);
-                _upgradeButtons[i].Initialization(_upgradeInfo.upgrades[i], index, this);
+
+                UpgradeButton button = Instantiate(_interactButtonPrefab, _interactGroup.transform);
+                button.Initialization(_upgradeInfo.upgrades[i], index, this);
+                _upgradeButtons.Add(button);
 
                 ValuePassing(type, _upgradeInfo.upgrades[i].elementList[index].Value, index);
-            }
-            else
-            {
-                _upgradeButtons[i].gameObject.SetActive(false);
-                break;
             }
         }
     }
@@ -128,12 +114,20 @@ public class Headquarters : MonoBehaviour
     #region View UI
     public void OpenViewGroup()
     {
-        _сanvasGroup.alpha = 1;
+        InitializationButtons();
+        _interactGroup.alpha = 1;
     }
 
     public void ClosedViewGroup()
     {
-        _сanvasGroup.alpha = 0;
+        _interactGroup.alpha = 0;
+
+        for (int i = 0; i < _upgradeButtons.Count; i++)
+        {
+            Destroy(_upgradeButtons[i].gameObject);
+        }
+
+        _upgradeButtons.Clear();
     }
 
     public void OnTriggerEnter(Collider other)
