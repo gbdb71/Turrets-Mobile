@@ -9,9 +9,10 @@ public class Headquarters : MonoBehaviour
     [SerializeField] private UpgradesInfo _upgradeInfo;
     [SerializeField] private List<UpgradeButton> _upgradeButtons = new List<UpgradeButton>();
 
-    [SerializeField] private int upgradeCurrency = 0;
-    [SerializeField] private int constructionCurrency = 0;
-
+    [SerializeField] private int _upgradeCurrency = 0;
+    [SerializeField] private int _constructionCurrency = 0;
+    public int ConstructionCurrency { get => _constructionCurrency; set { _constructionCurrency = Mathf.Clamp(value, 0, 9999); } }
+    
     [Header("View Settings")]
     [SerializeField] private CanvasGroup _сanvasGroup;
 
@@ -31,8 +32,8 @@ public class Headquarters : MonoBehaviour
     [ContextMenu("Add Currency")]
     public void AddCurrency()
     {
-        upgradeCurrency += 100;
-        constructionCurrency += 100;
+        _upgradeCurrency += 100;
+        _constructionCurrency += 100;
     }
 
     #region Buttons

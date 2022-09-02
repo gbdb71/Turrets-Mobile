@@ -12,6 +12,7 @@ public class Player : MonoBehaviour
     public PlayerInventory Inventory => _inventory;
     public PlayerMovement Movement => _movement;
     public PlayerAnimations Animation => _animation;
+    public Headquarters Headquarters => _headquarters;
 
     private void Awake()
     {
