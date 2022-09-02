@@ -11,16 +11,13 @@ public class BaseFactory : MonoBehaviour
 
     [SerializeField] private int _objectCost;
     public int ObjectCost { set { _objectCost = Mathf.Clamp(value, 0, 999); } }
-    [SerializeField] private int _costToCreate;
+    private int _costToCreate;
 
     [Header("Other Settings")]
     [SerializeField] private bool _platformIsActive = false;
     // [SerializeField] private bool _readyToCreate = false;
     [SerializeField] private float _timeToCreate = 0.75f;
 
-    //[Range(1, 99)]
-    //[SerializeField] private int _pointsToCreate;
-    //[SerializeField] private int _currentPointsToCreate;
 
     [SerializeField] private int _maxWarehouseCapacity = 1;
     [SerializeField] private int _currentWarehouseCapacity = 0;
@@ -43,10 +40,9 @@ public class BaseFactory : MonoBehaviour
     private IEnumerator Creating()
     {
         yield return new WaitForSeconds(_timeToCreate);
-
     }
 
-    private Transform CheckFactoryPlates()
+    private Transform GetEmptyPlate()
     {
         Transform tempTransform = null;
         foreach (FactoryPlate plate in plates)
@@ -58,18 +54,15 @@ public class BaseFactory : MonoBehaviour
 
     public bool CheckReadinessForUse()
     {
-        bool isReady = false;
         if (!_platformIsActive)
             return false;
 
-        if (CheckFactoryPlates() == null)
-            return false;
-
-        if (_player.Headquarters.ConstructionCurrency! > 0)
+        if (GetEmptyPlate() == null)
             return false;
 
         return true;
     }
+
 
     public void CreatingObject(Transform placeTransform)
     {
@@ -90,18 +83,25 @@ public class BaseFactory : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        CheckReadinessForUse();
+        if (!CheckReadinessForUse())
+            return;
 
         if (other.CompareTag("Player") && other.TryGetComponent(out Player player))
         {
             if (_costToCreate <= 0) 
             {
-                CreatingObject(CheckFactoryPlates());
+                _costToCreate = _objectCost;
+                CreatingObject(GetEmptyPlate());
+                return;
             }
             else
             {
+                if(_player.Headquarters.ConstructionCurrency <= 0)
+                    return;
+
                 _costToCreate -= 1;
                 _player.Headquarters.ConstructionCurrency -= 1;
+
             }
 
         }

@@ -9,6 +9,10 @@ public class Headquarters : MonoBehaviour
     [SerializeField] private UpgradesInfo _upgradeInfo;
     private List<UpgradeButton> _upgradeButtons = new List<UpgradeButton>();
 
+    [SerializeField] private int _upgradeCurrency = 0;
+    [SerializeField] private int _constructionCurrency = 0;
+    public int ConstructionCurrency { get => _constructionCurrency; set { _constructionCurrency = Mathf.Clamp(value, 0, 9999); } }
+   
     [Header("View Settings")]
     [SerializeField] private CanvasGroup _interactGroupPrefab;
     [SerializeField] private UpgradeButton _interactButtonPrefab;
@@ -20,6 +24,11 @@ public class Headquarters : MonoBehaviour
 
     private Dictionary<string, string> _data = new Dictionary<string, string>();
 
+    public void Awake()
+    {
+        _player.SetHeadquarters(this);    
+    }
+
     public void Start()
     {
         _interactGroup = Instantiate(_interactGroupPrefab, _canvas.transform);
@@ -28,7 +37,6 @@ public class Headquarters : MonoBehaviour
 
         ClosedViewGroup();
     }
-
 
     #region Buttons
     private void InitializationButtons()
@@ -53,6 +61,12 @@ public class Headquarters : MonoBehaviour
         }
     }
 
+    [ContextMenu("Add Currency")]
+    public void AddCurrency()
+    {
+        _upgradeCurrency += 100;
+        _constructionCurrency += 100;
+    }
 
     public void ValuePassing(UpgradeList.UpgradeType type, float value, int index)
     {
