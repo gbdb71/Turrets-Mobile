@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     private PlayerInventory _inventory;
     private PlayerMovement _movement;
     private PlayerAnimations _animation;
+    [SerializeField] private Headquarters _headquarters;
 
     public PlayerInventory Inventory => _inventory;
     public PlayerMovement Movement => _movement;

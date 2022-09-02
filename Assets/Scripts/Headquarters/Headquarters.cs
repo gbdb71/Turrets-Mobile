@@ -9,6 +9,9 @@ public class Headquarters : MonoBehaviour
     [SerializeField] private UpgradesInfo _upgradeInfo;
     [SerializeField] private List<UpgradeButton> _upgradeButtons = new List<UpgradeButton>();
 
+    [SerializeField] private int upgradeCurrency = 0;
+    [SerializeField] private int constructionCurrency = 0;
+
     [Header("View Settings")]
     [SerializeField] private CanvasGroup _сanvasGroup;
 
@@ -23,6 +26,13 @@ public class Headquarters : MonoBehaviour
 
         ClosedViewGroup();
         InitializationButtons();
+    }
+
+    [ContextMenu("Add Currency")]
+    public void AddCurrency()
+    {
+        upgradeCurrency += 100;
+        constructionCurrency += 100;
     }
 
     #region Buttons
