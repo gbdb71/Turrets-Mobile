@@ -6,15 +6,8 @@ public class FactoryPlate : MonoBehaviour
 {
     public Transform content;
 
-    public bool CheckChild()
+    public bool HasChild()
     {
-        bool empty;
-        if (content.transform.childCount > 0)
-            empty = false;
-        else
-            empty = true;
-
-        Debug.Log(empty);
-        return empty;
+        return content.transform.childCount == 0;
     }
 }

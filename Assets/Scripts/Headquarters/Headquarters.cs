@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-public class Headquarters : MonoBehaviour
+public class Headquarters : MonoBehaviour, IInteractable
 {
     [Header("DATA Settings")]
     [SerializeField] private UpgradesInfo _upgradeInfo;
@@ -144,21 +144,19 @@ public class Headquarters : MonoBehaviour
         _upgradeButtons.Clear();
     }
 
-    public void OnTriggerEnter(Collider other)
+    public void OnEnter(Player player)
     {
-        if (other.CompareTag("Player") && other.TryGetComponent(out Player player))
-        {
-            if (!player.Inventory.HasTurret)
-                OpenViewGroup();
-        }
+        if (!player.Inventory.HasTurret)
+            OpenViewGroup();
     }
 
-    public void OnTriggerExit(Collider other)
+    public void Interact(Player player)
     {
-        if (other.CompareTag("Player") && other.TryGetComponent(out Player player))
-        {
-            ClosedViewGroup();
-        }
+    }
+
+    public void OnExit(Player player)
+    {
+        ClosedViewGroup();
     }
     #endregion
 }

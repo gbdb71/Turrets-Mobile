@@ -4,114 +4,103 @@ using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-public class BaseFactory : MonoBehaviour
+public class BaseFactory : MonoBehaviour, IInteractable
 {
-    [Inject]
-    private Player _player;
-
-    [SerializeField] private int _objectCost;
-    public int ObjectCost { set { _objectCost = Mathf.Clamp(value, 0, 999); } }
-    private int _costToCreate;
-
     [Header("Other Settings")]
-    [SerializeField] private bool _platformIsActive = false;
-    // [SerializeField] private bool _readyToCreate = false;
-    [SerializeField] private float _timeToCreate = 0.75f;
-
-
-    [SerializeField] private int _maxWarehouseCapacity = 1;
-    [SerializeField] private int _currentWarehouseCapacity = 0;
-
-    public List<FactoryPlate> plates = new List<FactoryPlate>();
+    private List<FactoryPlate> plates = new List<FactoryPlate>();
 
     [Header("View Settings")]
     [SerializeField] private Image fillImage;
-    [SerializeField] private float fillTime = 0.25f;
+    [SerializeField] private float interactTime = 0.25f;
 
     [Header("Create Settings")]
     [SerializeField] private GameObject _objectPrefab;
 
+    [SerializeField] private float _timeToCreate = 0.75f;
+    [SerializeField] private int _objectCost = 25;
+
+    private int curentCurrency;
+    private float timer;
+
+    [Inject]
+    private Player _player;
+
+    //public int ObjectCost { set { _objectCost = Mathf.Clamp(value, 0, 999); } }
+
     public void Awake()
     {
         plates.AddRange(GetComponentsInChildren<FactoryPlate>());
-        _costToCreate = _objectCost;
     }
 
     private IEnumerator Creating()
     {
         yield return new WaitForSeconds(_timeToCreate);
+        coroutine = null;
     }
 
     private Transform GetEmptyPlate()
     {
         Transform tempTransform = null;
-        foreach (FactoryPlate plate in plates)
-            if (plate.CheckChild())
-                tempTransform = plate.content;
+        for (int i = 0; i < plates.Count; i++)
+        {
+            if (plates[i].HasChild())
+                tempTransform = plates[i].content;
+        }
 
         return tempTransform;
     }
 
-    public bool CheckReadinessForUse()
+    private bool CheckReadinessForUse()
     {
-        if (!_platformIsActive)
-            return false;
-
         if (GetEmptyPlate() == null)
             return false;
 
         return true;
     }
 
+    Coroutine coroutine;
 
-    public void CreatingObject(Transform placeTransform)
+    private void CreatingObject(Transform placeTransform)
     {
         if (placeTransform == null)
             return;
-        
+
         GameObject newObject = Instantiate(_objectPrefab, placeTransform.position, Quaternion.identity);
         newObject.transform.parent = placeTransform;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void Update()
     {
-        if (other.CompareTag("Player") && other.TryGetComponent(out Player player))
-        {
-            _platformIsActive = true;
-        }
+       // if(coroutine == null)
     }
 
-    private void OnTriggerStay(Collider other)
+    public void Interact(Player player)
     {
-        if (!CheckReadinessForUse())
-            return;
+        //if (!CheckReadinessForUse())
+        //    return;
 
-        if (other.CompareTag("Player") && other.TryGetComponent(out Player player))
-        {
-            if (_costToCreate <= 0) 
+        //if (_costToCreate <= 0)
+        //{
+        //    _costToCreate = _objectCost;
+        //    CreatingObject(GetEmptyPlate());
+        //    return;
+        //}
+        //else
+        //{
+            timer += Time.deltaTime;
+            if (timer >= interactTime)
             {
-                _costToCreate = _objectCost;
-                CreatingObject(GetEmptyPlate());
-                return;
-            }
-            else
-            {
-                if(_player.Headquarters.ConstructionCurrency <= 0)
+                if (_player.Headquarters.ConstructionCurrency <= 0)
                     return;
 
-                _costToCreate -= 1;
+                curentCurrency += 1;
                 _player.Headquarters.ConstructionCurrency -= 1;
-
+                timer = 0;
             }
 
-        }
+        //}
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player") && other.TryGetComponent(out Player player))
-        {
-            _platformIsActive = false;
-        }
-    }
+    public void OnEnter(Player player) { }
+    public void OnExit(Player player) { }
 }
