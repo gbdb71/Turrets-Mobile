@@ -25,6 +25,9 @@ public class PlayerInventory : MonoBehaviour
     {
         if (HasTurret) return;
 
+        if (_tempTurret != null)
+            ResetProgress(_tempTurret);
+
         if (other.CompareTag("Turret") && other.TryGetComponent(out BaseTurret turret))
         {
             _tempTurret = turret;

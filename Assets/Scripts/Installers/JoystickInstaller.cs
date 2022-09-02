@@ -8,6 +8,9 @@ public class JoystickInstaller : MonoInstaller
 
     public override void InstallBindings()
     {
-       Container.Bind<Joystick>().FromInstance(_joystick).AsSingle();
+        Canvas canvas = FindObjectOfType<Canvas>();
+
+        Container.Bind<Canvas>().FromInstance(canvas).AsSingle();
+        Container.Bind<Joystick>().FromComponentInNewPrefab(_joystick).UnderTransform(canvas.transform).AsSingle();
     }
 }
