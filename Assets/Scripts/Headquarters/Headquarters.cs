@@ -126,6 +126,8 @@ public class Headquarters : MonoBehaviour
         {
             Destroy(_upgradeButtons[i].gameObject);
         }
+
+        _upgradeButtons.Clear();
     }
 
     public void OnTriggerEnter(Collider other)
