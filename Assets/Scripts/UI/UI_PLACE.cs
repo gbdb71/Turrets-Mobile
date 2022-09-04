@@ -24,7 +24,7 @@ public class UI_PLACE : MonoBehaviour
         bool canInteract = _player.Inventory.HasTurret && !_player.Inventory.CanUpgrade;
 
         _group.alpha = canInteract ? 1 : 0;
-        _group.interactable = canInteract;
+        _group.blocksRaycasts = canInteract;
     }
 
     private void Place()

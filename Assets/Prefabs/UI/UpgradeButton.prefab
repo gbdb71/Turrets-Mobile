@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2787250191514229454}
   - component: {fileID: 2787250191514229455}
   - component: {fileID: 2787250191514229452}
+  - component: {fileID: 2343820797813772882}
   m_Layer: 5
   m_Name: UpgradeButton
   m_TagString: Untagged
@@ -146,6 +147,18 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &2343820797813772882
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2787250191514229449}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4e6ef62957b10b48b61005281c5d0b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2787250191659338973
 GameObject:
   m_ObjectHideFlags: 0

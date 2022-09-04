@@ -1,5 +1,6 @@
 using UnityEngine;
 using DG.Tweening;
+using System.Collections.Generic;
 
 public class PlayerInventory : MonoBehaviour
 {
@@ -22,8 +23,7 @@ public class PlayerInventory : MonoBehaviour
     public BaseTurret TakedTurret => _takedTurret;
     public bool HasTurret { get { return _turretSlot.childCount > 0 && TakedTurret != null; } }
     public int AmmoCount { set { _ammoCount = Mathf.Clamp(value, 1, 99); } }
-    public bool CanUpgrade{ get { return HasTurret && NearTurret != null && NearTurret.NextGrade == TakedTurret.NextGrade; } }
-
+    public bool CanUpgrade { get { return HasTurret && NearTurret != null && NearTurret.NextGrade == TakedTurret.NextGrade; } }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -69,7 +69,6 @@ public class PlayerInventory : MonoBehaviour
     {
         if (_takedTurret != null)
         {
-            _takedTurret.enabled = true;
 
             RaycastHit hit;
 
@@ -81,6 +80,7 @@ public class PlayerInventory : MonoBehaviour
 
                 _takedTurret.transform.DOJump(targetPos, 1f, 1, .6f).OnComplete(() =>
                 {
+                    _takedTurret.enabled = true;
                     _takedTurret.transform.SetParent(null);
                     _takedTurret = null;
                 });
@@ -91,6 +91,9 @@ public class PlayerInventory : MonoBehaviour
 
     private void Take(BaseTurret turret)
     {
+        if (turret == _nearTurret)
+            _nearTurret = null;
+
         _takedTurret = turret;
         _takedTurret.transform.SetParent(_turretSlot);
 
@@ -114,18 +117,24 @@ public class PlayerInventory : MonoBehaviour
     {
         if (CanUpgrade)
         {
-            _takedTurret.transform.DOJump(_nearTurret.transform.position, 1f, 1, .6f).OnComplete(() =>
+            GameObject near = _nearTurret.gameObject;
+
+            _takedTurret.transform.DOJump(near.transform.position, 1f, 1, .25f).OnComplete(() =>
             {
                 if (_upgradeEffect != null)
                 {
                     _upgradeEffect.transform.position = _nearTurret.transform.position;
                     _upgradeEffect.gameObject.SetActive(true);
+
                 }
 
-                BaseTurret newTurret = Instantiate(_takedTurret.NextGrade, _nearTurret.transform.position, _nearTurret.transform.rotation);
 
+                BaseTurret newTurret = Instantiate(_takedTurret.NextGrade, near.transform.position, near.transform.rotation, null);
                 Destroy(_takedTurret.gameObject);
-                Destroy(_nearTurret.gameObject);
+                Destroy(near);
+
+                _takedTurret.transform.SetParent(null);
+                _takedTurret = null;
             });
         }
     }
