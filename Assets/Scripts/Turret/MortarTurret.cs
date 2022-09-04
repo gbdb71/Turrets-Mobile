@@ -54,11 +54,9 @@ public class MortarTurret : BaseTurret
         if (r >= 0)
         {
             _launchVelocity = new Vector3(s * cosTheta * dir.x, s * sinTheta, s * cosTheta * dir.y);
+
             _aimPos = targetPoint;
             _aimPos.y = tanTheta;
-
-            Debug.Log(tanTheta);
-
 
             _aim.SetIdle(false);
             _aim.SetAim(_aimPos);

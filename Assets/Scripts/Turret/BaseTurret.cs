@@ -16,8 +16,8 @@ public abstract class BaseTurret : MonoBehaviour
     [Space]
 
     [Header("Take")]
-    [SerializeField] private Transform _indicatorTransform;
-    [SerializeField] private Image _indicatorFill;
+    [SerializeField] private Transform _indicatorTransform = default;
+    [SerializeField] private Image _indicatorFill = default;
 
     [Space]
 
@@ -27,6 +27,9 @@ public abstract class BaseTurret : MonoBehaviour
     [SerializeField] protected int _chargedAmmoMax;
     [Range(1, 100)]
     [SerializeField] private int _ammoMax;
+
+    [Header("Upgrade")]
+    [SerializeField] private BaseTurret _nextGrade = default;
 
     protected TurretAim _aim;
     protected IDamagable _currentTarget;
@@ -39,6 +42,7 @@ public abstract class BaseTurret : MonoBehaviour
     public Transform IndicatorTransform => _indicatorTransform;
     public Image IndicatorFill => _indicatorFill;
     public bool IsReloading { get; private set; }
+    public BaseTurret NextGrade => _nextGrade;
 
 
     protected virtual void Awake()
