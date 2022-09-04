@@ -3,11 +3,12 @@
 public class MortarTurret : BaseTurret
 {
     [Header("Mortar")]
-    [SerializeField] private Transform _mortar;
     [SerializeField, Range(0.5f, 3f)]
     private float _projectileRadius = 1f;
 
     private float _launchSpeed;
+    private Vector3 _launchVelocity;
+    private Vector3 _aimPos;
 
     private void Start()
     {
@@ -16,10 +17,20 @@ public class MortarTurret : BaseTurret
         _launchSpeed = Mathf.Sqrt(9.81f * (y + Mathf.Sqrt(x * x + y * y)));
     }
 
+
     protected override void Fire()
     {
         base.Fire();
 
+        if (_launchVelocity != Vector3.zero)
+        {
+            MortarShell projectile = Instantiate(_projectilePrefab, _shootPivot.position, Quaternion.identity).GetComponent<MortarShell>();
+
+            projectile.Initialize(_shootPivot.position, _launchVelocity, _projectileRadius, _damage);
+        }
+    }
+    protected override void Aim()
+    {
         Vector3 launchPoint = _shootPivot.position;
         Vector3 targetPoint = _currentTarget.Transform.position;
         targetPoint.y = 0f;
@@ -42,9 +53,21 @@ public class MortarTurret : BaseTurret
 
         if (r >= 0)
         {
-            MortarShell projectile = Instantiate(_projectilePrefab, _shootPivot.position, Quaternion.identity).GetComponent<MortarShell>();
+            _launchVelocity = new Vector3(s * cosTheta * dir.x, s * sinTheta, s * cosTheta * dir.y);
+            _aimPos = targetPoint;
+            _aimPos.y = tanTheta;
 
-            projectile.Initialize(launchPoint, new Vector3(s * cosTheta * dir.x, s * sinTheta, s * cosTheta * dir.y), _projectileRadius, _damage);
+            Debug.Log(tanTheta);
+
+
+            _aim.SetIdle(false);
+            _aim.SetAim(_aimPos);
         }
+        else
+        {
+            _launchVelocity = Vector3.zero;
+            _aim.SetIdle(true);
+        }
+
     }
 }

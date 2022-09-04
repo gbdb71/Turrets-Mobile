@@ -51,6 +51,9 @@ public abstract class BaseTurret : MonoBehaviour
 
     private void Update()
     {
+        if(_currentTarget != null)
+            Aim();
+
         if (_chargedAmmo > 0)
         {
             if (_currentTarget != null)
@@ -65,8 +68,6 @@ public abstract class BaseTurret : MonoBehaviour
                 {
                     Fire();
                 }
-
-                Aim();
             }
             else
             {
@@ -135,7 +136,7 @@ public abstract class BaseTurret : MonoBehaviour
 
     protected virtual bool CanFire()
     {
-        return _currentTarget != null && _aim.IsAimed && _fireTimer <= 0f && !IsReloading && _chargedAmmo > 0;
+        return _aim.IsAimed && _fireTimer <= 0f && !IsReloading && _chargedAmmo > 0;
     }
 
     protected IDamagable FindTarget()
@@ -146,6 +147,12 @@ public abstract class BaseTurret : MonoBehaviour
         }
 
         return null;
+    }
+
+    
+    public void Charge(int amount)
+    {
+        _chargedAmmo += amount;
     }
 
 }
