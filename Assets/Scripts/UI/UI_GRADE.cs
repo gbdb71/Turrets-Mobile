@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using Zenject;
 
 [RequireComponent(typeof(Button))]
-public class UI_PLACE : MonoBehaviour
+public class UI_GRADE : MonoBehaviour
 {
     [Inject]
     private Player _player;
@@ -16,19 +16,19 @@ public class UI_PLACE : MonoBehaviour
         _group = GetComponent<CanvasGroup>();
 
         _button = GetComponent<Button>();
-        _button.onClick.AddListener(Place);
+        _button.onClick.AddListener(Upgrade);
     }
 
     private void Update()
     {
-        bool canInteract = _player.Inventory.HasTurret && !_player.Inventory.CanUpgrade;
+        bool canInteract = _player.Inventory.CanUpgrade;
 
         _group.alpha = canInteract ? 1 : 0;
         _group.blocksRaycasts = canInteract;
     }
 
-    private void Place()
+    private void Upgrade()
     {
-        _player.Inventory.Place();
+        _player.Inventory.Upgrade();
     }
 }

@@ -612,6 +612,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: FlameThrow
       objectReference: {fileID: 0}
+    - target: {fileID: 2571933373229642558, guid: 8654c00af26312046b19c13b22daf895, type: 3}
+      propertyPath: m_InitialEventName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2571933373229642558, guid: 8654c00af26312046b19c13b22daf895, type: 3}
+      propertyPath: m_InitialEventNameOverriden
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5093667999088136377, guid: 8654c00af26312046b19c13b22daf895, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
