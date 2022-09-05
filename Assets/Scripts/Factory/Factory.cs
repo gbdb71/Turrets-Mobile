@@ -9,13 +9,20 @@ public class Factory : MonoBehaviour, IInteractable
 {
     [Header("Other Settings")]
     private List<FactoryPlate> plates = new List<FactoryPlate>();
+    [SerializeField] private Transform spawnPoint;
+    [SerializeField] private float moveTime = 0.5f;
 
     [Header("View Settings")]
-    [SerializeField] private Image fillImage;
     [SerializeField] private float interactTime = 0.25f;
 
     [Header("Create Settings")]
     [SerializeField] private GameObject _objectPrefab;
+    public FactoryType factoryType;
+    public enum FactoryType
+    {
+        Ammunition,
+        Turrets
+    }
 
     [SerializeField] private float _timeToCreate = 0.75f;
     [SerializeField] private int _objectCost = 25;
@@ -50,7 +57,8 @@ public class Factory : MonoBehaviour, IInteractable
         if (placeTransform == null)
             return;
 
-        GameObject newObject = Instantiate(_objectPrefab, placeTransform.position, Quaternion.identity);
+        GameObject newObject = Instantiate(_objectPrefab, spawnPoint.position, Quaternion.identity);
+        newObject.transform.DOMove(placeTransform.position, moveTime);
         newObject.transform.parent = placeTransform;
     }
 
@@ -65,7 +73,7 @@ public class Factory : MonoBehaviour, IInteractable
         {
             _workTimer += Time.deltaTime;
 
-            if(_workTimer >= _timeToCreate)
+            if (_workTimer >= _timeToCreate)
             {
                 CreatingObject(plate);
 
@@ -76,7 +84,7 @@ public class Factory : MonoBehaviour, IInteractable
             return;
         }
 
-        if(_currencyAmount >= _objectCost)
+        if (_currencyAmount >= _objectCost)
         {
             IsWorking = true;
             _currencyAmount -= _objectCost;
