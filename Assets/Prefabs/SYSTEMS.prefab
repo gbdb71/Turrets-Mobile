@@ -92,8 +92,10 @@ MonoBehaviour:
   _pathLength: {x: 15, y: 30}
   _offset:
     Top: 2
-    Bottom: 2
-  _gridCells:
+    Bottom: 4
+    Left: 0
+    Right: 0
+  _pathCellObjects:
   - {fileID: 11400000, guid: 4c5a62985a0ba2e418fa82fffd43420a, type: 2}
   - {fileID: 11400000, guid: 4c5a62985a0ba2e418fa82fffd43420a, type: 2}
   - {fileID: 11400000, guid: 4c5a62985a0ba2e418fa82fffd43420a, type: 2}
@@ -110,6 +112,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4c5a62985a0ba2e418fa82fffd43420a, type: 2}
   - {fileID: 11400000, guid: 4c5a62985a0ba2e418fa82fffd43420a, type: 2}
   - {fileID: 11400000, guid: 4c5a62985a0ba2e418fa82fffd43420a, type: 2}
+  _sceneryCellObjects:
+  - {fileID: 11400000, guid: 4c5a62985a0ba2e418fa82fffd43420a, type: 2}
+  - {fileID: 11400000, guid: fd3eb40a6358e1541b251cc74714e3db, type: 2}
 --- !u!1 &8742234293552909140
 GameObject:
   m_ObjectHideFlags: 0

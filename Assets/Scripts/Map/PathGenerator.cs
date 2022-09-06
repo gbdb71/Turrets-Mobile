@@ -6,11 +6,15 @@ public struct Offset
 {
     public int Top;
     public int Bottom;
+    public int Left;
+    public int Right;
 
-    public Offset(int top, int bottom)
+    public Offset(int top, int bottom, int left, int right)
     {
         Top = top;
         Bottom = bottom;
+        Left = left;
+        Right = right;
     }
 }
 
@@ -25,13 +29,14 @@ public class PathGenerator : MonoBehaviour
     {
         _width = width;
         _height = height;
+        _offset = offset;
     }
 
     public List<Vector2Int> GeneratePath()
     {
         _pathCells = new List<Vector2Int>();
 
-        int x = 0;
+        int x = _offset.Left;
         int y = (int)(_height / 2);
 
         while (x < _width)
@@ -65,9 +70,36 @@ public class PathGenerator : MonoBehaviour
         return _pathCells;
     }
 
-    private bool CellIsEmpty(int x, int y) => !_pathCells.Contains(new Vector2Int(x, y));
-    private bool CellIsTaken(int x, int y) => _pathCells.Contains(new Vector2Int(x, y));
+    public bool CellIsEmpty(int x, int y) => !_pathCells.Contains(new Vector2Int(x, y));
+    public bool CellIsTaken(int x, int y) => _pathCells.Contains(new Vector2Int(x, y));
 
+
+    public List<Vector2Int> GetCellNeighbours(int x, int y)
+    {
+        List<Vector2Int> cells = new List<Vector2Int>();
+
+        if (CellIsTaken(x, y - 1))
+        {
+            cells.Add(new Vector2Int(x, y - 1));
+        }
+
+        if (CellIsTaken(x - 1, y))
+        {
+            cells.Add(new Vector2Int(x - 1, y));
+        }
+
+        if (CellIsTaken(x + 1, y))
+        {
+            cells.Add(new Vector2Int(x + 1, y));
+        }
+
+        if (CellIsTaken(x, y + 1))
+        {
+            cells.Add(new Vector2Int(x, y + 1));
+        }
+
+        return cells;
+    }
     public int GetCellNeighbourValue(int x, int y)
     {
         int value = 0;

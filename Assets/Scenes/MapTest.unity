@@ -306,6 +306,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2109132196, guid: b2fee99712be10741b995c108679d0a0, type: 3}
+      propertyPath: _gridWidth
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109132196, guid: b2fee99712be10741b995c108679d0a0, type: 3}
+      propertyPath: _gridHeight
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109132196, guid: b2fee99712be10741b995c108679d0a0, type: 3}
+      propertyPath: _offset.Top
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109132196, guid: b2fee99712be10741b995c108679d0a0, type: 3}
+      propertyPath: _pathLength.y
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 2109132196, guid: b2fee99712be10741b995c108679d0a0, type: 3}
+      propertyPath: _offset.Bottom
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 8742234293817556372, guid: b2fee99712be10741b995c108679d0a0, type: 3}
       propertyPath: m_RootOrder
       value: 2

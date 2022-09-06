@@ -13,7 +13,8 @@ public class GridManager : MonoBehaviour
     [SerializeField] private Offset _offset;
 
     [Header("Tiles")]
-    [SerializeField] private GridCellObject[] _gridCells;
+    [SerializeField] private GridCellObject[] _pathCellObjects;
+    [SerializeField] private GridCellObject[] _sceneryCellObjects;
 
     private Transform _mapParent;
     private Transform _pathParent;
@@ -46,6 +47,7 @@ public class GridManager : MonoBehaviour
         }
 
         LayPathCells(path);
+        LaySceneryCells(); 
     }
 
     private void LayPathCells(List<Vector2Int> path)
@@ -53,12 +55,34 @@ public class GridManager : MonoBehaviour
         foreach (Vector2Int p in path)
         {
             int neighbourValue = _pathGenerator.GetCellNeighbourValue(p.x, p.y);
-            GameObject cellPrefab = _gridCells[neighbourValue].CellPrefab;
+            GameObject cellPrefab = _pathCellObjects[neighbourValue].CellPrefab;
 
-            GameObject pathTileCell = Instantiate(cellPrefab, new Vector3(p.x, 0f, p.y), Quaternion.identity, _pathParent);
-            pathTileCell.transform.rotation = Quaternion.Euler(0f, _gridCells[neighbourValue].Rotation, 0f); 
+            GameObject cell = Instantiate(cellPrefab, new Vector3(p.x, 0f, p.y), Quaternion.identity, _pathParent);
+            cell.name = $"[{p.x}, {p.y}]";
+            cell.transform.rotation = Quaternion.Euler(0f, _pathCellObjects[neighbourValue].Rotation, 0f);
         }
     }
 
+    private void LaySceneryCells()
+    {
+        for (int x = 0; x < _gridWidth; x++)
+        {
+            for (int y = 0; y < _gridHeight; y++)
+            {
+                if (_pathGenerator.CellIsEmpty(x, y))
+                {
+                    List<Vector2Int> neighbours = _pathGenerator.GetCellNeighbours(x, y);
+
+                    int randomCell = Random.Range(0, _sceneryCellObjects.Length);
+
+                    if (neighbours.Count > 0)
+                        randomCell = 0;
+
+                    GameObject cell = Instantiate(_sceneryCellObjects[randomCell].CellPrefab, new Vector3(x, 0, y), Quaternion.identity, _mapParent);
+                    cell.name = $"[{x}, {y}]";
+                }
+            }
+        }
+    }
 
 }
