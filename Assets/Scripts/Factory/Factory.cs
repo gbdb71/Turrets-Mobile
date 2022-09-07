@@ -1,31 +1,31 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using Zenject;
 using DG.Tweening;
 
+public enum FactoryType
+{
+    Ammunition,
+    Turrets
+}
+
 public class Factory : MonoBehaviour, IInteractable
 {
-    [Header("Other Settings")]
-    private List<FactoryPlate> plates = new List<FactoryPlate>();
-    [SerializeField] private Transform spawnPoint;
-    [SerializeField] private float moveTime = 0.5f;
+    [Label("Spawning Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
+    [SerializeField, NotNull] private Transform _spawPoint;
+    [SerializeField] private float _moveTime = 0.5f;
+    [SerializeField, NotNull] private GameObject _objectPrefab;
 
-    [Header("View Settings")]
-    [SerializeField] private float interactTime = 0.25f;
+    [Label("Intertact Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
+    [SerializeField] private float _interactTime = 0.25f;
 
-    [Header("Create Settings")]
-    [SerializeField] private GameObject _objectPrefab;
-    public FactoryType factoryType;
-    public enum FactoryType
-    {
-        Ammunition,
-        Turrets
-    }
+    [Label("Factory Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
+    [SerializeField, SearchableEnum] private FactoryType _type;
 
     [SerializeField] private float _timeToCreate = 0.75f;
     [SerializeField] private int _objectCost = 25;
+
+    private List<FactoryPlate> plates = new List<FactoryPlate>();
 
     private int _currencyAmount;
     private float _intertactTimer;
@@ -35,33 +35,11 @@ public class Factory : MonoBehaviour, IInteractable
 
     public bool IsWorking { get; private set; } = false;
 
-    public void Awake()
+
+    private void Awake()
     {
         plates.AddRange(GetComponentsInChildren<FactoryPlate>());
     }
-
-    private Transform GetEmptyPlate()
-    {
-        Transform tempTransform = null;
-        for (int i = 0; i < plates.Count; i++)
-        {
-            if (plates[i].HasChild())
-                tempTransform = plates[i].content;
-        }
-
-        return tempTransform;
-    }
-
-    private void CreatingObject(Transform placeTransform)
-    {
-        if (placeTransform == null)
-            return;
-
-        GameObject newObject = Instantiate(_objectPrefab, spawnPoint.position, Quaternion.identity);
-        newObject.transform.DOMove(placeTransform.position, moveTime);
-        newObject.transform.parent = placeTransform;
-    }
-
     private void Update()
     {
         Transform plate = GetEmptyPlate();
@@ -92,20 +70,42 @@ public class Factory : MonoBehaviour, IInteractable
 
     }
 
+
     public void Interact(Player player)
     {
         _intertactTimer += Time.deltaTime;
-        if (_intertactTimer >= interactTime)
+        if (_intertactTimer >= _interactTime)
         {
-            if (_player.Headquarters.ConstructionCurrency <= 0)
+            if (_player.Headquarters.Currencies[CurrencyType.Construction] <= 0)
                 return;
 
             _currencyAmount += 1;
-            _player.Headquarters.ConstructionCurrency -= 1;
+            _player.Headquarters.Currencies[CurrencyType.Construction] -= 1;
             _intertactTimer = 0;
         }
     }
-
     public void OnEnter(Player player) { }
     public void OnExit(Player player) { }
+
+
+    private Transform GetEmptyPlate()
+    {
+        Transform tempTransform = null;
+        for (int i = 0; i < plates.Count; i++)
+        {
+            if (plates[i].HasChild())
+                tempTransform = plates[i].content;
+        }
+
+        return tempTransform;
+    }
+    private void CreatingObject(Transform placeTransform)
+    {
+        if (placeTransform == null)
+            return;
+
+        GameObject newObject = Instantiate(_objectPrefab, _spawPoint.position, Quaternion.identity);
+        newObject.transform.DOMove(placeTransform.position, _moveTime);
+        newObject.transform.parent = placeTransform;
+    }
 }

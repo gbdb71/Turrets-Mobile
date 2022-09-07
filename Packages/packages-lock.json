@@ -1,11 +1,13 @@
 {
   "dependencies": {
-    "com.guciodevs.simple-min-max-slider": {
-      "version": "https://github.com/GucioDevs/SimpleMinMaxSlider.git#upm",
+    "com.browar.editor-toolbox": {
+      "version": "https://github.com/arimger/Unity-Editor-Toolbox.git#upm",
       "depth": 0,
       "source": "git",
-      "dependencies": {},
-      "hash": "46ff35d22982657d55f7861ddc01b115a2db1554"
+      "dependencies": {
+        "com.unity.editorcoroutines": "1.0.0"
+      },
+      "hash": "497e049a63cd104bb79d3c66196dbb067ba46874"
     },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
@@ -46,6 +48,13 @@
         "com.unity.nuget.newtonsoft-json": "2.0.0",
         "com.unity.services.core": "1.0.1"
       },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.editorcoroutines": {
+      "version": "1.0.0",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
       "url": "https://packages.unity.com"
     },
     "com.unity.ext.nunit": {

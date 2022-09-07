@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "com.guciodevs.simple-min-max-slider": "https://github.com/GucioDevs/SimpleMinMaxSlider.git#upm",
+    "com.browar.editor-toolbox": "https://github.com/arimger/Unity-Editor-Toolbox.git#upm",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.adaptiveperformance": "2.2.4",
     "com.unity.adaptiveperformance.samsung.android": "2.2.4",

@@ -2,9 +2,8 @@
 
 public class MortarTurret : BaseTurret
 {
-    [Header("Mortar")]
-    [SerializeField, Range(0.5f, 3f)]
-    private float _projectileRadius = 1f;
+    [Label("Mortart Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
+    [SerializeField, Range(0.5f, 3f)] private float _projectileRadius = 1f;
 
     private float _launchSpeed;
     private Vector3 _launchVelocity;

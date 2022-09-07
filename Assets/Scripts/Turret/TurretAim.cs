@@ -2,45 +2,31 @@
 
 public class TurretAim : MonoBehaviour
 {
-    [Range(5, 20f)]
-    [SerializeField] private float _aimDistance = 10f;
+    [Label("Aim", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
+    [SerializeField, Range(5, 20f)] private float _aimDistance = 10f;
 
-    [Header("Rotations")]
-    [Tooltip("Transform of the turret's azimuthal rotations.")]
-    [SerializeField] private Transform _turretBase = null;
-
-    [Tooltip("Transform of the turret's elevation rotations. ")]
+    [Label("Rotations", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
+    [SerializeField, NotNull] private Transform _turretBase = null;
     [SerializeField] private Transform _barrels = null;
 
-    [Header("Elevation")]
-    [Tooltip("Speed at which the turret's guns elevate up and down.")]
-    [SerializeField] private float ElevationSpeed = 50f;
+    [Label("Elevation", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
+    [SerializeField, Range(1, 500)] private float _elevationSpeed = 50f;
+    [SerializeField, Range(0, 90)] private float MaxElevation = 0f;
+    [SerializeField, Range(0, 90)] private float MaxDepression = 0f;
 
-    [Tooltip("Highest upwards elevation the turret's barrels can aim.")]
-    [Range(0, 90)]
-    [SerializeField] private float MaxElevation = 0f;
-
-    [Tooltip("Lowest downwards elevation the turret's barrels can aim.")]
-    [Range(0, 90)]
-    [SerializeField] private float MaxDepression = 0f;
-
-    [Header("Traverse")]
-    [Tooltip("Speed at which the turret can rotate left/right.")]
-    [SerializeField] private float TraverseSpeed = 60f;
-
-    [Tooltip("When true, the turret can only rotate horizontally with the given limits.")]
+    [Label("Traverse", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
+    [SerializeField, Range(1, 500)] private float _traverseSpeed = 60f;
     [SerializeField] private bool hasLimitedTraverse = false;
-    [Range(0, 179)] public float LeftLimit = 120f;
-    [Range(0, 179)] public float RightLimit = 120f;
+    [SerializeField, Range(0, 179), ShowIf(nameof(hasLimitedTraverse), true)] private float _leftLimit = 120f;
+    [SerializeField, Range(0, 179), ShowIf(nameof(hasLimitedTraverse), true)] private float _rightLimit = 120f;
+    [SerializeField, Range(1, 360)] private float aimedThreshold = 5f;
 
-    [Tooltip("When the turret is within this many degrees of the target, it is considered aimed.")]
-    [SerializeField] private float aimedThreshold = 5f;
+    [Label("Debug", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
+    [SerializeField, LeftToggle] private bool _drawDebugRay = true;
+    [SerializeField, LeftToggle] private bool _drawDebugArcs = false;
+
+
     private float limitedTraverseAngle = 0f;
-
-    [Header("Debug")]
-    public bool DrawDebugRay = true;
-    public bool DrawDebugArcs = false;
-
     private float angleToTarget = 0f;
     private float elevation = 0f;
 
@@ -83,7 +69,11 @@ public class TurretAim : MonoBehaviour
     public Transform TurretBase { get { return _turretBase; } }
     public Transform Barrels { get { return _barrels; } }
 
-    public Transform ArcRoot { get { return _barrels != null ? _barrels : _turretBase;  } }
+    public Transform ArcRoot { get { return _barrels != null ? _barrels : _turretBase; } }
+
+    public bool DrawDebugRay { get => _drawDebugRay; }
+    public bool DrawDebugArcs { get => _drawDebugArcs;  }
+
 
     /// <summary>
     /// Return turret aim to base look
@@ -166,7 +156,7 @@ public class TurretAim : MonoBehaviour
         {
             limitedTraverseAngle = Mathf.MoveTowards(
                 limitedTraverseAngle, 0f,
-                TraverseSpeed * Time.deltaTime);
+                _traverseSpeed * Time.deltaTime);
 
             if (Mathf.Abs(limitedTraverseAngle) > Mathf.Epsilon)
                 _turretBase.localEulerAngles = Vector3.up * limitedTraverseAngle;
@@ -178,14 +168,14 @@ public class TurretAim : MonoBehaviour
             _turretBase.rotation = Quaternion.RotateTowards(
                 _turretBase.rotation,
                 transform.rotation,
-                TraverseSpeed * Time.deltaTime);
+                _traverseSpeed * Time.deltaTime);
 
             isBaseAtRest = Mathf.Abs(_turretBase.localEulerAngles.y) < Mathf.Epsilon;
         }
 
         if (hasBarrels)
         {
-            elevation = Mathf.MoveTowards(elevation, 0f, ElevationSpeed * Time.deltaTime);
+            elevation = Mathf.MoveTowards(elevation, 0f, _elevationSpeed * Time.deltaTime);
             if (Mathf.Abs(elevation) > Mathf.Epsilon)
                 _barrels.localEulerAngles = Vector3.right * -elevation;
             else
@@ -204,13 +194,13 @@ public class TurretAim : MonoBehaviour
         targetElevation *= Mathf.Sign(localTargetPos.y);
 
         targetElevation = Mathf.Clamp(targetElevation, -MaxDepression, MaxElevation);
-        elevation = Mathf.MoveTowards(elevation, targetElevation, ElevationSpeed * Time.deltaTime);
+        elevation = Mathf.MoveTowards(elevation, targetElevation, _elevationSpeed * Time.deltaTime);
 
         if (Mathf.Abs(elevation) > Mathf.Epsilon)
             _barrels.localEulerAngles = Vector3.right * -elevation;
 
 #if UNITY_EDITOR
-        if (DrawDebugRay)
+        if (_drawDebugRay)
             Debug.DrawRay(_barrels.position, _barrels.forward * localTargetPos.magnitude, Color.red);
 #endif
     }
@@ -227,11 +217,11 @@ public class TurretAim : MonoBehaviour
             Vector3 turretForward = transform.forward;
             float targetTraverse = Vector3.SignedAngle(turretForward, flattenedVecForBase, turretUp);
 
-            targetTraverse = Mathf.Clamp(targetTraverse, -LeftLimit, RightLimit);
+            targetTraverse = Mathf.Clamp(targetTraverse, -_leftLimit, _rightLimit);
             limitedTraverseAngle = Mathf.MoveTowards(
                 limitedTraverseAngle,
                 targetTraverse,
-                TraverseSpeed * Time.deltaTime);
+                _traverseSpeed * Time.deltaTime);
 
             if (Mathf.Abs(limitedTraverseAngle) > Mathf.Epsilon)
                 _turretBase.localEulerAngles = Vector3.up * limitedTraverseAngle;
@@ -241,11 +231,11 @@ public class TurretAim : MonoBehaviour
             _turretBase.rotation = Quaternion.RotateTowards(
                 Quaternion.LookRotation(_turretBase.forward, turretUp),
                 Quaternion.LookRotation(flattenedVecForBase, turretUp),
-                TraverseSpeed * Time.deltaTime);
+                _traverseSpeed * Time.deltaTime);
         }
 
 #if UNITY_EDITOR
-        if (DrawDebugRay && !hasBarrels)
+        if (_drawDebugRay && !hasBarrels)
             Debug.DrawRay(_turretBase.position,
                 _turretBase.forward * flattenedVecForBase.magnitude,
                 Color.red);
@@ -257,7 +247,7 @@ public class TurretAim : MonoBehaviour
     // is a pain in the butt so I'd rather not.
     private void OnDrawGizmosSelected()
     {
-        if (!DrawDebugArcs)
+        if (!_drawDebugArcs)
             return;
 
         if (_turretBase != null)
@@ -276,11 +266,11 @@ public class TurretAim : MonoBehaviour
             {
                 UnityEditor.Handles.DrawSolidArc(
                     arcRoot.position, _turretBase.up,
-                    transform.forward, RightLimit,
+                    transform.forward, _rightLimit,
                     kArcSize);
                 UnityEditor.Handles.DrawSolidArc(
                     arcRoot.position, _turretBase.up,
-                    transform.forward, -LeftLimit,
+                    transform.forward, -_leftLimit,
                     kArcSize);
             }
             else

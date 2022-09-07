@@ -3,11 +3,10 @@ using UnityEngine.VFX;
 
 public class IceTurret : BaseTurret
 {
-    [Header("Throw Attack")]
-    [Range(1, 180)]
-    [SerializeField] protected float _damageAngle = 20f;
-    [SerializeField] protected float _attackRate = .1f;
-    [SerializeField] protected VisualEffect _throwEffect;
+    [Label("Ice Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
+    [SerializeField, Range(1, 180)] protected float _damageAngle = 20f;
+    [SerializeField, Range(.001f, 1f)] protected float _attackRate = .1f;
+    [SerializeField, NotNull] protected VisualEffect _throwEffect;
 
     public bool IsFire { get; private set; }
 

@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b5a23ac0c3cee446b535ee79a5cd9f9, type: 3}
+  m_Name: LevelData
+  m_EditorClassIdentifier: 
+  _gridWidth: 14
+  _gridHeight: 10
+  _pathLength: {x: 10, y: 28}
+  _offset:
+    Top: 2
+    Bottom: 2
+    Right: 2
+  _basePrefab: {fileID: 11400000, guid: fe8a3101d33292d40803a1c99867a975, type: 2}
+  _buildingObjects:
+  - {fileID: 11400000, guid: a4c27cf3f56776343b2be2125f8d1c82, type: 2}
+  _barrierRows: 4
+  _barrierPrefab: {fileID: 11400000, guid: fd3eb40a6358e1541b251cc74714e3db, type: 2}

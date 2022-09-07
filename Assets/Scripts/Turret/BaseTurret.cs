@@ -5,30 +5,26 @@ using UnityEngine.UI;
 [RequireComponent(typeof(TurretAim))]
 public abstract class BaseTurret : MonoBehaviour
 {
-    [Header("Damage")]
+    [Label("Damage", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField, Range(1, 200)] protected float _damage;
-    
-    [Header("Shooting")]
+
+    [Label("Shooting", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField, Range(.1f, 5f)] protected float _fireDelay;
     [SerializeField, Range(.5f, 5f)] protected float _reloadTime;
     [SerializeField] protected Transform _shootPivot;
 
-    [Space]
-
-    [Header("Take")]
+    [Label("Taking", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField] private Transform _indicatorTransform = default;
     [SerializeField] private Image _indicatorFill = default;
 
-    [Space]
-
-    [Header("Ammunition")]
+    [Label("Ammunition", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField] protected Rigidbody _projectilePrefab;
     [Range(1, 100)]
     [SerializeField] protected int _chargedAmmoMax;
     [Range(1, 100)]
     [SerializeField] private int _ammoMax;
 
-    [Header("Upgrade")]
+    [Label("Upgrade", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField] private BaseTurret _nextGrade = default;
 
     protected TurretAim _aim;

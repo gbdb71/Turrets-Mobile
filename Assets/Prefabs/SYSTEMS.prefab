@@ -55,7 +55,7 @@ GameObject:
   - component: {fileID: 2109132195}
   - component: {fileID: 2109132196}
   m_Layer: 0
-  m_Name: MapGeneration
+  m_Name: MapGenerator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -87,38 +87,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9435721289c23541a5a4b08cebfe5e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gridWidth: 18
-  _gridHeight: 12
+  levelData: {fileID: 11400000, guid: 65694227e398fb941a091cd16bff2964, type: 2}
   _cellSize: 3
-  _pathLength: {x: 20, y: 50}
-  _offset:
-    Top: 2
-    Bottom: 2
-    Right: 2
   _pathCellObjects:
-  - {fileID: 11400000, guid: 4c5a62985a0ba2e418fa82fffd43420a, type: 2}
-  - {fileID: 11400000, guid: 4c5a62985a0ba2e418fa82fffd43420a, type: 2}
-  - {fileID: 11400000, guid: 4c5a62985a0ba2e418fa82fffd43420a, type: 2}
-  - {fileID: 11400000, guid: 6e1c2742d1da6af43b654defc189fda9, type: 2}
-  - {fileID: 11400000, guid: 5de47c8e2cb9b78499339e3779090daa, type: 2}
-  - {fileID: 11400000, guid: 94cc291ab9dbc0e40bd7fe99c50b50ce, type: 2}
-  - {fileID: 11400000, guid: 513fc1199ff109e44930f8b47f836d96, type: 2}
-  - {fileID: 11400000, guid: 4c5a62985a0ba2e418fa82fffd43420a, type: 2}
-  - {fileID: 11400000, guid: 4c5a62985a0ba2e418fa82fffd43420a, type: 2}
-  - {fileID: 11400000, guid: c32aed27366d73e43a3bd593f34836d0, type: 2}
-  - {fileID: 11400000, guid: f32c7750bb226434b929ac0583fad4a0, type: 2}
-  - {fileID: 11400000, guid: 4c5a62985a0ba2e418fa82fffd43420a, type: 2}
-  - {fileID: 11400000, guid: a09b8c60e7671d04ea510c624bec4780, type: 2}
-  - {fileID: 11400000, guid: 4c5a62985a0ba2e418fa82fffd43420a, type: 2}
-  - {fileID: 11400000, guid: 4c5a62985a0ba2e418fa82fffd43420a, type: 2}
-  - {fileID: 11400000, guid: 4c5a62985a0ba2e418fa82fffd43420a, type: 2}
+    pairs:
+    - key: 2
+      value: {fileID: 11400000, guid: 4c5a62985a0ba2e418fa82fffd43420a, type: 2}
+    - key: 4
+      value: {fileID: 11400000, guid: 5de47c8e2cb9b78499339e3779090daa, type: 2}
+    - key: 3
+      value: {fileID: 11400000, guid: 6e1c2742d1da6af43b654defc189fda9, type: 2}
+    - key: 5
+      value: {fileID: 11400000, guid: 94cc291ab9dbc0e40bd7fe99c50b50ce, type: 2}
+    - key: 6
+      value: {fileID: 11400000, guid: 513fc1199ff109e44930f8b47f836d96, type: 2}
+    - key: 9
+      value: {fileID: 11400000, guid: c32aed27366d73e43a3bd593f34836d0, type: 2}
+    - key: 10
+      value: {fileID: 11400000, guid: f32c7750bb226434b929ac0583fad4a0, type: 2}
+    - key: 12
+      value: {fileID: 11400000, guid: a09b8c60e7671d04ea510c624bec4780, type: 2}
+    error: 0
   _sceneryCellObjects:
   - {fileID: 11400000, guid: 4c5a62985a0ba2e418fa82fffd43420a, type: 2}
-  _barrierPrefab: {fileID: 11400000, guid: fd3eb40a6358e1541b251cc74714e3db, type: 2}
-  _basePrefab: {fileID: 11400000, guid: fe8a3101d33292d40803a1c99867a975, type: 2}
-  _buildingObjects:
-  - {fileID: 11400000, guid: 0eb2f112718ee004f9e540226834618c, type: 2}
-  _barrierRows: 4
 --- !u!1 &8742234293552909140
 GameObject:
   m_ObjectHideFlags: 0

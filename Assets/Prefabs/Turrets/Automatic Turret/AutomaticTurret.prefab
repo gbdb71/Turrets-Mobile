@@ -356,7 +356,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0594a34ebcbe1544b4753a566df4821, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 0
+  _damage: 5
   _fireDelay: 0.2
   _reloadTime: 2
   _shootPivot: {fileID: 1880167752}
@@ -382,16 +382,16 @@ MonoBehaviour:
   _aimDistance: 7
   _turretBase: {fileID: 811073308637566026}
   _barrels: {fileID: 4254265437646780943}
-  ElevationSpeed: 0
+  _elevationSpeed: 1
   MaxElevation: 0
   MaxDepression: 0
-  TraverseSpeed: 400
+  _traverseSpeed: 60
   hasLimitedTraverse: 0
-  LeftLimit: 179
-  RightLimit: 179
+  _leftLimit: 120
+  _rightLimit: 120
   aimedThreshold: 25
-  DrawDebugRay: 1
-  DrawDebugArcs: 1
+  _drawDebugRay: 1
+  _drawDebugArcs: 1
 --- !u!65 &703859324536272724
 BoxCollider:
   m_ObjectHideFlags: 0

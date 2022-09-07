@@ -47,8 +47,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _upgradeInfo: {fileID: 11400000, guid: 6501667c695beab40ae89defb0902824, type: 2}
-  _upgradeCurrency: 0
-  _constructionCurrency: 0
+  _currencies:
+    pairs:
+    - key: 0
+      value: 100
+    - key: 1
+      value: 100
+    error: 0
   _interactGroupPrefab: {fileID: 5134897979160479666, guid: 6124358e3a15b544faf4ec3e90bf5dce, type: 3}
   _interactButtonPrefab: {fileID: 278325880557923504, guid: 7a6c9a94fc3816f42a458c75a45faee6, type: 3}
 --- !u!65 &2124631724605734639

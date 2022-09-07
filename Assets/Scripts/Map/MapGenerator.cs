@@ -1,35 +1,24 @@
 using System.Collections.Generic;
 using UnityEngine;
-using GD.MinMaxSlider;
 using System.Collections;
 using Zenject;
 
-public class GridManager : MonoBehaviour
+public class MapGenerator : MonoBehaviour
 {
-    [Header("Grid Settings")]
-    [SerializeField, Range(1, 100)] private int _gridWidth;
-    [SerializeField, Range(1, 100)] private int _gridHeight;
 
-    [Header("Cell Settings")]
+    // TODO : REMOVE 
+    [SerializeField] public LevelData levelData;
+
+    [Label("Cell Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [Range(1, 100)]
     [SerializeField] private int _cellSize = 1;
 
-    [Header("Path Settings")]
-    [SerializeField, MinMaxSlider(15, 50)] private Vector2Int _pathLength;
-    [SerializeField] private Offset _offset;
-
-    [Header("Tiles")]
-    [SerializeField] private GridCellObject[] _pathCellObjects;
-    [SerializeField] private GridCellObject[] _sceneryCellObjects;
-    [SerializeField] private GridCellObject _barrierPrefab;
-
-    [Header("Buildings")]
-    [SerializeField] private BuildingObject _basePrefab;
-    [SerializeField] private List<BuildingObject> _buildingObjects;
-
-    [Header("Barrier")]
-    [SerializeField] private int _barrierRows;
-
+    [Label("Tiles Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
+    [BeginHorizontal]
+    [SerializeField] private SerializedDictionary<int, GridCellObject> _pathCellObjects;
+    [SpaceArea(5)]
+    [SerializeField, ReorderableList(Foldable = true)] private GridCellObject[] _sceneryCellObjects;
+    [EndHorizontal]
     private Transform _mapParent;
     private Transform _pathParent;
     private Transform _barriersParent;
@@ -41,7 +30,7 @@ public class GridManager : MonoBehaviour
 
     private void Start()
     {
-        _pathGenerator = new PathGenerator(_gridWidth, _gridHeight, _offset);
+        _pathGenerator = new PathGenerator(levelData.GridWidth, levelData.GridHeight, levelData.Offset);
 
         _mapParent = new GameObject("Map").transform;
         _pathParent = new GameObject("Path").transform;
@@ -52,17 +41,17 @@ public class GridManager : MonoBehaviour
         _pathParent.SetParent(_mapParent);
         _buildingsParent.SetParent(_mapParent);
 
-        _cells = new Cell[_gridWidth, _gridHeight];
+        _cells = new Cell[levelData.GridWidth, levelData.GridHeight];
 
-        StartCoroutine(GeneratePath());
+        StartCoroutine(Generate());
     }
 
-    private IEnumerator GeneratePath()
+    private IEnumerator Generate()
     {
         List<Vector2Int> path = _pathGenerator.GeneratePath();
         int size = path.Count;
 
-        while (size < UnityEngine.Random.Range(_pathLength.x, _pathLength.y))
+        while (size < UnityEngine.Random.Range(levelData.PathLength.x, levelData.PathLength.y))
         {
             path = _pathGenerator.GeneratePath();
             size = path.Count;
@@ -75,7 +64,7 @@ public class GridManager : MonoBehaviour
 
         yield return StartCoroutine(LayBuildingCells());
 
-        if (_barrierPrefab != null)
+        if (levelData.BarrierRows > 0 && levelData.BarrierPrefab != null)
             yield return StartCoroutine(LayBarriersCells());
 
     }
@@ -85,20 +74,24 @@ public class GridManager : MonoBehaviour
         foreach (Vector2Int p in path)
         {
             int neighbourValue = _pathGenerator.GetCellNeighbourValue(p.x, p.y);
-            GameObject cellPrefab = _pathCellObjects[neighbourValue].CellPrefab;
 
-            Vector3 position = new Vector3(p.x, 0f, p.y);
-            position *= _cellSize;
-
-            GameObject cell = Instantiate(cellPrefab, position, Quaternion.identity, _pathParent);
-            cell.name = $"[{p.x}, {p.y}]";
-            cell.transform.rotation = Quaternion.Euler(0f, _pathCellObjects[neighbourValue].Rotation, 0f);
-
-            _cells[p.x, p.y] = new Cell
+            if (_pathCellObjects.ContainsKey(neighbourValue))
             {
-                Object = cell,
-                Type = _pathCellObjects[neighbourValue].CellType
-            };
+                GameObject cellPrefab = _pathCellObjects[neighbourValue].CellPrefab;
+
+                Vector3 position = new Vector3(p.x, 0f, p.y);
+                position *= _cellSize;
+
+                GameObject cell = Instantiate(cellPrefab, position, Quaternion.identity, _pathParent);
+                cell.name = $"[{p.x}, {p.y}]";
+                cell.transform.rotation = Quaternion.Euler(0f, _pathCellObjects[neighbourValue].Rotation, 0f);
+
+                _cells[p.x, p.y] = new Cell
+                {
+                    Object = cell,
+                    Type = _pathCellObjects[neighbourValue].CellType
+                };
+            }
 
             yield return null;
         }
@@ -106,9 +99,9 @@ public class GridManager : MonoBehaviour
 
     private IEnumerator LaySceneryCells()
     {
-        for (int x = 0; x < _gridWidth; x++)
+        for (int x = 0; x < levelData.GridWidth; x++)
         {
-            for (int y = 0; y < _gridHeight; y++)
+            for (int y = 0; y < levelData.GridHeight; y++)
             {
                 if (_pathGenerator.CellIsEmpty(x, y))
                 {
@@ -139,28 +132,28 @@ public class GridManager : MonoBehaviour
 
     private IEnumerator LayBarriersCells()
     {
-        for (int x = 0; x < _gridWidth; x++)
+        for (int x = 0; x < levelData.GridWidth; x++)
         {
-            for (int y = -1; y > -_barrierRows; y--)
+            for (int y = -1; y > -levelData.BarrierRows; y--)
             {
                 Vector3 position = new Vector3(x, 0, y);
                 position *= _cellSize;
 
-                GameObject cell = Instantiate(_barrierPrefab.CellPrefab, position, Quaternion.identity, _barriersParent);
+                GameObject cell = Instantiate(levelData.BarrierPrefab.CellPrefab, position, Quaternion.identity, _barriersParent);
                 cell.name = $"[{x}, {y}]";
 
                 yield return null;
             }
         }
 
-        for (int x = 0; x < _gridWidth; x++)
+        for (int x = 0; x < levelData.GridWidth; x++)
         {
-            for (int y = _gridHeight; y < (_gridHeight + _barrierRows); y++)
+            for (int y = levelData.GridHeight; y < (levelData.GridHeight + levelData.BarrierRows); y++)
             {
                 Vector3 position = new Vector3(x, 0, y);
                 position *= _cellSize;
 
-                GameObject cell = Instantiate(_barrierPrefab.CellPrefab, position, Quaternion.identity, _barriersParent);
+                GameObject cell = Instantiate(levelData.BarrierPrefab.CellPrefab, position, Quaternion.identity, _barriersParent);
                 cell.name = $"[{x}, {y}]";
 
                 yield return null;
@@ -168,28 +161,28 @@ public class GridManager : MonoBehaviour
 
         }
 
-        for (int x = -1; x > -_barrierRows; x--)
+        for (int x = -1; x > -levelData.BarrierRows; x--)
         {
-            for (int y = (-_barrierRows + 1); y < (_gridHeight + _barrierRows); y++)
+            for (int y = (-levelData.BarrierRows + 1); y < (levelData.GridHeight + levelData.BarrierRows); y++)
             {
                 Vector3 position = new Vector3(x, 0, y);
                 position *= _cellSize;
 
-                GameObject cell = Instantiate(_barrierPrefab.CellPrefab, position, Quaternion.identity, _barriersParent);
+                GameObject cell = Instantiate(levelData.BarrierPrefab.CellPrefab, position, Quaternion.identity, _barriersParent);
                 cell.name = $"[{x}, {y}]";
 
                 yield return null;
             }
         }
 
-        for (int x = _gridWidth; x < (_gridWidth + _barrierRows); x++)
+        for (int x = levelData.GridWidth; x < (levelData.GridWidth + levelData.BarrierRows); x++)
         {
-            for (int y = (-_barrierRows + 1); y < (_gridHeight + _barrierRows); y++)
+            for (int y = (-levelData.BarrierRows + 1); y < (levelData.GridHeight + levelData.BarrierRows); y++)
             {
                 Vector3 position = new Vector3(x, 0, y);
                 position *= _cellSize;
 
-                GameObject cell = Instantiate(_barrierPrefab.CellPrefab, position, Quaternion.identity, _barriersParent);
+                GameObject cell = Instantiate(levelData.BarrierPrefab.CellPrefab, position, Quaternion.identity, _barriersParent);
                 cell.name = $"[{x}, {y}]";
 
                 yield return null;
@@ -197,20 +190,19 @@ public class GridManager : MonoBehaviour
         }
     }
 
-
     private IEnumerator LayBuildingCells()
     {
         BuildBase();
 
-        foreach (var b in _buildingObjects)
+        foreach (var b in levelData.BuildingObjects)
         {
             Vector2Int size = b.Size;
 
             List<Vector2Int> positions = new List<Vector2Int>();
 
-            for (int x = 1; x < (_gridWidth - 1); x++)
+            for (int x = 1; x < (levelData.GridWidth - 1); x++)
             {
-                for (int y = 1; y < (_gridHeight - 1); y++)
+                for (int y = 1; y < (levelData.GridHeight - 1); y++)
                 {
                     if (_cells[x, y].Type == CellType.Ground)
                     {
@@ -233,7 +225,7 @@ public class GridManager : MonoBehaviour
                 OccupyTiles(pos.x, pos.y, size.x, size.y);
 
                 pos *= _cellSize;
-                Instantiate(b.CellPrefab, new Vector3(pos.x, b.Offset, pos.y), Quaternion.identity, _buildingsParent);
+                _container.InstantiatePrefab(b.CellPrefab, new Vector3(pos.x, b.Offset, pos.y), Quaternion.identity, _buildingsParent);
             }
         }
 
@@ -244,9 +236,11 @@ public class GridManager : MonoBehaviour
         Vector2Int p = _pathGenerator.PathCells[_pathGenerator.PathCells.Count - 1];
 
 
-        OccupyTiles(p.x, p.y, _basePrefab.Size.x, _basePrefab.Size.y);
+        BuildingObject basePrefab = levelData.BasePrefab;
+        OccupyTiles(p.x, p.y, basePrefab.Size.x, basePrefab.Size.y);
+
         p *= _cellSize;
-        _container.InstantiatePrefab(_basePrefab.CellPrefab, new Vector3(p.x, _basePrefab.Offset, p.y), Quaternion.identity, _buildingsParent);
+        _container.InstantiatePrefab(basePrefab.CellPrefab, new Vector3(p.x, basePrefab.Offset, p.y), Quaternion.identity, _buildingsParent);
     }
 
 
@@ -259,7 +253,7 @@ public class GridManager : MonoBehaviour
                 int nextX = posX + x;
                 int nextY = posY + y;
 
-                if (nextX >= _gridWidth || nextY >= _gridHeight)
+                if (nextX >= levelData.GridWidth || nextY >= levelData.GridHeight)
                     return false;
 
                 if (_cells[nextX, nextY].IsBusy) return false;

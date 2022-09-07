@@ -4,30 +4,28 @@ using Zenject;
 [RequireComponent(typeof(CharacterController))]
 public class PlayerMovement : MonoBehaviour
 {
-    [Range(5, 15f)]
-    [SerializeField] private float _speed = 5f;
-    public float Speed { set { _speed = Mathf.Clamp(value, 1, 99); } }
+    [Label("Speed", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
+    [SerializeField, Range(5, 15f)] private float _speed = 5f;
+    [SerializeField, Range(1, 15f)] private float _speedWithTurret = 2f;
 
-    [Range(1, 15f)]
-    [SerializeField] private float _speedWithTurret = 2f;
-    public float SpeedWithTurret {set { _speedWithTurret =Mathf.Clamp(value, 1, 99); } }
-
-    [Range(1, 20)]
-    [SerializeField] private float _rotationPerFrame = 10f;
+    [Label("Rotation", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
+    [SerializeField, Range(1, 20)] private float _rotationPerFrame = 10f;
 
     [Inject] private Joystick _joystick;
 	private CharacterController _cc;
     private Player _player;
 
+    public float Speed { set { _speed = Mathf.Clamp(value, 1, 99); } }
+    public float SpeedWithTurret {set { _speedWithTurret =Mathf.Clamp(value, 1, 99); } }
     public float MoveVelocity { get { return _cc.velocity.magnitude; } }
     public bool IsMove { get; private set; }
+
 
     private void Awake()
     {
         _cc = GetComponent<CharacterController>();
         _player = GetComponent<Player>();
     }
-
     private void Update()
     {
         HandleGravity();
