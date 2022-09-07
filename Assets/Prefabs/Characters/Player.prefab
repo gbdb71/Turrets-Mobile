@@ -509,7 +509,7 @@ CharacterController:
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.92, z: 0}
+  m_Center: {x: 0, y: 0.8, z: 0}
 --- !u!114 &3382120190014436759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -551,6 +551,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _turrelTakeTime: 1.5
   _turretSlot: {fileID: 806539327}
+  _upgradeEffect: {fileID: 0}
   _ammoCount: 0
   _ammoSlot: {fileID: 7329303657596097285}
   _placeOffset: {x: 0, y: 0.25, z: 0.2}

@@ -109,7 +109,7 @@ Transform:
   m_GameObject: {fileID: 2699958650359207802}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 10, y: 7.8050256, z: 1.2002496}
+  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_Children: []
   m_Father: {fileID: 3805081200559784805}
   m_RootOrder: 0
@@ -123,8 +123,8 @@ VisualEffect:
   m_GameObject: {fileID: 2699958650359207802}
   m_Enabled: 1
   m_Asset: {fileID: 8926484042661614526, guid: 61546c6af4f1110458a7a83a4f240217, type: 3}
-  m_InitialEventName: OnPlay
-  m_InitialEventNameOverriden: 0
+  m_InitialEventName: 
+  m_InitialEventNameOverriden: 1
   m_StartSeed: 0
   m_ResetSeedOnPlay: 0
   m_ResourceVersion: 1
@@ -173,9 +173,9 @@ VFXRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2722dd08cac6a5940929d22a65b31269, type: 2}
-  - {fileID: 2100000, guid: 2722dd08cac6a5940929d22a65b31269, type: 2}
-  - {fileID: 2100000, guid: 2722dd08cac6a5940929d22a65b31269, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -363,7 +363,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3904745141446584335}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalPosition: {x: 0, y: 0.37, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1114267297474218889}
@@ -399,7 +399,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4123050127064966823}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.73231053, y: 0.24145024, z: 3.1387458}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6989716615632269596}
@@ -466,6 +466,7 @@ MonoBehaviour:
   _projectilePrefab: {fileID: 0}
   _chargedAmmoMax: 6
   _ammoMax: 12
+  _nextGrade: {fileID: 0}
   _damageAngle: 30
   _attackRate: 0.5
   _throwEffect: {fileID: 2699958650359207781}

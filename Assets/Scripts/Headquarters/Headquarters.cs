@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
+public enum CurrencyType
+{
+    Upgrade,
+    Construction
+}
+
 public class Headquarters : MonoBehaviour, IInteractable
 {
-    [Header("DATA Settings")]
+    [Label("Data Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField] private UpgradesInfo _upgradeInfo;
-    private List<UpgradeButton> _upgradeButtons = new List<UpgradeButton>();
+    [SerializeField] private SerializedDictionary<CurrencyType, int> _currencies;
 
-    [SerializeField] private int _upgradeCurrency = 0;
-    [SerializeField] private int _constructionCurrency = 0;
-    public int ConstructionCurrency { get => _constructionCurrency; set { _constructionCurrency = Mathf.Clamp(value, 0, 9999); } }
-   
-    [Header("View Settings")]
+    [Label("View Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField] private CanvasGroup _interactGroupPrefab;
     [SerializeField] private UpgradeButton _interactButtonPrefab;
 
@@ -22,14 +24,16 @@ public class Headquarters : MonoBehaviour, IInteractable
 
     private CanvasGroup _interactGroup;
 
+    private List<UpgradeButton> _upgradeButtons = new List<UpgradeButton>();
     private Dictionary<string, string> _data = new Dictionary<string, string>();
 
-    public void Awake()
-    {
-        _player.SetHeadquarters(this);    
-    }
+    public Dictionary<CurrencyType, int> Currencies => _currencies.BuildNativeDictionary();
 
-    public void Start()
+    private void Awake()
+    {
+        _player.SetHeadquarters(this);
+    }
+    private void Start()
     {
         _interactGroup = Instantiate(_interactGroupPrefab, _canvas.transform);
 
@@ -37,6 +41,33 @@ public class Headquarters : MonoBehaviour, IInteractable
 
         ClosedViewGroup();
     }
+
+    #region Currency 
+
+    public void TryAddCurrency(CurrencyType type, int amount)
+    {
+        if (amount > 0)
+        {
+            if (_currencies.ContainsKey(type))
+                _currencies[type] += amount;
+            else
+                _currencies.Add(type, amount);
+        }
+    }
+    public void TryWithdrawCurrency(CurrencyType type, int amount)
+    {
+        if (_currencies.ContainsKey(type))
+        {
+            _currencies[type] -= amount;
+
+            if (_currencies[type] < 0)
+            {
+                _currencies[type] = 0;
+            }
+        }
+    }
+
+    #endregion
 
     #region Buttons
     private void InitializationButtons()
@@ -60,14 +91,6 @@ public class Headquarters : MonoBehaviour, IInteractable
             }
         }
     }
-
-    [ContextMenu("Add Currency")]
-    public void AddCurrency()
-    {
-        _upgradeCurrency += 100;
-        _constructionCurrency += 100;
-    }
-
     public void ValuePassing(UpgradeList.UpgradeType type, float value, int index)
     {
         string key = type.ToString();
@@ -118,11 +141,6 @@ public class Headquarters : MonoBehaviour, IInteractable
         }
     }
 
-    [ContextMenu("Clear Data")]
-    public void ClearData()
-    {
-        PlayerPrefs.DeleteAll();
-    }
     #endregion
 
     #region View UI
@@ -158,5 +176,14 @@ public class Headquarters : MonoBehaviour, IInteractable
     {
         ClosedViewGroup();
     }
+    #endregion
+
+    #region Editor
+
+    private void AddCurrency()
+    {
+
+    }
+
     #endregion
 }

@@ -2,9 +2,8 @@ using UnityEngine;
 
 public class AutomaticTurret : BaseTurret
 {
-    [Header("Bullet Settings")]
-    [Range(2, 40)]
-    [SerializeField] protected float _shootForce;
+    [Label("Bullet Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
+    [SerializeField, Range(2, 40)] protected float _shootForce;
 
     protected override void Fire()
     {

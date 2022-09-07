@@ -1,23 +1,22 @@
 using UnityEngine;
 using DG.Tweening;
-using System.Collections.Generic;
 
 public class PlayerInventory : MonoBehaviour
 {
-    [Header("Turrets")]
-    [Range(.1f, 3f)]
-    [SerializeField] private float _turrelTakeTime = 1.5f;
-    [SerializeField] private Transform _turretSlot;
+    [Label("Turrets", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
+    [SerializeField, Range(.1f, .3f)] private float _turrelTakeTime = 1.5f;
+    [SerializeField, NotNull] private Transform _turretSlot;
     [SerializeField] private GameObject _upgradeEffect;
 
-    [Header("Ammo")]
-    [SerializeField] private int _ammoCount;
-    [SerializeField] private Transform _ammoSlot;
+    [Label("Ammunition", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
+    [SerializeField, Range(1, 100)] private int _maxAmmoCount;
+    [SerializeField, NotNull] private Transform _ammoSlot;
     [SerializeField] private Vector3 _placeOffset;
 
     private BaseTurret _nearTurret;
     private BaseTurret _takedTurret;
     private float _takeProgess = 0f;
+    private int _ammoCount;
 
     public BaseTurret NearTurret => _nearTurret;
     public BaseTurret TakedTurret => _takedTurret;

@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8aad0289ab1b653488301b70a13df994, type: 3}
+  m_Name: Grass Cell
+  m_EditorClassIdentifier: 
+  _cellPrefab: {fileID: 8594340298032338358, guid: 634790c38d2088e459565eaaa775cb79, type: 3}
+  _rotation: 0
+  _cellType: 1
