@@ -6,14 +6,12 @@ public struct Offset
 {
     public int Top;
     public int Bottom;
-    public int Left;
     public int Right;
 
-    public Offset(int top, int bottom, int left, int right)
+    public Offset(int top, int bottom, int right)
     {
         Top = top;
         Bottom = bottom;
-        Left = left;
         Right = right;
     }
 }
@@ -23,7 +21,7 @@ public class PathGenerator : MonoBehaviour
     private readonly int _width, _height;
     private readonly Offset _offset;
 
-    private List<Vector2Int> _pathCells;
+    public List<Vector2Int> PathCells { get; private set; }
 
     public PathGenerator(int width, int height, Offset offset)
     {
@@ -34,14 +32,14 @@ public class PathGenerator : MonoBehaviour
 
     public List<Vector2Int> GeneratePath()
     {
-        _pathCells = new List<Vector2Int>();
+        PathCells = new List<Vector2Int>();
 
-        int x = _offset.Left;
+        int x = 0;
         int y = (int)(_height / 2);
 
-        while (x < _width)
+        while (x < (_width - _offset.Right))
         {
-            _pathCells.Add(new Vector2Int(x, y));
+            PathCells.Add(new Vector2Int(x, y));
 
             bool validMove = false;
 
@@ -49,7 +47,7 @@ public class PathGenerator : MonoBehaviour
             {
                 int move = Random.Range(0, 3);
 
-                if (move == 0 || x % 2 == 0 || x > (_width - 2))
+                if (move == 0 || x % 2 == 0 || x > ((_width - _offset.Right) - 2))
                 {
                     x++;
                     validMove = true;
@@ -67,11 +65,11 @@ public class PathGenerator : MonoBehaviour
             }
         }
 
-        return _pathCells;
+        return PathCells;
     }
 
-    public bool CellIsEmpty(int x, int y) => !_pathCells.Contains(new Vector2Int(x, y));
-    public bool CellIsTaken(int x, int y) => _pathCells.Contains(new Vector2Int(x, y));
+    public bool CellIsEmpty(int x, int y) => !PathCells.Contains(new Vector2Int(x, y));
+    public bool CellIsTaken(int x, int y) => PathCells.Contains(new Vector2Int(x, y));
 
 
     public List<Vector2Int> GetCellNeighbours(int x, int y)

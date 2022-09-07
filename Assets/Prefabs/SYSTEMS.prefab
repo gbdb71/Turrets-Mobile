@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46f4b501189113d4da3e03795ad692a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _joystick: {fileID: 8135886326569738823, guid: 56fae09712773584fb63896d473a98ee, type: 3}
+  _joystick: {fileID: 2929252283123773951, guid: aaa2c939c0359ac4dbce3f49e8b90252, type: 3}
 --- !u!1 &2109132194
 GameObject:
   m_ObjectHideFlags: 0
@@ -87,14 +87,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9435721289c23541a5a4b08cebfe5e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gridWidth: 16
-  _gridHeight: 8
-  _pathLength: {x: 15, y: 30}
+  _gridWidth: 18
+  _gridHeight: 12
+  _cellSize: 3
+  _pathLength: {x: 20, y: 50}
   _offset:
     Top: 2
-    Bottom: 4
-    Left: 0
-    Right: 0
+    Bottom: 2
+    Right: 2
   _pathCellObjects:
   - {fileID: 11400000, guid: 4c5a62985a0ba2e418fa82fffd43420a, type: 2}
   - {fileID: 11400000, guid: 4c5a62985a0ba2e418fa82fffd43420a, type: 2}
@@ -114,7 +114,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4c5a62985a0ba2e418fa82fffd43420a, type: 2}
   _sceneryCellObjects:
   - {fileID: 11400000, guid: 4c5a62985a0ba2e418fa82fffd43420a, type: 2}
-  - {fileID: 11400000, guid: fd3eb40a6358e1541b251cc74714e3db, type: 2}
+  _barrierPrefab: {fileID: 11400000, guid: fd3eb40a6358e1541b251cc74714e3db, type: 2}
+  _basePrefab: {fileID: 11400000, guid: fe8a3101d33292d40803a1c99867a975, type: 2}
+  _buildingObjects:
+  - {fileID: 11400000, guid: 0eb2f112718ee004f9e540226834618c, type: 2}
+  _barrierRows: 4
 --- !u!1 &8742234293552909140
 GameObject:
   m_ObjectHideFlags: 0

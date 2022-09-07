@@ -3,7 +3,7 @@ using UnityEngine;
 public enum CellType
 {
     Path,
-    Ground
+    Ground,
 }
 
 [CreateAssetMenu( fileName = "GridCell", menuName = "TowerDefense/Grid Cell")]

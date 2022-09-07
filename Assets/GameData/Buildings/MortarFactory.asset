@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2902942afb26ba045adade0f10ac70b4, type: 3}
+  m_Name: MortarFactory
+  m_EditorClassIdentifier: 
+  _cellPrefab: {fileID: 2315681298973498246, guid: aa92310a671f08e49b1784f91f7a9ce8, type: 3}
+  _rotation: 0
+  _cellType: 0
+  _size: {x: 3, y: 2}
+  _offset: 0.7
