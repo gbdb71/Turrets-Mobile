@@ -98,7 +98,7 @@ public class MapGenerator : MonoBehaviour
             {
                 GridCellObject info = _pathCellObjects[neighbourValue];
 
-                Cell cell = SpawnCell(info, p);
+                Cell cell = SpawnCell(info, p, _pathParent);
 
                 _cells[p.x, p.y] = cell;
             }
@@ -122,7 +122,7 @@ public class MapGenerator : MonoBehaviour
                     if (neighbours.Count > 0)
                         randomCell = 0;
 
-                    Cell cell = SpawnCell(_sceneryCellObjects[randomCell], new Vector2Int(x, y));
+                    Cell cell = SpawnCell(_sceneryCellObjects[randomCell], new Vector2Int(x, y), _mapParent);
 
                     _cells[x, y] = cell;
                     yield return null;
@@ -137,7 +137,7 @@ public class MapGenerator : MonoBehaviour
         {
             for (int y = -1; y > -levelData.BarrierRows; y--)
             {
-                SpawnCell(levelData.BarrierPrefab, new Vector2Int(x, y));
+                SpawnCell(levelData.BarrierPrefab, new Vector2Int(x, y), _barriersParent);
                 yield return null;
             }
         }
@@ -146,7 +146,7 @@ public class MapGenerator : MonoBehaviour
         {
             for (int y = levelData.GridHeight; y < (levelData.GridHeight + levelData.BarrierRows); y++)
             {
-                SpawnCell(levelData.BarrierPrefab, new Vector2Int(x, y));
+                SpawnCell(levelData.BarrierPrefab, new Vector2Int(x, y), _barriersParent);
                 yield return null;
             }
 
@@ -156,7 +156,7 @@ public class MapGenerator : MonoBehaviour
         {
             for (int y = (-levelData.BarrierRows + 1); y < (levelData.GridHeight + levelData.BarrierRows); y++)
             {
-                SpawnCell(levelData.BarrierPrefab, new Vector2Int(x, y));
+                SpawnCell(levelData.BarrierPrefab, new Vector2Int(x, y), _barriersParent);
                 yield return null;
             }
         }
@@ -165,7 +165,7 @@ public class MapGenerator : MonoBehaviour
         {
             for (int y = (-levelData.BarrierRows + 1); y < (levelData.GridHeight + levelData.BarrierRows); y++)
             {
-                SpawnCell(levelData.BarrierPrefab, new Vector2Int(x, y));
+                SpawnCell(levelData.BarrierPrefab, new Vector2Int(x, y), _barriersParent);
                 yield return null;
             }
         }
@@ -215,7 +215,7 @@ public class MapGenerator : MonoBehaviour
 
         return building;
     }
-    private Cell SpawnCell(GridCellObject info, Vector2Int point)
+    private Cell SpawnCell(GridCellObject info, Vector2Int point, Transform parent)
     {
         if(info.CellPrefab == null)
         {
@@ -228,7 +228,7 @@ public class MapGenerator : MonoBehaviour
         Vector3 position = new Vector3(point.x, 0, point.y);
         position *= _cellSize;
 
-        Cell cell = Instantiate(cellPrefab, position, Quaternion.identity, _pathParent);
+        Cell cell = Instantiate(cellPrefab, position, Quaternion.identity, parent);
         cell.name = $"[{point.x}, {point.y}]";
         cell.transform.rotation = Quaternion.Euler(0f, info.Rotation, 0f);
 

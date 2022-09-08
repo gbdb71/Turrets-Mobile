@@ -35,15 +35,19 @@ public abstract class BaseTurret : MonoBehaviour
     protected int _chargedAmmo = 0;
     protected int _ammo = 0;
 
+    private Renderer[] _renderers;
+
     public Transform IndicatorTransform => _indicatorTransform;
     public Image IndicatorFill => _indicatorFill;
     public bool IsReloading { get; private set; }
     public BaseTurret NextGrade => _nextGrade;
+    public Renderer[] Renderers => _renderers;
 
 
     protected virtual void Awake()
     {
         _aim = GetComponent<TurretAim>();
+        _renderers = GetComponentsInChildren<Renderer>();
 
         _ammo = _ammoMax;
         _chargedAmmo = _chargedAmmoMax;

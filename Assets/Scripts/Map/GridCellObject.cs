@@ -4,6 +4,7 @@ public enum CellType
 {
     Path,
     Ground,
+    Barrier
 }
 
 [CreateAssetMenu( fileName = "GridCell", menuName = "TowerDefense/Grid Cell")]

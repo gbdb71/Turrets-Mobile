@@ -552,6 +552,8 @@ MonoBehaviour:
   _turrelTakeTime: 1.5
   _turretSlot: {fileID: 806539327}
   _upgradeEffect: {fileID: 0}
+  _placeBlockColor: {r: 0.7924528, g: 0, b: 0, a: 0.5882353}
+  _takeDelay: 0.5
   _maxAmmoCount: 0
   _ammoSlot: {fileID: 7329303657596097285}
   _placeOffset: {x: 0, y: 0.25, z: 0.2}
