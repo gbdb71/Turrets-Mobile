@@ -8,12 +8,13 @@ public enum CurrencyType
     Upgrade,
     Construction
 }
-
+[SelectionBase]
 public class Headquarters : MonoBehaviour, IInteractable
 {
     [Label("Data Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField] private UpgradesInfo _upgradeInfo;
-    [SerializeField] private SerializedDictionary<CurrencyType, int> _currencies;
+    [SerializeField, EditorButton(nameof(ClearData), "ClearData"), DisableInPlayMode] private SerializedDictionary<CurrencyType, int> _currencies;
+
 
     [Label("View Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField] private CanvasGroup _interactGroupPrefab;
@@ -141,6 +142,11 @@ public class Headquarters : MonoBehaviour, IInteractable
         }
     }
 
+    private void ClearData()
+    {
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.Save();
+    }
     #endregion
 
     #region View UI

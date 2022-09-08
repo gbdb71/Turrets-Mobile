@@ -9,6 +9,7 @@ public enum FactoryType
     Turrets
 }
 
+[SelectionBase]
 public class Factory : MonoBehaviour, IInteractable
 {
     [Label("Spawning Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]

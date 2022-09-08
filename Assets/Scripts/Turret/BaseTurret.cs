@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(TurretAim))]
+[RequireComponent(typeof(TurretAim)), SelectionBase]
 public abstract class BaseTurret : MonoBehaviour
 {
     [Label("Damage", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]

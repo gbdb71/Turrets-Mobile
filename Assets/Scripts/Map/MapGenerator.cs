@@ -19,6 +19,9 @@ public class MapGenerator : MonoBehaviour
     [SpaceArea(5)]
     [SerializeField, ReorderableList(Foldable = true)] private GridCellObject[] _sceneryCellObjects;
     [EndHorizontal]
+
+
+
     private Transform _mapParent;
     private Transform _pathParent;
     private Transform _barriersParent;
