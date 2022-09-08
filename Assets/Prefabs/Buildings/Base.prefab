@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af0b9f595cdbb884087482bf32dc7d27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _health: 100
   _upgradeInfo: {fileID: 11400000, guid: 6501667c695beab40ae89defb0902824, type: 2}
   _currencies:
     pairs:

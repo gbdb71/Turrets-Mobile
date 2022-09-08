@@ -11,6 +11,7 @@ public enum CurrencyType
 [SelectionBase]
 public class Headquarters : MonoBehaviour, IInteractable
 {
+    [SerializeField, DisableInPlayMode, Range(1, 300)] private float _health;
     [Label("Data Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField] private UpgradesInfo _upgradeInfo;
     [SerializeField, EditorButton(nameof(ClearData), "ClearData"), DisableInPlayMode] private SerializedDictionary<CurrencyType, int> _currencies;
@@ -27,8 +28,9 @@ public class Headquarters : MonoBehaviour, IInteractable
 
     private List<UpgradeButton> _upgradeButtons = new List<UpgradeButton>();
     private Dictionary<string, string> _data = new Dictionary<string, string>();
-
     public Dictionary<CurrencyType, int> Currencies => _currencies.BuildNativeDictionary();
+
+    public event Action OnDeath;
 
     private void Awake()
     {
@@ -42,6 +44,21 @@ public class Headquarters : MonoBehaviour, IInteractable
 
         ClosedViewGroup();
     }
+
+
+    public void ApplyDamage(float damage)
+    {
+        _health -= damage;
+
+        if(_health <= 0)
+        {
+            OnDeath?.Invoke();
+            
+            //REMOVE
+            this.enabled = false;
+        }
+    }
+
 
     #region Currency 
 

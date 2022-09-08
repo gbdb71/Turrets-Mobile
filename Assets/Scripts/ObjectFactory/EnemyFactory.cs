@@ -17,6 +17,9 @@ class EnemyConfig
 
     [MinMaxSlider(10f, 500f)]
     public Vector2 Health;
+
+    [Range(1, 300)]
+    public float Damage;
 }
 
 [CreateAssetMenu(fileName = "EnemyFactory", menuName = "TowerDefense/Enemy/Factory")]
@@ -41,7 +44,7 @@ public partial class EnemyFactory : GameObjectFactory<Enemy, EnemyType>
         Enemy instance = CreateGameObjectInstance(config.Prefab);
         instance.OriginFactory = this;
         instance.Initialize(scale,speed,pathOffset,
-            health);
+            health, config.Damage);
 
         return instance;
     }

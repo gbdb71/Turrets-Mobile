@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class Enemy : MonoBehaviour
 {
@@ -11,11 +12,14 @@ public class Enemy : MonoBehaviour
     private List<Vector3> _points;
 
     private int _currentCell = 0;
+    private float _damage = 0;
     private int _nextCell = 0;
     private float _pathOffset;
     private float _health = 0f;
     private float _speed = 0f;
     private float _progress = 0f;
+
+    [Inject] private Headquarters _headquarters;
 
     public float Health => _health;
     public Rigidbody Rigidbody => _rigidbody;
@@ -29,6 +33,7 @@ public class Enemy : MonoBehaviour
     }
 
     private bool _initialized = false;
+
 
     private void Awake()
     {
@@ -59,7 +64,7 @@ public class Enemy : MonoBehaviour
     }
     private void Move()
     {
-        _progress += Time.deltaTime;
+        _progress += _speed * Time.deltaTime;
 
         while (_progress >= 1f)
         {
@@ -68,14 +73,21 @@ public class Enemy : MonoBehaviour
 
             if (_nextCell >= (_points.Count - 1))
             {
+                _headquarters.ApplyDamage(_damage);
                 Recycle();
             }
 
             _progress -= 1f;
         }
 
+        Vector3 from = _points[_currentCell];
+        from.x += _pathOffset;
+
+        Vector3 to = _points[_nextCell];
+        to.x += _pathOffset;
+
         transform.position =
-            Vector3.LerpUnclamped(_points[_currentCell], _points[_nextCell], _progress);
+            Vector3.LerpUnclamped(from, to, _progress);
     }
 
 
@@ -83,13 +95,14 @@ public class Enemy : MonoBehaviour
     {
         _health -= damage;
     }
-    public void Initialize(float scale, float speed, float pathOffset, float health)
+    public void Initialize(float scale, float speed, float pathOffset, float health, float damage)
     {
         gameObject.transform.localScale = new Vector3(scale, scale, scale);
 
         _speed = speed;
         _pathOffset = pathOffset;
         _health = health;
+        _damage = damage;
 
         _initialized = true;
     }

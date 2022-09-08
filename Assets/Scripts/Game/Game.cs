@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Zenject;
 
 public class Game : MonoBehaviour
 {
@@ -14,8 +15,8 @@ public class Game : MonoBehaviour
 
     public bool GameStared { get; private set; } = false;
     public LevelData CurrentLevel { get; private set; }
-
     private List<Vector3> _pathPoints;
+
 
     private void Awake()
     {
@@ -24,7 +25,7 @@ public class Game : MonoBehaviour
         if (_mapGenerator != null)
             _mapGenerator.OnMapGenerated += OnMapGenerated;
 
-        _activeScenario = CurrentLevel.LevelScenario.Begin(this);
+        _activeScenario = CurrentLevel.LevelScenario.Begin();
     }
 
     private void Update()

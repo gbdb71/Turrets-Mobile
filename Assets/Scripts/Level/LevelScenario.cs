@@ -5,7 +5,7 @@ public class LevelScenario : ScriptableObject
 {
     [SerializeField, ReorderableList] private EnemyWave[] waves = { };
     [SerializeField, Range(0, 10)] private int cycles = 1;
-    public State Begin(Game game) => new State(this, game);
+    public State Begin() => new State(this);
 
     [System.Serializable]
     public struct State
@@ -15,19 +15,17 @@ public class LevelScenario : ScriptableObject
         private LevelScenario _scenario;
 
         private int _index, _cycle;
-        private Game _game;
 
-        public State(LevelScenario scenario, Game game)
+        public State(LevelScenario scenario)
         {
             this._scenario = scenario;
-            this._game = game;
 
             _cycle = 0;
             _index = 0;
 
             Debug.Assert(scenario.waves.Length > 0, "Empty scenario!");
 
-            _wave = scenario.waves[0].Begin(_game);
+            _wave = scenario.waves[0].Begin();
         }
 
         public bool Progress()
@@ -44,7 +42,7 @@ public class LevelScenario : ScriptableObject
 
                     _index = 0;
                 }
-                _wave = _scenario.waves[_index].Begin(_game);
+                _wave = _scenario.waves[_index].Begin();
                 deltaTime = _wave.Progress(deltaTime);
             }
             return true;

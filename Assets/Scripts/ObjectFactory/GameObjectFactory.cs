@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using Zenject;
 
 public abstract class GameObjectFactory<T, T2> : ScriptableObject where T : MonoBehaviour
 {
+    [Inject] private DiContainer _container;
     private Scene scene;
 
     public abstract T Get(T2 args);
@@ -25,7 +26,7 @@ public abstract class GameObjectFactory<T, T2> : ScriptableObject where T : Mono
                 scene = SceneManager.CreateScene(name);
             }
         }
-        T instance = Instantiate(prefab);
+        T instance = _container.InstantiatePrefab(prefab).GetComponent<T>();
         SceneManager.MoveGameObjectToScene(instance.gameObject, scene);
         return instance;
     }

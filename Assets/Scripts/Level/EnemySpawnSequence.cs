@@ -18,7 +18,6 @@ public class EnemySpawnSequence
 
     public State Begin(Game game) => new State(this, game);
 
-    private Game game;
 
     [System.Serializable]
     public struct State
