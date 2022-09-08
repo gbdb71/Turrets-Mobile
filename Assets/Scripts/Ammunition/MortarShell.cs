@@ -2,32 +2,16 @@
 
 public class MortarShell : BaseProjectile
 {
-    [Header("Damage")]
     [SerializeField] private LayerMask _enemyMask;
 
-    Vector3 _launchPoint, _launchVelocity;
+    private float _blastRadius;
 
-    public void Initialize(
-        Vector3 launchPoint, Vector3 launchVelocity,
+    public override void Initialize(Vector3 launchPoint, Vector3 launchVelocity,
         float blastRadius, float damage)
     {
-        this._launchPoint = launchPoint;
-        this._launchVelocity = launchVelocity;
+        base.Initialize(launchPoint, launchVelocity, damage, 9.81f);
+
         this._blastRadius = blastRadius;
-        this._damage = damage;
-    }
-
-    float age, _blastRadius;
-    private void Update()
-    {
-        age += Time.deltaTime;
-        Vector3 p = _launchPoint + _launchVelocity * age;
-        p.y -= 0.5f * 9.81f * age * age;
-        transform.localPosition = p;
-
-        Vector3 d = _launchVelocity;
-        d.y -= 9.81f * age;
-        transform.localRotation = Quaternion.LookRotation(d);
     }
 
     protected override void Damage(Collision collision)

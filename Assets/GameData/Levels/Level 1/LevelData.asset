@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b5a23ac0c3cee446b535ee79a5cd9f9, type: 3}
   m_Name: LevelData
   m_EditorClassIdentifier: 
-  _gridWidth: 14
+  _gridWidth: 10
   _gridHeight: 10
-  _pathLength: {x: 10, y: 28}
+  _pathLength: {x: 10, y: 20}
   _offset:
     Top: 2
     Bottom: 2
@@ -24,3 +24,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a4c27cf3f56776343b2be2125f8d1c82, type: 2}
   _barrierRows: 4
   _barrierPrefab: {fileID: 11400000, guid: fd3eb40a6358e1541b251cc74714e3db, type: 2}
+  _levelScenario: {fileID: 11400000, guid: 301a89ff9d0ab5048a501cd467740853, type: 2}

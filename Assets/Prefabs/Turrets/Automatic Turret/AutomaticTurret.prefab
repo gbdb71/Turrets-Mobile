@@ -356,13 +356,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0594a34ebcbe1544b4753a566df4821, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 5
+  _damage: 20
   _fireDelay: 0.2
   _reloadTime: 2
   _shootPivot: {fileID: 1880167752}
   _indicatorTransform: {fileID: 1307280066}
   _indicatorFill: {fileID: 1069694142}
-  _projectilePrefab: {fileID: 6314001117089900343, guid: 23729ad4639e8244fbee285632c5ebba, type: 3}
+  _projectilePrefab: {fileID: -4436015116509720468, guid: 23729ad4639e8244fbee285632c5ebba, type: 3}
   _chargedAmmoMax: 20
   _ammoMax: 40
   _nextGrade: {fileID: 56816909316813559, guid: 627a3d944edb08a40a796c4394eea6a6, type: 3}
@@ -385,7 +385,7 @@ MonoBehaviour:
   _elevationSpeed: 1
   MaxElevation: 0
   MaxDepression: 0
-  _traverseSpeed: 60
+  _traverseSpeed: 200
   hasLimitedTraverse: 0
   _leftLimit: 120
   _rightLimit: 120

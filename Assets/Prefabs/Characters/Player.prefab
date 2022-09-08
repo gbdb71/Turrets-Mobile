@@ -449,7 +449,7 @@ GameObject:
   - component: {fileID: 919132148344753372}
   - component: {fileID: 1566553246}
   - component: {fileID: 3810837798286562221}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -552,7 +552,7 @@ MonoBehaviour:
   _turrelTakeTime: 1.5
   _turretSlot: {fileID: 806539327}
   _upgradeEffect: {fileID: 0}
-  _ammoCount: 0
+  _maxAmmoCount: 0
   _ammoSlot: {fileID: 7329303657596097285}
   _placeOffset: {x: 0, y: 0.25, z: 0.2}
 --- !u!114 &3810837798286562221

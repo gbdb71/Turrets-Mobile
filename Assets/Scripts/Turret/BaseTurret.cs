@@ -18,7 +18,7 @@ public abstract class BaseTurret : MonoBehaviour
     [SerializeField] private Image _indicatorFill = default;
 
     [Label("Ammunition", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
-    [SerializeField] protected Rigidbody _projectilePrefab;
+    [SerializeField] protected BaseProjectile _projectilePrefab;
     [Range(1, 100)]
     [SerializeField] protected int _chargedAmmoMax;
     [Range(1, 100)]
@@ -28,7 +28,7 @@ public abstract class BaseTurret : MonoBehaviour
     [SerializeField] private BaseTurret _nextGrade = default;
 
     protected TurretAim _aim;
-    protected IDamagable _currentTarget;
+    protected Enemy _currentTarget;
 
     protected float _fireTimer = 0f;
 
@@ -51,14 +51,14 @@ public abstract class BaseTurret : MonoBehaviour
 
     private void Update()
     {
-        if(_currentTarget != null)
+        if (_currentTarget != null)
             Aim();
 
         if (_chargedAmmo > 0)
         {
             if (_currentTarget != null)
             {
-                if (Vector3.Distance(_currentTarget.Transform.position, transform.position) > _aim.AimDistance)
+                if (Vector3.Distance(_currentTarget.transform.position, transform.position) > _aim.AimDistance)
                 {
                     _currentTarget = null;
                     return;
@@ -104,8 +104,11 @@ public abstract class BaseTurret : MonoBehaviour
 
     protected virtual void Aim()
     {
-        _aim.SetIdle(false);
-        _aim.SetAim(_currentTarget.Transform.position);
+        if (_currentTarget != null)
+        {
+            _aim.SetIdle(false);
+            _aim.SetAim(_currentTarget.transform.position);
+        }
     }
 
     protected virtual IEnumerator Reload()
@@ -139,7 +142,7 @@ public abstract class BaseTurret : MonoBehaviour
         return _aim.IsAimed && _fireTimer <= 0f && !IsReloading && _chargedAmmo > 0;
     }
 
-    protected IDamagable FindTarget()
+    protected Enemy FindTarget()
     {
         if (TargetPoint.FillBuffer(transform.localPosition, _aim.AimDistance))
         {
@@ -149,7 +152,7 @@ public abstract class BaseTurret : MonoBehaviour
         return null;
     }
 
-    
+
     public void Charge(int amount)
     {
         _chargedAmmo += amount;

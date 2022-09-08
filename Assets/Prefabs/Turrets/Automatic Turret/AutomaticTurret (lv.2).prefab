@@ -67,7 +67,7 @@ MonoBehaviour:
   _shootPivot: {fileID: 954626379497100490}
   _indicatorTransform: {fileID: 954626379425432384}
   _indicatorFill: {fileID: 954626378588192060}
-  _projectilePrefab: {fileID: 6314001117089900343, guid: 23729ad4639e8244fbee285632c5ebba, type: 3}
+  _projectilePrefab: {fileID: -4436015116509720468, guid: 23729ad4639e8244fbee285632c5ebba, type: 3}
   _chargedAmmoMax: 20
   _ammoMax: 40
   _nextGrade: {fileID: 0}
@@ -87,16 +87,16 @@ MonoBehaviour:
   _aimDistance: 7
   _turretBase: {fileID: 4328338264232656095}
   _barrels: {fileID: 2205885033962847940}
-  ElevationSpeed: 0
+  _elevationSpeed: 50
   MaxElevation: 0
   MaxDepression: 0
-  TraverseSpeed: 400
+  _traverseSpeed: 60
   hasLimitedTraverse: 0
-  LeftLimit: 179
-  RightLimit: 179
+  _leftLimit: 120
+  _rightLimit: 120
   aimedThreshold: 25
-  DrawDebugRay: 1
-  DrawDebugArcs: 1
+  _drawDebugRay: 1
+  _drawDebugArcs: 0
 --- !u!65 &358915717432735446
 BoxCollider:
   m_ObjectHideFlags: 0
