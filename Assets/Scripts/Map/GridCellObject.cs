@@ -9,7 +9,7 @@ public enum CellType
 [CreateAssetMenu( fileName = "GridCell", menuName = "TowerDefense/Grid Cell")]
 public class GridCellObject : ScriptableObject
 {
-    [SerializeField, AssetPreview] private GameObject _cellPrefab;
+    [SerializeField, AssetPreview] GameObject _cellPrefab;
     [SerializeField, Range(0, 360)] private int _rotation = 0;
     [SerializeField, SearchableEnum] private CellType _cellType = CellType.Path;
 

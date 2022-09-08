@@ -21,5 +21,7 @@ public class PlayerIntaller : MonoInstaller
 
         Container.Bind<CinemachineVirtualCamera>().FromInstance(cam).AsSingle(); 
         Container.Bind<Player>().FromInstance(player).AsSingle().NonLazy();
+
+        player.gameObject.SetActive(false);
     }
 }
