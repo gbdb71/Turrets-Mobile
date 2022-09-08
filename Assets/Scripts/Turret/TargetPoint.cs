@@ -9,7 +9,7 @@ public class TargetPoint
 
     public static int BufferedCount { get; private set; }
 
-    public static IDamagable RandomBuffered =>
+    public static Enemy RandomBuffered =>
         GetBuffered(Random.Range(0, BufferedCount));
 
     public static bool FillBuffer(Vector3 position, float range)
@@ -22,9 +22,9 @@ public class TargetPoint
         return BufferedCount > 0;
     }
 
-    public static IDamagable GetBuffered(int index)
+    public static Enemy GetBuffered(int index)
     {
-        var target = buffer[index].GetComponent<IDamagable>();
+        var target = buffer[index].GetComponent<Enemy>();
         Debug.Assert(target != null, "Targeted non-enemy!", buffer[0]);
         return target;
     }

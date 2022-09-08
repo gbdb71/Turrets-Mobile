@@ -8,6 +8,8 @@ public class MapGenerator : MonoBehaviour
 {
     // TODO : REMOVE 
     [SerializeField] public LevelData levelData;
+    [Label("Generate Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
+    [SerializeField, Range(1, 5)] private float _maxWaitTime = 1.5f;
 
     [Label("Cell Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [Range(1, 100)]
@@ -30,8 +32,10 @@ public class MapGenerator : MonoBehaviour
     private Cell[,] _cells;
     [Inject] private DiContainer _container;
 
+
     public Cell[,] Cells => _cells;
     public int CellSize => _cellSize;
+    public PathGenerator PathGenerator => _pathGenerator;
     public event Action OnMapGenerated;
 
 
@@ -58,10 +62,17 @@ public class MapGenerator : MonoBehaviour
         List<Vector2Int> path = _pathGenerator.GeneratePath();
         int size = path.Count;
 
+        float timer = 0;
+
         while (size < UnityEngine.Random.Range(levelData.PathLength.x, levelData.PathLength.y))
         {
             path = _pathGenerator.GeneratePath();
             size = path.Count;
+
+            timer += Time.deltaTime;
+
+            if (timer >= _maxWaitTime)
+                break;
         }
 
         yield return StartCoroutine(LayPathCells(path));
@@ -197,6 +208,7 @@ public class MapGenerator : MonoBehaviour
             Debug.LogWarning($"{info.name} prefab not found!");
             return null;
         }
+
         GameObject building = _container.InstantiatePrefab(info.CellPrefab, new Vector3(point.x * _cellSize, info.Offset, point.y * _cellSize), Quaternion.identity, _buildingsParent);
        
         OccupyTiles(point, new Vector2Int(info.Size.x, info.Size.y), building);
@@ -286,6 +298,7 @@ public class MapGenerator : MonoBehaviour
 
         return positions;
     }
+
     public List<Cell> GetBuildingsCells<T>() where T : MonoBehaviour
     {
         List<Cell> buildings = new List<Cell>();

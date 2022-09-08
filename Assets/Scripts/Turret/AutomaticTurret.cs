@@ -9,7 +9,7 @@ public class AutomaticTurret : BaseTurret
     {
         base.Fire();
 
-        Rigidbody projectile = Instantiate(_projectilePrefab, _shootPivot.transform.position, _shootPivot.transform.rotation);
-        projectile.AddForce(projectile.transform.forward * _shootForce, ForceMode.Impulse);
+        BaseProjectile projectile = Instantiate(_projectilePrefab, _shootPivot.transform.position, _shootPivot.transform.rotation);
+        projectile.Initialize(_shootPivot.transform.position, projectile.transform.forward * _shootForce, _damage, 0f);
     }
 }

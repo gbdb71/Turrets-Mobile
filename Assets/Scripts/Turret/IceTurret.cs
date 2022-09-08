@@ -46,14 +46,14 @@ public class IceTurret : BaseTurret
         {
             for (int i = 0; i < TargetPoint.BufferedCount; i++)
             {
-                IDamagable damagable = TargetPoint.GetBuffered(i);
+                Enemy enemy = TargetPoint.GetBuffered(i);
 
-                Vector3 targetDirection = damagable.Transform.position - _aim.ArcRoot.transform.position;
+                Vector3 targetDirection = enemy.transform.position - _aim.ArcRoot.transform.position;
                 float angleBetween = Vector3.Angle(_aim.ArcRoot.transform.forward, targetDirection);
 
                 if (angleBetween <= _damageAngle)
                 {
-                    damagable.ApplyDamage(_damage);
+                    enemy.ApplyDamage(_damage);
                 }
             }
         }

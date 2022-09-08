@@ -31,7 +31,7 @@ public class MortarTurret : BaseTurret
     protected override void Aim()
     {
         Vector3 launchPoint = _shootPivot.position;
-        Vector3 targetPoint = _currentTarget.Transform.position;
+        Vector3 targetPoint = _currentTarget.transform.position;
         targetPoint.y = 0f;
 
         Vector2 dir;
