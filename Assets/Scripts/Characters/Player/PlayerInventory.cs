@@ -50,6 +50,7 @@ public class PlayerInventory : MonoBehaviour
                 return;
 
             PutAmmoInBackpack(ammunition);
+            BackpackFilter();
         }
     }
 
@@ -58,18 +59,27 @@ public class PlayerInventory : MonoBehaviour
         ammunition.transform.parent = backpackPoint.transform;
 
         int index = _ammunitionInBackpack.Count;
+        _ammunitionInBackpack.Add(ammunition);
+
         Vector3 endPosition = new Vector3(0, index * _distanceBetweenObjects, 0);
 
         ammunition.transform.DOLocalRotate(Vector3.zero, _itemRotationTime);
         ammunition.transform.DOLocalMove(endPosition, _itemMoveTime);
-        _ammunitionInBackpack.Add(ammunition);
+
     }
 
+    float putTime = 0.3f;
     private void OnTriggerStay(Collider other)
     {
         if (_nearTurret == null || HasTurret) return;
 
-        RemoveAmmoFromBackpack(_nearTurret);
+        if (putTime <= 0)
+        {
+            RemoveAmmoFromBackpack(_nearTurret);
+            putTime = 0.5f;
+        }
+        else
+            putTime -= Time.deltaTime;
 
         if (_nearTurret.gameObject == other.gameObject)
         {
@@ -83,22 +93,37 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
-    public void RemoveAmmoFromBackpack(BaseTurret baseTurret)
+    [ContextMenu("Filter")]
+    public void BackpackFilter()
     {
         if (_ammunitionInBackpack.Count == 0)
             return;
 
-        if (baseTurret == null)
+        _ammunitionInBackpack.Clear();
+        _ammunitionInBackpack.AddRange(backpackPoint.GetComponentsInChildren<Ammunition>());
+
+        for (int i = 0; i < _ammunitionInBackpack.Count; i++)
+            _ammunitionInBackpack[i].transform.localPosition = Vector3.zero;
+
+        for (int i = 0; i < _ammunitionInBackpack.Count; i++)
+            _ammunitionInBackpack[i].transform.localPosition = new Vector3(0, i * _distanceBetweenObjects, 0);
+    }
+
+    public void RemoveAmmoFromBackpack(BaseTurret baseTurret)
+    {
+        if (_ammunitionInBackpack.Count == 0 || baseTurret == null)
             return;
 
+        BackpackFilter();
         Ammunition ammunition = _ammunitionInBackpack[_ammunitionInBackpack.Count - 1];
+        ammunition.collider.enabled = false;
         _ammunitionInBackpack.Remove(ammunition);
-
+        
         ammunition.transform.parent = baseTurret.transform;
 
-        ammunition.transform.DOLocalRotate(Vector3.zero, _itemRotationTime);
-        ammunition.transform.DOLocalMove(Vector3.zero, _itemMoveTime);
-        Destroy(ammunition.gameObject, _itemMoveTime + 0.05f);
+        //ammunition.transform.DOLocalRotate(Vector3.zero, _itemRotationTime);
+        //ammunition.transform.DOLocalMove(Vector3.zero, _itemMoveTime);
+        Destroy(ammunition.gameObject/*, _itemMoveTime + 0.05f*/);
     }
 
     private void OnTriggerExit(Collider other)
