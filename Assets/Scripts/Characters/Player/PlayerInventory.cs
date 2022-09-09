@@ -1,5 +1,6 @@
 using UnityEngine;
 using DG.Tweening;
+using System.Collections.Generic;
 
 public class PlayerInventory : MonoBehaviour
 {
@@ -16,10 +17,17 @@ public class PlayerInventory : MonoBehaviour
     private BaseTurret _nearTurret;
     private BaseTurret _takedTurret;
     private float _takeProgess = 0f;
+    private float _putProgess = 0f;
+
+    private List<Ammunition> _ammunitionInBackpack = new List<Ammunition>();
+    private float _distanceBetweenObjects = 0.25f; 
+    [SerializeField] private float _itemMoveTime = 0.5f;
+    [SerializeField] private float _itemRotationTime = 0.25f;
     private int _ammoCount;
 
     public BaseTurret NearTurret => _nearTurret;
     public BaseTurret TakedTurret => _takedTurret;
+    public Transform backpackPoint;
     public bool HasTurret { get { return _turretSlot.childCount > 0 && TakedTurret != null; } }
     public int AmmoCount { set { _ammoCount = Mathf.Clamp(value, 1, 99); } }
     public bool CanUpgrade { get { return HasTurret && NearTurret != null && NearTurret.NextGrade == TakedTurret.NextGrade; } }
@@ -38,6 +46,26 @@ public class PlayerInventory : MonoBehaviour
 
             _nearTurret.IndicatorTransform.gameObject.SetActive(true);
         }
+
+        if (other.CompareTag("Ammunition") && other.TryGetComponent(out Ammunition ammunition))
+        {
+            if (_ammunitionInBackpack.Count > _ammoCount)
+                return;
+
+            PutAmmoInBackpack(ammunition);
+        }
+    }
+
+    public void PutAmmoInBackpack(Ammunition ammunition)
+    {
+        ammunition.transform.parent = backpackPoint.transform;
+
+        int index = _ammunitionInBackpack.Count;
+        Vector3 endPosition = new Vector3(0, index * _distanceBetweenObjects, 0);
+
+        ammunition.transform.DOLocalRotate(Vector3.zero, _itemRotationTime);
+        ammunition.transform.DOLocalMove(endPosition, _itemMoveTime);
+        _ammunitionInBackpack.Add(ammunition);
     }
 
     private void OnTriggerStay(Collider other)
@@ -54,6 +82,33 @@ public class PlayerInventory : MonoBehaviour
                 Take(_nearTurret);
             }
         }
+
+        if (_nearTurret != null) 
+        {
+            _putProgess += Time.deltaTime;
+
+            if (_putProgess >= 1f)
+            {
+                _putProgess = 0;
+                RemoveAmmoFromBackpack(_nearTurret);
+            }
+        }
+    }
+
+    public void RemoveAmmoFromBackpack(BaseTurret baseTurret)
+    {
+        if (_ammunitionInBackpack.Count == 0 || baseTurret == null)
+            return;
+
+        Ammunition ammunition = _ammunitionInBackpack[_ammunitionInBackpack.Count - 1];
+        _ammunitionInBackpack.Remove(ammunition);
+
+        ammunition.transform.parent = baseTurret.transform;
+        Vector3 endPosition = baseTurret.transform.position;
+
+        ammunition.transform.DOLocalRotate(Vector3.zero, _itemRotationTime);
+        ammunition.transform.DOLocalMove(endPosition, _itemMoveTime);
+        Destroy(ammunition.gameObject, _itemMoveTime);
     }
 
     private void OnTriggerExit(Collider other)
