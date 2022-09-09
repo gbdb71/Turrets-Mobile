@@ -120,6 +120,7 @@ public class PlayerInventory : MonoBehaviour
         _ammunitionInBackpack.Remove(ammunition);
         
         ammunition.transform.parent = baseTurret.transform;
+        baseTurret.Charge(ammunition.ammoCount);
 
         //ammunition.transform.DOLocalRotate(Vector3.zero, _itemRotationTime);
         //ammunition.transform.DOLocalMove(Vector3.zero, _itemMoveTime);

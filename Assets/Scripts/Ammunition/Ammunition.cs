@@ -5,6 +5,7 @@ using UnityEngine;
 public class Ammunition : MonoBehaviour
 {
     public BoxCollider collider;
+    public int ammoCount;
 
     private void Awake()
     {
