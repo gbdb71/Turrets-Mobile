@@ -82,7 +82,7 @@ MonoBehaviour:
   _spawPoint: {fileID: 2315681297665264487}
   _moveTime: 0.5
   _objectPrefab: {fileID: 7157497047578270229, guid: c28485ba04aff5b49a1ed98168c6568d, type: 3}
-  _interactTime: 0.25
+  _interactTime: 0.1
   _type: 0
   _timeToCreate: 2
   _objectCost: 25

@@ -5,22 +5,19 @@ using System.Collections.Generic;
 public class PlayerInventory : MonoBehaviour
 {
     [Label("Turrets", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
-    [SerializeField, Range(.1f, .3f)] private float _turrelTakeTime = 1.5f;
     [SerializeField, NotNull] private Transform _turretSlot;
     [SerializeField] private GameObject _upgradeEffect;
 
     [Label("Ammunition", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
-    [SerializeField, Range(1, 100)] private int _maxAmmoCount;
-    [SerializeField, NotNull] private Transform _ammoSlot;
     [SerializeField] private Vector3 _placeOffset;
 
     private BaseTurret _nearTurret;
     private BaseTurret _takedTurret;
     private float _takeProgess = 0f;
-    private float _putProgess = 0f;
+    [SerializeField] private float _putProgess = 0f;
 
-    private List<Ammunition> _ammunitionInBackpack = new List<Ammunition>();
-    private float _distanceBetweenObjects = 0.25f; 
+    [SerializeField] private List<Ammunition> _ammunitionInBackpack = new List<Ammunition>();
+    private float _distanceBetweenObjects = 0.25f;
     [SerializeField] private float _itemMoveTime = 0.5f;
     [SerializeField] private float _itemRotationTime = 0.25f;
     private int _ammoCount;
@@ -49,7 +46,7 @@ public class PlayerInventory : MonoBehaviour
 
         if (other.CompareTag("Ammunition") && other.TryGetComponent(out Ammunition ammunition))
         {
-            if (_ammunitionInBackpack.Count > _ammoCount)
+            if (_ammunitionInBackpack.Count > _ammoCount - 1)
                 return;
 
             PutAmmoInBackpack(ammunition);
@@ -72,6 +69,8 @@ public class PlayerInventory : MonoBehaviour
     {
         if (_nearTurret == null || HasTurret) return;
 
+        RemoveAmmoFromBackpack(_nearTurret);
+
         if (_nearTurret.gameObject == other.gameObject)
         {
             _takeProgess += Time.deltaTime;
@@ -82,33 +81,24 @@ public class PlayerInventory : MonoBehaviour
                 Take(_nearTurret);
             }
         }
-
-        if (_nearTurret != null) 
-        {
-            _putProgess += Time.deltaTime;
-
-            if (_putProgess >= 1f)
-            {
-                _putProgess = 0;
-                RemoveAmmoFromBackpack(_nearTurret);
-            }
-        }
     }
 
     public void RemoveAmmoFromBackpack(BaseTurret baseTurret)
     {
-        if (_ammunitionInBackpack.Count == 0 || baseTurret == null)
+        if (_ammunitionInBackpack.Count == 0)
+            return;
+
+        if (baseTurret == null)
             return;
 
         Ammunition ammunition = _ammunitionInBackpack[_ammunitionInBackpack.Count - 1];
         _ammunitionInBackpack.Remove(ammunition);
 
         ammunition.transform.parent = baseTurret.transform;
-        Vector3 endPosition = baseTurret.transform.position;
 
         ammunition.transform.DOLocalRotate(Vector3.zero, _itemRotationTime);
-        ammunition.transform.DOLocalMove(endPosition, _itemMoveTime);
-        Destroy(ammunition.gameObject, _itemMoveTime);
+        ammunition.transform.DOLocalMove(Vector3.zero, _itemMoveTime);
+        Destroy(ammunition.gameObject, _itemMoveTime + 0.05f);
     }
 
     private void OnTriggerExit(Collider other)
