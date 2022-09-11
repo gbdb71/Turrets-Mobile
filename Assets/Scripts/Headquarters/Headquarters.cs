@@ -36,12 +36,14 @@ public class Headquarters : MonoBehaviour, IInteractable
     {
         _player.SetHeadquarters(this);
     }
+
     private void Start()
     {
         _interactGroup = Instantiate(_interactGroupPrefab, _canvas.transform);
 
         LoadData();
 
+        OpenViewGroup();
         ClosedViewGroup();
     }
 
