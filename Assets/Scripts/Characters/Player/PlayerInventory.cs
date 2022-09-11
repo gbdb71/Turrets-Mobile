@@ -68,21 +68,16 @@ public class PlayerInventory : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (_nearTurret != null)
-            ResetProgress(_nearTurret);
-
         switch (other.tag)
         {
             case "Turret":
                 {
                     if (other.TryGetComponent(out BaseTurret turret))
                     {
+                        if (_nearTurret != null)
+                            ResetProgress(_nearTurret);
+
                         _nearTurret = turret;
-
-                        if (HasTurret || _delayTimer > 0f)
-                            return;
-
-                        _nearTurret.IndicatorTransform.gameObject.SetActive(true);
                     }
                     break;
                 }
@@ -111,6 +106,12 @@ public class PlayerInventory : MonoBehaviour
             }
             else
             {
+                if (HasTurret || _delayTimer > 0f)
+                    return;
+
+                if (!_nearTurret.IndicatorTransform.gameObject.activeSelf)
+                    _nearTurret.IndicatorTransform.gameObject.SetActive(true);
+
                 _takeProgess += Time.deltaTime;
                 _nearTurret.IndicatorFill.fillAmount = _takeProgess;
 
@@ -171,13 +172,9 @@ public class PlayerInventory : MonoBehaviour
 
     public void Place()
     {
-        if (_takedTurret != null)
+        if (_takedTurret != null && CanPlace)
         {
-
-            int x, y;
-            _map.MapGrid.GetXY(_takedTurret.transform.position, out x, out y);
-
-            Vector3 targetPos = new Vector3(x, 0f, y);
+            Vector3 targetPos = _takedTurret.transform.position;
             targetPos.y = 0f;
             targetPos += _placeOffset;
 
@@ -252,8 +249,7 @@ public class PlayerInventory : MonoBehaviour
     }
     private bool CheckPlace()
     {
-        int x, y;
-        _map.MapGrid.GetXY(_takedTurret.transform.position, out x, out y);
+        _map.MapGrid.GetXY(_takedTurret.transform.position, out int x, out int y);
 
         GridCell cell = _map.MapGrid.GetObject(x, y);
 

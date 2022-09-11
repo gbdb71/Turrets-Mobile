@@ -91,7 +91,7 @@ public class Map : MonoBehaviour
 
             if (_pathObjects.ContainsKey(neighbourValue))
             {
-                SpawnGridObject(_pathObjects[neighbourValue], p.x, p.y);
+                SpawnGridCell(_pathObjects[neighbourValue], p.x, p.y);
             }
             else
             {
@@ -119,7 +119,7 @@ public class Map : MonoBehaviour
                     if (neighbours.Count > 0)
                         randomCell = 0;
 
-                    SpawnGridObject(_sceneryObjects[randomCell], x, y, _mapParent);
+                    SpawnGridCell(_sceneryObjects[randomCell], x, y, _mapParent);
                     yield return null;
                 }
             }
@@ -132,7 +132,7 @@ public class Map : MonoBehaviour
         {
             for (int y = -1; y > -_game.CurrentLevel.BarrierRows; y--)
             {
-                SpawnGridObject(_game.CurrentLevel.BarrierPrefab, x, y, _barriersParent);
+                SpawnGridCell(_game.CurrentLevel.BarrierPrefab, x, y, _barriersParent);
                 yield return null;
             }
         }
@@ -141,7 +141,7 @@ public class Map : MonoBehaviour
         {
             for (int y = _game.CurrentLevel.GridHeight; y < (_game.CurrentLevel.GridHeight + _game.CurrentLevel.BarrierRows); y++)
             {
-                SpawnGridObject(_game.CurrentLevel.BarrierPrefab, x, y, _barriersParent);
+                SpawnGridCell(_game.CurrentLevel.BarrierPrefab, x, y, _barriersParent);
                 yield return null;
             }
 
@@ -151,7 +151,7 @@ public class Map : MonoBehaviour
         {
             for (int y = (-_game.CurrentLevel.BarrierRows + 1); y < (_game.CurrentLevel.GridHeight + _game.CurrentLevel.BarrierRows); y++)
             {
-                SpawnGridObject(_game.CurrentLevel.BarrierPrefab, x, y, _barriersParent);
+                SpawnGridCell(_game.CurrentLevel.BarrierPrefab, x, y, _barriersParent);
                 yield return null;
             }
         }
@@ -160,7 +160,7 @@ public class Map : MonoBehaviour
         {
             for (int y = (-_game.CurrentLevel.BarrierRows + 1); y < (_game.CurrentLevel.GridHeight + _game.CurrentLevel.BarrierRows); y++)
             {
-                SpawnGridObject(_game.CurrentLevel.BarrierPrefab, x, y, _barriersParent);
+                SpawnGridCell(_game.CurrentLevel.BarrierPrefab, x, y, _barriersParent);
                 yield return null;
             }
         }
@@ -192,10 +192,13 @@ public class Map : MonoBehaviour
     private void SpawnBase()
     {
         Vector2Int roadEndPoint = _pathGenerator.PathCells[_pathGenerator.PathCells.Count - 1];
+        roadEndPoint.y -= 1;
+
         var headquartes = SpawnBuilding(_game.CurrentLevel.BasePrefab, roadEndPoint).GetComponent<Headquarters>();
 
         _container.Bind<Headquarters>().FromInstance(headquartes).AsSingle();
     }
+
     private GameObject SpawnBuilding(GridBuilding info, Vector2Int point)
     {
         if (info.Prefab == null)
@@ -215,29 +218,24 @@ public class Map : MonoBehaviour
     }
 
 
-    private void SpawnGridObject(GridObject gridObject, int x, int y, Transform parent = null)
+    private void SpawnGridCell(GridObject gridObject, int x, int y, Transform parent = null)
     {
 
         Vector3 worldPosition = _grid.GetWorldPosition(x, y);
 
-        Transform pathObject = Instantiate(gridObject.Prefab, worldPosition, Quaternion.Euler(0f, gridObject.Rotation, 0f)).transform;
+        Transform gameObj = Instantiate(gridObject.Prefab, worldPosition, Quaternion.Euler(0f, gridObject.Rotation, 0f)).transform;
 
         if (parent == null)
             parent = _mapParent;
-        pathObject.SetParent(parent);
+        gameObj.SetParent(parent);
+        gameObj.name = $"[{x}, {y}]";
 
         GridCell gridCell = _grid.GetObject(x, y);
 
         if (gridCell != null)
         {
-            gridCell.SetTransform(pathObject);
+            gridCell.SetType(gridObject.Type);
         }
-        else
-        {
-            gridCell = new GridCell(_grid, x, y, CellType.Barrier);
-            _grid.SetObject(x, y, gridCell);
-        }
-
     }
 
 
@@ -285,7 +283,8 @@ public class Map : MonoBehaviour
             for (int y = 1; y < (_game.CurrentLevel.GridHeight - 1); y++)
             {
                 GridCell gridCell = _grid.GetObject(x, y);
-                if (gridCell.Type == CellType.Ground && gridCell.CanBuild())
+
+                if (gridCell.CanBuild())
                 {
                     List<Vector2Int> neighbours = _pathGenerator.GetCellNeighbours(x, y);
 

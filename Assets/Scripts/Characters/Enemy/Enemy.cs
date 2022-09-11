@@ -57,7 +57,8 @@ public class Enemy : MonoBehaviour
 
     private void Rotate()
     {
-        Vector3 relativePos = _points[_nextCell] - transform.position;
+        Vector3 offset = transform.right * _pathOffset;
+        Vector3 relativePos = (_points[_nextCell] + offset) - transform.position;
 
         Quaternion targetRot = Quaternion.LookRotation(relativePos, Vector3.up);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, _rotationSpeed * Time.deltaTime);
@@ -80,11 +81,13 @@ public class Enemy : MonoBehaviour
             _progress -= 1f;
         }
 
+        Vector3 offset = transform.right * _pathOffset;
+
         Vector3 from = _points[_currentCell];
-        from.x += _pathOffset;
+        from += offset;
 
         Vector3 to = _points[_nextCell];
-        to.x += _pathOffset;
+        to += offset;
 
         transform.position =
             Vector3.LerpUnclamped(from, to, _progress);

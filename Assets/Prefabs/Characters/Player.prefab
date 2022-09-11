@@ -446,7 +446,7 @@ GameObject:
   - component: {fileID: 919132148344753372}
   - component: {fileID: 1566553246}
   - component: {fileID: 3810837798286562221}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -546,14 +546,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a006f14094e9184fa037058c8b4cf9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _turrelTakeTime: 1.5
   _turretSlot: {fileID: 806539327}
   _upgradeEffect: {fileID: 0}
-  _maxAmmoCount: 0
-  _ammoSlot: {fileID: 7329303657596097285}
-  _placeOffset: {x: 0, y: 0.25, z: 0.2}
-  _itemMoveTime: 0.5
-  _itemRotationTime: 0.25
+  _placeBlockColor: {r: 0.8867924, g: 0, b: 0, a: 0.7176471}
+  _takeDelay: 0.5
+  _placeOffset: {x: 0, y: 0.6, z: 0.2}
+  _ammoMoveSpeed: 0.5
+  _ammoRotationSpeed: 0.25
+  _ammoPutDelay: 0.5
   backpackPoint: {fileID: 7329303657596097285}
 --- !u!114 &3810837798286562221
 MonoBehaviour:

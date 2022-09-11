@@ -362,11 +362,12 @@ MonoBehaviour:
   _shootPivot: {fileID: 1880167752}
   _indicatorTransform: {fileID: 1307280066}
   _indicatorFill: {fileID: 1069694142}
-  _projectilePrefab: {fileID: -4436015116509720468, guid: 23729ad4639e8244fbee285632c5ebba, type: 3}
+  _projectilePrefab: {fileID: 503519449688536475, guid: 23729ad4639e8244fbee285632c5ebba, type: 3}
   _chargedAmmoMax: 20
   _ammoMax: 40
+  _ammoPerBox: 10
   _nextGrade: {fileID: 56816909316813559, guid: 627a3d944edb08a40a796c4394eea6a6, type: 3}
-  _shootForce: 10
+  _bulletSpeed: 10
 --- !u!114 &1006089489906742132
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -6,8 +6,7 @@ public class MortarShell : BaseProjectile
 
     private float _blastRadius;
 
-    public override void Initialize(Vector3 launchPoint, Vector3 launchVelocity,
-        float blastRadius, float damage)
+    public void Initialize(Vector3 launchPoint, Vector3 launchVelocity, float damage, float blastRadius)
     {
         base.Initialize(launchPoint, launchVelocity, damage, 9.81f);
 
@@ -21,5 +20,19 @@ public class MortarShell : BaseProjectile
         {
             TargetPoint.GetBuffered(i).ApplyDamage(_damage);
         }
+    }
+
+    protected float _age;
+
+    protected override void Move()
+    {
+        _age += Time.deltaTime;
+        Vector3 p = _launchPoint + _launchVelocity * _age;
+        p.y -= 0.5f * _gravity * _age * _age;
+        transform.localPosition = p;
+
+        Vector3 d = _launchVelocity;
+        d.y -= _gravity * _age;
+        transform.localRotation = Quaternion.LookRotation(d);
     }
 }

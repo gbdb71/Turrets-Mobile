@@ -12,7 +12,7 @@ class EnemyConfig
     [MinMaxSlider(0.2f, 5f)]
     public Vector2 Speed;
 
-    [MinMaxSlider(-0.4f, 0.4f)]
+    [MinMaxSlider(-.7f, .7f)]
     public Vector2 PathOffset;
 
     [MinMaxSlider(10f, 500f)]

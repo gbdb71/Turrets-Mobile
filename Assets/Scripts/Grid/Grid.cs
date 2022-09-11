@@ -39,8 +39,7 @@ public class Grid<TGridObject>
 
     public void SetObject(Vector3 worldPosition, TGridObject value)
     {
-        int x, y;
-        GetXY(worldPosition, out x, out y);
+        GetXY(worldPosition, out int x, out int y);
         SetObject(x, y, value);
     }
     public void SetObject(int x, int y, TGridObject value)
@@ -75,8 +74,10 @@ public class Grid<TGridObject>
 
     public void GetXY(Vector3 worldPosition, out int x, out int y)
     {
-        x = Mathf.FloorToInt(worldPosition.x);
-        y = Mathf.FloorToInt(worldPosition.z);
+        x = Mathf.RoundToInt(worldPosition.x / _cellSize);
+        y = Mathf.RoundToInt(worldPosition.z / _cellSize);
+
+        Debug.Log($"{x} {y}");
     }
 }
 

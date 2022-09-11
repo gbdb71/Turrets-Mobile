@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -18,6 +19,9 @@ public class Game : MonoBehaviour
     private List<Vector3> _pathPoints = new List<Vector3>();
 
 
+    public static event Action OnGameFinished;
+
+
     private void Awake()
     {
         CurrentLevel = _startLevel;
@@ -31,7 +35,10 @@ public class Game : MonoBehaviour
     private void Update()
     {
         if (GameStared)
-            _activeScenario.Progress();
+        {
+            if (_activeScenario.Progress() == false)
+                OnGameFinished?.Invoke();
+        }
     }
 
     private void OnMapGenerated()
@@ -42,9 +49,12 @@ public class Game : MonoBehaviour
 
         for (int i = 0; i < _map.PathGenerator.PathCells.Count; i++)
         {
-            Vector2Int pos = _map.PathGenerator.PathCells[i];
+            Vector2Int posXZ = _map.PathGenerator.PathCells[i];
 
-            _pathPoints.Add(_map.MapGrid.GetWorldPosition(pos.x, pos.y));
+            Vector3 worldPos = _map.MapGrid.GetWorldPosition(posXZ.x, posXZ.y);
+            worldPos.y = .5f;
+
+            _pathPoints.Add(worldPos);
         }
     }
 

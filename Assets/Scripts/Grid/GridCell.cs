@@ -35,7 +35,7 @@ public class GridCell
 
     public bool CanBuild()
     {
-        return _transform == null;
+        return _transform == null && _cellType == CellType.Ground;
     }
 }
 

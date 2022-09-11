@@ -7,27 +7,30 @@ public class PlayerSpawner : MonoBehaviour
 {
     [Inject] private Map _mapGenerator;
     [Inject] private Player _player;
-  
-    private void Awake()
+
+    private Headquarters _headquarters;
+
+    private void Start()
     {
-        if (_mapGenerator != null)
-            _mapGenerator.OnMapGenerated += SpawnPlayer;
+        _mapGenerator.OnMapGenerated += SpawnPlayer;
     }
 
     private void SpawnPlayer()
     {
-        //List<Vector2Int> points = _mapGenerator.GetEmptyCells(Vector2Int.one);
+        _headquarters = FindObjectOfType<Headquarters>();
 
-        //int x, y;
+        List<Vector2Int> points = _mapGenerator.GetEmptyCells(Vector2Int.one);
 
-        // _mapGenerator.MapGrid.GetXY(_headquarters.transform.position, out x, out y);
+        _mapGenerator.MapGrid.GetXY(_headquarters.transform.position, out int x, out int y);
 
-        //Vector2Int targetPos = new Vector2Int(x, y);
-        //points.Sort((x, y) => { return (targetPos - x).sqrMagnitude.CompareTo((targetPos - y).sqrMagnitude); });
+        Vector2Int targetPos = new Vector2Int(x, y);
+        points.Sort((x, y) => { return (targetPos - x).sqrMagnitude.CompareTo((targetPos - y).sqrMagnitude); });
+        Vector2Int spawnXZ = points.First();
 
-        //Vector2Int spawPoint = points.First();
+        Vector3 worldSpawn = _mapGenerator.MapGrid.GetWorldPosition(spawnXZ.x, spawnXZ.y);
+        worldSpawn.y = 1f;
 
-        //_player.transform.position = _mapGenerator.MapGrid.GetWorldPosition(spawPoint.x, spawPoint.y);
-        //_player.gameObject.SetActive(true);
+        _player.transform.position = worldSpawn;
+        _player.gameObject.SetActive(true);
     }
 }
