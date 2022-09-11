@@ -68,10 +68,6 @@ public class PathGenerator : MonoBehaviour
         return PathCells;
     }
 
-    public bool CellIsEmpty(int x, int y) => !PathCells.Contains(new Vector2Int(x, y));
-    public bool CellIsTaken(int x, int y) => PathCells.Contains(new Vector2Int(x, y));
-
-
     public List<Vector2Int> GetCellNeighbours(int x, int y)
     {
         List<Vector2Int> cells = new List<Vector2Int>();
@@ -124,4 +120,7 @@ public class PathGenerator : MonoBehaviour
 
         return value;
     }
+
+    private bool CellIsEmpty(int x, int y) => !PathCells.Contains(new Vector2Int(x, y));
+    private bool CellIsTaken(int x, int y) => PathCells.Contains(new Vector2Int(x, y));
 }

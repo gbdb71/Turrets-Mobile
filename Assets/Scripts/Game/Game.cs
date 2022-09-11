@@ -7,23 +7,23 @@ public class Game : MonoBehaviour
 {
     //TODO : remove 
     [SerializeField] private LevelData _startLevel;
-    [SerializeField] private MapGenerator _mapGenerator;
 
+    [Inject] private Map _map;
     private List<Enemy> _enemies = new List<Enemy>();
     private LevelScenario.State _activeScenario;
 
 
     public bool GameStared { get; private set; } = false;
     public LevelData CurrentLevel { get; private set; }
-    private List<Vector3> _pathPoints;
+    private List<Vector3> _pathPoints = new List<Vector3>();
 
 
     private void Awake()
     {
         CurrentLevel = _startLevel;
 
-        if (_mapGenerator != null)
-            _mapGenerator.OnMapGenerated += OnMapGenerated;
+        if (_map != null)
+            _map.OnMapGenerated += OnMapGenerated;
 
         _activeScenario = CurrentLevel.LevelScenario.Begin();
     }
@@ -38,13 +38,14 @@ public class Game : MonoBehaviour
     {
         GameStared = true;
 
-        _pathPoints = _mapGenerator.PathGenerator.PathCells.FromVec2Int();
-        _pathPoints = _pathPoints.Select((x) =>
+        _pathPoints.Clear();
+
+        for (int i = 0; i < _map.PathGenerator.PathCells.Count; i++)
         {
-            x *= _mapGenerator.CellSize;
-            x.y = .5f;
-            return x;
-        }).ToList();
+            Vector2Int pos = _map.PathGenerator.PathCells[i];
+
+            _pathPoints.Add(_map.MapGrid.GetWorldPosition(pos.x, pos.y));
+        }
     }
 
     public void SpawnEnemy(EnemyFactory factory, EnemyType type)

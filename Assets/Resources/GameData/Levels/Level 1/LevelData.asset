@@ -20,8 +20,7 @@ MonoBehaviour:
     Bottom: 2
     Right: 2
   _basePrefab: {fileID: 11400000, guid: fe8a3101d33292d40803a1c99867a975, type: 2}
-  _buildingObjects:
-  - {fileID: 11400000, guid: a4c27cf3f56776343b2be2125f8d1c82, type: 2}
+  _buildingObjects: []
   _barrierRows: 4
   _barrierPrefab: {fileID: 11400000, guid: fd3eb40a6358e1541b251cc74714e3db, type: 2}
   _levelScenario: {fileID: 11400000, guid: 301a89ff9d0ab5048a501cd467740853, type: 2}

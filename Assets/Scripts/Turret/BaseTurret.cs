@@ -23,6 +23,7 @@ public abstract class BaseTurret : MonoBehaviour
     [SerializeField] protected int _chargedAmmoMax;
     [Range(1, 100)]
     [SerializeField] private int _ammoMax;
+    [SerializeField, Range(1, 100)] private int _ammoPerBox = 10;
 
     [Label("Upgrade", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField] private BaseTurret _nextGrade = default;
@@ -42,6 +43,7 @@ public abstract class BaseTurret : MonoBehaviour
     public bool IsReloading { get; private set; }
     public BaseTurret NextGrade => _nextGrade;
     public Renderer[] Renderers => _renderers;
+    public bool CanCharge { get { return _ammo < _ammoMax; } }
 
 
     protected virtual void Awake()
@@ -98,14 +100,22 @@ public abstract class BaseTurret : MonoBehaviour
         if (_fireTimer > 0f)
             _fireTimer -= Time.deltaTime;
     }
-
-    protected virtual void StopFire() { }
-
     private void OnDisable()
     {
         _aim.SetIdle(true);
     }
 
+
+
+    protected Enemy FindTarget()
+    {
+        if (TargetPoint.FillBuffer(transform.localPosition, _aim.AimDistance))
+        {
+            return TargetPoint.RandomBuffered;
+        }
+
+        return null;
+    }
     protected virtual void Aim()
     {
         if (_currentTarget != null)
@@ -115,6 +125,7 @@ public abstract class BaseTurret : MonoBehaviour
         }
     }
 
+    protected virtual void StopFire() { }
     protected virtual IEnumerator Reload()
     {
         IsReloading = true;
@@ -134,32 +145,24 @@ public abstract class BaseTurret : MonoBehaviour
 
         IsReloading = false;
     }
-
     protected virtual void Fire()
     {
         _fireTimer = _fireDelay;
         _chargedAmmo -= 1;
     }
-
     protected virtual bool CanFire()
     {
         return _aim.IsAimed && _fireTimer <= 0f && !IsReloading && _chargedAmmo > 0;
     }
 
-    protected Enemy FindTarget()
+    public void Charge()
     {
-        if (TargetPoint.FillBuffer(transform.localPosition, _aim.AimDistance))
+        _ammo += _ammoPerBox;
+
+        if (_ammo > _ammoMax)
         {
-            return TargetPoint.RandomBuffered;
+            _ammo = _ammoMax;
         }
-
-        return null;
-    }
-
-
-    public void Charge(int amount)
-    {
-        _chargedAmmo += amount;
     }
 
 }

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Base Upgrades", menuName = "Upgrade Info")]
+[CreateAssetMenu(fileName = "Base Upgrades", menuName = "TowerDefense/Upgrade Info")]
 public class UpgradesInfo : ScriptableObject
 {
     public List<UpgradeList> upgrades = new List<UpgradeList>();

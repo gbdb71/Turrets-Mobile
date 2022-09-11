@@ -1,132 +1,127 @@
 using UnityEngine;
 using DG.Tweening;
 using System.Collections.Generic;
+using Zenject;
 
 public class PlayerInventory : MonoBehaviour
 {
     [Label("Turrets", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField, NotNull] private Transform _turretSlot;
     [SerializeField] private GameObject _upgradeEffect;
+    [SerializeField] private Color _placeBlockColor;
+    [SerializeField, Range(.2f, 1f)] private float _takeDelay = .5f;
 
     [Label("Ammunition", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField] private Vector3 _placeOffset;
+    [SerializeField, Range(.1f, 2f)] private float _ammoMoveSpeed = 0.5f;
+    [SerializeField, Range(.1f, 2f)] private float _ammoRotationSpeed = 0.25f;
+    [SerializeField, Range(.1f, 1f)] private float _ammoPutDelay = .5f;
 
     private BaseTurret _nearTurret;
     private BaseTurret _takedTurret;
     private float _takeProgess = 0f;
-    [SerializeField] private float _putProgess = 0f;
 
-    [SerializeField] private List<Ammunition> _ammunitionInBackpack = new List<Ammunition>();
+    private List<Ammunition> _ammunition = new List<Ammunition>();
     private float _distanceBetweenObjects = 0.25f;
-    [SerializeField] private float _itemMoveTime = 0.5f;
-    [SerializeField] private float _itemRotationTime = 0.25f;
     private int _ammoCount;
+    private float _delayTimer = 0f;
+    private float _putTimer = 0.0f;
+
+    [Inject] private Map _map;
 
     public BaseTurret NearTurret => _nearTurret;
     public BaseTurret TakedTurret => _takedTurret;
     public Transform backpackPoint;
     public bool HasTurret { get { return _turretSlot.childCount > 0 && TakedTurret != null; } }
     public int AmmoCount { set { _ammoCount = Mathf.Clamp(value, 1, 99); } }
-    public bool CanUpgrade { get { return HasTurret && NearTurret != null && NearTurret.NextGrade == TakedTurret.NextGrade; } }
+    public bool CanPlace { get; private set; }
+    public bool CanUpgrade
+    {
+        get
+        {
+            return HasTurret && NearTurret != null &&
+                NearTurret != TakedTurret &&
+                NearTurret.NextGrade != null &&
+                NearTurret.NextGrade == TakedTurret.NextGrade;
+        }
+    }
 
+
+    private void Update()
+    {
+        if (_delayTimer > 0)
+            _delayTimer -= Time.deltaTime;
+
+        if (_putTimer >= 0)
+            _putTimer -= Time.deltaTime;
+
+        if (HasTurret)
+        {
+            bool canPlace = CheckPlace();
+
+            if (CanPlace != canPlace)
+            {
+                CanPlace = canPlace;
+                ChangeTurretColor();
+            }
+        }
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (_nearTurret != null)
             ResetProgress(_nearTurret);
 
-        if (other.CompareTag("Turret") && other.TryGetComponent(out BaseTurret turret))
+        switch (other.tag)
         {
-            _nearTurret = turret;
+            case "Turret":
+                {
+                    if (other.TryGetComponent(out BaseTurret turret))
+                    {
+                        _nearTurret = turret;
 
-            if (HasTurret)
-                return;
+                        if (HasTurret || _delayTimer > 0f)
+                            return;
 
-            _nearTurret.IndicatorTransform.gameObject.SetActive(true);
-        }
+                        _nearTurret.IndicatorTransform.gameObject.SetActive(true);
+                    }
+                    break;
+                }
+            case "Ammunition":
+                {
+                    if (other.TryGetComponent(out Ammunition ammunition))
+                    {
+                        if (_ammunition.Count > _ammoCount - 1)
+                            return;
 
-        if (other.CompareTag("Ammunition") && other.TryGetComponent(out Ammunition ammunition))
-        {
-            if (_ammunitionInBackpack.Count > _ammoCount - 1)
-                return;
-
-            PutAmmoInBackpack(ammunition);
-            BackpackFilter();
+                        PutAmmo(ammunition);
+                    }
+                    break;
+                }
         }
     }
-
-    public void PutAmmoInBackpack(Ammunition ammunition)
-    {
-        ammunition.transform.parent = backpackPoint.transform;
-
-        int index = _ammunitionInBackpack.Count;
-        _ammunitionInBackpack.Add(ammunition);
-
-        Vector3 endPosition = new Vector3(0, index * _distanceBetweenObjects, 0);
-
-        ammunition.transform.DOLocalRotate(Vector3.zero, _itemRotationTime);
-        ammunition.transform.DOLocalMove(endPosition, _itemMoveTime);
-
-    }
-
-    float putTime = 0.3f;
     private void OnTriggerStay(Collider other)
     {
         if (_nearTurret == null || HasTurret) return;
 
-        if (putTime <= 0)
-        {
-            RemoveAmmoFromBackpack(_nearTurret);
-            putTime = 0.5f;
-        }
-        else
-            putTime -= Time.deltaTime;
-
         if (_nearTurret.gameObject == other.gameObject)
         {
-            _takeProgess += Time.deltaTime;
-            _nearTurret.IndicatorFill.fillAmount = _takeProgess;
-
-            if (_takeProgess >= 1f)
+            if (_ammunition.Count > 0 && _putTimer <= 0 && _nearTurret.CanCharge)
             {
-                Take(_nearTurret);
+                ChargeTurret(_nearTurret);
+            }
+            else
+            {
+                _takeProgess += Time.deltaTime;
+                _nearTurret.IndicatorFill.fillAmount = _takeProgess;
+
+                if (_takeProgess >= 1f)
+                {
+                    Take(_nearTurret);
+                }
+
             }
         }
     }
-
-    [ContextMenu("Filter")]
-    public void BackpackFilter()
-    {
-        if (_ammunitionInBackpack.Count == 0)
-            return;
-
-        _ammunitionInBackpack.Clear();
-        _ammunitionInBackpack.AddRange(backpackPoint.GetComponentsInChildren<Ammunition>());
-
-        for (int i = 0; i < _ammunitionInBackpack.Count; i++)
-            _ammunitionInBackpack[i].transform.localPosition = Vector3.zero;
-
-        for (int i = 0; i < _ammunitionInBackpack.Count; i++)
-            _ammunitionInBackpack[i].transform.localPosition = new Vector3(0, i * _distanceBetweenObjects, 0);
-    }
-
-    public void RemoveAmmoFromBackpack(BaseTurret baseTurret)
-    {
-        if (_ammunitionInBackpack.Count == 0 || baseTurret == null)
-            return;
-
-        BackpackFilter();
-        Ammunition ammunition = _ammunitionInBackpack[_ammunitionInBackpack.Count - 1];
-        ammunition.collider.enabled = false;
-        _ammunitionInBackpack.Remove(ammunition);
-        
-        ammunition.transform.parent = baseTurret.transform;
-        baseTurret.Charge(ammunition.ammoCount);
-
-        //ammunition.transform.DOLocalRotate(Vector3.zero, _itemRotationTime);
-        //ammunition.transform.DOLocalMove(Vector3.zero, _itemMoveTime);
-        Destroy(ammunition.gameObject/*, _itemMoveTime + 0.05f*/);
-    }
-
     private void OnTriggerExit(Collider other)
     {
         if (_nearTurret != null)
@@ -135,30 +130,71 @@ public class PlayerInventory : MonoBehaviour
         _nearTurret = null;
     }
 
+    #region Ammo
+
+    public void PutAmmo(Ammunition ammunition)
+    {
+        ammunition.transform.parent = backpackPoint.transform;
+
+        int index = _ammunition.Count;
+        _ammunition.Add(ammunition);
+
+        Vector3 endPosition = new Vector3(0, index * _distanceBetweenObjects, 0);
+
+        ammunition.transform.DOLocalRotate(Vector3.zero, _ammoRotationSpeed);
+        ammunition.transform.DOLocalMove(endPosition, _ammoMoveSpeed);
+
+    }
+    public void ChargeTurret(BaseTurret turret)
+    {
+        if (_ammunition.Count == 0 || turret == null)
+            return;
+
+        Ammunition ammunition = _ammunition[_ammunition.Count - 1];
+
+        _ammunition.Remove(ammunition);
+
+        ammunition.transform.DOMove(turret.transform.position, _ammoMoveSpeed).OnComplete(() =>
+        {
+            turret.Charge();
+            Destroy(ammunition.gameObject);
+        });
+
+        _putTimer = _ammoPutDelay;
+        _delayTimer = _takeDelay;
+
+    }
+
+    #endregion
+
+    #region Turret
+
     public void Place()
     {
         if (_takedTurret != null)
         {
 
-            RaycastHit hit;
+            int x, y;
+            _map.MapGrid.GetXY(_takedTurret.transform.position, out x, out y);
 
-            if (Physics.Raycast(_takedTurret.transform.position, -_takedTurret.transform.up, out hit))
+            Vector3 targetPos = new Vector3(x, 0f, y);
+            targetPos.y = 0f;
+            targetPos += _placeOffset;
+
+            BaseTurret turret = _takedTurret;
+
+            turret.transform.DOJump(targetPos, 1f, 1, .6f).OnComplete(() =>
             {
-                Vector3 targetPos = _takedTurret.transform.position;
-                targetPos.y = hit.point.y;
-                targetPos += _placeOffset;
+                turret.enabled = true;
+                turret.transform.SetParent(null);
+            });
 
-                _takedTurret.transform.DOJump(targetPos, 1f, 1, .6f).OnComplete(() =>
-                {
-                    _takedTurret.enabled = true;
-                    _takedTurret.transform.SetParent(null);
-                    _takedTurret = null;
-                });
-            }
+            _takedTurret = null;
+
+            _delayTimer = _takeDelay;
 
         }
     }
-
     private void Take(BaseTurret turret)
     {
         if (turret == _nearTurret)
@@ -182,7 +218,6 @@ public class PlayerInventory : MonoBehaviour
         turret.IndicatorTransform.gameObject.SetActive(false);
         _takeProgess = 0f;
     }
-
     public void Upgrade()
     {
         if (CanUpgrade)
@@ -208,4 +243,22 @@ public class PlayerInventory : MonoBehaviour
             });
         }
     }
+    private void ChangeTurretColor()
+    {
+        for (int i = 0; i < TakedTurret.Renderers.Length; i++)
+        {
+            TakedTurret.Renderers[i].material.color = CanPlace ? Color.white : _placeBlockColor;
+        }
+    }
+    private bool CheckPlace()
+    {
+        int x, y;
+        _map.MapGrid.GetXY(_takedTurret.transform.position, out x, out y);
+
+        GridCell cell = _map.MapGrid.GetObject(x, y);
+
+        return cell.CanBuild() && cell.Type != CellType.Path;
+    }
+
+    #endregion
 }

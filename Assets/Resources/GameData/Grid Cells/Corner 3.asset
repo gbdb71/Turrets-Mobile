@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8aad0289ab1b653488301b70a13df994, type: 3}
+  m_Script: {fileID: 11500000, guid: 1f039db9820437141be87b240952d5d2, type: 3}
   m_Name: Corner 3
   m_EditorClassIdentifier: 
-  _cellPrefab: {fileID: 8375587834352386534, guid: 6d72d1015950d85449fbb9dfcfca4289, type: 3}
+  _prefab: {fileID: 8375587834352386534, guid: 6d72d1015950d85449fbb9dfcfca4289, type: 3}
   _rotation: -90
-  _cellType: 0
+  _type: 0

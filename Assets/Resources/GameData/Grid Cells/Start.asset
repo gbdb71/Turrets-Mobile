@@ -9,11 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2902942afb26ba045adade0f10ac70b4, type: 3}
-  m_Name: MortarFactory
+  m_Script: {fileID: 11500000, guid: 1f039db9820437141be87b240952d5d2, type: 3}
+  m_Name: Start
   m_EditorClassIdentifier: 
-  _cellPrefab: {fileID: 2315681298973498246, guid: aa92310a671f08e49b1784f91f7a9ce8, type: 3}
-  _rotation: 0
-  _cellType: 0
-  _size: {x: 3, y: 2}
-  _offset: 0.7
+  _prefab: {fileID: 2199527513952348396, guid: 0fd45a70db007bc4097b0c4639f25653, type: 3}
+  _rotation: 90
+  _type: 0
