@@ -76,8 +76,8 @@ public class Grid<TGridObject>
     {
         x = Mathf.RoundToInt(worldPosition.x / _cellSize);
         y = Mathf.RoundToInt(worldPosition.z / _cellSize);
-
-        Debug.Log($"{x} {y}");
     }
+
+    public float GetCellSize() => _cellSize;
 }
 

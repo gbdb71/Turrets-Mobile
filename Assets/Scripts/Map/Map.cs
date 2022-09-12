@@ -52,6 +52,7 @@ public class Map : MonoBehaviour
         StartCoroutine(Generate());
     }
 
+
     private IEnumerator Generate()
     {
         List<Vector2Int> path = _pathGenerator.GeneratePath();
@@ -82,7 +83,6 @@ public class Map : MonoBehaviour
 
         OnMapGenerated?.Invoke();
     }
-
     private IEnumerator LayPathObjects(List<Vector2Int> path)
     {
         foreach (Vector2Int p in path)
@@ -101,7 +101,6 @@ public class Map : MonoBehaviour
             yield return null;
         }
     }
-
     private IEnumerator LaySceneryObjects()
     {
         for (int x = 0; x < _game.CurrentLevel.GridWidth; x++)
@@ -125,7 +124,6 @@ public class Map : MonoBehaviour
             }
         }
     }
-
     private IEnumerator LayBarrierObjects()
     {
         for (int x = 0; x < _game.CurrentLevel.GridWidth; x++)
@@ -165,10 +163,9 @@ public class Map : MonoBehaviour
             }
         }
     }
-
     private IEnumerator LayBuildingObjects()
     {
-        SpawnBase();
+        var headquarters = SpawnHeadquarters();
 
         foreach (var b in _game.CurrentLevel.BuildingObjects)
         {
@@ -178,9 +175,10 @@ public class Map : MonoBehaviour
 
             if (positions.Count > 0)
             {
-                var pos = positions[UnityEngine.Random.Range(0, positions.Count)];
+                positions.Sort((x, y) => { return (headquarters.Item1 - x).sqrMagnitude.CompareTo((headquarters.Item1 - y).sqrMagnitude); });
+                Vector2Int spawnXZ = positions[1];
 
-                SpawnBuilding(b, pos);
+                SpawnBuilding(b, spawnXZ);
             }
         }
 
@@ -189,16 +187,17 @@ public class Map : MonoBehaviour
 
 
 
-    private void SpawnBase()
+    private Tuple<Vector2Int, Headquarters> SpawnHeadquarters()
     {
         Vector2Int roadEndPoint = _pathGenerator.PathCells[_pathGenerator.PathCells.Count - 1];
         roadEndPoint.y -= 1;
 
-        var headquartes = SpawnBuilding(_game.CurrentLevel.BasePrefab, roadEndPoint).GetComponent<Headquarters>();
+        Headquarters headquartes = SpawnBuilding(_game.CurrentLevel.HeadquartersPrefab, roadEndPoint).GetComponent<Headquarters>();
 
         _container.Bind<Headquarters>().FromInstance(headquartes).AsSingle();
-    }
 
+        return new Tuple<Vector2Int, Headquarters>(roadEndPoint, headquartes);
+    }
     private GameObject SpawnBuilding(GridBuilding info, Vector2Int point)
     {
         if (info.Prefab == null)
@@ -206,24 +205,26 @@ public class Map : MonoBehaviour
             Debug.LogWarning($"{info.name} prefab not found!");
             return null;
         }
+        Vector2Int rotationOffset = info.GetRotationOffset();
 
         Vector3 worldPosition = _grid.GetWorldPosition(point.x, point.y);
         worldPosition.y = info.YOffset;
+        worldPosition += new Vector3(rotationOffset.x, 0f, rotationOffset.y);
 
-        GameObject building = _container.InstantiatePrefab(info.Prefab, worldPosition, Quaternion.Euler(0f, info.Rotation, 0f), _buildingsParent);
 
-        OccupyCells(point, new Vector2Int(info.Size.x, info.Size.y), building);
+        Quaternion rotation = Quaternion.Euler(0f, (int)info.Dir, 0f);
+        GameObject building = _container.InstantiatePrefab(info.Prefab, worldPosition, rotation, _buildingsParent);
+
+        OccupyCells(point, new Vector2Int(info.Size.x, info.Size.y), rotation, building);
 
         return building;
     }
-
-
     private void SpawnGridCell(GridObject gridObject, int x, int y, Transform parent = null)
     {
 
         Vector3 worldPosition = _grid.GetWorldPosition(x, y);
 
-        Transform gameObj = Instantiate(gridObject.Prefab, worldPosition, Quaternion.Euler(0f, gridObject.Rotation, 0f)).transform;
+        Transform gameObj = Instantiate(gridObject.Prefab, worldPosition, Quaternion.Euler(0f, (int)gridObject.Dir, 0f)).transform;
 
         if (parent == null)
             parent = _mapParent;
@@ -239,7 +240,7 @@ public class Map : MonoBehaviour
     }
 
 
-    private void OccupyCells(Vector2Int pos, Vector2Int size, GameObject obj)
+    private void OccupyCells(Vector2Int pos, Vector2Int size, Quaternion rotation, GameObject obj)
     {
         for (int x = 0; x < size.x; ++x)
         {
@@ -274,13 +275,35 @@ public class Map : MonoBehaviour
 
         return true;
     }
-    public List<Vector2Int> GetEmptyCells(Vector2Int size)
+    public List<Vector2Int> GetEmptyCells(Vector2Int size, Dir dir = Dir.Down)
     {
         List<Vector2Int> positions = new List<Vector2Int>();
 
-        for (int x = 1; x < (_game.CurrentLevel.GridWidth - 1); x++)
+        int width = 0;
+        int height = 0;
+
+        switch (dir)
         {
-            for (int y = 1; y < (_game.CurrentLevel.GridHeight - 1); y++)
+            default:
+            case Dir.Down:
+            case Dir.Up:
+                {
+                    width = (_game.CurrentLevel.GridWidth - 1);
+                    height = (_game.CurrentLevel.GridHeight - 1);
+                    break;
+                }
+            case Dir.Left:
+            case Dir.Right:
+                {
+                    height = (_game.CurrentLevel.GridWidth - 1);
+                    width = (_game.CurrentLevel.GridHeight - 1);
+                    break;
+                }
+        }
+
+        for (int x = 1; x < width; x++)
+        {
+            for (int y = 1; y < height; y++)
             {
                 GridCell gridCell = _grid.GetObject(x, y);
 
@@ -301,4 +324,5 @@ public class Map : MonoBehaviour
 
         return positions;
     }
+
 }

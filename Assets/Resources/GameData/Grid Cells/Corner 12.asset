@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Corner 12
   m_EditorClassIdentifier: 
   _prefab: {fileID: 8375587834352386534, guid: 6d72d1015950d85449fbb9dfcfca4289, type: 3}
-  _rotation: 90
+  _dir: 90
   _type: 0

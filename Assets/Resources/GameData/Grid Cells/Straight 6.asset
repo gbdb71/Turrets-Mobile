@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Straight 6
   m_EditorClassIdentifier: 
   _prefab: {fileID: 7170208573058273678, guid: 958096c34ceb328429012e0ad07911ad, type: 3}
-  _rotation: 90
+  _dir: 90
   _type: 0
