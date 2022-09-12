@@ -15,6 +15,7 @@ public class Game : MonoBehaviour
 
 
     public bool GameStared { get; private set; } = false;
+    public bool GameFinished { get; private set; } = false;
     public LevelData CurrentLevel { get; private set; }
     private List<Vector3> _pathPoints = new List<Vector3>();
 
@@ -34,10 +35,13 @@ public class Game : MonoBehaviour
 
     private void Update()
     {
-        if (GameStared)
+        if (GameStared && !GameFinished)
         {
             if (_activeScenario.Progress() == false)
+            {
+                GameFinished = true;
                 OnGameFinished?.Invoke();
+            }
         }
     }
 

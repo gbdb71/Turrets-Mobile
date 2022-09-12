@@ -31,7 +31,7 @@ public class LevelData : ScriptableObject
     public int GridHeight { get => _gridHeight; }
     public Vector2Int PathLength { get => Vector2Int.RoundToInt(_pathLength); }
     public Offset Offset { get => _offset; }
-    public GridBuilding BasePrefab { get => _basePrefab; }
+    public GridBuilding HeadquartersPrefab { get => _basePrefab; }
     public List<GridBuilding> BuildingObjects { get => _buildingObjects; }
     public int BarrierRows { get => _barrierRows; }
     public GridObject BarrierPrefab { get => _barrierPrefab; }

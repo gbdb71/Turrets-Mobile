@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Start
   m_EditorClassIdentifier: 
   _prefab: {fileID: 2199527513952348396, guid: 0fd45a70db007bc4097b0c4639f25653, type: 3}
-  _rotation: 90
+  _dir: 90
   _type: 0

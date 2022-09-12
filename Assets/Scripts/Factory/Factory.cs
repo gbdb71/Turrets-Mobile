@@ -14,7 +14,6 @@ public class Factory : MonoBehaviour, IInteractable
 {
     [Label("Spawning Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField, NotNull] private Transform _spawPoint;
-    [SerializeField] private float _moveTime = 0.5f;
     [SerializeField, NotNull] private GameObject _objectPrefab;
 
     [Label("Intertact Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
@@ -26,24 +25,28 @@ public class Factory : MonoBehaviour, IInteractable
     [SerializeField] private float _timeToCreate = 0.75f;
     [SerializeField] private int _objectCost = 25;
 
-    private List<FactoryPlate> plates = new List<FactoryPlate>();
 
+    private List<FactoryPlate> _plates = new List<FactoryPlate>();
     private int _currencyAmount;
     private float _intertactTimer;
     private float _workTimer;
-
     [Inject] private Player _player;
 
-    public bool IsWorking { get; private set; } = false;
 
+    public bool IsWorking { get; private set; } = false;
+    public List<FactoryPlate> Plates => _plates;
+    public FactoryType Type => _type;
+    public static List<Factory> Factories { get; private set; } = new List<Factory>();
 
     private void Awake()
     {
-        plates.AddRange(GetComponentsInChildren<FactoryPlate>());
+        Factories.Add(this);
+
+        _plates.AddRange(GetComponentsInChildren<FactoryPlate>());
     }
     private void Update()
     {
-        Transform plate = GetEmptyPlate();
+        FactoryPlate plate = GetEmptyPlate();
 
         if (plate == null)
             return;
@@ -70,6 +73,10 @@ public class Factory : MonoBehaviour, IInteractable
         }
 
     }
+    private void OnDestroy()
+    {
+        Factories.Remove(this);
+    }
 
 
     public void Interact(Player player)
@@ -89,24 +96,19 @@ public class Factory : MonoBehaviour, IInteractable
     public void OnExit(Player player) { }
 
 
-    private Transform GetEmptyPlate()
+    private FactoryPlate GetEmptyPlate()
     {
-        Transform tempTransform = null;
-        for (int i = 0; i < plates.Count; i++)
+        for (int i = 0; i < _plates.Count; i++)
         {
-            if (plates[i].HasChild())
-                tempTransform = plates[i].content;
+            if (_plates[i].CanPlace())
+                return _plates[i];
         }
 
-        return tempTransform;
+        return null;
     }
-    private void CreatingObject(Transform placeTransform)
+    private void CreatingObject(FactoryPlate plate)
     {
-        if (placeTransform == null)
-            return;
-
         GameObject newObject = Instantiate(_objectPrefab, _spawPoint.position, Quaternion.identity);
-        newObject.transform.DOMove(placeTransform.position, _moveTime);
-        newObject.transform.parent = placeTransform;
+        plate.Place(newObject.transform);
     }
 }

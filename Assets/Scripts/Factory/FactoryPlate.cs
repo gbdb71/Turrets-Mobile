@@ -1,13 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class FactoryPlate : MonoBehaviour
 {
-    public Transform content;
+    [SerializeField] private float _moveTime = 0.5f;
+    [SerializeField, NotNull] private Transform _contentTransform;
 
-    public bool HasChild()
+    public void Place(Transform gameObject)
     {
-        return content.transform.childCount == 0;
+        gameObject.transform.SetParent(_contentTransform, true);
+        gameObject.transform.DOMove(_contentTransform.position, _moveTime);
+    }
+
+    public bool CanPlace()
+    {
+        return _contentTransform.childCount == 0;
     }
 }

@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gridWidth: 10
   _gridHeight: 10
-  _pathLength: {x: 10, y: 20}
+  _pathLength: {x: 12, y: 20}
   _offset:
     Top: 2
     Bottom: 2
-    Right: 2
+    Right: 3
   _basePrefab: {fileID: 11400000, guid: fe8a3101d33292d40803a1c99867a975, type: 2}
   _buildingObjects: []
   _barrierRows: 4
