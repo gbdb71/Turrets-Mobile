@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections;
 using Zenject;
 using System;
+using UnityEngine.AI;
 
 public class Map : MonoBehaviour
 {
@@ -13,12 +14,16 @@ public class Map : MonoBehaviour
     [Range(1, 100)]
     [SerializeField] private int _cellSize = 1;
 
+    [Label("Navigation", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
+    [SerializeField] private LayerMask _navigationMask;
+
     [Label("Tiles Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [BeginHorizontal]
     [SerializeField] private SerializedDictionary<int, GridObject> _pathObjects;
     [SpaceArea(5)]
     [SerializeField, ReorderableList(Foldable = true)] private GridObject[] _sceneryObjects;
     [EndHorizontal]
+
 
     private Grid<GridCell> _grid;
     private Transform _mapParent;
@@ -40,6 +45,13 @@ public class Map : MonoBehaviour
         _grid = new Grid<GridCell>(_game.CurrentLevel.GridWidth, _game.CurrentLevel.GridHeight, _cellSize, (Grid<GridCell> g, int x, int y) => new GridCell(g, x, y));
         _pathGenerator = new PathGenerator(_game.CurrentLevel.GridWidth, _game.CurrentLevel.GridHeight, _game.CurrentLevel.Offset);
 
+        InitializeTransforms();
+
+        StartCoroutine(Generate());
+    }
+
+    private void InitializeTransforms()
+    {
         _mapParent = new GameObject("Map").transform;
         _pathParent = new GameObject("Path").transform;
         _barriersParent = new GameObject("Barriers").transform;
@@ -48,10 +60,7 @@ public class Map : MonoBehaviour
         _barriersParent.SetParent(_mapParent);
         _pathParent.SetParent(_mapParent);
         _buildingsParent.SetParent(_mapParent);
-
-        StartCoroutine(Generate());
     }
-
 
     private IEnumerator Generate()
     {
@@ -81,6 +90,10 @@ public class Map : MonoBehaviour
         if (_game.CurrentLevel.BarrierRows > 0 && _game.CurrentLevel.BarrierPrefab != null)
             yield return StartCoroutine(LayBarrierObjects());
 
+        NavMeshSurface mapSurface = _mapParent.gameObject.AddComponent<NavMeshSurface>();
+        mapSurface.layerMask = _navigationMask;
+        mapSurface.BuildNavMesh();
+
         OnMapGenerated?.Invoke();
     }
     private IEnumerator LayPathObjects(List<Vector2Int> path)
@@ -91,7 +104,7 @@ public class Map : MonoBehaviour
 
             if (_pathObjects.ContainsKey(neighbourValue))
             {
-                SpawnGridCell(_pathObjects[neighbourValue], p.x, p.y);
+                SpawnGridCell(_pathObjects[neighbourValue], p.x, p.y, _pathParent);
             }
             else
             {
@@ -184,7 +197,6 @@ public class Map : MonoBehaviour
 
         yield return null;
     }
-
 
 
     private Tuple<Vector2Int, Headquarters> SpawnHeadquarters()

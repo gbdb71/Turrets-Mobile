@@ -80,10 +80,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spawPoint: {fileID: 3124256463862472698}
-  _moveTime: 0.5
   _objectPrefab: {fileID: 1006089489906741386, guid: 30c426210db6bb247a57344874fed413, type: 3}
   _interactTime: 0.1
-  _type: 0
+  _type: 1
   _timeToCreate: 1
   _objectCost: 25
 --- !u!1001 &2077240235314361201
@@ -357,6 +356,22 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -2228417370725966487, guid: 0b3b1cedaf6f3c344ad23c1b064fa9d0, type: 3}
+--- !u!208 &8233671947572853007
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2853874114018597162}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.023000002, y: 0.015000001, z: 0.023000002}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 0
+  m_Center: {x: 0, y: 0.011000001, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1001 &8301119311522074577
 PrefabInstance:
   m_ObjectHideFlags: 0

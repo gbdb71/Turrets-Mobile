@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -44,7 +45,7 @@ public abstract class BaseTurret : MonoBehaviour
     public BaseTurret NextGrade => _nextGrade;
     public Renderer[] Renderers => _renderers;
     public bool CanCharge { get { return _ammo < _ammoMax; } }
-
+    public static List<BaseTurret> Turrets { get; private set; } = new List<BaseTurret>();
 
     protected virtual void Awake()
     {
@@ -53,8 +54,9 @@ public abstract class BaseTurret : MonoBehaviour
 
         _ammo = _ammoMax;
         _chargedAmmo = _chargedAmmoMax;
-    }
 
+        Turrets.Add(this);
+    }
     private void Update()
     {
         if (_currentTarget != null)
@@ -104,7 +106,10 @@ public abstract class BaseTurret : MonoBehaviour
     {
         _aim.SetIdle(true);
     }
-
+    private void OnDestroy()
+    {
+        Turrets.Remove(this);
+    }
 
 
     protected Enemy FindTarget()

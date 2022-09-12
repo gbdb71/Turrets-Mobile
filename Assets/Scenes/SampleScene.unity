@@ -707,6 +707,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 986577206, guid: b2fee99712be10741b995c108679d0a0, type: 3}
+      propertyPath: _navigationMask.m_Bits
+      value: 1024
+      objectReference: {fileID: 0}
+    - target: {fileID: 986577206, guid: b2fee99712be10741b995c108679d0a0, type: 3}
       propertyPath: _pathObjects.pairs.Array.size
       value: 8
       objectReference: {fileID: 0}
