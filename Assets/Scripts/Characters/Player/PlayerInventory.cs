@@ -186,8 +186,9 @@ public class PlayerInventory : MonoBehaviour
                 turret.transform.SetParent(null);
             });
 
+            turret.transform.DORotate(Vector3.zero, 1f);
+            
             _takedTurret = null;
-
             _delayTimer = _takeDelay;
 
         }

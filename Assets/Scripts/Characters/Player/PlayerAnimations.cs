@@ -1,4 +1,5 @@
 using UnityEngine;
+using DG.Tweening;
 
 [RequireComponent(typeof(Animator))]
 public class PlayerAnimations : MonoBehaviour
@@ -17,6 +18,11 @@ public class PlayerAnimations : MonoBehaviour
         if(_movement != null)
         {
             _animator.SetFloat(nameof(_movement.MoveVelocity), _movement.MoveVelocity);
+
+            float currentLayerWeight = _animator.GetLayerWeight(1);
+            if (_movement.LayerWeight != currentLayerWeight)
+                DOTween.To(() => currentLayerWeight, x => currentLayerWeight = x, _movement.LayerWeight, Random.Range(0.25f, 0.375f)).OnUpdate(() => { _animator.SetLayerWeight(1, currentLayerWeight); });
+                
         }
     }
 }

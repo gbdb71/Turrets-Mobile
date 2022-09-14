@@ -17,15 +17,18 @@ public class PlayerMovement : MonoBehaviour
 
     public float Speed { set { _speed = Mathf.Clamp(value, 1, 99); } }
     public float SpeedWithTurret {set { _speedWithTurret =Mathf.Clamp(value, 1, 99); } }
-    public float MoveVelocity { get { return _cc.velocity.magnitude; } }
+    public float MoveVelocity;
+    public float LayerWeight;
     public bool IsMove { get; private set; }
 
+    public float _distance = 0;
 
     private void Awake()
     {
         _cc = GetComponent<CharacterController>();
         _player = GetComponent<Player>();
     }
+
     private void Update()
     {
         HandleGravity();
@@ -33,19 +36,20 @@ public class PlayerMovement : MonoBehaviour
 		Rotate();
 	}
 
-
     private Vector3 moveDir;
 	private void Movement()
 	{
 		moveDir.Set(_joystick.Horizontal, 0, _joystick.Vertical);
+        MoveVelocity = Vector2.Distance(Vector2.zero, new Vector2(_joystick.Horizontal, _joystick.Vertical));
 
-        //float speed = _player.Inventory.HasTurret ? _speedWithTurret : _speed; ;
-        float speed = _player.Inventory.HasTurret ? _speedWithTurret : _speed; 
+        float speed = _player.Inventory.HasTurret ? _speedWithTurret : _speed;
+        LayerWeight = _player.Inventory.HasTurret ? 1 : 0;
 
         _cc.SimpleMove(moveDir * speed);
 
         IsMove = moveDir.magnitude > 0 && _cc.isGrounded;
 	}
+
     private void Rotate()
     {
         if (moveDir.magnitude > 0)

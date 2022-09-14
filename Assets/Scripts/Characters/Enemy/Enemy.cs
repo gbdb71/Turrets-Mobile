@@ -125,3 +125,4 @@ public class Enemy : MonoBehaviour
         _originFactory.Reclaim(this);
     }
 }
+
