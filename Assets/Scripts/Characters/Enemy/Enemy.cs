@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 using Zenject;
 
 public class Enemy : MonoBehaviour
@@ -54,6 +55,7 @@ public class Enemy : MonoBehaviour
 
         if (Health <= 0f)
         {
+            _animator.SetBool("DieBool", true);
             PreDestroy();
         }
 
@@ -73,6 +75,8 @@ public class Enemy : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, _rotationSpeed * Time.deltaTime);
     }
 
+    [SerializeField] float dashSpeed = 1f;
+    [SerializeField] float dashRotationSpeed = 0.25f;
     private void Move()
     {
         if (lastCell)
@@ -87,7 +91,11 @@ public class Enemy : MonoBehaviour
 
             if (_nextCell >= (_points.Count - 1))
             {
-                _headquarters.ApplyDamage(_damage); 
+                _animator.SetBool("GiveDamage", true);
+                _headquarters.ApplyDamage(_damage);
+
+                transform.DORotate(_headquarters.targetPoint.position, dashRotationSpeed);
+                transform.DOMove(_headquarters.targetPoint.position, dashSpeed);
                 PreDestroy();
             }
 
@@ -123,6 +131,7 @@ public class Enemy : MonoBehaviour
 
         _initialized = true;
     }
+
     public void SpawnOn(List<Vector3> points)
     {
         _currentCell = 0;
@@ -137,7 +146,8 @@ public class Enemy : MonoBehaviour
 
     public void PreDestroy()
     {
-        _animator.SetBool("DieBool", true);
+        //_animator.SetBool("DieBool", true);
+        //_animator.SetBool("GiveDamage", true);
         Invoke("Recycle", timeToDestroy);
         lastCell = true;
     }

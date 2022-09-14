@@ -15,7 +15,7 @@ class EnemyConfig
     [MinMaxSlider(-.7f, .7f)]
     public Vector2 PathOffset;
 
-    [MinMaxSlider(10f, 500f)]
+    [MinMaxSlider(10f, 4000f)]
     public Vector2 Health;
 
     [Range(1, 300)]

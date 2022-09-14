@@ -31,6 +31,7 @@ public class Headquarters : MonoBehaviour, IInteractable
     private List<UpgradeButton> _upgradeButtons = new List<UpgradeButton>();
     private Dictionary<string, string> _data = new Dictionary<string, string>();
     public Dictionary<CurrencyType, int> Currencies => _currencies.BuildNativeDictionary();
+    public Transform targetPoint;
 
     public event Action OnDeath;
 

@@ -61,7 +61,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0594a34ebcbe1544b4753a566df4821, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 5
+  _damage: 10
   _fireDelay: 0.2
   _reloadTime: 2
   _shootPivot: {fileID: 954626379497100490}

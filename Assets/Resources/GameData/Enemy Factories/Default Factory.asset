@@ -15,21 +15,21 @@ MonoBehaviour:
   _small:
     Prefab: {fileID: -6491075291442993941, guid: b527f8899ba57461fbb0f1bd903ac65e, type: 3}
     Scale: {x: 1, y: 1}
-    Speed: {x: 1.3, y: 1.3}
+    Speed: {x: 1.5, y: 1.5}
     PathOffset: {x: -0.7, y: 0.7}
-    Health: {x: 10, y: 186.8639}
+    Health: {x: 35, y: 50}
     Damage: 10
   _large:
-    Prefab: {fileID: -6491075291442993941, guid: b527f8899ba57461fbb0f1bd903ac65e, type: 3}
-    Scale: {x: 1, y: 1}
-    Speed: {x: 1.5, y: 1.5}
+    Prefab: {fileID: -6491075291442993941, guid: 3a05a58aa452f0e4eaa6588023b54db3, type: 3}
+    Scale: {x: 1.25, y: 1.25}
+    Speed: {x: 1, y: 1}
     PathOffset: {x: -1.2, y: 1.2}
-    Health: {x: 10, y: 186.8639}
-    Damage: 20
-  _medium:
-    Prefab: {fileID: -6491075291442993941, guid: b527f8899ba57461fbb0f1bd903ac65e, type: 3}
-    Scale: {x: 1, y: 1}
-    Speed: {x: 1, y: 1.7}
-    PathOffset: {x: -0.7, y: 0.7}
-    Health: {x: 10, y: 186.8639}
+    Health: {x: 85, y: 125}
     Damage: 30
+  _medium:
+    Prefab: {fileID: -6491075291442993941, guid: b757fc765daab9d41bcd38c74bcee8d0, type: 3}
+    Scale: {x: 1.5, y: 1.5}
+    Speed: {x: 0.2, y: 0.25}
+    PathOffset: {x: -0.7, y: 0.7}
+    Health: {x: 800, y: 1000}
+    Damage: 100
