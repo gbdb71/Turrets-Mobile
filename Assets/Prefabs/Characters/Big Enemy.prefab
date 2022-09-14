@@ -44,128 +44,13 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4803257595097350734}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 25eb36a0eda674f33a7cd9e5c7dc24b9, type: 3}
-  m_Controller: {fileID: 9100000, guid: b819af31e00af7043ae0f268295a53e6, type: 2}
+  m_Avatar: {fileID: 9000000, guid: 5108a7df5817a5a42a6b0c8a811fb5dd, type: 3}
+  m_Controller: {fileID: 9100000, guid: 608ad740efd0d3f4c9f5edc590a56b08, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
-  m_WarningMessage: '
-
-    Transform ''f_index.03.L'' has been deleted
-
-    Transform
-    ''f_index.02.L'' has been deleted
-
-    Transform ''f_index.01.L'' has been deleted
-
-    Transform
-    ''thumb.03.L'' has been deleted
-
-    Transform ''thumb.02.L'' has been deleted
-
-    Transform
-    ''thumb.01.L'' has been deleted
-
-    Transform ''palm.01.L'' has been deleted
-
-    Transform
-    ''f_pinky.03.L'' has been deleted
-
-    Transform ''f_pinky.02.L'' has been deleted
-
-    Transform
-    ''f_pinky.01.L'' has been deleted
-
-    Transform ''palm.04.L'' has been deleted
-
-    Transform
-    ''hand.L'' has been deleted
-
-    Transform ''forearm.L'' has been deleted
-
-    Transform
-    ''upper_arm.L'' has been deleted
-
-    Transform ''shoulder.L'' has been deleted
-
-    Transform
-    ''f_index.03.R'' has been deleted
-
-    Transform ''f_index.02.R'' has been deleted
-
-    Transform
-    ''f_index.01.R'' has been deleted
-
-    Transform ''thumb.03.R'' has been deleted
-
-    Transform
-    ''thumb.02.R'' has been deleted
-
-    Transform ''thumb.01.R'' has been deleted
-
-    Transform
-    ''palm.01.R'' has been deleted
-
-    Transform ''f_pinky.03.R'' has been deleted
-
-    Transform
-    ''f_pinky.02.R'' has been deleted
-
-    Transform ''f_pinky.01.R'' has been deleted
-
-    Transform
-    ''palm.04.R'' has been deleted
-
-    Transform ''hand.R'' has been deleted
-
-    Transform
-    ''forearm.R'' has been deleted
-
-    Transform ''upper_arm.R'' has been deleted
-
-    Transform
-    ''shoulder.R'' has been deleted
-
-    Transform ''spine.006'' has been deleted
-
-    Transform
-    ''spine.005'' has been deleted
-
-    Transform ''spine.004'' has been deleted
-
-    Transform
-    ''spine.003'' has been deleted
-
-    Transform ''spine.002'' has been deleted
-
-    Transform
-    ''spine.001'' has been deleted
-
-    Transform ''toe.L'' has been deleted
-
-    Transform
-    ''foot.L'' has been deleted
-
-    Transform ''shin.L'' has been deleted
-
-    Transform
-    ''thigh.L'' has been deleted
-
-    Transform ''toe.R'' has been deleted
-
-    Transform
-    ''foot.R'' has been deleted
-
-    Transform ''shin.R'' has been deleted
-
-    Transform
-    ''thigh.R'' has been deleted
-
-    Transform ''spine'' has been deleted
-
-    Transform
-    ''Humanoid.3 (metarig).003'' has been deleted'
+  m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0

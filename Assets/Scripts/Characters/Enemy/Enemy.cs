@@ -36,7 +36,7 @@ public class Enemy : MonoBehaviour
     }
 
     private bool _initialized = false;
-
+    private bool lastCell = false;
 
     private void Awake()
     {
@@ -63,14 +63,21 @@ public class Enemy : MonoBehaviour
 
     private void Rotate()
     {
+        if (lastCell)
+            return;
+        
         Vector3 offset = transform.right * _pathOffset;
         Vector3 relativePos = (_points[_nextCell] + offset) - transform.position;
 
         Quaternion targetRot = Quaternion.LookRotation(relativePos, Vector3.up);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, _rotationSpeed * Time.deltaTime);
     }
+
     private void Move()
     {
+        if (lastCell)
+            return;
+
         _progress += _speed * Time.deltaTime;
 
         while (_progress >= 1f)
@@ -98,7 +105,6 @@ public class Enemy : MonoBehaviour
         transform.position =
             Vector3.LerpUnclamped(from, to, _progress);
     }
-
 
     public void ApplyDamage(float damage)
     {
@@ -133,6 +139,7 @@ public class Enemy : MonoBehaviour
     {
         _animator.SetBool("DieBool", true);
         Invoke("Recycle", timeToDestroy);
+        lastCell = true;
     }
 
     public void Recycle()

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
+using DG.Tweening;
 
 public enum CurrencyType
 {
@@ -20,6 +21,7 @@ public class Headquarters : MonoBehaviour, IInteractable
     [Label("View Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField] private CanvasGroup _interactGroupPrefab;
     [SerializeField] private UpgradeButton _interactButtonPrefab;
+    [SerializeField] private GameObject _headquartersBody;
 
     [Inject] private Player _player;
     [Inject] private Canvas _canvas;
@@ -47,15 +49,19 @@ public class Headquarters : MonoBehaviour, IInteractable
         ClosedViewGroup();
     }
 
-
+    [SerializeField] float duration = 1f;
+    [SerializeField] float strenght = 15;
+    [SerializeField] int vibrato = 10;
+    [SerializeField] float random = 25;
     public void ApplyDamage(float damage)
     {
         _health -= damage;
+        if (_headquartersBody != null)
+            _headquartersBody.transform.DOShakeScale(duration, strenght, vibrato, random);
 
-        if(_health <= 0)
+        if (_health <= 0)
         {
-            OnDeath?.Invoke();
-            
+            OnDeath?.Invoke();    
             //REMOVE
             this.enabled = false;
         }
