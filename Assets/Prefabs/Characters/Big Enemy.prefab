@@ -1,0 +1,277 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4803257595097350734
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5324180518727178484}
+  - component: {fileID: 2234741086733206158}
+  - component: {fileID: 7573089184764797685}
+  - component: {fileID: -6491075291442993941}
+  - component: {fileID: -3030107636550699320}
+  m_Layer: 8
+  m_Name: Big Enemy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5324180518727178484
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4803257595097350734}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 5380872744979338979}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &2234741086733206158
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4803257595097350734}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 25eb36a0eda674f33a7cd9e5c7dc24b9, type: 3}
+  m_Controller: {fileID: 9100000, guid: b819af31e00af7043ae0f268295a53e6, type: 2}
+  m_CullingMode: 1
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: '
+
+    Transform ''f_index.03.L'' has been deleted
+
+    Transform
+    ''f_index.02.L'' has been deleted
+
+    Transform ''f_index.01.L'' has been deleted
+
+    Transform
+    ''thumb.03.L'' has been deleted
+
+    Transform ''thumb.02.L'' has been deleted
+
+    Transform
+    ''thumb.01.L'' has been deleted
+
+    Transform ''palm.01.L'' has been deleted
+
+    Transform
+    ''f_pinky.03.L'' has been deleted
+
+    Transform ''f_pinky.02.L'' has been deleted
+
+    Transform
+    ''f_pinky.01.L'' has been deleted
+
+    Transform ''palm.04.L'' has been deleted
+
+    Transform
+    ''hand.L'' has been deleted
+
+    Transform ''forearm.L'' has been deleted
+
+    Transform
+    ''upper_arm.L'' has been deleted
+
+    Transform ''shoulder.L'' has been deleted
+
+    Transform
+    ''f_index.03.R'' has been deleted
+
+    Transform ''f_index.02.R'' has been deleted
+
+    Transform
+    ''f_index.01.R'' has been deleted
+
+    Transform ''thumb.03.R'' has been deleted
+
+    Transform
+    ''thumb.02.R'' has been deleted
+
+    Transform ''thumb.01.R'' has been deleted
+
+    Transform
+    ''palm.01.R'' has been deleted
+
+    Transform ''f_pinky.03.R'' has been deleted
+
+    Transform
+    ''f_pinky.02.R'' has been deleted
+
+    Transform ''f_pinky.01.R'' has been deleted
+
+    Transform
+    ''palm.04.R'' has been deleted
+
+    Transform ''hand.R'' has been deleted
+
+    Transform
+    ''forearm.R'' has been deleted
+
+    Transform ''upper_arm.R'' has been deleted
+
+    Transform
+    ''shoulder.R'' has been deleted
+
+    Transform ''spine.006'' has been deleted
+
+    Transform
+    ''spine.005'' has been deleted
+
+    Transform ''spine.004'' has been deleted
+
+    Transform
+    ''spine.003'' has been deleted
+
+    Transform ''spine.002'' has been deleted
+
+    Transform
+    ''spine.001'' has been deleted
+
+    Transform ''toe.L'' has been deleted
+
+    Transform
+    ''foot.L'' has been deleted
+
+    Transform ''shin.L'' has been deleted
+
+    Transform
+    ''thigh.L'' has been deleted
+
+    Transform ''toe.R'' has been deleted
+
+    Transform
+    ''foot.R'' has been deleted
+
+    Transform ''shin.R'' has been deleted
+
+    Transform
+    ''thigh.R'' has been deleted
+
+    Transform ''spine'' has been deleted
+
+    Transform
+    ''Humanoid.3 (metarig).003'' has been deleted'
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!136 &7573089184764797685
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4803257595097350734}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.17
+  m_Height: 1.3
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.63, z: 0}
+--- !u!114 &-6491075291442993941
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4803257595097350734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 682ee7405c060bd4bb6e2bb946dc9883, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rotationSpeed: 4.26
+  _rigidbody: {fileID: 0}
+--- !u!54 &-3030107636550699320
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4803257595097350734}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
+--- !u!1001 &5962417769244688587
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 5324180518727178484}
+    m_Modifications:
+    - target: {fileID: 1734572081990470152, guid: 7f3425f16f17470468f250a8fd950f73, type: 3}
+      propertyPath: m_Name
+      value: Shadow
+      objectReference: {fileID: 0}
+    - target: {fileID: 1734572081990702632, guid: 7f3425f16f17470468f250a8fd950f73, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1734572081990702632, guid: 7f3425f16f17470468f250a8fd950f73, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1734572081990702632, guid: 7f3425f16f17470468f250a8fd950f73, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1734572081990702632, guid: 7f3425f16f17470468f250a8fd950f73, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1734572081990702632, guid: 7f3425f16f17470468f250a8fd950f73, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1734572081990702632, guid: 7f3425f16f17470468f250a8fd950f73, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1734572081990702632, guid: 7f3425f16f17470468f250a8fd950f73, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1734572081990702632, guid: 7f3425f16f17470468f250a8fd950f73, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1734572081990702632, guid: 7f3425f16f17470468f250a8fd950f73, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1734572081990702632, guid: 7f3425f16f17470468f250a8fd950f73, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1734572081990702632, guid: 7f3425f16f17470468f250a8fd950f73, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7f3425f16f17470468f250a8fd950f73, type: 3}
+--- !u!4 &5380872744979338979 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1734572081990702632, guid: 7f3425f16f17470468f250a8fd950f73, type: 3}
+  m_PrefabInstance: {fileID: 5962417769244688587}
+  m_PrefabAsset: {fileID: 0}

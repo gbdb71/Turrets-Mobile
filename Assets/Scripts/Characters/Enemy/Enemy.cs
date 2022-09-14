@@ -21,6 +21,9 @@ public class Enemy : MonoBehaviour
 
     [Inject] private Headquarters _headquarters;
 
+    private Animator _animator;
+    private float timeToDestroy = 0.75f;
+
     public float Health => _health;
     public Rigidbody Rigidbody => _rigidbody;
     public EnemyFactory OriginFactory
@@ -38,7 +41,10 @@ public class Enemy : MonoBehaviour
     private void Awake()
     {
         if(_rigidbody == null)
-            _rigidbody = GetComponent<Rigidbody>(); 
+            _rigidbody = GetComponent<Rigidbody>();
+
+        _animator = GetComponent<Animator>();
+        _animator.SetBool("DieBool", false);
     }
 
     private void Update()
@@ -48,7 +54,7 @@ public class Enemy : MonoBehaviour
 
         if (Health <= 0f)
         {
-            Recycle();
+            PreDestroy();
         }
 
         Move();
@@ -74,8 +80,8 @@ public class Enemy : MonoBehaviour
 
             if (_nextCell >= (_points.Count - 1))
             {
-                _headquarters.ApplyDamage(_damage);
-                Recycle();
+                _headquarters.ApplyDamage(_damage); 
+                PreDestroy();
             }
 
             _progress -= 1f;
@@ -97,7 +103,9 @@ public class Enemy : MonoBehaviour
     public void ApplyDamage(float damage)
     {
         _health -= damage;
+        _animator.SetTrigger("TakeDamage");
     }
+
     public void Initialize(float scale, float speed, float pathOffset, float health, float damage)
     {
         gameObject.transform.localScale = new Vector3(scale, scale, scale);
@@ -120,6 +128,13 @@ public class Enemy : MonoBehaviour
         Vector3 spawnPoint = points[0];
         transform.position = spawnPoint;
     }
+
+    public void PreDestroy()
+    {
+        _animator.SetBool("DieBool", true);
+        Invoke("Recycle", timeToDestroy);
+    }
+
     public void Recycle()
     {
         _originFactory.Reclaim(this);
