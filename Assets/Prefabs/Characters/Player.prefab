@@ -521,6 +521,9 @@ MonoBehaviour:
   _speed: 5
   _speedWithTurret: 2
   _rotationPerFrame: 10
+  MoveVelocity: 0
+  LayerWeight: 0
+  _distance: 0
 --- !u!114 &919132148344753372
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -548,7 +551,7 @@ MonoBehaviour:
   _turretSlot: {fileID: 806539327}
   _upgradeEffect: {fileID: 0}
   _placeBlockColor: {r: 0.8867924, g: 0, b: 0, a: 0.7176471}
-  _takeDelay: 0.5
+  _takeDelay: 0.2
   _placeOffset: {x: 0, y: 0.6, z: 0.2}
   _ammoMoveSpeed: 0.5
   _ammoRotationSpeed: 0.25
