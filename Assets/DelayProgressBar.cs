@@ -25,7 +25,7 @@ public class DelayProgressBar : MonoBehaviour
     {
         if (_game.GameStared)
         {
-            Debug.Log("Wave Lenght" + _game.ActiveScenario.Wave.WaveProgress);
+            //Debug.Log("Wave Lenght" + _game.ActiveScenario.Wave.WaveProgress);
         }
 
         if (!_enabled)
@@ -34,7 +34,7 @@ public class DelayProgressBar : MonoBehaviour
         if (_game.ActiveScenario.Wave.DelayProgress < _game.ActiveScenario.Wave.StartDelay)
         {
             float progress = _game.ActiveScenario.Wave.DelayProgress / _game.ActiveScenario.Wave.StartDelay;
-            Debug.Log(progress);
+            //Debug.Log(progress);
             fillImage.fillAmount = 1 - progress;
         }
         else

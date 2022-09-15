@@ -121,6 +121,8 @@ public class Enemy : MonoBehaviour
     public void ApplyDamage(float damage)
     {
         _health -= damage;
+        if (_hpBar != null)
+            _hpBar.ChangeValue(_health);
         _animator.SetTrigger("TakeDamage");
     }
 
