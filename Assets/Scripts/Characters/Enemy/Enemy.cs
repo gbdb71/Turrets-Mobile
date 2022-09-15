@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
 using Zenject;
 
 public class Enemy : MonoBehaviour
@@ -25,6 +26,8 @@ public class Enemy : MonoBehaviour
     private Animator _animator;
     private float timeToDestroy = 0.75f;
 
+    private HPBar _hpBar;
+
     public float Health => _health;
     public Rigidbody Rigidbody => _rigidbody;
     public EnemyFactory OriginFactory
@@ -41,11 +44,12 @@ public class Enemy : MonoBehaviour
 
     private void Awake()
     {
-        if(_rigidbody == null)
+        if (_rigidbody == null)
             _rigidbody = GetComponent<Rigidbody>();
 
         _animator = GetComponent<Animator>();
         _animator.SetBool("DieBool", false);
+        _hpBar = GetComponentInChildren<HPBar>();
     }
 
     private void Update()
@@ -67,7 +71,7 @@ public class Enemy : MonoBehaviour
     {
         if (lastCell)
             return;
-        
+
         Vector3 offset = transform.right * _pathOffset;
         Vector3 relativePos = (_points[_nextCell] + offset) - transform.position;
 
@@ -129,6 +133,9 @@ public class Enemy : MonoBehaviour
         _health = health;
         _damage = damage;
 
+        if (_hpBar != null)
+            _hpBar.InitializationBar(health);
+
         _initialized = true;
     }
 
@@ -146,9 +153,9 @@ public class Enemy : MonoBehaviour
 
     public void PreDestroy()
     {
-        //_animator.SetBool("DieBool", true);
-        //_animator.SetBool("GiveDamage", true);
         Invoke("Recycle", timeToDestroy);
+        if (_hpBar != null)
+            _hpBar.DisableBar();
         lastCell = true;
     }
 

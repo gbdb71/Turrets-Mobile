@@ -21,3 +21,4 @@ MonoBehaviour:
     _type: 1
     _amount: 6
     _cooldown: 4
+  startDelay: 10

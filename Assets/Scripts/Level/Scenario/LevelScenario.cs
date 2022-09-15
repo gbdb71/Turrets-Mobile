@@ -1,21 +1,29 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 [CreateAssetMenu(fileName = "Scenario", menuName = "TowerDefense/Level/Scenario")]
 public class LevelScenario : ScriptableObject
 {
     [SerializeField, ReorderableList] private EnemyWave[] waves = { };
     [SerializeField, Range(0, 10)] private int cycles = 1;
-    public State Begin() => new State(this);
+
+    public static event Action OnWaveChanged;
+    public State Begin()
+    {
+        OnWaveChanged?.Invoke();
+        return new State(this);
+    }
 
     [System.Serializable]
     public struct State
     {
-
         private EnemyWave.State _wave;
         private LevelScenario _scenario;
-
         private int _index, _cycle;
 
+        public EnemyWave.State Wave => _wave;
+        //public float ScenarioProgress => _index / _scenario.waves.Length;
+            
         public State(LevelScenario scenario)
         {
             this._scenario = scenario;
@@ -44,6 +52,7 @@ public class LevelScenario : ScriptableObject
                 }
                 _wave = _scenario.waves[_index].Begin();
                 deltaTime = _wave.Progress(deltaTime);
+                OnWaveChanged?.Invoke();
             }
             return true;
         }

@@ -12,16 +12,14 @@ public class Game : MonoBehaviour
     [Inject] private Map _map;
     private List<Enemy> _enemies = new List<Enemy>();
     private LevelScenario.State _activeScenario;
-
+    public LevelScenario.State ActiveScenario => _activeScenario;
 
     public bool GameStared { get; private set; } = false;
     public bool GameFinished { get; private set; } = false;
     public LevelData CurrentLevel { get; private set; }
     private List<Vector3> _pathPoints = new List<Vector3>();
 
-
     public static event Action OnGameFinished;
-
 
     private void Awake()
     {
@@ -29,8 +27,6 @@ public class Game : MonoBehaviour
 
         if (_map != null)
             _map.OnMapGenerated += OnMapGenerated;
-
-        _activeScenario = CurrentLevel.LevelScenario.Begin();
     }
 
     private void Update()
@@ -47,8 +43,9 @@ public class Game : MonoBehaviour
 
     private void OnMapGenerated()
     {
-        GameStared = true;
+        _activeScenario = CurrentLevel.LevelScenario.Begin();
 
+        GameStared = true;
         _pathPoints.Clear();
 
         for (int i = 0; i < _map.PathGenerator.PathCells.Count; i++)
