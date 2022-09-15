@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Tree
   m_EditorClassIdentifier: 
   _prefab: {fileID: 5615953194154960548, guid: d1a1bc4beb459324083450ad02cf4ffc, type: 3}
-  _rotation: 0
+  _dir: 0
   _type: 2

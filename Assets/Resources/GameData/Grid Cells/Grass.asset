@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Grass
   m_EditorClassIdentifier: 
   _prefab: {fileID: 8594340298032338358, guid: 634790c38d2088e459565eaaa775cb79, type: 3}
-  _rotation: 0
+  _dir: 0
   _type: 1

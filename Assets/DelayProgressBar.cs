@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 using UnityEngine.UI;
+using TMPro;
 
 public class DelayProgressBar : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class DelayProgressBar : MonoBehaviour
     private bool _enabled = false;
 
     [SerializeField] private Image fillImage;
+    [SerializeField] private Transform content;
+    [SerializeField] private TextMeshProUGUI titleText;
 
     private void Awake()
     { 
@@ -41,12 +44,13 @@ public class DelayProgressBar : MonoBehaviour
     private void EnableProgressBar()
     {
         _enabled = true;
-        fillImage.gameObject.SetActive(true);
+        content.gameObject.SetActive(true);
+        titleText.text = "Wave " + (_game.ActiveScenario.Wave.WaveIndex + 1).ToString();
     }
 
     private void DisableProgressBar()
     {
         _enabled = false;
-        fillImage.gameObject.SetActive(false);
+        content.gameObject.SetActive(false);
     }
 }
