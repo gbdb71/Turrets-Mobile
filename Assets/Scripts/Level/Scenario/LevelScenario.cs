@@ -21,10 +21,10 @@ public class LevelScenario : ScriptableObject
         private LevelScenario _scenario;
         private int _index, _cycle;
 
-        public EnemyWave.State Wave => _wave;
+        public EnemyWave.State Wave => _wave; 
+        public int WaveIndex => _index;
         //public float ScenarioProgress => _index / _scenario.waves.Length;
-          
-        
+
         public State(LevelScenario scenario)
         {
             this._scenario = scenario;

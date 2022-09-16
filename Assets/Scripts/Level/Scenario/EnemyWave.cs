@@ -23,7 +23,6 @@ public class EnemyWave : ScriptableObject
         public float DelayProgress => delayTimer;
         public float StartDelay => _wave.startDelay;
         public float WaveProgress => _index / _wave._spawnSequences.Length;
-        public int WaveIndex => _index;
 
         public State(EnemyWave wave)
         {

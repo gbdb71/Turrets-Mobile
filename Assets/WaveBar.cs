@@ -5,7 +5,7 @@ using Zenject;
 using UnityEngine.UI;
 using TMPro;
 
-public class DelayProgressBar : MonoBehaviour
+public class WaveBar : MonoBehaviour
 {
     [Inject]
     private Game _game;
@@ -23,18 +23,12 @@ public class DelayProgressBar : MonoBehaviour
 
     public void Update()
     {
-        if (_game.GameStared)
-        {
-            //Debug.Log("Wave Lenght" + _game.ActiveScenario.Wave.WaveProgress);
-        }
-
         if (!_enabled)
             return;
 
         if (_game.ActiveScenario.Wave.DelayProgress < _game.ActiveScenario.Wave.StartDelay)
         {
             float progress = _game.ActiveScenario.Wave.DelayProgress / _game.ActiveScenario.Wave.StartDelay;
-            //Debug.Log(progress);
             fillImage.fillAmount = 1 - progress;
         }
         else
@@ -45,7 +39,7 @@ public class DelayProgressBar : MonoBehaviour
     {
         _enabled = true;
         content.gameObject.SetActive(true);
-        titleText.text = "Wave " + (_game.ActiveScenario.Wave.WaveIndex + 1).ToString();
+        titleText.text = "Wave " + (_game.ActiveScenario.WaveIndex + 1).ToString();
     }
 
     private void DisableProgressBar()
