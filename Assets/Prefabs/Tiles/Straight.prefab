@@ -10,8 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7550955587575024436}
   - component: {fileID: 8783321006079162986}
-  - component: {fileID: 1132870666553836534}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Straight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,22 +46,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3, y: 0.6, z: 3}
   m_Center: {x: 0, y: 0.3, z: 0}
---- !u!208 &1132870666553836534
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7170208573058273678}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
-  m_MoveThreshold: 0.1
-  m_Carve: 1
-  m_CarveOnlyStationary: 0
-  m_Center: {x: 0, y: 0, z: 0}
-  m_TimeToStationary: 0.5
 --- !u!1 &7237750000748451058
 GameObject:
   m_ObjectHideFlags: 0
@@ -200,6 +183,14 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 991df5347fa15f04685bde6f11810a60, type: 3}
       propertyPath: m_Name
       value: tile_straight (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 991df5347fa15f04685bde6f11810a60, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8164078558771037576, guid: 991df5347fa15f04685bde6f11810a60, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 991df5347fa15f04685bde6f11810a60, type: 3}

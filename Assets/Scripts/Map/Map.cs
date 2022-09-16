@@ -39,7 +39,6 @@ public class Map : MonoBehaviour
     public PathGenerator PathGenerator => _pathGenerator;
     public event Action OnMapGenerated;
 
-
     private void Start()
     {
         _grid = new Grid<GridCell>(_game.CurrentLevel.GridWidth, _game.CurrentLevel.GridHeight, _cellSize, (Grid<GridCell> g, int x, int y) => new GridCell(g, x, y));

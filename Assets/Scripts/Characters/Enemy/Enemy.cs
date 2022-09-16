@@ -55,7 +55,7 @@ public class Enemy : MonoBehaviour
 
     private void Update()
     {
-        if (!_initialized)
+        if (!_initialized || _headquarters.IsDead)
             return;
 
         Move();

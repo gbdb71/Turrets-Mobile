@@ -17,7 +17,6 @@ public class Headquarters : MonoBehaviour, IInteractable
     [SerializeField] private UpgradesInfo _upgradeInfo;
     [SerializeField, EditorButton(nameof(ClearData), "ClearData"), DisableInPlayMode] private SerializedDictionary<CurrencyType, int> _currencies;
 
-
     [Label("View Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField] private CanvasGroup _interactGroupPrefab;
     [SerializeField] private UpgradeButton _interactButtonPrefab;
@@ -28,13 +27,15 @@ public class Headquarters : MonoBehaviour, IInteractable
     [Inject] private Game _game;
 
     private HPBar _hpBar;
-
     private CanvasGroup _interactGroup;
 
     private List<UpgradeButton> _upgradeButtons = new List<UpgradeButton>();
     private Dictionary<string, string> _data = new Dictionary<string, string>();
+    
     public Dictionary<CurrencyType, int> Currencies => _currencies.BuildNativeDictionary();
     public Transform targetPoint;
+
+    public bool IsDead => _health <= 0;
 
     public event Action OnDeath;
     public static event Action<CurrencyType, int> OnCurrencyChanged;
@@ -173,7 +174,7 @@ public class Headquarters : MonoBehaviour, IInteractable
     {
         if (_data != null)
         {
-            if(_data.ContainsKey("UpgradeCurrency"))
+            if (_data.ContainsKey("UpgradeCurrency"))
                 _data["UpgradeCurrency"] = Currencies[CurrencyType.Upgrade].ToString();
             else
                 _data.Add("UpgradeCurrency", Currencies[CurrencyType.Upgrade].ToString());
@@ -239,22 +240,11 @@ public class Headquarters : MonoBehaviour, IInteractable
             OpenViewGroup();
     }
 
-    public void Interact(Player player)
-    {
-    }
+    public void Interact(Player player) { }
 
     public void OnExit(Player player)
     {
         ClosedViewGroup();
     }
-    #endregion
-
-    #region Editor
-
-    private void AddCurrency()
-    {
-
-    }
-
     #endregion
 }
