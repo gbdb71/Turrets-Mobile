@@ -57,6 +57,7 @@ public abstract class BaseTurret : MonoBehaviour
 
         Turrets.Add(this);
     }
+
     private void Update()
     {
         if (_currentTarget != null)
@@ -66,7 +67,7 @@ public abstract class BaseTurret : MonoBehaviour
         {
             if (_currentTarget != null)
             {
-                if (Vector3.Distance(_currentTarget.transform.position, transform.position) > _aim.AimDistance)
+                if (_currentTarget.isDead || Vector3.Distance(_currentTarget.transform.position, transform.position) > _aim.AimDistance)
                 {
                     _currentTarget = null;
                     return;
@@ -102,15 +103,16 @@ public abstract class BaseTurret : MonoBehaviour
         if (_fireTimer > 0f)
             _fireTimer -= Time.deltaTime;
     }
+
     private void OnDisable()
     {
         _aim.SetIdle(true);
     }
+
     private void OnDestroy()
     {
         Turrets.Remove(this);
     }
-
 
     protected Enemy FindTarget()
     {
@@ -121,6 +123,7 @@ public abstract class BaseTurret : MonoBehaviour
 
         return null;
     }
+
     protected virtual void Aim()
     {
         if (_currentTarget != null)
@@ -150,11 +153,13 @@ public abstract class BaseTurret : MonoBehaviour
 
         IsReloading = false;
     }
+
     protected virtual void Fire()
     {
         _fireTimer = _fireDelay;
         _chargedAmmo -= 1;
     }
+    
     protected virtual bool CanFire()
     {
         return _aim.IsAimed && _fireTimer <= 0f && !IsReloading && _chargedAmmo > 0;

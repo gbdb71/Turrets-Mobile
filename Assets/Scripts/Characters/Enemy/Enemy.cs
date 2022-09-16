@@ -40,7 +40,8 @@ public class Enemy : MonoBehaviour
     }
 
     private bool _initialized = false;
-    private bool lastCell = false;
+
+    public bool isDead { get; private set; }
 
     private void Awake()
     {
@@ -57,19 +58,13 @@ public class Enemy : MonoBehaviour
         if (!_initialized)
             return;
 
-        if (Health <= 0f)
-        {
-            _animator.SetBool("DieBool", true);
-            PreDestroy();
-        }
-
         Move();
         Rotate();
     }
 
     private void Rotate()
     {
-        if (lastCell)
+        if (isDead)
             return;
 
         Vector3 offset = transform.right * _pathOffset;
@@ -83,7 +78,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] float dashRotationSpeed = 0.25f;
     private void Move()
     {
-        if (lastCell)
+        if (isDead)
             return;
 
         _progress += _speed * Time.deltaTime;
@@ -98,9 +93,11 @@ public class Enemy : MonoBehaviour
                 _animator.SetBool("GiveDamage", true);
                 _headquarters.ApplyDamage(_damage);
 
-                transform.DORotate(_headquarters.targetPoint.position, dashRotationSpeed);
+                Quaternion targetRot = Quaternion.LookRotation(_headquarters.targetPoint.position - transform.position, Vector3.up);
+                transform.DORotateQuaternion(targetRot, dashRotationSpeed);
                 transform.DOMove(_headquarters.targetPoint.position, dashSpeed);
-                PreDestroy();
+
+                Death();
             }
 
             _progress -= 1f;
@@ -124,6 +121,22 @@ public class Enemy : MonoBehaviour
         if (_hpBar != null)
             _hpBar.ChangeValue(_health);
         _animator.SetTrigger("TakeDamage");
+        
+        if (Health <= 0f)
+        {
+            Death(); 
+        }
+    }
+
+    private void Death()
+    {
+        _animator.SetBool("DieBool", true);
+        isDead = true;
+
+        if (_hpBar != null)
+            _hpBar.DisableBar();
+
+        Invoke(nameof(Recycle), 2f);
     }
 
     public void Initialize(float scale, float speed, float pathOffset, float health, float damage)
@@ -151,14 +164,6 @@ public class Enemy : MonoBehaviour
 
         Vector3 spawnPoint = points[0];
         transform.position = spawnPoint;
-    }
-
-    public void PreDestroy()
-    {
-        Invoke("Recycle", timeToDestroy);
-        if (_hpBar != null)
-            _hpBar.DisableBar();
-        lastCell = true;
     }
 
     public void Recycle()

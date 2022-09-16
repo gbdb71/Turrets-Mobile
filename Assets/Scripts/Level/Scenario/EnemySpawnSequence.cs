@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using Zenject;
 
 [System.Serializable]
@@ -13,7 +14,7 @@ public class EnemySpawnSequence
     [SerializeField, Range(1, 100)]
     private int _amount = 1;
 
-    [SerializeField, Range(0.1f, 10f)]
+    [SerializeField, Range(0.1f, 30f)]
     private float _cooldown = 1f;
 
     public State Begin(Game game) => new State(this, game);
@@ -27,6 +28,7 @@ public class EnemySpawnSequence
         private int _count;
         private float _cooldown;
         private Game _game;
+        private Enemy[] spawnedEnemy;
 
         public State(EnemySpawnSequence sequence, Game game)
         {
@@ -35,6 +37,7 @@ public class EnemySpawnSequence
 
             _count = 0;
             _cooldown = sequence._cooldown;
+            spawnedEnemy = new Enemy[sequence._amount];
         }
 
         public float Progress(float deltaTime)
@@ -46,13 +49,18 @@ public class EnemySpawnSequence
 
                 if (_count >= _sequence._amount)
                 {
+                    for (int i = 0; i < spawnedEnemy.Length; i++)
+                        if (spawnedEnemy[i] != null || !spawnedEnemy[i].isDead)
+                            return -1f;
+
                     return _cooldown;
                 }
 
-                _game.SpawnEnemy(_sequence._factory, _sequence._type);
+                spawnedEnemy[_count] = _game.SpawnEnemy(_sequence._factory, _sequence._type);
 
                 _count += 1;
             }
+
             return -1f;
         }
     }

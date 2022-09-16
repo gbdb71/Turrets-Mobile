@@ -59,11 +59,12 @@ public class Game : MonoBehaviour
         }
     }
 
-    public void SpawnEnemy(EnemyFactory factory, EnemyType type)
+    public Enemy SpawnEnemy(EnemyFactory factory, EnemyType type)
     {
         Enemy enemy = factory.Get(type);
         enemy.SpawnOn(_pathPoints);
 
         _enemies.Add(enemy);
+        return enemy;
     }
 }
