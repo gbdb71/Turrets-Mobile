@@ -56,7 +56,7 @@ public class HPBar : MonoBehaviour
         _valueText.text = ((int)newValue).ToString();
 
         newValue *= _hpCoefficient;
-        DOTween.To(() => fillImage.fillAmount, x => fillImage.fillAmount = x, newValue, fillTime);
+        fillImage.DOFillAmount(newValue, fillTime);
     }
 
     public void DisableBar()

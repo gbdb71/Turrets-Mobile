@@ -30,6 +30,8 @@ public class EnemySpawnSequence
         private Game _game;
         private Enemy[] spawnedEnemy;
 
+        public float SequenceProgress => (float)_count / _sequence._amount;
+
         public State(EnemySpawnSequence sequence, Game game)
         {
             this._sequence = sequence;
