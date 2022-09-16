@@ -30,8 +30,9 @@ public class Factory : MonoBehaviour, IInteractable
     private int _currencyAmount;
     private float _intertactTimer;
     private float _workTimer;
-    [Inject] private Player _player;
 
+    [Inject] private Player _player;
+    [Inject] private Game _game;
 
     public bool IsWorking { get; private set; } = false;
     public List<FactoryPlate> Plates => _plates;
@@ -44,6 +45,7 @@ public class Factory : MonoBehaviour, IInteractable
 
         _plates.AddRange(GetComponentsInChildren<FactoryPlate>());
     }
+
     private void Update()
     {
         FactoryPlate plate = GetEmptyPlate();
@@ -78,17 +80,17 @@ public class Factory : MonoBehaviour, IInteractable
         Factories.Remove(this);
     }
 
-
     public void Interact(Player player)
     {
         _intertactTimer += Time.deltaTime;
         if (_intertactTimer >= _interactTime)
         {
-            if (_player.Headquarters.Currencies[CurrencyType.Construction] <= 0)
+            if (_game.Headquarters.Currencies[CurrencyType.Construction] <= 0)
                 return;
 
             _currencyAmount += 1;
-            _player.Headquarters.Currencies[CurrencyType.Construction] -= 1;
+            _game.Headquarters.TryWithdrawCurrency(CurrencyType.Construction, 1);
+            
             _intertactTimer = 0;
         }
     }

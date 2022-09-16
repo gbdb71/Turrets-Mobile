@@ -27,6 +27,10 @@ public class LevelData : ScriptableObject
     [Label("Barriers", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField, NotNull] private LevelScenario _levelScenario = default;
 
+    [Label("Currencies", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
+    [SerializeField] private int _constructionCurrency;
+
+    public int ConstructionCurrency => _constructionCurrency;
     public int GridWidth { get => _gridWidth; }
     public int GridHeight { get => _gridHeight; }
     public Vector2Int PathLength { get => Vector2Int.RoundToInt(_pathLength); }

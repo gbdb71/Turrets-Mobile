@@ -25,6 +25,7 @@ public class Headquarters : MonoBehaviour, IInteractable
 
     [Inject] private Player _player;
     [Inject] private Canvas _canvas;
+    [Inject] private Game _game;
 
     private HPBar _hpBar;
 
@@ -36,10 +37,11 @@ public class Headquarters : MonoBehaviour, IInteractable
     public Transform targetPoint;
 
     public event Action OnDeath;
+    public static event Action<CurrencyType, int> OnCurrencyChanged;
 
     private void Awake()
     {
-        _player.SetHeadquarters(this);
+        _game.SetHeadquarters(this);
         _hpBar = GetComponentInChildren<HPBar>();
 
         if (_hpBar != null)
@@ -75,7 +77,7 @@ public class Headquarters : MonoBehaviour, IInteractable
             if (_hpBar != null)
                 _hpBar.DisableBar();
 
-            OnDeath?.Invoke();    
+            OnDeath?.Invoke();
 
             //REMOVE
             this.enabled = false;
@@ -93,8 +95,11 @@ public class Headquarters : MonoBehaviour, IInteractable
                 _currencies[type] += amount;
             else
                 _currencies.Add(type, amount);
+
+            OnCurrencyChanged?.Invoke(type, _currencies[type]);
         }
     }
+
     public void TryWithdrawCurrency(CurrencyType type, int amount)
     {
         if (_currencies.ContainsKey(type))
@@ -105,6 +110,8 @@ public class Headquarters : MonoBehaviour, IInteractable
             {
                 _currencies[type] = 0;
             }
+
+            OnCurrencyChanged?.Invoke(type, _currencies[type]);
         }
     }
 
@@ -132,6 +139,7 @@ public class Headquarters : MonoBehaviour, IInteractable
             }
         }
     }
+
     public void ValuePassing(UpgradeList.UpgradeType type, float value, int index)
     {
         string key = type.ToString();
@@ -164,8 +172,15 @@ public class Headquarters : MonoBehaviour, IInteractable
     private void SaveData()
     {
         if (_data != null)
+        {
+            if(_data.ContainsKey("UpgradeCurrency"))
+                _data["UpgradeCurrency"] = Currencies[CurrencyType.Upgrade].ToString();
+            else
+                _data.Add("UpgradeCurrency", Currencies[CurrencyType.Upgrade].ToString());
+
             foreach (var itemData in _data)
                 PlayerPrefs.SetString(itemData.Key.ToString(), itemData.Value.ToString());
+        }
 
         PlayerPrefs.Save();
     }
@@ -174,12 +189,22 @@ public class Headquarters : MonoBehaviour, IInteractable
     {
         _data = new Dictionary<string, string>();
 
+        int upgradeValue = PlayerPrefs.HasKey("UpgradeCurrency") ? int.Parse(PlayerPrefs.GetString("UpgradeCurrency")) : 0;
+        _currencies[CurrencyType.Upgrade] = upgradeValue;
+        OnCurrencyChanged?.Invoke(CurrencyType.Upgrade, upgradeValue);
+
+        int constructionValue = _game.CurrentLevel.ConstructionCurrency;
+        _currencies[CurrencyType.Construction] = constructionValue;
+        OnCurrencyChanged?.Invoke(CurrencyType.Construction, constructionValue);
+
         foreach (string name in Enum.GetNames(typeof(UpgradeList.UpgradeType)))
         {
             string value = PlayerPrefs.HasKey(name) ? PlayerPrefs.GetString(name) : "0";
 
             _data.Add(name, value);
         }
+
+        //OnCurrenciesChanged();
     }
 
     private void ClearData()

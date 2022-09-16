@@ -19,6 +19,10 @@ public class Game : MonoBehaviour
     public LevelData CurrentLevel { get; private set; }
     private List<Vector3> _pathPoints = new List<Vector3>();
 
+    private Headquarters _headquarters;
+
+    public Headquarters Headquarters => _headquarters;
+
     public static event Action OnGameFinished;
 
     private void Awake()
@@ -27,6 +31,11 @@ public class Game : MonoBehaviour
 
         if (_map != null)
             _map.OnMapGenerated += OnMapGenerated;
+    }
+
+    public void SetHeadquarters(Headquarters headquarters)
+    {
+        _headquarters = headquarters;
     }
 
     private void Update()
