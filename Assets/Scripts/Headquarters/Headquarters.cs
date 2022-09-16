@@ -12,7 +12,7 @@ public enum CurrencyType
 [SelectionBase]
 public class Headquarters : MonoBehaviour, IInteractable
 {
-    [SerializeField, DisableInPlayMode, Range(1, 300)] private float _health;
+    [SerializeField, DisableInPlayMode, Range(100, 1000)] private float _health;
     [Label("Data Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField] private UpgradesInfo _upgradeInfo;
     [SerializeField, EditorButton(nameof(ClearData), "ClearData"), DisableInPlayMode] private SerializedDictionary<CurrencyType, int> _currencies;
@@ -26,6 +26,8 @@ public class Headquarters : MonoBehaviour, IInteractable
     [Inject] private Player _player;
     [Inject] private Canvas _canvas;
 
+    private HPBar _hpBar;
+
     private CanvasGroup _interactGroup;
 
     private List<UpgradeButton> _upgradeButtons = new List<UpgradeButton>();
@@ -38,6 +40,10 @@ public class Headquarters : MonoBehaviour, IInteractable
     private void Awake()
     {
         _player.SetHeadquarters(this);
+        _hpBar = GetComponentInChildren<HPBar>();
+
+        if (_hpBar != null)
+            _hpBar.InitializationBar(_health);
     }
 
     private void Start()
@@ -57,12 +63,20 @@ public class Headquarters : MonoBehaviour, IInteractable
     public void ApplyDamage(float damage)
     {
         _health -= damage;
+
+        if (_hpBar != null)
+            _hpBar.ChangeValue(_health);
+
         if (_headquartersBody != null)
             _headquartersBody.transform.DOShakeScale(duration, strenght, vibrato, random);
 
         if (_health <= 0)
         {
+            if (_hpBar != null)
+                _hpBar.DisableBar();
+
             OnDeath?.Invoke();    
+
             //REMOVE
             this.enabled = false;
         }
