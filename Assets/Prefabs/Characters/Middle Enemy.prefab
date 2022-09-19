@@ -83,8 +83,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rotationSpeed: 4.26
   _rigidbody: {fileID: 0}
+  _bodyRenderer: {fileID: 0}
   dashSpeed: 1
   dashRotationSpeed: 0.25
+  flickerDuration: 0.15
 --- !u!54 &-3030107636550699320
 Rigidbody:
   m_ObjectHideFlags: 0

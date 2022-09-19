@@ -27,6 +27,7 @@ public class Enemy : MonoBehaviour
     private float timeToDestroy = 0.75f;
 
     private HPBar _hpBar;
+    [SerializeField] private Renderer _bodyRenderer;
 
     public float Health => _health;
     public Rigidbody Rigidbody => _rigidbody;
@@ -51,6 +52,7 @@ public class Enemy : MonoBehaviour
         _animator = GetComponent<Animator>();
         _animator.SetBool("DieBool", false);
         _hpBar = GetComponentInChildren<HPBar>();
+        _bodyRenderer = GetComponentInChildren<Renderer>();
     }
 
     private void Update()
@@ -120,12 +122,22 @@ public class Enemy : MonoBehaviour
         _health -= damage;
         if (_hpBar != null)
             _hpBar.ChangeValue(_health);
-        _animator.SetTrigger("TakeDamage");
-        
+
+        //_animator.SetTrigger("TakeDamage");
+        TakeDamage();
+
         if (Health <= 0f)
         {
             Death(); 
         }
+    }
+
+    [SerializeField] float flickerDuration = 0.25f;
+    [ContextMenu("Take Damage")]
+    private void TakeDamage()
+    {
+        _bodyRenderer.material.DOOffset(new Vector2(0, 1), flickerDuration);
+        _bodyRenderer.material.mainTextureOffset = Vector2.zero;
     }
 
     private void Death()

@@ -6,7 +6,10 @@ public class PlayerMovement : MonoBehaviour
 {
     [Label("Speed", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField, Range(5, 15f)] private float _speed = 5f;
+    [SerializeField] private float _speedCoef = 0.2f;
+
     [SerializeField, Range(1, 15f)] private float _speedWithTurret = 2f;
+    [SerializeField] private float _speedWithTurretCoef = 0.25f;
 
     [Label("Rotation", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField, Range(1, 20)] private float _rotationPerFrame = 10f;
@@ -44,6 +47,9 @@ public class PlayerMovement : MonoBehaviour
 
         float speed = _player.Inventory.HasTurret ? _speedWithTurret : _speed;
         LayerWeight = _player.Inventory.HasTurret ? 1 : 0;
+
+        float animationSpeed = _player.Inventory.HasTurret ? _speedWithTurret * _speedWithTurretCoef : _speed * _speedCoef;
+        _player.PlayerAnimations.AnimationSpeed = animationSpeed;
 
         _cc.SimpleMove(moveDir * speed);
 
