@@ -9,6 +9,7 @@ public enum CurrencyType
     Upgrade,
     Construction
 }
+
 [SelectionBase]
 public class Headquarters : MonoBehaviour, IInteractable
 {
@@ -19,7 +20,7 @@ public class Headquarters : MonoBehaviour, IInteractable
 
     [Label("View Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField] private CanvasGroup _interactGroupPrefab;
-    [SerializeField] private UpgradeButton _interactButtonPrefab;
+    [SerializeField] private CustomButton _interactButtonPrefab;
     [SerializeField] private GameObject _headquartersBody;
 
     [Inject] private Player _player;
@@ -29,7 +30,7 @@ public class Headquarters : MonoBehaviour, IInteractable
     private HPBar _hpBar;
     private CanvasGroup _interactGroup;
 
-    private List<UpgradeButton> _upgradeButtons = new List<UpgradeButton>();
+    private List<CustomButton> _upgradeButtons = new List<CustomButton>();
     private Dictionary<string, string> _data = new Dictionary<string, string>();
     
     public Dictionary<CurrencyType, int> Currencies => _currencies.BuildNativeDictionary();
@@ -132,7 +133,7 @@ public class Headquarters : MonoBehaviour, IInteractable
 
                 int index = int.Parse(_data[type.ToString()]);
 
-                UpgradeButton button = Instantiate(_interactButtonPrefab, _interactGroup.transform);
+                CustomButton button = Instantiate(_interactButtonPrefab, _interactGroup.transform);
                 button.Initialization(_upgradeInfo.upgrades[i], index, this);
                 _upgradeButtons.Add(button);
 

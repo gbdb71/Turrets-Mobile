@@ -9,13 +9,11 @@ public class PlayerAnimations : MonoBehaviour
     private PlayerMovement _movement;
 
     public float AnimationSpeed;
-    public BlendTree blendTree;
 
     private void Awake()
     {
         _animator = GetComponent<Animator>();
         _movement = GetComponent<PlayerMovement>();
-        blendTree = _animator.GetComponentInChildren<BlendTree>();
     }
 
     private void Update()

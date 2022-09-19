@@ -22,6 +22,8 @@ public class IdleState : HelperBaseState
                 _stateMachine.ChangeState(_stateMachine.TakeAmmoState);
             }
         }
+
+        _stateMachine.Owner.Agent.SetDestination(_stateMachine.Owner.Game.Headquarters.targetPoint.position);
     }
 
 

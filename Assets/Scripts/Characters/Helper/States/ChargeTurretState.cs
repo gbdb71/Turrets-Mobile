@@ -1,5 +1,4 @@
-﻿
-using Assets.Scripts.StateMachine;
+﻿using Assets.Scripts.StateMachine;
 
 public class ChargeTurretState : HelperBaseState
 {
@@ -17,6 +16,7 @@ public class ChargeTurretState : HelperBaseState
     {
         if(_stateMachine.Owner.InventoyEmpty)
         {
+           // _stateMachine.Owner.IsMove = true;
             _stateMachine.ChangeState(_stateMachine.TakeAmmoState);
             return;
         }
@@ -24,7 +24,10 @@ public class ChargeTurretState : HelperBaseState
         if(_targetTurret != null)
         {
             if (!_targetTurret.CanCharge)
+            {
                 _targetTurret = null;
+                //_stateMachine.Owner.IsMove = false;
+            }
         }
 
         if(_targetTurret == null)
@@ -34,12 +37,15 @@ public class ChargeTurretState : HelperBaseState
             if( _targetTurret == null)
             {
                 _stateMachine.ChangeState(_stateMachine.IdleState);
+                //_stateMachine.Owner.IsMove = false;
                 return;
             }
         }
 
+        //_stateMachine.Owner.IsMove = true;
         _stateMachine.Owner.Agent.SetDestination(_targetTurret.transform.position);
     }
+
     public override void Exit()
     {
        
