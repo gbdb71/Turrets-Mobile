@@ -85,18 +85,15 @@ public class Factory : MonoBehaviour, IInteractable
         _intertactTimer += Time.deltaTime;
         if (_intertactTimer >= _interactTime)
         {
-            if (_game.Headquarters.Currencies[CurrencyType.Construction] <= 0)
-                return;
-
-            _currencyAmount += 1;
-            _game.Headquarters.TryWithdrawCurrency(CurrencyType.Construction, 1);
-            
-            _intertactTimer = 0;
+            if (_game.Headquarters.TryWithdrawCurrency(CurrencyType.Construction, 1))
+            {
+                _currencyAmount += 1;
+                _intertactTimer = 0;
+            }
         }
     }
     public void OnEnter(Player player) { }
     public void OnExit(Player player) { }
-
 
     private FactoryPlate GetEmptyPlate()
     {
