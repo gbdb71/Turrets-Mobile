@@ -88,7 +88,7 @@ MonoBehaviour:
       value: 100
     error: 0
   _interactGroupPrefab: {fileID: 5134897979160479666, guid: 6124358e3a15b544faf4ec3e90bf5dce, type: 3}
-  _interactButtonPrefab: {fileID: 278325880557923504, guid: 7a6c9a94fc3816f42a458c75a45faee6, type: 3}
+  _upgradeButtonPrefab: {fileID: 6953870278822238118, guid: 7a6c9a94fc3816f42a458c75a45faee6, type: 3}
   _headquartersBody: {fileID: 8609843843147868682}
   targetPoint: {fileID: 8515274584460209521}
   duration: 1

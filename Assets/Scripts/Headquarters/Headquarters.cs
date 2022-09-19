@@ -20,7 +20,7 @@ public class Headquarters : MonoBehaviour, IInteractable
 
     [Label("View Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField] private CanvasGroup _interactGroupPrefab;
-    [SerializeField] private CustomButton _interactButtonPrefab;
+    [SerializeField] private CustomButton _upgradeButtonPrefab;
     [SerializeField] private GameObject _headquartersBody;
 
     [Inject] private Player _player;
@@ -102,9 +102,9 @@ public class Headquarters : MonoBehaviour, IInteractable
         }
     }
 
-    public void TryWithdrawCurrency(CurrencyType type, int amount)
+    public bool TryWithdrawCurrency(CurrencyType type, int amount)
     {
-        if (_currencies.ContainsKey(type))
+        if (_currencies.ContainsKey(type) && _currencies[type] >= amount)
         {
             _currencies[type] -= amount;
 
@@ -114,7 +114,10 @@ public class Headquarters : MonoBehaviour, IInteractable
             }
 
             OnCurrencyChanged?.Invoke(type, _currencies[type]);
+            return true;
         }
+
+        return false;
     }
 
     #endregion
@@ -133,8 +136,8 @@ public class Headquarters : MonoBehaviour, IInteractable
 
                 int index = int.Parse(_data[type.ToString()]);
 
-                CustomButton button = Instantiate(_interactButtonPrefab, _interactGroup.transform);
-                button.Initialization(_upgradeInfo.upgrades[i], index, this);
+                UpgradeButton button = (UpgradeButton)Instantiate(_upgradeButtonPrefab, _interactGroup.transform);
+                button.Initialization(_upgradeInfo.upgrades[i], index, _upgradeInfo.upgrades[i].name, this);
                 _upgradeButtons.Add(button);
 
                 ValuePassing(type, _upgradeInfo.upgrades[i].elementList[index].Value, index);

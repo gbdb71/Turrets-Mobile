@@ -433,11 +433,11 @@ GameObject:
   - component: {fileID: 278325880557923516}
   - component: {fileID: 278325880557923506}
   - component: {fileID: 278325880557923507}
-  - component: {fileID: 278325880557923504}
   - component: {fileID: 278325880557923505}
   - component: {fileID: 7574857149208807180}
+  - component: {fileID: 6953870278822238118}
   m_Layer: 5
-  m_Name: Custom Button
+  m_Name: UI Upgrade
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -503,27 +503,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &278325880557923504
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 278325880557923517}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf684604d526611409803f3ab1362f79, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  button: {fileID: 278325880557923505}
-  canvasGroup: {fileID: 7574857149208807180}
-  currentUpgradeList:
-    name: 
-    elementList: []
-  buttonIsActive: 0
-  titleText: {fileID: 278325879289071049}
-  costText: {fileID: 278325879807222892}
-  levelText: {fileID: 3988975228929832193}
 --- !u!114 &278325880557923505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -580,6 +559,23 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &6953870278822238118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 278325880557923517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97492b1b39e39ba488281b2a566cfd90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  button: {fileID: 278325880557923505}
+  canvasGroup: {fileID: 7574857149208807180}
+  _titleText: {fileID: 278325879289071049}
+  costText: {fileID: 278325879807222892}
+  levelText: {fileID: 3988975228929832193}
 --- !u!1 &1738407812400431514
 GameObject:
   m_ObjectHideFlags: 0
