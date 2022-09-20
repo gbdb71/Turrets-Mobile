@@ -4,6 +4,7 @@ public class MortarTurret : BaseTurret
 {
     [Label("Mortart Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField, Range(0.5f, 3f)] private float _projectileRadius = 1f;
+    [SerializeField] private MortarShell _shellPrefab;
 
     private float _launchSpeed;
     private Vector3 _launchVelocity;
@@ -23,9 +24,9 @@ public class MortarTurret : BaseTurret
 
         if (_launchVelocity != Vector3.zero)
         {
-            MortarShell projectile = Instantiate(_projectilePrefab, _shootPivot.position, Quaternion.identity).GetComponent<MortarShell>();
+            MortarShell projectile = Instantiate(_shellPrefab, _shootPivot.position, Quaternion.identity);
 
-            projectile.Initialize(_shootPivot.position, _launchVelocity, _projectileRadius, _damage);
+            projectile.Initialize(_shootPivot.position, _launchVelocity, _damage, _projectileRadius);
         }
     }
     protected override void Aim()

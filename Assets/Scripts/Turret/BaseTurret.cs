@@ -18,16 +18,15 @@ public abstract class BaseTurret : MonoBehaviour
     [SerializeField] private Transform _indicatorTransform = default;
     [SerializeField] private Image _indicatorFill = default;
 
+    [Label("Upgrade", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
+    [SerializeField] private BaseTurret _nextGrade = default;
+
     [Label("Ammunition", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
-    [SerializeField] protected BaseProjectile _projectilePrefab;
     [Range(1, 100)]
     [SerializeField] protected int _chargedAmmoMax;
     [Range(1, 100)]
     [SerializeField] private int _ammoMax;
     [SerializeField, Range(1, 100)] private int _ammoPerBox = 10;
-
-    [Label("Upgrade", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
-    [SerializeField] private BaseTurret _nextGrade = default;
 
     protected TurretAim _aim;
     protected Enemy _currentTarget;

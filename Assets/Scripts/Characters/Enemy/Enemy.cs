@@ -140,7 +140,6 @@ public class Enemy : MonoBehaviour
         if (_hpBar != null)
             _hpBar.ChangeValue(_health);
 
-        //_animator.SetTrigger("TakeDamage");
         TakeDamage();
 
         if (Health <= 0f)

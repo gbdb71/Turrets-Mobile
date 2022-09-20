@@ -2,7 +2,7 @@
 
 public class MortarShell : BaseProjectile
 {
-    [SerializeField] private LayerMask _enemyMask;
+    [SerializeField, Range(1f, 2f)] private float _damageDrop = 2f;
 
     private float _blastRadius;
 
@@ -15,10 +15,18 @@ public class MortarShell : BaseProjectile
 
     protected override void Damage(Collision collision)
     {
-        TargetPoint.FillBuffer(transform.position, _blastRadius);
+        TargetPoint.FillBuffer(collision.transform.position, _blastRadius);
+
         for (int i = 0; i < TargetPoint.BufferedCount; i++)
         {
-            TargetPoint.GetBuffered(i).ApplyDamage(_damage);
+            Enemy enemy = TargetPoint.GetBuffered(i);
+            float distance = Vector3.Distance(collision.transform.position, enemy.transform.position);
+
+            float percent = distance / _blastRadius;
+            float minDamage = (_damage / 3);
+            float damage = (_damageDrop - percent) * (_damage - minDamage) + minDamage;
+
+            enemy.ApplyDamage(damage);
         }
     }
 

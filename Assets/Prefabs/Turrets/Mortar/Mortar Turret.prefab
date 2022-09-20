@@ -423,7 +423,7 @@ MonoBehaviour:
   _rightLimit: 120
   aimedThreshold: 20
   _drawDebugRay: 1
-  _drawDebugArcs: 0
+  _drawDebugArcs: 1
 --- !u!114 &7157497047578270226
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -436,17 +436,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3499ea574fa5f3a4486bed9e40690dd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 0
+  _damage: 8
   _fireDelay: 0.1
   _reloadTime: 1
   _shootPivot: {fileID: 3642958238143821735}
   _indicatorTransform: {fileID: 5520151737244513286}
   _indicatorFill: {fileID: 6667220803628488832}
-  _projectilePrefab: {fileID: 5558264920343970145, guid: 699da27d33bc75e45ac0b5e8a9068378, type: 3}
+  _nextGrade: {fileID: 0}
   _chargedAmmoMax: 1
   _ammoMax: 3
-  _nextGrade: {fileID: 0}
-  _projectileRadius: 1
+  _ammoPerBox: 10
+  _projectileRadius: 1.2
+  _shellPrefab: {fileID: 5558264920343970145, guid: 699da27d33bc75e45ac0b5e8a9068378, type: 3}
 --- !u!65 &2802504676723262349
 BoxCollider:
   m_ObjectHideFlags: 0
