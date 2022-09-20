@@ -16,7 +16,6 @@ public class ChargeTurretState : HelperBaseState
     {
         if(_stateMachine.Owner.InventoyEmpty)
         {
-           // _stateMachine.Owner.IsMove = true;
             _stateMachine.ChangeState(_stateMachine.TakeAmmoState);
             return;
         }
@@ -26,7 +25,6 @@ public class ChargeTurretState : HelperBaseState
             if (!_targetTurret.CanCharge)
             {
                 _targetTurret = null;
-                //_stateMachine.Owner.IsMove = false;
             }
         }
 
@@ -37,12 +35,9 @@ public class ChargeTurretState : HelperBaseState
             if( _targetTurret == null)
             {
                 _stateMachine.ChangeState(_stateMachine.IdleState);
-                //_stateMachine.Owner.IsMove = false;
                 return;
             }
         }
-
-        //_stateMachine.Owner.IsMove = true;
         _stateMachine.Owner.Agent.SetDestination(_targetTurret.transform.position);
     }
 
@@ -57,7 +52,7 @@ public class ChargeTurretState : HelperBaseState
         {
             BaseTurret turret = BaseTurret.Turrets[i];
 
-            if(turret.gameObject.activeSelf && turret.CanCharge)
+            if(turret.gameObject.activeSelf && turret.CanCharge && turret.enabled)
             {
                 return turret;
             }
