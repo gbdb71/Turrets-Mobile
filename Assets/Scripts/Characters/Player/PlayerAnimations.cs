@@ -26,7 +26,6 @@ public class PlayerAnimations : MonoBehaviour
             {
                 DOTween.To(() => targetLayer, x => targetLayer = x, _movement.LayerWeight, Random.Range(0.25f, 0.375f)).OnUpdate(() =>
                 {
-
                     _animator.SetLayerWeight(1, targetLayer);
                 });
             }

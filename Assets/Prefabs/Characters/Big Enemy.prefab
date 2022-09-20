@@ -471,7 +471,7 @@ MonoBehaviour:
   dashSpeed: 1
   dashRotationSpeed: 0.25
   flickerDuration: 0.15
-  _decelerationDrop: 0.1
+  _decelerationDrop: 0.6
 --- !u!54 &-3030107636550699320
 Rigidbody:
   m_ObjectHideFlags: 0
