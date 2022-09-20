@@ -180,6 +180,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7635826562936255635, guid: 991df5347fa15f04685bde6f11810a60, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 751228c6183f65c49933f23d7f97e19b, type: 2}
     - target: {fileID: 919132149155446097, guid: 991df5347fa15f04685bde6f11810a60, type: 3}
       propertyPath: m_Name
       value: tile_straight (1)
