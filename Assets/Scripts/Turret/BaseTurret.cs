@@ -67,7 +67,7 @@ public abstract class BaseTurret : MonoBehaviour
         {
             if (_currentTarget != null)
             {
-                if (_currentTarget.isDead || Vector3.Distance(_currentTarget.transform.position, transform.position) > _aim.AimDistance)
+                if (_currentTarget.IsDead || Vector3.Distance(_currentTarget.transform.position, transform.position) > _aim.AimDistance)
                 {
                     _currentTarget = null;
                     return;

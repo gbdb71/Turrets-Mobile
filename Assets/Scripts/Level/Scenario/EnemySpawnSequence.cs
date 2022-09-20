@@ -52,7 +52,7 @@ public class EnemySpawnSequence
                 if (_count >= _sequence._amount)
                 {
                     for (int i = 0; i < spawnedEnemy.Length; i++)
-                        if (spawnedEnemy[i] != null || !spawnedEnemy[i].isDead)
+                        if (spawnedEnemy[i] != null || !spawnedEnemy[i].IsDead)
                             return -1f;
 
                     return _cooldown;

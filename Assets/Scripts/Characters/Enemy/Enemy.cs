@@ -8,28 +8,40 @@ using Zenject;
 public class Enemy : MonoBehaviour
 {
     [SerializeField, Range(1, 10f)] private float _rotationSpeed = 5f;
-    [SerializeField] private Rigidbody _rigidbody;
+
+    [Label("Dash Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
+    [SerializeField] float dashSpeed = 1f;
+    [SerializeField] float dashRotationSpeed = 0.25f;
+
+    [Label("Damage Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
+    [SerializeField] float flickerDuration = 0.25f;
+
+    [Label("Deceleration Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
+    [SerializeField, Range(.1f, 1.5f)] private float _decelerationDrop = 2f;
 
     private EnemyFactory _originFactory;
     private List<Vector3> _points;
+    private Animator _animator;
+    private HPBar _hpBar;
+    [Inject] private Headquarters _headquarters;
+    private Rigidbody _rigidbody;
+    private Renderer _bodyRenderer;
 
-    private int _currentCell = 0;
     private float _damage = 0;
-    private int _nextCell = 0;
-    private float _pathOffset;
     private float _health = 0f;
     private float _speed = 0f;
+    private bool _initialized = false;
+
+    private float _timeToDestroy = 0.75f;
+
+    private int _currentCell = 0;
+    private int _nextCell = 0;
+    private float _pathOffset;
     private float _progress = 0f;
-
-    [Inject] private Headquarters _headquarters;
-
-    private Animator _animator;
-    private float timeToDestroy = 0.75f;
-
-    private HPBar _hpBar;
-    [SerializeField] private Renderer _bodyRenderer;
+    private float _deceleration = 0;
 
     public float Health => _health;
+    public bool IsDead { get; private set; }
     public Rigidbody Rigidbody => _rigidbody;
     public EnemyFactory OriginFactory
     {
@@ -39,10 +51,6 @@ public class Enemy : MonoBehaviour
             _originFactory = value;
         }
     }
-
-    private bool _initialized = false;
-
-    public bool isDead { get; private set; }
 
     private void Awake()
     {
@@ -60,13 +68,18 @@ public class Enemy : MonoBehaviour
         if (!_initialized || _headquarters.IsDead)
             return;
 
+        if(_deceleration > 0)
+        {
+            _deceleration -= _decelerationDrop * Time.deltaTime;
+        }
+
         Move();
         Rotate();
     }
 
     private void Rotate()
     {
-        if (isDead)
+        if (IsDead)
             return;
 
         Vector3 offset = transform.right * _pathOffset;
@@ -76,14 +89,12 @@ public class Enemy : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, _rotationSpeed * Time.deltaTime);
     }
 
-    [SerializeField] float dashSpeed = 1f;
-    [SerializeField] float dashRotationSpeed = 0.25f;
     private void Move()
     {
-        if (isDead)
+        if (IsDead)
             return;
 
-        _progress += _speed * Time.deltaTime;
+        _progress += (_speed - (_speed * _deceleration)) * Time.deltaTime;
 
         while (_progress >= 1f)
         {
@@ -117,6 +128,12 @@ public class Enemy : MonoBehaviour
             Vector3.LerpUnclamped(from, to, _progress);
     }
 
+    public void AddDeceleration(float value)
+    {
+        _deceleration += value;
+        _deceleration = Mathf.Clamp(_deceleration, 0f, .8f);
+    }
+
     public void ApplyDamage(float damage)
     {
         _health -= damage;
@@ -128,12 +145,10 @@ public class Enemy : MonoBehaviour
 
         if (Health <= 0f)
         {
-            Death(); 
+            Death();
         }
     }
 
-    [SerializeField] float flickerDuration = 0.25f;
-    [ContextMenu("Take Damage")]
     private void TakeDamage()
     {
         _bodyRenderer.material.DOOffset(new Vector2(0, 1), flickerDuration);
@@ -143,7 +158,7 @@ public class Enemy : MonoBehaviour
     private void Death()
     {
         _animator.SetBool("DieBool", true);
-        isDead = true;
+        IsDead = true;
 
         if (_hpBar != null)
             _hpBar.DisableBar();

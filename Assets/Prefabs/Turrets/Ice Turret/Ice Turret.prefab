@@ -435,16 +435,16 @@ MonoBehaviour:
   _aimDistance: 5
   _turretBase: {fileID: 856421760991539132}
   _barrels: {fileID: 856421760991539132}
-  ElevationSpeed: 0
+  _elevationSpeed: 50
   MaxElevation: 0
   MaxDepression: 0
-  TraverseSpeed: 400
+  _traverseSpeed: 150
   hasLimitedTraverse: 0
-  LeftLimit: 179
-  RightLimit: 179
-  aimedThreshold: 12
-  DrawDebugRay: 1
-  DrawDebugArcs: 1
+  _leftLimit: 120
+  _rightLimit: 120
+  aimedThreshold: 15
+  _drawDebugRay: 1
+  _drawDebugArcs: 1
 --- !u!114 &4123050127064966816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -466,9 +466,11 @@ MonoBehaviour:
   _projectilePrefab: {fileID: 0}
   _chargedAmmoMax: 6
   _ammoMax: 12
+  _ammoPerBox: 10
   _nextGrade: {fileID: 0}
-  _damageAngle: 30
-  _attackRate: 0.5
+  _damageAngle: 50
+  _attackRate: 1
+  _decelerationPerAttack: 0.5
   _throwEffect: {fileID: 2699958650359207781}
 --- !u!65 &-8876097353109488144
 BoxCollider:

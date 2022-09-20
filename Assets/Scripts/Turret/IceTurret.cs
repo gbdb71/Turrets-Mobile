@@ -3,9 +3,12 @@ using UnityEngine.VFX;
 
 public class IceTurret : BaseTurret
 {
-    [Label("Ice Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
+    [Label("Attack Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField, Range(1, 180)] protected float _damageAngle = 20f;
     [SerializeField, Range(.001f, 1f)] protected float _attackRate = .1f;
+    [SerializeField, Range(.1f, 1.5f)] protected float _decelerationPerAttack = 1f; 
+
+    [Label("Visual Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField, NotNull] protected VisualEffect _throwEffect;
 
     public bool IsFire { get; private set; }
@@ -54,6 +57,7 @@ public class IceTurret : BaseTurret
                 if (angleBetween <= _damageAngle)
                 {
                     enemy.ApplyDamage(_damage);
+                    enemy.AddDeceleration(_decelerationPerAttack);
                 }
             }
         }
