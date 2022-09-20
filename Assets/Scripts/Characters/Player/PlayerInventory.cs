@@ -254,6 +254,9 @@ public class PlayerInventory : MonoBehaviour
 
         GridCell cell = _map.MapGrid.GetObject(x, y);
 
+        if (cell == null)
+            return false;
+
         return cell.CanBuild() && cell.Type != CellType.Path;
     }
 
