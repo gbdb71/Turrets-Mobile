@@ -191,7 +191,6 @@ public abstract class BaseTurret : MonoBehaviour
         }
 
         if (_ammoBar != null)
-            _ammoBar.ChangeValue(_chargedAmmo, _ammo);
+            _ammoBar.ChangeValue(_ammo,_ammoMax);
     }
-
 }

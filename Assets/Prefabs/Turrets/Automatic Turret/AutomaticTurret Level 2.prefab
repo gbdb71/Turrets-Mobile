@@ -310,7 +310,7 @@ GameObject:
   - component: {fileID: 1006089489906742132}
   - component: {fileID: 703859324536272724}
   m_Layer: 6
-  m_Name: AutomaticTurret
+  m_Name: AutomaticTurret Level 2
   m_TagString: Turret
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
