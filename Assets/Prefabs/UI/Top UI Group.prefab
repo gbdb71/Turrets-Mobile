@@ -85,7 +85,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5084182779613041680}
   - component: {fileID: 5084182779613041686}
-  - component: {fileID: 5084182779613041681}
   m_Layer: 5
   m_Name: Bottom Right UI Group (1)
   m_TagString: Untagged
@@ -123,20 +122,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5084182779613041683}
   m_CullTransparentMesh: 1
---- !u!114 &5084182779613041681
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5084182779613041683}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b8243c857484b24a91175227bdcb1f5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currencyType: 1
-  amountText: {fileID: 5084182780887623030}
 --- !u!1 &5084182779707616821
 GameObject:
   m_ObjectHideFlags: 0

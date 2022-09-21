@@ -10,20 +10,21 @@ public class Game : MonoBehaviour
     [SerializeField] private LevelData _startLevel;
 
     [Inject] private Map _map;
+    [Inject] private Data _data;
+    private Headquarters _headquarters;
+
+    private List<Vector3> _pathPoints = new List<Vector3>();
     private List<Enemy> _enemies = new List<Enemy>();
     private LevelScenario.State _activeScenario;
-    public LevelScenario.State ActiveScenario => _activeScenario;
 
     public bool GameStared { get; private set; } = false;
     public bool GameFinished { get; private set; } = false;
-    public LevelData CurrentLevel { get; private set; }
-    private List<Vector3> _pathPoints = new List<Vector3>();
-
-    private Headquarters _headquarters;
-
-    public Headquarters Headquarters => _headquarters;
-
     public static event Action OnGameFinished;
+    public LevelData CurrentLevel { get; private set; }
+    public LevelScenario.State ActiveScenario => _activeScenario;
+    public Headquarters Headquarters => _headquarters;
+    public Data Data => _data;
+
 
     private void Awake()
     {
@@ -31,6 +32,10 @@ public class Game : MonoBehaviour
 
         if (_map != null)
             _map.OnMapGenerated += OnMapGenerated;
+    }
+
+    private void Start()
+    {
     }
 
     public void SetHeadquarters(Headquarters headquarters)
@@ -46,6 +51,8 @@ public class Game : MonoBehaviour
             {
                 GameFinished = true;
                 OnGameFinished?.Invoke();
+
+                _data.User.SetCurrencyValue(CurrencyType.Construction, 0);
             }
         }
     }
@@ -66,6 +73,8 @@ public class Game : MonoBehaviour
 
             _pathPoints.Add(worldPos);
         }
+
+        _data.User.SetCurrencyValue(CurrencyType.Construction, _startLevel.ConstructionCurrency);
     }
 
     public Enemy SpawnEnemy(EnemyFactory factory, EnemyType type)

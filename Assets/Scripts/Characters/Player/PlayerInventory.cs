@@ -1,7 +1,8 @@
 using UnityEngine;
 using DG.Tweening;
 using System.Collections.Generic;
-using Zenject;
+using System.Linq;
+using System;
 
 public class PlayerInventory : MonoBehaviour
 {
@@ -17,23 +18,21 @@ public class PlayerInventory : MonoBehaviour
     [SerializeField, Range(.1f, 2f)] private float _ammoRotationSpeed = 0.25f;
     [SerializeField, Range(.1f, 1f)] private float _ammoPutDelay = .5f;
 
+    private Player _player;
     private BaseTurret _nearTurret;
     private BaseTurret _takedTurret;
-    private float _takeProgess = 0f;
-
     private List<Ammunition> _ammunition = new List<Ammunition>();
+
     private float _distanceBetweenObjects = 0.25f;
-    private int _ammoCount;
+    private float _takeProgess = 0f;
     private float _delayTimer = 0f;
     private float _putTimer = 0.0f;
-
-    [Inject] private Map _map;
+    private int _maxAmmo = 0;
 
     public BaseTurret NearTurret => _nearTurret;
     public BaseTurret TakedTurret => _takedTurret;
     public Transform backpackPoint;
     public bool HasTurret { get { return _turretSlot.childCount > 0 && TakedTurret != null; } }
-    public int AmmoCount { set { _ammoCount = Mathf.Clamp(value, 1, 99); } }
     public bool CanPlace { get; private set; }
     public bool CanUpgrade
     {
@@ -46,6 +45,13 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
+    private void Awake()
+    {
+        _player = GetComponent<Player>();
+
+        UserData.OnUpgradeChanged += UpdateAmmoMax;
+        UpdateAmmoMax(UpgradeType.AmmoCount, -1);
+    }
 
     private void Update()
     {
@@ -84,8 +90,8 @@ public class PlayerInventory : MonoBehaviour
             case "Ammunition":
                 {
                     if (other.TryGetComponent(out Ammunition ammunition))
-                    {
-                        if (_ammunition.Count > _ammoCount - 1)
+                    { 
+                        if (_ammunition.Count > _maxAmmo - 1)
                             return;
 
                         PutAmmo(ammunition);
@@ -129,6 +135,16 @@ public class PlayerInventory : MonoBehaviour
             ResetProgress(_nearTurret);
 
         _nearTurret = null;
+    }
+
+
+    private void UpdateAmmoMax(UpgradeType type, int index)
+    {
+        if (type == UpgradeType.AmmoCount)
+        {
+            int upgradeIndex = _player.Data.User.UpgradesProgress[type];
+            _maxAmmo = (int)_player.Data.UpgradesInfo.Upgrades.First(x => x.Type == type).Elements[upgradeIndex].Value;
+        }
     }
 
     #region Ammo
@@ -250,9 +266,9 @@ public class PlayerInventory : MonoBehaviour
     }
     private bool CheckPlace()
     {
-        _map.MapGrid.GetXY(_takedTurret.transform.position, out int x, out int y);
+        _player.Map.MapGrid.GetXY(_takedTurret.transform.position, out int x, out int y);
 
-        GridCell cell = _map.MapGrid.GetObject(x, y);
+        GridCell cell = _player.Map.MapGrid.GetObject(x, y);
 
         if (cell == null)
             return false;

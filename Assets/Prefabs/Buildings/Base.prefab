@@ -79,22 +79,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _health: 400
-  _upgradeInfo: {fileID: 11400000, guid: 6501667c695beab40ae89defb0902824, type: 2}
-  _currencies:
-    pairs:
-    - key: 0
-      value: 100
-    - key: 1
-      value: 100
-    error: 0
   _interactGroupPrefab: {fileID: 5134897979160479666, guid: 6124358e3a15b544faf4ec3e90bf5dce, type: 3}
-  _upgradeButtonPrefab: {fileID: 6953870278822238118, guid: 7a6c9a94fc3816f42a458c75a45faee6, type: 3}
+  _customButtonPrefab: {fileID: 5794388558723849181, guid: 7a6c9a94fc3816f42a458c75a45faee6, type: 3}
+  _upgradeButtonPrefab: {fileID: 6953870278822238118, guid: 8d2e6c07af2ca6c4683a00a9535c1ff6, type: 3}
   _headquartersBody: {fileID: 8609843843147868682}
-  targetPoint: {fileID: 8515274584460209521}
-  duration: 1
-  strenght: 15
-  vibrato: 10
-  random: 25
+  _targetPoint: {fileID: 8515274584460209521}
+  _dronePoint: {fileID: 7216333598831623282}
+  _damageAnimation:
+    duration: 1
+    strenght: 15
+    vibrato: 10
+    random: 25
+  _helperPrefab: {fileID: 6823445674114097691, guid: d94e7e902418ed247a4ed1f3ba6f747e, type: 3}
+  _helperPrice: 20
 --- !u!1 &7075429134554942648
 GameObject:
   m_ObjectHideFlags: 0

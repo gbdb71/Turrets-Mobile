@@ -1,27 +1,26 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Base Upgrades", menuName = "TowerDefense/Upgrade Info")]
 public class UpgradesInfo : ScriptableObject
 {
-    public List<UpgradeList> upgrades = new List<UpgradeList>();
+    [LabelByChild("Type")]
+    public List<UpgradeList> Upgrades = new List<UpgradeList>();
+}
+
+public enum UpgradeType
+{
+    Speed,
+    SpeedWithTurret,
+    AmmoCount
 }
 
 [Serializable]
 public class UpgradeList
 {
-    public string name;
     public UpgradeType Type;
-    public enum UpgradeType
-    {
-        Speed,
-        SpeedWithTurret,
-        AmmoCount
-    }
-
-    public List<Upgrade> elementList;
+    public List<Upgrade> Elements;
 }
 
 [Serializable]

@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using UnityEngine;
 using Zenject;
 
@@ -8,18 +10,16 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField, Range(5, 15f)] private float _speed = 5f;
     [SerializeField] private float _speedCoef = 0.2f;
 
-    [SerializeField, Range(1, 15f)] private float _speedWithTurret = 2f;
-    [SerializeField] private float _speedWithTurretCoef = 0.25f;
+    private float _speedWithTurret = 2f;
+    private float _speedWithTurretCoef = 0.25f;
 
     [Label("Rotation", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField, Range(1, 20)] private float _rotationPerFrame = 10f;
 
     [Inject] private Joystick _joystick;
-	private CharacterController _cc;
+    private CharacterController _cc;
     private Player _player;
 
-    public float Speed { set { _speed = Mathf.Clamp(value, 1, 99); } }
-    public float SpeedWithTurret {set { _speedWithTurret =Mathf.Clamp(value, 1, 99); } }
     public float MoveVelocity => _cc.velocity.sqrMagnitude;
     public float LayerWeight;
     public bool IsMove { get; private set; }
@@ -32,17 +32,24 @@ public class PlayerMovement : MonoBehaviour
         _player = GetComponent<Player>();
     }
 
+    private void Start()
+    {
+        UserData.OnUpgradeChanged += UpdateSpeed;
+
+        UpdateSpeed(UpgradeType.Speed, -1);
+        UpdateSpeed(UpgradeType.SpeedWithTurret, -1);
+    }
     private void Update()
     {
         HandleGravity();
         Movement();
-		Rotate();
-	}
+        Rotate();
+    }
 
     private Vector3 moveDir;
-	private void Movement()
-	{
-		moveDir.Set(_joystick.Horizontal, 0, _joystick.Vertical);
+    private void Movement()
+    {
+        moveDir.Set(_joystick.Horizontal, 0, _joystick.Vertical);
         float speed = _player.Inventory.HasTurret ? _speedWithTurret : _speed;
         LayerWeight = _player.Inventory.HasTurret ? 1 : 0;
 
@@ -52,7 +59,7 @@ public class PlayerMovement : MonoBehaviour
         _cc.SimpleMove(moveDir * speed);
 
         IsMove = moveDir.magnitude > 0 && _cc.isGrounded;
-	}
+    }
 
     private void Rotate()
     {
@@ -66,7 +73,7 @@ public class PlayerMovement : MonoBehaviour
     }
     private void HandleGravity()
     {
-        if(_cc.isGrounded)
+        if (_cc.isGrounded)
         {
             float groundedGravity = .05f;
             moveDir.y = groundedGravity;
@@ -78,5 +85,24 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
+    private void UpdateSpeed(UpgradeType type, int index)
+    {
+        switch (type)
+        {
+            case UpgradeType.Speed:
+                _speed = GetUpgradedSpeed(type);
+                break;
+            case UpgradeType.SpeedWithTurret:
+                _speedWithTurret = GetUpgradedSpeed(type);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private float GetUpgradedSpeed(UpgradeType type)
+    {
+        int upgradeIndex = _player.Data.User.UpgradesProgress[type];
+        return _player.Data.UpgradesInfo.Upgrades.First(x => x.Type == type).Elements[upgradeIndex].Value;
+    }
 }
- 

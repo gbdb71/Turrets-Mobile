@@ -23,7 +23,7 @@ public class IdleState : HelperBaseState
             }
         }
 
-        _stateMachine.Owner.Agent.SetDestination(_stateMachine.Owner.Game.Headquarters.targetPoint.position);
+        _stateMachine.Owner.Agent.SetDestination(_stateMachine.Owner.Game.Headquarters.DronePoint.position);
     }
 
 

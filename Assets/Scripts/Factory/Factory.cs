@@ -85,7 +85,7 @@ public class Factory : MonoBehaviour, IInteractable
         _intertactTimer += Time.deltaTime;
         if (_intertactTimer >= _interactTime)
         {
-            if (_game.Headquarters.TryWithdrawCurrency(CurrencyType.Construction, 1))
+            if (_game.Data.User.TryWithdrawCurrency(CurrencyType.Construction, 1))
             {
                 _currencyAmount += 1;
                 _intertactTimer = 0;

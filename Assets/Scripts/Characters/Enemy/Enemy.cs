@@ -68,7 +68,7 @@ public class Enemy : MonoBehaviour
         if (!_initialized || _headquarters.IsDead)
             return;
 
-        if(_deceleration > 0)
+        if (_deceleration > 0)
         {
             _deceleration -= _decelerationDrop * Time.deltaTime;
         }
@@ -106,9 +106,11 @@ public class Enemy : MonoBehaviour
                 _animator.SetBool("GiveDamage", true);
                 _headquarters.ApplyDamage(_damage);
 
-                Quaternion targetRot = Quaternion.LookRotation(_headquarters.targetPoint.position - transform.position, Vector3.up);
-                transform.DORotateQuaternion(targetRot, dashRotationSpeed);
-                transform.DOMove(_headquarters.targetPoint.position, dashSpeed);
+                Quaternion targetRot = Quaternion.LookRotation(_headquarters.TargetPoint.position - transform.position, Vector3.up);
+                transform.DORotateQuaternion(targetRot, dashRotationSpeed).OnComplete(() =>
+                {
+                    transform.DOMove(_headquarters.TargetPoint.position, dashSpeed);
+                });
 
                 Death();
             }
