@@ -45,7 +45,7 @@ public class IceTurret : BaseTurret
 
     private void DamageArea()
     {
-        if (TargetPoint.FillBuffer(_shootPivot.position, _aim.AimDistance))
+        if (TargetPoint.FillBuffer(_shootPivot[ShootPivotIndex].position, _aim.AimDistance))
         {
             for (int i = 0; i < TargetPoint.BufferedCount; i++)
             {
