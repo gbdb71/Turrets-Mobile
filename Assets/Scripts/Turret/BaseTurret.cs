@@ -51,15 +51,15 @@ public abstract class BaseTurret : MonoBehaviour
     {
         _aim = GetComponent<TurretAim>();
         _renderers = GetComponentsInChildren<Renderer>();
+        _ammoBar = GetComponentInChildren<AmmoBar>();
 
         _ammo = _ammoMax;
         _chargedAmmo = _chargedAmmoMax;
-
         Turrets.Add(this);
 
-        _ammoBar = GetComponentInChildren<AmmoBar>();
+
         if (_ammoBar != null)
-            _ammoBar.ChangeValue(_chargedAmmo, _ammo);
+            _ammoBar.ChangeValue(_ammo, _ammoMax);
     }
 
     private void Update()
@@ -110,7 +110,7 @@ public abstract class BaseTurret : MonoBehaviour
 
     private void OnEnable()
     {
-        if (_ammoBar != null) 
+        if (_ammoBar != null)
             _ammoBar.EnableBar();
     }
 
@@ -118,7 +118,7 @@ public abstract class BaseTurret : MonoBehaviour
     {
         _aim.SetIdle(true);
 
-        if (_ammoBar != null) 
+        if (_ammoBar != null)
             _ammoBar.DisableBar();
     }
 
@@ -126,7 +126,7 @@ public abstract class BaseTurret : MonoBehaviour
     {
         Turrets.Remove(this);
     }
-    
+
     protected Enemy FindTarget()
     {
         if (TargetPoint.FillBuffer(transform.localPosition, _aim.AimDistance))
@@ -173,9 +173,9 @@ public abstract class BaseTurret : MonoBehaviour
         _chargedAmmo -= 1;
 
         if (_ammoBar != null)
-            _ammoBar.ChangeValue(_chargedAmmo, _ammo);
+            _ammoBar.ChangeValue(_ammo - (_chargedAmmoMax - _chargedAmmo), _ammoMax);
     }
-    
+
     protected virtual bool CanFire()
     {
         return _aim.IsAimed && _fireTimer <= 0f && !IsReloading && _chargedAmmo > 0;
@@ -191,6 +191,6 @@ public abstract class BaseTurret : MonoBehaviour
         }
 
         if (_ammoBar != null)
-            _ammoBar.ChangeValue(_ammo,_ammoMax);
+            _ammoBar.ChangeValue(_ammo, _ammoMax);
     }
 }
