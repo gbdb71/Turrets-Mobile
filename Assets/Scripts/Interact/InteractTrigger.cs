@@ -1,9 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class InteractTrigger : MonoBehaviour
 {
+    [Label("Interact Visual", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
+    [SerializeField] private Vector3 _interactScale = new Vector3(1.1f, 1f, 1.1f);
+
     private IInteractable interactable;
     private bool triggerIsActive;
 
@@ -18,6 +20,8 @@ public class InteractTrigger : MonoBehaviour
         {
             triggerIsActive = true;
             interactable.OnEnter(player);
+
+            transform.DOScale(_interactScale, .3f).SetEase(Ease.InBounce);
         }
     }
 
@@ -38,6 +42,9 @@ public class InteractTrigger : MonoBehaviour
         {
             triggerIsActive = false;
             interactable.OnExit(player);
+
+
+            transform.DOScale(Vector3.one, .3f).SetEase(Ease.InOutBack);
         }
     }
 }
