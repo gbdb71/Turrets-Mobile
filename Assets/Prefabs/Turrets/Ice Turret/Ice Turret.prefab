@@ -460,14 +460,15 @@ MonoBehaviour:
   _damage: 3
   _fireDelay: 0.5
   _reloadTime: 2
-  _shootPivot: {fileID: 3805081200559784805}
+  _shootPivot:
+  - {fileID: 3805081200559784805}
   _indicatorTransform: {fileID: 7054605062132796638}
   _indicatorFill: {fileID: 1291687084924840197}
-  _projectilePrefab: {fileID: 0}
+  _nextGrade: {fileID: 0}
   _chargedAmmoMax: 6
   _ammoMax: 12
   _ammoPerBox: 10
-  _nextGrade: {fileID: 0}
+  ShootPivotIndex: 0
   _damageAngle: 50
   _attackRate: 1
   _decelerationPerAttack: 0.5

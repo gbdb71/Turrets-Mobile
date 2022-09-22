@@ -439,13 +439,15 @@ MonoBehaviour:
   _damage: 8
   _fireDelay: 0.1
   _reloadTime: 1
-  _shootPivot: {fileID: 3642958238143821735}
+  _shootPivot:
+  - {fileID: 3642958238143821735}
   _indicatorTransform: {fileID: 5520151737244513286}
   _indicatorFill: {fileID: 6667220803628488832}
   _nextGrade: {fileID: 0}
   _chargedAmmoMax: 1
   _ammoMax: 3
   _ammoPerBox: 10
+  ShootPivotIndex: 0
   _projectileRadius: 1.2
   _shellPrefab: {fileID: 5558264920343970145, guid: 699da27d33bc75e45ac0b5e8a9068378, type: 3}
 --- !u!65 &2802504676723262349
