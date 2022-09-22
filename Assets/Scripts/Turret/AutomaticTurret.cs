@@ -13,29 +13,32 @@ public class AutomaticTurret : BaseTurret
     protected override void Fire()
     {
         base.Fire();
-        HomingProjectile projectile;
-        projectile = Instantiate(_projectilePrefab, _shootPivot[ShootPivotIndex].transform.position, _shootPivot[ShootPivotIndex].transform.rotation) as HomingProjectile;
 
         _shootPivot[ShootPivotIndex].parent.DOLocalMoveZ(gunMove.y, moveDuration.x).OnComplete(() =>
         {
+            HomingProjectile projectile = Instantiate(_projectilePrefab, _shootPivot[ShootPivotIndex].transform.position, _shootPivot[ShootPivotIndex].transform.rotation) as HomingProjectile;
             projectile.Initialize(_shootPivot[ShootPivotIndex].transform.position, Vector3.zero, _damage, 0f);
             projectile.SetSpeed(_bulletSpeed);
             projectile.SetTarget(_currentTarget.transform);
+
             _shootPivot[ShootPivotIndex].parent.DOLocalMoveZ(gunMove.x, moveDuration.y);
         });
 
 
-        CheckPivotIndex();
-    }
-
-    private void CheckPivotIndex()
-    {
-        Debug.Log($"Do Shoot Pivot Index {ShootPivotIndex} | Pivot Lenght {_shootPivot.Length}");
-
         ShootPivotIndex += 1;
+
         if (ShootPivotIndex > _shootPivot.Length - 1)
             ShootPivotIndex = 0;
+    }
 
-        Debug.Log($"Past Shoot Pivot Index {ShootPivotIndex} | Pivot Lenght {_shootPivot.Length}");
+    protected override void StopFire()
+    {
+        base.StopFire();
+
+        for (int i = 0; i < _shootPivot.Length; i++)
+        {
+            _shootPivot[i].parent.DOKill();
+            _shootPivot[i].parent.DOLocalMoveZ(gunMove.x, moveDuration.y);
+        }
     }
 }
