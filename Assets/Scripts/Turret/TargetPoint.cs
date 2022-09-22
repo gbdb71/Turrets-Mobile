@@ -5,7 +5,7 @@ public class TargetPoint
 {
     const int enemyLayerMask = 1 << 8;
 
-    static Collider[] buffer = new Collider[100];
+    static Collider[] buffer = new Collider[35];
 
     public static int BufferedCount { get; private set; }
 
@@ -25,7 +25,11 @@ public class TargetPoint
     public static Enemy GetBuffered(int index)
     {
         var target = buffer[index].GetComponent<Enemy>();
-        Debug.Assert(target != null, "Targeted non-enemy!", buffer[0]);
+
+
+        if (target != null && target.IsDead)
+            return null;
+
         return target;
     }
 }

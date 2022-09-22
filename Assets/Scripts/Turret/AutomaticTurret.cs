@@ -30,15 +30,4 @@ public class AutomaticTurret : BaseTurret
         if (ShootPivotIndex > _shootPivot.Length - 1)
             ShootPivotIndex = 0;
     }
-
-    protected override void StopFire()
-    {
-        base.StopFire();
-
-        for (int i = 0; i < _shootPivot.Length; i++)
-        {
-            _shootPivot[i].parent.DOKill();
-            _shootPivot[i].parent.DOLocalMoveZ(gunMove.x, moveDuration.y);
-        }
-    }
 }

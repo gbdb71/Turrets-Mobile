@@ -441,7 +441,7 @@ MonoBehaviour:
   _reloadTime: 1
   _shootPivot:
   - {fileID: 3642958238143821735}
-  _indicatorTransform: {fileID: 5520151737244513286}
+  _indicatorTransform: {fileID: 4774810337631635647, guid: e0838757563bfea48aa8f2b82e34ea84, type: 3}
   _indicatorFill: {fileID: 6667220803628488832}
   _nextGrade: {fileID: 0}
   _chargedAmmoMax: 1
@@ -449,7 +449,7 @@ MonoBehaviour:
   _ammoPerBox: 10
   ShootPivotIndex: 0
   _projectileRadius: 1.2
-  _shellPrefab: {fileID: 5558264920343970145, guid: 699da27d33bc75e45ac0b5e8a9068378, type: 3}
+  _shellPrefab: {fileID: 8119367024055230900, guid: e0838757563bfea48aa8f2b82e34ea84, type: 3}
 --- !u!65 &2802504676723262349
 BoxCollider:
   m_ObjectHideFlags: 0
