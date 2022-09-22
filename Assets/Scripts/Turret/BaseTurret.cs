@@ -12,7 +12,7 @@ public abstract class BaseTurret : MonoBehaviour
     [Label("Shooting", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField, Range(.1f, 5f)] protected float _fireDelay;
     [SerializeField, Range(.5f, 5f)] protected float _reloadTime;
-    [SerializeField] protected Transform _shootPivot;
+    [SerializeField] protected Transform[] _shootPivot;
 
     [Label("Taking", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField] private Transform _indicatorTransform = default;
@@ -46,6 +46,7 @@ public abstract class BaseTurret : MonoBehaviour
     public Renderer[] Renderers => _renderers;
     public bool CanCharge { get { return _ammo < _ammoMax; } }
     public static List<BaseTurret> Turrets { get; private set; } = new List<BaseTurret>();
+    public int ShootPivotIndex = 0;
 
     protected virtual void Awake()
     {

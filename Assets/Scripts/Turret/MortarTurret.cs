@@ -26,7 +26,6 @@ public class MortarTurret : BaseTurret
             MortarShell projectile = Instantiate(_shellPrefab, _shootPivot[ShootPivotIndex].position, Quaternion.identity);
 
             projectile.Initialize(_shootPivot[ShootPivotIndex].position, _launchVelocity, _damage, _projectileRadius);
-            CheckPivotIndex();
         }
     }
     protected override void Aim()

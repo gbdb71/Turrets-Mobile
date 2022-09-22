@@ -10,10 +10,21 @@ public class AutomaticTurret : BaseTurret
     {
         base.Fire();
 
-        HomingProjectile projectile = Instantiate(_projectilePrefab, _shootPivot.transform.position, _shootPivot.transform.rotation) as HomingProjectile;
-        projectile.Initialize(_shootPivot.transform.position, Vector3.zero, _damage, 0f);
-
+        HomingProjectile projectile = Instantiate(_projectilePrefab, _shootPivot[ShootPivotIndex].transform.position, _shootPivot[ShootPivotIndex].transform.rotation) as HomingProjectile;
+        projectile.Initialize(_shootPivot[ShootPivotIndex].transform.position, Vector3.zero, _damage, 0f);
         projectile.SetSpeed(_bulletSpeed);
         projectile.SetTarget(_currentTarget.transform);
+        CheckPivotIndex();
+    }
+
+    private void CheckPivotIndex()
+    {
+        Debug.Log($"Do Shoot Pivot Index {ShootPivotIndex} | Pivot Lenght {_shootPivot.Length}");
+
+        ShootPivotIndex += 1;
+        if (ShootPivotIndex > _shootPivot.Length - 1)
+            ShootPivotIndex = 0;
+
+        Debug.Log($"Past Shoot Pivot Index {ShootPivotIndex} | Pivot Lenght {_shootPivot.Length}");
     }
 }
