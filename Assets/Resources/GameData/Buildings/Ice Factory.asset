@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 312fea00a0b61bf4fa1a4dec6936aa4b, type: 3}
+  m_Name: Ice Factory
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 7909025906447340614, guid: 742f8a67d8843584cab0572e861ba6d0, type: 3}
+  _dir: 0
+  _type: 0
+  _size: {x: 2, y: 2}
+  _offset: 0.75
