@@ -9,7 +9,6 @@ public class MortarShell : BaseProjectile
     public void Initialize(Vector3 launchPoint, Vector3 launchVelocity, float damage, float blastRadius)
     {
         base.Initialize(launchPoint, launchVelocity, damage, 9.81f);
-
         this._blastRadius = blastRadius;
     }
 

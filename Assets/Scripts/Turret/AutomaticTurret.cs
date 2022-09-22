@@ -29,10 +29,10 @@ public class AutomaticTurret : BaseTurret
 
         HomingProjectile projectile;
         projectile = Instantiate(_projectilePrefab, _shootPivot[ShootPivotIndex].transform.position, _shootPivot[ShootPivotIndex].transform.rotation) as HomingProjectile;
-        projectile.Initialize(_shootPivot[ShootPivotIndex].transform.position, Vector3.zero, _damage, 0f);
+        projectile.Initialize(_shootPivot[ShootPivotIndex].transform.position , Vector3.zero, _damage, 0f);
         projectile.SetSpeed(_bulletSpeed);
         projectile.SetTarget(_currentTarget.transform);
-
+       
         _shootPivot[ShootPivotIndex].parent.DOLocalMoveZ(gunMove.y, moveDuration.x).OnComplete(() =>
         {
             _shootPivot[ShootPivotIndex].parent.DOLocalMoveZ(gunMove.x, moveDuration.y);

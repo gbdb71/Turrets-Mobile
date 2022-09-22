@@ -5,6 +5,7 @@ public abstract class BaseProjectile : MonoBehaviour
     protected float _gravity = 9.81f;
     protected float _damage = 10f;
     protected Vector3 _launchPoint, _launchVelocity;
+    public float _scaleDuration = 0.5f;
 
     public virtual void Initialize(Vector3 launchPoint, Vector3 launchVelocity, float damage, float physicsDrop)
     {

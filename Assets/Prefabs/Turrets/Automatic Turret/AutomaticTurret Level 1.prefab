@@ -368,6 +368,7 @@ MonoBehaviour:
   _chargedAmmoMax: 20
   _ammoMax: 40
   _ammoPerBox: 10
+  _projectileScale: {x: 0.25, y: 0.25, z: 0.25}
   ShootPivotIndex: 0
   _bulletSpeed: 10
   _projectilePrefab: {fileID: 503519449688536475, guid: 23729ad4639e8244fbee285632c5ebba, type: 3}

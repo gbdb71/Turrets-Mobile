@@ -187,7 +187,6 @@ public abstract class BaseTurret : MonoBehaviour
     protected virtual bool CanFire()
     {
        // Debug.Log($"Charged Ammo {_chargedAmmo} | Ammo {_ammo} | Charged Ammo Max {_chargedAmmoMax}");
-
         int temp = _ammo - (_chargedAmmoMax - _chargedAmmo);
         if (temp <= 0)
             return false;
