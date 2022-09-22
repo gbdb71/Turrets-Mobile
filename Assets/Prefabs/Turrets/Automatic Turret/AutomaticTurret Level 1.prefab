@@ -368,8 +368,11 @@ MonoBehaviour:
   _chargedAmmoMax: 20
   _ammoMax: 40
   _ammoPerBox: 10
+  ShootPivotIndex: 0
   _bulletSpeed: 10
   _projectilePrefab: {fileID: 503519449688536475, guid: 23729ad4639e8244fbee285632c5ebba, type: 3}
+  gunMove: {x: -0.25, y: -0.375}
+  moveDuration: 0.125
 --- !u!114 &1006089489906742132
 MonoBehaviour:
   m_ObjectHideFlags: 0
