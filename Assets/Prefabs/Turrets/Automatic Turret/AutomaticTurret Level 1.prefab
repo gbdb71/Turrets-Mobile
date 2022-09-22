@@ -257,7 +257,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1880167751}
   m_LocalRotation: {x: -0.000000021855694, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.00092, y: 0.0045, z: 0.0075}
+  m_LocalPosition: {x: 0.00092, y: 0.0045, z: 0.00889}
   m_LocalScale: {x: 0.002, y: 0.002, z: 0.008}
   m_Children: []
   m_Father: {fileID: 2946534783411290696}
@@ -372,7 +372,7 @@ MonoBehaviour:
   _bulletSpeed: 10
   _projectilePrefab: {fileID: 503519449688536475, guid: 23729ad4639e8244fbee285632c5ebba, type: 3}
   gunMove: {x: -0.25, y: -0.375}
-  moveDuration: 0.125
+  moveDuration: {x: 0.075, y: 0.125}
 --- !u!114 &1006089489906742132
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -406,7 +406,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1791533510020019547}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+<<<<<<< HEAD
   m_LocalPosition: {x: -0.00192, y: 0.004862, z: 0.01}
+=======
+  m_LocalPosition: {x: -0.00175, y: 0.005, z: 0.01}
+>>>>>>> 917953f (Bad Fix Turret View)
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4261824371229072044}
@@ -681,7 +685,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6807595825998826608}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+<<<<<<< HEAD
   m_LocalPosition: {x: 0.00192, y: 0.004862, z: 0.01}
+=======
+  m_LocalPosition: {x: 0.00175, y: 0.005, z: 0.01}
+>>>>>>> 917953f (Bad Fix Turret View)
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2171498056008097877}

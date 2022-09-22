@@ -58,9 +58,12 @@ public abstract class BaseTurret : MonoBehaviour
         _chargedAmmo = _chargedAmmoMax;
         Turrets.Add(this);
 
-
         if (_ammoBar != null)
-            _ammoBar.ChangeValue(_ammo, _ammoMax);
+        {
+            int temp = _ammo - (_chargedAmmoMax - _chargedAmmo);
+            Debug.Log("Temp " + temp);
+            _ammoBar.ChangeValue(temp, _ammoMax);
+        }
     }
 
     private void Update()
@@ -174,11 +177,21 @@ public abstract class BaseTurret : MonoBehaviour
         _chargedAmmo -= 1;
 
         if (_ammoBar != null)
-            _ammoBar.ChangeValue(_ammo - (_chargedAmmoMax - _chargedAmmo), _ammoMax);
+        {
+            int temp = _ammo - (_chargedAmmoMax - _chargedAmmo);
+            Debug.Log("Temp " + temp);
+            _ammoBar.ChangeValue(temp, _ammoMax);
+        }
     }
 
     protected virtual bool CanFire()
     {
+       // Debug.Log($"Charged Ammo {_chargedAmmo} | Ammo {_ammo} | Charged Ammo Max {_chargedAmmoMax}");
+
+        int temp = _ammo - (_chargedAmmoMax - _chargedAmmo);
+        if (temp <= 0)
+            return false;
+
         return _aim.IsAimed && _fireTimer <= 0f && !IsReloading && _chargedAmmo > 0;
     }
 
@@ -187,11 +200,13 @@ public abstract class BaseTurret : MonoBehaviour
         _ammo += _ammoPerBox;
 
         if (_ammo > _ammoMax)
-        {
             _ammo = _ammoMax;
-        }
 
         if (_ammoBar != null)
-            _ammoBar.ChangeValue(_ammo, _ammoMax);
+        {
+            int temp = _ammo - (_chargedAmmoMax - _chargedAmmo);
+            Debug.Log("Temp " + temp);
+            _ammoBar.ChangeValue(temp, _ammoMax);
+        }
     }
 }

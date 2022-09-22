@@ -13,6 +13,7 @@ public class AutomaticTurret : BaseTurret
     protected override void Fire()
     {
         base.Fire();
+<<<<<<< HEAD
 
         _shootPivot[ShootPivotIndex].parent.DOLocalMoveZ(gunMove.y, moveDuration.x).OnComplete(() =>
         {
@@ -24,6 +25,26 @@ public class AutomaticTurret : BaseTurret
             _shootPivot[ShootPivotIndex].parent.DOLocalMoveZ(gunMove.x, moveDuration.y);
         });
 
+=======
+
+        HomingProjectile projectile;
+        projectile = Instantiate(_projectilePrefab, _shootPivot[ShootPivotIndex].transform.position, _shootPivot[ShootPivotIndex].transform.rotation) as HomingProjectile;
+        projectile.Initialize(_shootPivot[ShootPivotIndex].transform.position, Vector3.zero, _damage, 0f);
+        projectile.SetSpeed(_bulletSpeed);
+        projectile.SetTarget(_currentTarget.transform);
+
+        _shootPivot[ShootPivotIndex].parent.DOLocalMoveZ(gunMove.y, moveDuration.x).OnComplete(() =>
+        {
+            _shootPivot[ShootPivotIndex].parent.DOLocalMoveZ(gunMove.x, moveDuration.y);
+        });
+
+        CheckPivotIndex();
+    }
+
+    private void CheckPivotIndex()
+    {
+        Debug.Log($"Do Shoot Pivot Index {ShootPivotIndex} | Pivot Lenght {_shootPivot.Length}");
+>>>>>>> 917953f (Bad Fix Turret View)
 
         ShootPivotIndex += 1;
 
