@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4465599110721165411}
-  - component: {fileID: 5261326126693367125}
+  - component: {fileID: 1486669844451612570}
   m_Layer: 5
   m_Name: AmmoBar
   m_TagString: Untagged
@@ -37,7 +37,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &5261326126693367125
+--- !u!114 &1486669844451612570
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -46,17 +46,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 5783178000912738086}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c915bc4c61c710d4fad80cac5a618a1a, type: 3}
+  m_Script: {fileID: 11500000, guid: 132421be889f1fd49ae0ec1748df9176, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fillImage: {fileID: 0}
-  _valueText: {fileID: 867028743666841791}
-  content: {fileID: 2711297789755013521}
-  _startValue: 0
-  _hpCoefficient: 0
-  moveHeight: 0
-  moveDuration: 0.5
-  fillTime: 0.15
+  _canvasGroup: {fileID: 2542407461238174405}
+  _fadeDuration: 0.5
+  content: {fileID: 5929851989206955870}
+  titleText: {fileID: 867028743666841791}
 --- !u!1 &6207666898349006302
 GameObject:
   m_ObjectHideFlags: 0
@@ -68,7 +64,6 @@ GameObject:
   - component: {fileID: 5929851989206955870}
   - component: {fileID: 2521387533741741488}
   - component: {fileID: 4931033081180387044}
-  - component: {fileID: 5228555633526678935}
   m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
@@ -134,26 +129,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5228555633526678935
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6207666898349006302}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c915bc4c61c710d4fad80cac5a618a1a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fillImage: {fileID: 0}
-  _valueText: {fileID: 867028743666841791}
-  content: {fileID: 0}
-  _startValue: 0
-  _hpCoefficient: 0
-  moveHeight: 30
-  moveDuration: 0.5
-  fillTime: 0.15
 --- !u!1 &6570039944937004267
 GameObject:
   m_ObjectHideFlags: 0
@@ -166,6 +141,7 @@ GameObject:
   - component: {fileID: 1806261424084800570}
   - component: {fileID: 8309092516697508753}
   - component: {fileID: 7528489549408351276}
+  - component: {fileID: 2542407461238174405}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -254,6 +230,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!225 &2542407461238174405
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6570039944937004267}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &8663221843170300175
 GameObject:
   m_ObjectHideFlags: 0

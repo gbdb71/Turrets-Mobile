@@ -61,7 +61,7 @@ public abstract class BaseTurret : MonoBehaviour
         if (_ammoBar != null)
         {
             int temp = _ammo - (_chargedAmmoMax - _chargedAmmo);
-            Debug.Log("Temp " + temp);
+            //Debug.Log("Temp " + temp);
             _ammoBar.ChangeValue(temp, _ammoMax);
         }
     }
@@ -179,7 +179,7 @@ public abstract class BaseTurret : MonoBehaviour
         if (_ammoBar != null)
         {
             int temp = _ammo - (_chargedAmmoMax - _chargedAmmo);
-            Debug.Log("Temp " + temp);
+            //Debug.Log("Temp " + temp);
             _ammoBar.ChangeValue(temp, _ammoMax);
         }
     }
@@ -205,7 +205,7 @@ public abstract class BaseTurret : MonoBehaviour
         if (_ammoBar != null)
         {
             int temp = _ammo - (_chargedAmmoMax - _chargedAmmo);
-            Debug.Log("Temp " + temp);
+            //Debug.Log("Temp " + temp);
             _ammoBar.ChangeValue(temp, _ammoMax);
         }
     }
