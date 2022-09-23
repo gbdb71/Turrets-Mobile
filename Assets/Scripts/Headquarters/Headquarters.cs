@@ -18,8 +18,8 @@ public class Headquarters : MonoBehaviour, IInteractable
     [SerializeField] private GameObject _headquartersBody;
 
     [Label("Points Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
-    [SerializeField] protected Transform _targetPoint;
     [SerializeField] protected Transform _dronePoint;
+    [SerializeField] protected Transform _finishPoint;
 
     [Label("Animation Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField] private DamageAnimationSettings _damageAnimation;
@@ -37,8 +37,8 @@ public class Headquarters : MonoBehaviour, IInteractable
     private List<CustomButton> _upgradeButtons = new List<CustomButton>();
 
     public bool IsDead => _health <= 0;
-    public Transform TargetPoint => _targetPoint;
     public Transform DronePoint => _dronePoint;
+    public Transform FinishPoint => _finishPoint;
 
     public event Action OnDeath;
 

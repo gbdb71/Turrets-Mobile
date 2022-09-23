@@ -65,7 +65,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.17
+  m_Radius: 0.26
   m_Height: 1.3
   m_Direction: 1
   m_Center: {x: 0, y: 0.63, z: 0}
@@ -82,9 +82,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rotationSpeed: 4.26
-  dashSpeed: 1
-  dashRotationSpeed: 0.25
-  flickerDuration: 0.15
+  _dashSpeed: 1
+  _dashRotationSpeed: 0.25
+  _finishOffset: {x: -0.5, y: -2, z: 0}
+  _flickerDuration: 0.25
   _decelerationDrop: 0.6
 --- !u!54 &-3030107636550699320
 Rigidbody:
@@ -278,6 +279,18 @@ PrefabInstance:
     - target: {fileID: 1734572081990702632, guid: 7f3425f16f17470468f250a8fd950f73, type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1734572081990702632, guid: 7f3425f16f17470468f250a8fd950f73, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1734572081990702632, guid: 7f3425f16f17470468f250a8fd950f73, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1734572081990702632, guid: 7f3425f16f17470468f250a8fd950f73, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 1734572081990702632, guid: 7f3425f16f17470468f250a8fd950f73, type: 3}
       propertyPath: m_LocalPosition.x

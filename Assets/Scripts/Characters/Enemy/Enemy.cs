@@ -1,20 +1,18 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-using UnityEngine.UI;
 using Zenject;
 
 public class Enemy : MonoBehaviour
 {
+    [Label("Movement Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField, Range(1, 10f)] private float _rotationSpeed = 5f;
-
-    [Label("Dash Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
-    [SerializeField] float dashSpeed = 1f;
-    [SerializeField] float dashRotationSpeed = 0.25f;
+    [SerializeField] private float _dashSpeed = 1f;
+    [SerializeField] private float _dashRotationSpeed = 0.25f;
+    [SerializeField] private Vector3 _finishOffset = Vector3.zero;
 
     [Label("Damage Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
-    [SerializeField] float flickerDuration = 0.25f;
+    [SerializeField] private float _flickerDuration = 0.25f;
 
     [Label("Deceleration Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField, Range(.1f, 1.5f)] private float _decelerationDrop = 2f;
@@ -58,7 +56,6 @@ public class Enemy : MonoBehaviour
             _rigidbody = GetComponent<Rigidbody>();
 
         _animator = GetComponent<Animator>();
-        _animator.SetBool("DieBool", false);
         _hpBar = GetComponentInChildren<HPBar>();
         _bodyRenderer = GetComponentInChildren<Renderer>();
     }
@@ -103,16 +100,7 @@ public class Enemy : MonoBehaviour
 
             if (_nextCell >= (_points.Count - 1))
             {
-                _animator.SetBool("GiveDamage", true);
-                _headquarters.ApplyDamage(_damage);
-
-                Quaternion targetRot = Quaternion.LookRotation(_headquarters.TargetPoint.position - transform.position, Vector3.up);
-                transform.DORotateQuaternion(targetRot, dashRotationSpeed).OnComplete(() =>
-                {
-                    transform.DOMove(_headquarters.TargetPoint.position, dashSpeed);
-                });
-
-                Death();
+                Finish();
             }
 
             _progress -= 1f;
@@ -128,6 +116,29 @@ public class Enemy : MonoBehaviour
 
         transform.position =
             Vector3.LerpUnclamped(from, to, _progress);
+    }
+
+    private void Finish()
+    {
+        _animator.SetBool("Finish", true);
+        _headquarters.ApplyDamage(_damage);
+
+        Vector3 targetPoint = _headquarters.FinishPoint.position + _finishOffset;
+
+        Vector3 diff = targetPoint - transform.position;
+        diff.y = 0;
+
+        Quaternion targetRot = Quaternion.LookRotation(targetPoint - transform.position, Vector3.up);
+
+        targetRot.x = 0;
+        targetRot.z = 0;
+
+        transform.DORotateQuaternion(targetRot, _dashRotationSpeed).OnComplete(() =>
+        {
+            transform.DOMove(targetPoint, _dashSpeed);
+        });
+
+        Death();
     }
 
     public void AddDeceleration(float value)
@@ -152,19 +163,17 @@ public class Enemy : MonoBehaviour
 
     private void TakeDamage()
     {
-        _bodyRenderer.material.DOOffset(new Vector2(0, 1), flickerDuration);
+        _bodyRenderer.material.DOOffset(new Vector2(0, 1), _flickerDuration);
         _bodyRenderer.material.mainTextureOffset = Vector2.zero;
     }
 
     private void Death()
     {
-        _animator.SetBool("DieBool", true);
+        _animator.SetBool("Die", true);
         IsDead = true;
 
         if (_hpBar != null)
             _hpBar.DisableBar();
-
-        Invoke(nameof(Recycle), 2f);
     }
 
     public void Initialize(float scale, float speed, float pathOffset, float health, float damage)

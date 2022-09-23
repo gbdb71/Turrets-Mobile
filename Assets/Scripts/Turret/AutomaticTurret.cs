@@ -23,8 +23,10 @@ public class AutomaticTurret : BaseTurret
         projectile.Initialize(_shootPivot[ShootPivotIndex].transform.position, Vector3.zero, _damage, 0f);
         projectile.SetSpeed(_bulletSpeed);
         projectile.SetTarget(_currentTarget.transform);
+
+        ChangePivotIndex();
     }
-    private void CheckPivotIndex()
+    private void ChangePivotIndex()
     {
         ShootPivotIndex += 1;
 
