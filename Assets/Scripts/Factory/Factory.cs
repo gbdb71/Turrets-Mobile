@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public enum FactoryType
 {
@@ -38,11 +39,21 @@ public class Factory : MonoBehaviour, IInteractable
     public FactoryType Type => _type;
     public static List<Factory> Factories { get; private set; } = new List<Factory>();
 
+    public Sprite plateSprite;
+    public int ViewValue => _currencyAmount;
+    public float ViewFill => _viewFill;
+
+    float _viewFill = 0;
+
     private void Awake()
     {
         Factories.Add(this);
 
         _plates.AddRange(GetComponentsInChildren<FactoryPlate>());
+        
+        FactoryView _factoryView = GetComponentInChildren<FactoryView>();
+        if (_factoryView != null)
+            _factoryView.InitializationPanel(plateSprite, _objectCost, this);
     }
 
     private void Update()
@@ -64,6 +75,8 @@ public class Factory : MonoBehaviour, IInteractable
                 IsWorking = false;
             }
 
+            _viewFill = (_timeToCreate / 1) * _workTimer;
+            Debug.Log(_viewFill);
             return;
         }
 
@@ -82,6 +95,7 @@ public class Factory : MonoBehaviour, IInteractable
     public void Interact(Player player)
     {
         _intertactTimer += Time.deltaTime;
+
         if (_intertactTimer >= _interactTime)
         {
             if (_game.Data.User.TryWithdrawCurrency(CurrencyType.Construction, 1))
@@ -89,8 +103,10 @@ public class Factory : MonoBehaviour, IInteractable
                 _currencyAmount += 1;
                 _intertactTimer = 0;
             }
+            
         }
     }
+
     public void OnEnter(Player player) { }
     public void OnExit(Player player) { }
 
@@ -104,6 +120,7 @@ public class Factory : MonoBehaviour, IInteractable
 
         return null;
     }
+
     private void CreatingObject(FactoryPlate plate)
     {
         GameObject newObject = Instantiate(_objectPrefab, _spawPoint.position, Quaternion.identity);
