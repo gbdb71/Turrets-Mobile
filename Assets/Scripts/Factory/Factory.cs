@@ -25,7 +25,6 @@ public class Factory : MonoBehaviour, IInteractable
     [SerializeField] private float _timeToCreate = 0.75f;
     [SerializeField] private int _objectCost = 25;
 
-
     private List<FactoryPlate> _plates = new List<FactoryPlate>();
     private int _currencyAmount;
     private float _intertactTimer;

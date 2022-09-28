@@ -171,13 +171,6 @@ public class Enemy : MonoBehaviour
 
     private void TakeDamage()
     {
-        //_bodyRenderer.material.DOOffset(new Vector2(0, 1), _flickerDuration).OnComplete(()=>
-        //{
-        //        _bodyRenderer.material.mainTextureOffset = Vector2.zero;
-        //});
-
-        //    _bodyRenderer.material.mainTextureOffset = new Vector2(0, 1);
-
         _bodyRenderer.material.mainTexture = lightTexture;
 
         if (tempCorutine != null)
@@ -190,7 +183,6 @@ public class Enemy : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         _bodyRenderer.material.mainTexture = tempTexture;
-        Debug.Log("Clear");
     }
 
     private void Death()
