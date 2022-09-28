@@ -82,10 +82,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rotationSpeed: 4.26
-  dashSpeed: 1.5
-  dashRotationSpeed: 0.25
-  flickerDuration: 0.15
+  _dashSpeed: 1
+  _dashRotationSpeed: 0.05
+  _finishOffset: {x: 0, y: 0, z: 0}
+  _flickerDuration: 0.05
   _decelerationDrop: 0.2
+  lightTexture: {fileID: 2800000, guid: 9c95ff609a65b0c43899c485c97b20e1, type: 3}
 --- !u!54 &-3030107636550699320
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -303,6 +305,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spook
       objectReference: {fileID: 0}
+    - target: {fileID: 2143963233189678986, guid: 646cf81af973f0647b302702d8983dd5, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 113665cbc8bd67344b70740608362a98, type: 2}
     m_RemovedComponents:
     - {fileID: 2143963233185509706, guid: 646cf81af973f0647b302702d8983dd5, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 646cf81af973f0647b302702d8983dd5, type: 3}

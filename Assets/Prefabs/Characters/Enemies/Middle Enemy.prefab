@@ -87,6 +87,7 @@ MonoBehaviour:
   _finishOffset: {x: 0, y: -1.5, z: 0}
   _flickerDuration: 0.25
   _decelerationDrop: 0.35
+  lightTexture: {fileID: 2800000, guid: 9c95ff609a65b0c43899c485c97b20e1, type: 3}
 --- !u!54 &-3030107636550699320
 Rigidbody:
   m_ObjectHideFlags: 0

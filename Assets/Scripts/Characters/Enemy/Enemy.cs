@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using Zenject;
+using System.Collections;
 
 public class Enemy : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class Enemy : MonoBehaviour
     [Label("Deceleration Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField, Range(.1f, 1.5f)] private float _decelerationDrop = 2f;
 
+    [SerializeField] private Texture lightTexture;
+    
     private EnemyFactory _originFactory;
     private List<Vector3> _points;
     private Animator _animator;
@@ -58,6 +61,8 @@ public class Enemy : MonoBehaviour
         _animator = GetComponent<Animator>();
         _hpBar = GetComponentInChildren<HPBar>();
         _bodyRenderer = GetComponentInChildren<Renderer>();
+
+        tempTexture = _bodyRenderer.material.mainTexture;
     }
 
     private void Update()
@@ -161,10 +166,31 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    Coroutine tempCorutine;
+    Texture tempTexture;
+
     private void TakeDamage()
     {
-        _bodyRenderer.material.DOOffset(new Vector2(0, 1), _flickerDuration);
-        _bodyRenderer.material.mainTextureOffset = Vector2.zero;
+        //_bodyRenderer.material.DOOffset(new Vector2(0, 1), _flickerDuration).OnComplete(()=>
+        //{
+        //        _bodyRenderer.material.mainTextureOffset = Vector2.zero;
+        //});
+
+        //    _bodyRenderer.material.mainTextureOffset = new Vector2(0, 1);
+
+        _bodyRenderer.material.mainTexture = lightTexture;
+
+        if (tempCorutine != null)
+            StopCoroutine(tempCorutine);
+
+        StartCoroutine(ClearFill(_flickerDuration));
+    }
+
+    private IEnumerator ClearFill(float time)
+    {
+        yield return new WaitForSeconds(time);
+        _bodyRenderer.material.mainTexture = tempTexture;
+        Debug.Log("Clear");
     }
 
     private void Death()

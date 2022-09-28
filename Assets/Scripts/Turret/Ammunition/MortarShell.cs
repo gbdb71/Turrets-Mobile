@@ -16,6 +16,7 @@ public class MortarShell : BaseProjectile
     {
         TargetPoint.FillBuffer(collision.transform.position, _blastRadius);
 
+        //fuck particle
         for (int i = 0; i < TargetPoint.BufferedCount; i++)
         {
             Enemy enemy = TargetPoint.GetBuffered(i);
