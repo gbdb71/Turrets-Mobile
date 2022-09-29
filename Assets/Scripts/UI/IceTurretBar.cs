@@ -1,34 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class IceTurretBar : BaseBar
 {
     [Header("Ice Turret")]
-    [SerializeField] private Image fillImage;
-    [SerializeField] private GridLayoutGroup canvasGroup;
+    [SerializeField] private Image _fill;
+    [SerializeField] private Transform _linesParent;
 
-    [SerializeField] private GameObject linePrefab;
+    [SerializeField] private RectTransform _linePrefab;
 
-    public override void Initialization(int currentValue, int maxValue)
+    public void SetStepsCount(int steps)
     {
-        Debug.Log("Dod");
-        int newFill = (maxValue / 100) * currentValue;
-        fillImage.fillAmount = 1 - newFill;
+        if (_linesParent == null || _linePrefab == null)
+            return;
 
-        for (int i = 0; i < maxValue; i++)
+        int offsetStep = (int)((float)Math.Round(1f / steps, 2, MidpointRounding.ToEven) * 300);
+
+        for (int i = 0; i < steps - 1; i++)
         {
-            GameObject line = Instantiate(linePrefab, canvasGroup.transform);
+            RectTransform line = Instantiate(_linePrefab, _linesParent.transform);
+            line.anchoredPosition = new Vector3(offsetStep * (i + 1), 0, 0);
         }
-        Debug.Log("Initialization | Max " + maxValue);
     }
 
     public override void ChangeValue(int currentValue, int maxValue)
     {
-        int newFill = (maxValue / 100) * currentValue;
-        Debug.Log(newFill);
-
-        fillImage.fillAmount = 1 - newFill;
+        float fill = (float)Math.Round((float)currentValue / maxValue, 2, MidpointRounding.ToEven);
+        _fill.fillAmount = fill;
     }
 }

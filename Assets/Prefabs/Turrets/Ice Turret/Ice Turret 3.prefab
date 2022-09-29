@@ -252,7 +252,7 @@ Transform:
   m_GameObject: {fileID: 3805081200559784810}
   m_LocalRotation: {x: -0.000000021855694, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.0034572731, z: 0.0077204234}
-  m_LocalScale: {x: 0.02, y: 0.02, z: 0.02}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2699958650359207803}
   m_Father: {fileID: 1539548939411860932}
@@ -353,14 +353,13 @@ MonoBehaviour:
   _indicatorTransform: {fileID: 7054605062132796638}
   _indicatorFill: {fileID: 1291687084924840197}
   _nextGrade: {fileID: 0}
-  _chargedAmmoMax: 6
-  _ammoMax: 12
-  _ammoPerBox: 10
-  _baseBar: {fileID: 7296592618620300589}
+  _chargedAmmoMax: 9
+  _ammoMax: 27
+  _ammoPerBox: 9
   ShootPivotIndex: 0
-  _damageAngle: 50
-  _attackRate: 1
-  _decelerationPerAttack: 0.5
+  _damageAngle: 60
+  _attackRate: 0.9
+  _decelerationPerAttack: 0.7
   _throwEffect: {fileID: 2699958650359207781}
 --- !u!65 &-8876097353109488144
 BoxCollider:
@@ -835,14 +834,3 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4465599110721165411, guid: dffbc4455cb190b459cc029b560a15a7, type: 3}
   m_PrefabInstance: {fileID: 7645291413937361055}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7296592618620300589 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1106544495183084978, guid: dffbc4455cb190b459cc029b560a15a7, type: 3}
-  m_PrefabInstance: {fileID: 7645291413937361055}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d09a52822a746e4ca3dd8aa0e7b30f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

@@ -290,7 +290,7 @@ public class Map : MonoBehaviour
 
         return true;
     }
-    public List<Vector2Int> GetEmptyCells(Vector2Int size, Dir dir = Dir.Down)
+    public List<Vector2Int> GetEmptyCells(Vector2Int size, Dir dir = Dir.Down, bool ignorePathCells = false)
     {
         List<Vector2Int> positions = new List<Vector2Int>();
 
@@ -324,10 +324,13 @@ public class Map : MonoBehaviour
 
                 if (gridCell.CanBuild())
                 {
-                    List<Vector2Int> neighboursPath = _pathGenerator.GetCellNeighbours(x, y);
+                    if (!ignorePathCells)
+                    {
+                        List<Vector2Int> neighboursPath = _pathGenerator.GetCellNeighbours(x, y);
 
-                    if (neighboursPath.Count > 0)
-                        continue;
+                        if (neighboursPath.Count > 0)
+                            continue;
+                    }
 
                     if (CellsIsEmpty(new Vector2Int(x, y), new Vector2Int(size.x, size.y)))
                     {

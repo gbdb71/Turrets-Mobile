@@ -468,10 +468,9 @@ MonoBehaviour:
   _nextGrade: {fileID: 4123050127064966816, guid: 96e25d1f8b2bdfc4498ff3bb4320695d, type: 3}
   _chargedAmmoMax: 6
   _ammoMax: 12
-  _ammoPerBox: 10
-  _baseBar: {fileID: 7296592618620300589}
+  _ammoPerBox: 6
   ShootPivotIndex: 0
-  _damageAngle: 50
+  _damageAngle: 45
   _attackRate: 1
   _decelerationPerAttack: 0.5
   _throwEffect: {fileID: 2699958650359207781}
@@ -828,6 +827,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: IceTurret AmmoBar
       objectReference: {fileID: 0}
+    - target: {fileID: 7331231827701410977, guid: dffbc4455cb190b459cc029b560a15a7, type: 3}
+      propertyPath: m_FillAmount
+      value: 0.36
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dffbc4455cb190b459cc029b560a15a7, type: 3}
 --- !u!224 &6332473066186164476 stripped
@@ -835,14 +838,3 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4465599110721165411, guid: dffbc4455cb190b459cc029b560a15a7, type: 3}
   m_PrefabInstance: {fileID: 7645291413937361055}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7296592618620300589 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1106544495183084978, guid: dffbc4455cb190b459cc029b560a15a7, type: 3}
-  m_PrefabInstance: {fileID: 7645291413937361055}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d09a52822a746e4ca3dd8aa0e7b30f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

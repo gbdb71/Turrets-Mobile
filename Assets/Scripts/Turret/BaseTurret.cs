@@ -25,9 +25,11 @@ public abstract class BaseTurret : MonoBehaviour
     [Range(1, 100)]
     [SerializeField] protected int _chargedAmmoMax;
     [Range(1, 100)]
-    [SerializeField] private int _ammoMax;
+    [SerializeField] protected int _ammoMax;
     [SerializeField, Range(1, 100)] private int _ammoPerBox = 10;
 
+    private Renderer[] _renderers;
+    protected BaseBar _baseBar;
     protected TurretAim _aim;
     protected Enemy _currentTarget;
 
@@ -35,9 +37,6 @@ public abstract class BaseTurret : MonoBehaviour
 
     protected int _chargedAmmo = 0;
     protected int _ammo = 0;
-
-    private Renderer[] _renderers;
-   [SerializeField] private BaseBar _baseBar;
 
     public Transform IndicatorTransform => _indicatorTransform;
     public Image IndicatorFill => _indicatorFill;
@@ -52,15 +51,15 @@ public abstract class BaseTurret : MonoBehaviour
     {
         _aim = GetComponent<TurretAim>();
         _renderers = GetComponentsInChildren<Renderer>();
-        _baseBar = GetComponentInChildren<DefaultTurretBar>();
-     
+        _baseBar = GetComponentInChildren<BaseBar>();
+
         _ammo = _ammoMax;
         _chargedAmmo = _chargedAmmoMax;
-     
+
         Turrets.Add(this);
     }
 
-    private void Start()
+    protected virtual void Start()
     {
         UpdateAmmoBar();
 
@@ -181,7 +180,7 @@ public abstract class BaseTurret : MonoBehaviour
         UpdateAmmoBar();
     }
 
-    private void UpdateAmmoBar()
+    protected void UpdateAmmoBar()
     {
         if (_baseBar != null)
             _baseBar.ChangeValue(_chargedAmmo + _ammo, _chargedAmmoMax + _ammoMax);

@@ -35,6 +35,10 @@ public abstract class BaseBar : MonoBehaviour
         });
     }
 
-    public abstract void Initialization(int currentValue, int maxValue);
+    public virtual void Initialization(int currentValue, int maxValue)
+    {
+        ChangeValue(currentValue, maxValue);
+    }
+
     public abstract void ChangeValue(int currentValue, int maxValue);
 }

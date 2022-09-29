@@ -13,8 +13,18 @@ public class IceTurret : BaseTurret
 
     public bool IsFire { get; private set; }
 
-    protected void Start()
+    protected override void Start()
     {
+        if(_baseBar != null)
+        {
+            IceTurretBar iceTurretBar = (IceTurretBar)_baseBar;
+            iceTurretBar.SetStepsCount((_chargedAmmoMax + _ammoMax) / _chargedAmmoMax);
+        }
+
+        base.Start();
+
+        _fireDelay = 0f;
+
         _throwEffect.SetFloat("Angle", _damageAngle);
     }
 
@@ -39,7 +49,8 @@ public class IceTurret : BaseTurret
         if (fireTime >= 1f)
         {
             fireTime = 0f;
-            _chargedAmmo -= 1;
+
+            base.Fire();    
         }
     }
 

@@ -19,7 +19,7 @@ public class PlayerSpawner : MonoBehaviour
     {
         _headquarters = FindObjectOfType<Headquarters>();
 
-        List<Vector2Int> points = _mapGenerator.GetEmptyCells(Vector2Int.one);
+        List<Vector2Int> points = _mapGenerator.GetEmptyCells(Vector2Int.one, ignorePathCells: true);
 
         _mapGenerator.MapGrid.GetXY(_headquarters.transform.position, out int x, out int y);
 
