@@ -20,6 +20,9 @@ public class MortarShell : BaseProjectile
         for (int i = 0; i < TargetPoint.BufferedCount; i++)
         {
             Enemy enemy = TargetPoint.GetBuffered(i);
+            if (enemy == null)
+                break;
+
             float distance = Vector3.Distance(collision.transform.position, enemy.transform.position);
 
             float percent = distance / _blastRadius;

@@ -51,7 +51,11 @@ public class IceTurret : BaseTurret
             {
                 Enemy enemy = TargetPoint.GetBuffered(i);
 
+                if (enemy == null)
+                    break;
+
                 Vector3 targetDirection = enemy.transform.position - _aim.ArcRoot.transform.position;
+
                 float angleBetween = Vector3.Angle(_aim.ArcRoot.transform.forward, targetDirection);
 
                 if (angleBetween <= _damageAngle)

@@ -37,7 +37,7 @@ public abstract class BaseTurret : MonoBehaviour
     protected int _ammo = 0;
 
     private Renderer[] _renderers;
-    private AmmoBar _ammoBar;
+   [SerializeField] private BaseBar _baseBar;
 
     public Transform IndicatorTransform => _indicatorTransform;
     public Image IndicatorFill => _indicatorFill;
@@ -46,23 +46,26 @@ public abstract class BaseTurret : MonoBehaviour
     public Renderer[] Renderers => _renderers;
     public bool CanCharge { get { return _ammo < _ammoMax; } }
     public static List<BaseTurret> Turrets { get; private set; } = new List<BaseTurret>();
-    public int ShootPivotIndex = 0;
+    [HideInInspector] public int ShootPivotIndex = 0;
 
     protected virtual void Awake()
     {
         _aim = GetComponent<TurretAim>();
         _renderers = GetComponentsInChildren<Renderer>();
-        _ammoBar = GetComponentInChildren<AmmoBar>();
-
+        _baseBar = GetComponentInChildren<DefaultTurretBar>();
+     
         _ammo = _ammoMax;
         _chargedAmmo = _chargedAmmoMax;
-
+     
         Turrets.Add(this);
     }
 
     private void Start()
     {
         UpdateAmmoBar();
+
+        if (_baseBar != null)
+            _baseBar.Initialization(_chargedAmmo + _ammo, _chargedAmmoMax + _ammoMax);
     }
 
     private void Update()
@@ -113,16 +116,16 @@ public abstract class BaseTurret : MonoBehaviour
 
     private void OnEnable()
     {
-        if (_ammoBar != null)
-            _ammoBar.EnableBar();
+        if (_baseBar != null)
+            _baseBar.EnableBar();
     }
 
     private void OnDisable()
     {
         _aim.SetIdle(true);
 
-        if (_ammoBar != null)
-            _ammoBar.DisableBar();
+        if (_baseBar != null)
+            _baseBar.DisableBar();
     }
 
     private void OnDestroy()
@@ -180,8 +183,8 @@ public abstract class BaseTurret : MonoBehaviour
 
     private void UpdateAmmoBar()
     {
-        if (_ammoBar != null)
-            _ammoBar.ChangeValue(_chargedAmmo + _ammo, _chargedAmmoMax + _ammoMax);
+        if (_baseBar != null)
+            _baseBar.ChangeValue(_chargedAmmo + _ammo, _chargedAmmoMax + _ammoMax);
     }
 
     protected virtual bool CanFire()

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4465599110721165411}
   - component: {fileID: 1486669844451612570}
   m_Layer: 5
-  m_Name: AmmoBar
+  m_Name: Turret AmmoBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -50,8 +50,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _canvasGroup: {fileID: 2542407461238174405}
-  _fadeDuration: 0.5
   content: {fileID: 5929851989206955870}
+  _fadeDuration: 0.5
   titleText: {fileID: 867028743666841791}
 --- !u!1 &6207666898349006302
 GameObject:

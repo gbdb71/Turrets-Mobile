@@ -1,14 +1,15 @@
-using UnityEngine;
 using Cinemachine;
-using Zenject;
 using DG.Tweening;
+using System.Collections;
+using System.Collections.Generic;
 using TMPro;
+using UnityEngine;
+using Zenject;
 
-public class AmmoBar : MonoBehaviour
+public class BaseBar : MonoBehaviour
 {
     [SerializeField] private CanvasGroup _canvasGroup;
     [SerializeField] private Transform content;
-    [SerializeField] private TextMeshProUGUI titleText;
 
     [SerializeField] private float _fadeDuration = 0.5f;
 
@@ -19,21 +20,17 @@ public class AmmoBar : MonoBehaviour
         _canvasGroup.alpha = 0;
     }
 
-    public void EnableBar()
-    {
-        content.gameObject.SetActive(true);
-        _canvasGroup.DOFade(1f, _fadeDuration);
-    }
-
     private void Update()
     {
         if (_playerCamera != null)
             transform.LookAt(_playerCamera.transform);
     }
 
-    public void ChangeValue(int currentValue, int maxValue)
+    public void EnableBar()
     {
-        titleText.text =  $"{currentValue}/{maxValue}";
+        content.gameObject.SetActive(true);
+        _canvasGroup.DOFade(1f, _fadeDuration);
+        Debug.Log("Enable + " + gameObject.name);
     }
 
     public void DisableBar()
@@ -43,4 +40,7 @@ public class AmmoBar : MonoBehaviour
             content.gameObject.SetActive(false);
         });
     }
+
+    public virtual void Initialization(int currentValue, int maxValue) { Debug.Log("Non"); }
+    public virtual void ChangeValue(int currentValue, int maxValue) { }
 }
