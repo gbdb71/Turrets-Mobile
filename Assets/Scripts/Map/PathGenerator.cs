@@ -16,7 +16,7 @@ public struct Offset
     }
 }
 
-public class PathGenerator : MonoBehaviour
+public class PathGenerator 
 {
     private readonly int _width, _height;
     private readonly Offset _offset;

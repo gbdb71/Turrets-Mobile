@@ -4,6 +4,7 @@ using System.Collections;
 using Zenject;
 using System;
 using UnityEngine.AI;
+using System.Linq;
 
 public class Map : MonoBehaviour
 {
@@ -188,9 +189,12 @@ public class Map : MonoBehaviour
             if (positions.Count > 0)
             {
                 positions.Sort((x, y) => { return (headquarters.Item1 - x).sqrMagnitude.CompareTo((headquarters.Item1 - y).sqrMagnitude); });
-                Vector2Int spawnXZ = positions[1];
+                Vector2Int spawnXZ = positions.FirstOrDefault();
 
-                SpawnBuilding(b, spawnXZ);
+                if (spawnXZ != Vector2Int.zero)
+                {
+                    SpawnBuilding(b, spawnXZ);
+                }
             }
         }
 
@@ -320,9 +324,9 @@ public class Map : MonoBehaviour
 
                 if (gridCell.CanBuild())
                 {
-                    List<Vector2Int> neighbours = _pathGenerator.GetCellNeighbours(x, y);
+                    List<Vector2Int> neighboursPath = _pathGenerator.GetCellNeighbours(x, y);
 
-                    if (neighbours.Count > 0)
+                    if (neighboursPath.Count > 0)
                         continue;
 
                     if (CellsIsEmpty(new Vector2Int(x, y), new Vector2Int(size.x, size.y)))
