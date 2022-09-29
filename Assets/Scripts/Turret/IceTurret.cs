@@ -23,8 +23,6 @@ public class IceTurret : BaseTurret
 
         base.Start();
 
-        _fireDelay = 0f;
-
         _throwEffect.SetFloat("Angle", _damageAngle);
     }
 

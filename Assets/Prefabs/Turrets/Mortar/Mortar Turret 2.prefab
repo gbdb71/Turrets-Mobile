@@ -449,7 +449,7 @@ MonoBehaviour:
   _elevationSpeed: 50
   MaxElevation: 90
   MaxDepression: 0
-  _traverseSpeed: 60
+  _traverseSpeed: 125
   hasLimitedTraverse: 0
   _leftLimit: 120
   _rightLimit: 120
@@ -468,8 +468,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3499ea574fa5f3a4486bed9e40690dd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 15
-  _fireDelay: 0.1
+  _damage: 18
+  _fireDelay: 0
   _reloadTime: 1
   _shootPivot:
   - {fileID: 3642958238143821735}
@@ -477,9 +477,8 @@ MonoBehaviour:
   _indicatorFill: {fileID: 6667220803628488832}
   _nextGrade: {fileID: 7157497047578270226, guid: 982c122f397d7b14893c342a83604f86, type: 3}
   _chargedAmmoMax: 1
-  _ammoMax: 10
-  _ammoPerBox: 10
-  _baseBar: {fileID: 8688859511088421012}
+  _ammoMax: 12
+  _ammoPerBox: 6
   ShootPivotIndex: 0
   _projectileRadius: 2
   _shellPrefab: {fileID: 8119367024055230900, guid: b4994758d6a28244cb8b3de362e3b37a, type: 3}
@@ -718,14 +717,3 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4465599110721165411, guid: d65c645277adc2a4f87fc351e3bdc266, type: 3}
   m_PrefabInstance: {fileID: 7797052466442391310}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8688859511088421012 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1486669844451612570, guid: d65c645277adc2a4f87fc351e3bdc266, type: 3}
-  m_PrefabInstance: {fileID: 7797052466442391310}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 132421be889f1fd49ae0ec1748df9176, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

@@ -10,7 +10,7 @@ public abstract class BaseTurret : MonoBehaviour
     [SerializeField, Range(1, 200)] protected float _damage;
 
     [Label("Shooting", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
-    [SerializeField, Range(.1f, 5f)] protected float _fireDelay;
+    [SerializeField, Range(0f, 5f)] protected float _fireDelay;
     [SerializeField, Range(.5f, 5f)] protected float _reloadTime;
     [SerializeField] protected Transform[] _shootPivot;
 

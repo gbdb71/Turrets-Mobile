@@ -10,8 +10,10 @@ public class MortarTurret : BaseTurret
     private Vector3 _launchVelocity;
     private Vector3 _aimPos;
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
+
         float x = _aim.AimDistance + 0.25001f;
         float y = -_shootPivot[ShootPivotIndex].position.y;
         _launchSpeed = Mathf.Sqrt(9.81f * (y + Mathf.Sqrt(x * x + y * y)));
