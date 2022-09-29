@@ -10,4 +10,8 @@ public class DefaultTurretBar : BaseBar
     {
         titleText.text =  $"{currentValue}/{maxValue}";
     }
+
+    public override void Initialization(int currentValue, int maxValue)
+    {
+    }
 }

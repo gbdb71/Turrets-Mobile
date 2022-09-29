@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -19,13 +17,11 @@ public class FactoryView : MonoBehaviour
 
     public void InitializationPanel(Sprite iconSprite, int cost, Factory factory)
     {
-        Debug.Log("Initialization");
         _factory = factory;
         iconImage.sprite = iconSprite;
         _cost = cost;
 
         fillImage.fillAmount = 0;
-        currentValueText.text = 00 + " / "  + cost.ToString();
     }
 
     private void Update()
@@ -36,15 +32,7 @@ public class FactoryView : MonoBehaviour
         if (_factory == null)
             return;
 
-        string leftString;
-        int value = _factory.ViewValue;
-
-        if (value < 10)
-            leftString = 0 + value.ToString();
-        else
-            leftString = value.ToString();
-
-        fillImage.fillAmount = _factory.ViewFill;
-        currentValueText.text = leftString + " / " + _cost.ToString(); 
-    }
+        fillImage.fillAmount = _factory.CreateProgress;
+        currentValueText.text = $"{_factory.CurrencyAmount.ToString("D2")} / {_cost}";
+}
 }

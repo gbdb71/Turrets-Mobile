@@ -40,10 +40,8 @@ public class Factory : MonoBehaviour, IInteractable
     public static List<Factory> Factories { get; private set; } = new List<Factory>();
 
     public Sprite plateSprite;
-    public int ViewValue => _currencyAmount;
-    public float ViewFill => _viewFill;
-
-    float _viewFill = 0;
+    public int CurrencyAmount => _currencyAmount;
+    public float CreateProgress => _workTimer / _timeToCreate;
 
     private void Awake()
     {
@@ -75,8 +73,6 @@ public class Factory : MonoBehaviour, IInteractable
                 IsWorking = false;
             }
 
-            _viewFill = (_timeToCreate / 1) * _workTimer;
-            Debug.Log(_viewFill);
             return;
         }
 
@@ -103,7 +99,6 @@ public class Factory : MonoBehaviour, IInteractable
                 _currencyAmount += 1;
                 _intertactTimer = 0;
             }
-            
         }
     }
 

@@ -15,5 +15,5 @@ MonoBehaviour:
   _prefab: {fileID: 6140268463261831372, guid: 57655a98714a50e42929f19d2504faef, type: 3}
   _dir: 0
   _type: 0
-  _size: {x: 2, y: 2}
+  _size: {x: 3, y: 3}
   _offset: 0.75
