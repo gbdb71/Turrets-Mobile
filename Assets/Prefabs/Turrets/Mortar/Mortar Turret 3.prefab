@@ -480,7 +480,7 @@ MonoBehaviour:
   _ammoMax: 16
   _ammoPerBox: 8
   ShootPivotIndex: 0
-  _projectileRadius: 2.43
+  _projectileRadius: 2.5
   _shellPrefab: {fileID: 8119367024055230900, guid: b4994758d6a28244cb8b3de362e3b37a, type: 3}
 --- !u!65 &2802504676723262349
 BoxCollider:

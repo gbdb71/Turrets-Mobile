@@ -418,7 +418,7 @@ MonoBehaviour:
   _elevationSpeed: 50
   MaxElevation: 90
   MaxDepression: 0
-  _traverseSpeed: 130
+  _traverseSpeed: 135
   hasLimitedTraverse: 0
   _leftLimit: 120
   _rightLimit: 120
