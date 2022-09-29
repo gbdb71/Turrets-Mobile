@@ -475,7 +475,7 @@ MonoBehaviour:
   - {fileID: 3642958238143821735}
   _indicatorTransform: {fileID: 5520151737244513286}
   _indicatorFill: {fileID: 6667220803628488832}
-  _nextGrade: {fileID: 0}
+  _nextGrade: {fileID: 7157497047578270226, guid: 982c122f397d7b14893c342a83604f86, type: 3}
   _chargedAmmoMax: 1
   _ammoMax: 10
   _ammoPerBox: 10
