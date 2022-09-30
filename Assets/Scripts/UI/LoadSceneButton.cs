@@ -1,36 +1,28 @@
-﻿using System.Collections;
+﻿using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Button))]
-public class LoadSceneButton : MonoBehaviour
+public class LoadSceneButton : SceneLoader
 {
-    [SerializeField] private SerializedScene _targetScene;
-    [SerializeField] private Button _button;
+    [SerializeField] private TextMeshProUGUI _text;
+    private Button _button;
+
+    protected override void ShowProgress(string progress)
+    {
+        _text.text = progress;
+    }
+
+    protected override void StartLoadScene()
+    {
+        base.StartLoadScene();
+
+        _button.interactable = false;
+    }
 
     private void Awake()
     {
         _button = GetComponent<Button>();
         _button.onClick.AddListener(StartLoadScene);
-    }
-
-    private void StartLoadScene()
-    {
-        _button.interactable = false;
-        StartCoroutine(LoadScene());
-    }
-    private IEnumerator LoadScene()
-    {
-        AsyncOperation async = SceneManager.LoadSceneAsync(_targetScene.BuildIndex, LoadSceneMode.Single);
-        async.allowSceneActivation = false;
-
-        while (async.progress <= 0.8f)
-        {
-            Debug.Log(async.progress);
-            yield return null;
-        }
-
-        async.allowSceneActivation = true;
     }
 }

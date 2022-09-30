@@ -47,7 +47,7 @@ public class Map : MonoBehaviour
 
         InitializeTransforms();
 
-        StartCoroutine(Generate());
+       Generate();
     }
 
     private void InitializeTransforms()
@@ -62,7 +62,7 @@ public class Map : MonoBehaviour
         _buildingsParent.SetParent(_mapParent);
     }
 
-    private IEnumerator Generate()
+    private void Generate()
     {
         List<Vector2Int> path = _pathGenerator.GeneratePath();
         int size = path.Count;
@@ -80,15 +80,15 @@ public class Map : MonoBehaviour
                 break;
         }
 
-        yield return StartCoroutine(LayPathObjects(path));
+        LayPathObjects(path);
 
         if (_sceneryObjects.Length > 0)
-            yield return StartCoroutine(LaySceneryObjects());
+            LaySceneryObjects();
 
-        yield return StartCoroutine(LayBuildingObjects());
+        LayBuildingObjects();
 
         if (_game.CurrentLevel.BarrierRows > 0 && _game.CurrentLevel.BarrierPrefab != null)
-            yield return StartCoroutine(LayBarrierObjects());
+          LayBarrierObjects();
 
         NavMeshSurface mapSurface = _mapParent.gameObject.AddComponent<NavMeshSurface>();
         mapSurface.layerMask = _navigationMask;
@@ -96,7 +96,7 @@ public class Map : MonoBehaviour
 
         OnMapGenerated?.Invoke();
     }
-    private IEnumerator LayPathObjects(List<Vector2Int> path)
+    private void LayPathObjects(List<Vector2Int> path)
     {
         foreach (Vector2Int p in path)
         {
@@ -110,11 +110,9 @@ public class Map : MonoBehaviour
             {
                 Debug.LogWarning($"Path objects doesn't implement: {neighbourValue} value");
             }
-
-            yield return null;
         }
     }
-    private IEnumerator LaySceneryObjects()
+    private void LaySceneryObjects()
     {
         for (int x = 0; x < _game.CurrentLevel.GridWidth; x++)
         {
@@ -132,19 +130,17 @@ public class Map : MonoBehaviour
                         randomCell = 0;
 
                     SpawnGridCell(_sceneryObjects[randomCell], x, y, _mapParent);
-                    yield return null;
                 }
             }
         }
     }
-    private IEnumerator LayBarrierObjects()
+    private void LayBarrierObjects()
     {
         for (int x = 0; x < _game.CurrentLevel.GridWidth; x++)
         {
             for (int y = -1; y > -_game.CurrentLevel.BarrierRows; y--)
             {
                 SpawnGridCell(_game.CurrentLevel.BarrierPrefab, x, y, _barriersParent);
-                yield return null;
             }
         }
 
@@ -153,9 +149,7 @@ public class Map : MonoBehaviour
             for (int y = _game.CurrentLevel.GridHeight; y < (_game.CurrentLevel.GridHeight + _game.CurrentLevel.BarrierRows); y++)
             {
                 SpawnGridCell(_game.CurrentLevel.BarrierPrefab, x, y, _barriersParent);
-                yield return null;
             }
-
         }
 
         for (int x = -1; x > -_game.CurrentLevel.BarrierRows; x--)
@@ -163,7 +157,6 @@ public class Map : MonoBehaviour
             for (int y = (-_game.CurrentLevel.BarrierRows + 1); y < (_game.CurrentLevel.GridHeight + _game.CurrentLevel.BarrierRows); y++)
             {
                 SpawnGridCell(_game.CurrentLevel.BarrierPrefab, x, y, _barriersParent);
-                yield return null;
             }
         }
 
@@ -172,11 +165,10 @@ public class Map : MonoBehaviour
             for (int y = (-_game.CurrentLevel.BarrierRows + 1); y < (_game.CurrentLevel.GridHeight + _game.CurrentLevel.BarrierRows); y++)
             {
                 SpawnGridCell(_game.CurrentLevel.BarrierPrefab, x, y, _barriersParent);
-                yield return null;
             }
         }
     }
-    private IEnumerator LayBuildingObjects()
+    private void LayBuildingObjects()
     {
         var headquarters = SpawnHeadquarters();
 
@@ -197,8 +189,6 @@ public class Map : MonoBehaviour
                 }
             }
         }
-
-        yield return null;
     }
 
 
