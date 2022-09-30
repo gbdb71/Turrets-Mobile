@@ -1,4 +1,3 @@
-using System.Collections;
 using ToolBox.Pools;
 using UnityEngine;
 
@@ -6,22 +5,24 @@ public class CustomParticle : MonoBehaviour, IPoolable
 {
     [SerializeField] private ParticleSystem _particle;
 
-    private IEnumerator DisableParticle()
+    private float _timer = 0;
+
+    private void Update()
     {
-        Debug.Log("Play");
-        yield return new WaitForSeconds(_particle.main.duration);
-        gameObject.Release();
+        _timer += Time.deltaTime;
+
+        if (_timer >= _particle.main.duration)
+        {
+            transform.parent.gameObject.Release();
+        }
     }
 
     public void OnReuse()
     {
-        Debug.Log("Enable");
-        _particle.Play();
-        StartCoroutine(DisableParticle());
+        _timer = 0;
     }
-   
+
     public void OnRelease()
     {
-        Debug.Log("Disable");
     }
 }
