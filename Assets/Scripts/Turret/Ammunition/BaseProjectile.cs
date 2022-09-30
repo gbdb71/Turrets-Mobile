@@ -26,7 +26,6 @@ public abstract class BaseProjectile : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         Damage(collision);
-        _particle.Reuse(collision.GetContact(0).point, Quaternion.identity);
         gameObject.Release();
     }
 
@@ -34,8 +33,8 @@ public abstract class BaseProjectile : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent(out Enemy damagable))
         {
+            _particle.Reuse(collision.GetContact(0).point, Quaternion.identity);
             damagable.ApplyDamage(_damage);
-
         }
     }
 }

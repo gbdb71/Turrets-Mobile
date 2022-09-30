@@ -29,7 +29,6 @@ public class HomingProjectile : BaseProjectile
         {
             direction = (_target.transform.position - transform.position).normalized;
             direction.y = 0f;
-
         }
 
         transform.position += direction * _speed * Time.deltaTime;

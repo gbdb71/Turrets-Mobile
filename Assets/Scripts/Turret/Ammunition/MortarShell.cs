@@ -6,19 +6,20 @@ public class MortarShell : BaseProjectile
     [SerializeField, Range(1f, 2f)] private float _damageDrop = 2f;
     [SerializeField] private GameObject _mortarDamageParticle;
 
+    protected float _age;
     private float _blastRadius;
 
-    public void Initialize(Vector3 launchPoint, Vector3 launchVelocity, float damage, float blastRadius)
+    public override void Initialize(Vector3 launchPoint, Vector3 launchVelocity, float damage, float blastRadius)
     {
         base.Initialize(launchPoint, launchVelocity, damage, 9.81f);
         this._blastRadius = blastRadius;
+        this._age = 0f;
     }
 
     protected override void Damage(Collision collision)
     {
         TargetPoint.FillBuffer(collision.transform.position, _blastRadius);
 
-        //fuck particle
         _mortarDamageParticle.Reuse(collision.GetContact(0).point, Quaternion.identity);
 
         for (int i = 0; i < TargetPoint.BufferedCount; i++)
@@ -36,9 +37,6 @@ public class MortarShell : BaseProjectile
             enemy.ApplyDamage(damage);
         }
     }
-
-    protected float _age;
-
     protected override void Move()
     {
         _age += Time.deltaTime;
