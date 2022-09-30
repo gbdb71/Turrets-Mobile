@@ -19,12 +19,12 @@ public class Game : MonoBehaviour
 
     public bool GameStared { get; private set; } = false;
     public bool GameFinished { get; private set; } = false;
-    public static event Action OnGameFinished;
     public LevelData CurrentLevel { get; private set; }
     public LevelScenario.State ActiveScenario => _activeScenario;
     public Headquarters Headquarters => _headquarters;
     public Data Data => _data;
 
+    public static event Action OnGameFinished;
 
     private void Awake()
     {
