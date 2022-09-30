@@ -40,7 +40,7 @@ public class Headquarters : MonoBehaviour, IInteractable
     public Transform DronePoint => _dronePoint;
     public Transform FinishPoint => _finishPoint;
 
-    public event Action OnDeath;
+    public static event Action OnDeath;
 
     private void Awake()
     {
@@ -50,7 +50,6 @@ public class Headquarters : MonoBehaviour, IInteractable
         if (_hpBar != null)
             _hpBar.InitializationBar(_health);
     }
-
     private void Start()
     {
         _interactGroup = Instantiate(_interactGroupPrefab, _canvas.transform);
@@ -76,7 +75,6 @@ public class Headquarters : MonoBehaviour, IInteractable
 
             OnDeath?.Invoke();
 
-            //REMOVE
             this.enabled = false;
         }
     }
@@ -101,7 +99,6 @@ public class Headquarters : MonoBehaviour, IInteractable
         buyButton.Initialization("Buy Helper", _helperPrice, BuyHelper);
         _upgradeButtons.Add(buyButton);
     }
-
     private void BuyHelper()
     {
         if(_game.Data.User.TryWithdrawCurrency(CurrencyType.Construction, _helperPrice))
@@ -109,7 +106,6 @@ public class Headquarters : MonoBehaviour, IInteractable
             _container.InstantiatePrefab(_helperPrefab, DronePoint.transform.position, Quaternion.identity, null);
         }
     }
-
     private void TryUpgade(UpgradeType type)
     {
         UpgradeList upgradeList = _game.Data.UpgradesInfo.Upgrades.Where(x => x.Type == type).First();
@@ -130,7 +126,6 @@ public class Headquarters : MonoBehaviour, IInteractable
         InitializationButtons();
         _interactGroup.alpha = 1;
     }
-
     public void ClosedViewGroup()
     {
         _interactGroup.alpha = 0;
@@ -142,15 +137,12 @@ public class Headquarters : MonoBehaviour, IInteractable
 
         _upgradeButtons.Clear();
     }
-
     public void OnEnter(Player player)
     {
         if (!player.Inventory.HasTurret)
             OpenViewGroup();
     }
-
     public void Interact(Player player) { }
-
     public void OnExit(Player player)
     {
         ClosedViewGroup();

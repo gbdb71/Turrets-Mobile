@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0, g: 0.99999905, b: 0.99999905, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -639,8 +639,8 @@ RectTransform:
   m_Children:
   - {fileID: 1128631259}
   - {fileID: 969708225}
-  - {fileID: 755686136}
   - {fileID: 1442033782}
+  - {fileID: 755686136}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -682,7 +682,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5084182781065107490, guid: 9a75e9dc2a3012c4e9740620a7795d3d, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5084182781065107490, guid: 9a75e9dc2a3012c4e9740620a7795d3d, type: 3}
       propertyPath: m_AnchorMax.x
@@ -698,7 +698,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5084182781065107490, guid: 9a75e9dc2a3012c4e9740620a7795d3d, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0.435
       objectReference: {fileID: 0}
     - target: {fileID: 5084182781065107490, guid: 9a75e9dc2a3012c4e9740620a7795d3d, type: 3}
       propertyPath: m_SizeDelta.x
@@ -706,7 +706,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5084182781065107490, guid: 9a75e9dc2a3012c4e9740620a7795d3d, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 400
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5084182781065107490, guid: 9a75e9dc2a3012c4e9740620a7795d3d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -771,7 +771,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7427309629592188164, guid: 784930e77bdd052468c5369127c1038c, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7427309629592188164, guid: 784930e77bdd052468c5369127c1038c, type: 3}
       propertyPath: m_LocalPosition.x
