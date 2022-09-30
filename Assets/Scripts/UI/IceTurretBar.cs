@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class IceTurretBar : BaseBar
 {
@@ -9,6 +10,7 @@ public class IceTurretBar : BaseBar
     [SerializeField] private Transform _linesParent;
 
     [SerializeField] private RectTransform _linePrefab;
+    [SerializeField] private float fillTime = 0.25f;
 
     public void SetStepsCount(int steps)
     {
@@ -27,6 +29,6 @@ public class IceTurretBar : BaseBar
     public override void ChangeValue(int currentValue, int maxValue)
     {
         float fill = (float)Math.Round((float)currentValue / maxValue, 2, MidpointRounding.ToEven);
-        _fill.fillAmount = fill;
+        _fill.DOFillAmount(fill, fillTime);
     }
 }
