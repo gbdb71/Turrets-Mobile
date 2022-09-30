@@ -7,6 +7,8 @@ public class MortarTurret : BaseTurret
     [SerializeField, Range(0.5f, 3f)] private float _projectileRadius = 1f;
     [SerializeField] private MortarShell _shellPrefab;
 
+    [SerializeField] private ParticleSystem _muzzleParticle;
+
     private float _launchSpeed;
     private Vector3 _launchVelocity;
     private Vector3 _aimPos;
@@ -26,6 +28,9 @@ public class MortarTurret : BaseTurret
 
         if (_launchVelocity != Vector3.zero)
         {
+            if (_muzzleParticle != null)
+                _muzzleParticle.Play();
+
             MortarShell projectile = _shellPrefab.gameObject.Reuse<MortarShell>(_shootPivot[ShootPivotIndex].position, Quaternion.identity);
             projectile.Initialize(_shootPivot[ShootPivotIndex].position, _launchVelocity, _damage, _projectileRadius);
         }
