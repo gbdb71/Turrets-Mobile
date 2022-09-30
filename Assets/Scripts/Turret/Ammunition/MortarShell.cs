@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
+using ToolBox.Pools;
 
 public class MortarShell : BaseProjectile
 {
     [SerializeField, Range(1f, 2f)] private float _damageDrop = 2f;
+    [SerializeField] private GameObject _mortarDamageParticle;
 
     private float _blastRadius;
 
@@ -17,6 +19,8 @@ public class MortarShell : BaseProjectile
         TargetPoint.FillBuffer(collision.transform.position, _blastRadius);
 
         //fuck particle
+        _mortarDamageParticle.Reuse(collision.GetContact(0).point, Quaternion.identity);
+
         for (int i = 0; i < TargetPoint.BufferedCount; i++)
         {
             Enemy enemy = TargetPoint.GetBuffered(i);
