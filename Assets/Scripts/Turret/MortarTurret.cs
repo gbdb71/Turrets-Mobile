@@ -30,6 +30,7 @@ public class MortarTurret : BaseTurret
             projectile.Initialize(_shootPivot[ShootPivotIndex].position, _launchVelocity, _damage, _projectileRadius);
         }
     }
+
     protected override void Aim()
     {
         Vector3 launchPoint = _shootPivot[ShootPivotIndex].position;

@@ -1,6 +1,7 @@
 using UnityEngine;
 using DG.Tweening;
 using ToolBox.Pools;
+using System.Collections.Generic;
 
 public class AutomaticTurret : BaseTurret
 {
@@ -11,14 +12,24 @@ public class AutomaticTurret : BaseTurret
     [SerializeField] private Vector2 gunMove = new Vector2(0.001f, -0.001f);
     [SerializeField] private Vector2 moveDuration = new Vector2(0.075f, 0.125f);
 
+    [SerializeField] private List<ParticleSystem> _muzzleParticles;
+
     protected override void Start()
     {
         base.Start();
+        
+        for (int i = 0; i < _shootPivot.Length; i++)
+        {
+            _muzzleParticles.Add(_shootPivot[i].parent.gameObject.GetComponentInChildren<ParticleSystem>());
+        }
     }
 
     protected override void Fire()
     {
         base.Fire();
+
+        if (_muzzleParticles[ShootPivotIndex] != null && _muzzleParticles.Count > 0)
+            _muzzleParticles[ShootPivotIndex].Play();
 
         _shootPivot[ShootPivotIndex].parent.DOLocalMoveZ(gunMove.y, moveDuration.x).OnComplete(() =>
         {
