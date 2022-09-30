@@ -1,11 +1,13 @@
 using UnityEngine;
+using ToolBox.Pools;
 
 public abstract class BaseProjectile : MonoBehaviour
 {
+    [SerializeField] private GameObject _particle;
+
     protected float _gravity = 9.81f;
     protected float _damage = 10f;
     protected Vector3 _launchPoint, _launchVelocity;
-    public float _scaleDuration = 0.5f;
 
     public virtual void Initialize(Vector3 launchPoint, Vector3 launchVelocity, float damage, float physicsDrop)
     {
@@ -24,13 +26,16 @@ public abstract class BaseProjectile : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         Damage(collision);
-        Destroy(gameObject);
+        _particle.Reuse(collision.GetContact(0).point, Quaternion.identity);
+        gameObject.Release();
     }
+
     protected virtual void Damage(Collision collision)
     {
         if (collision.gameObject.TryGetComponent(out Enemy damagable))
         {
             damagable.ApplyDamage(_damage);
+
         }
     }
 }

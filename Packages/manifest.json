@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "com.browar.editor-toolbox": "https://github.com/arimger/Unity-Editor-Toolbox.git#upm",
+    "com.intothedev.objectpooling": "https://github.com/IntoTheDev/Object-Pooling-for-Unity.git",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.adaptiveperformance": "2.2.4",
     "com.unity.adaptiveperformance.samsung.android": "2.2.4",

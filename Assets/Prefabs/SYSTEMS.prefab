@@ -309,11 +309,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxWaitTime: 1.5
-  _cellSize: 1
+  _cellSize: 3
+  _navigationMask:
+    serializedVersion: 2
+    m_Bits: 1024
   _pathObjects:
     pairs:
+    - key: 2
+      value: {fileID: 11400000, guid: a2350e87f099d3e44bc8ba3a5733ffd6, type: 2}
     - key: 3
       value: {fileID: 11400000, guid: 6e1c2742d1da6af43b654defc189fda9, type: 2}
+    - key: 4
+      value: {fileID: 11400000, guid: 2b08dbb4f66fd304aa547f4160302417, type: 2}
     - key: 5
       value: {fileID: 11400000, guid: 94cc291ab9dbc0e40bd7fe99c50b50ce, type: 2}
     - key: 6
@@ -324,8 +331,6 @@ MonoBehaviour:
       value: {fileID: 11400000, guid: f32c7750bb226434b929ac0583fad4a0, type: 2}
     - key: 12
       value: {fileID: 11400000, guid: a09b8c60e7671d04ea510c624bec4780, type: 2}
-    - key: 0
-      value: {fileID: 0}
     error: 0
   _sceneryObjects:
   - {fileID: 11400000, guid: a2350e87f099d3e44bc8ba3a5733ffd6, type: 2}
@@ -375,11 +380,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scriptableObjectInstallers: []
   _monoInstallers:
-  - {fileID: 1528270780}
-  - {fileID: 8742234295005352930}
+  - {fileID: 1027476916}
   - {fileID: 1185382947}
   - {fileID: 925701292}
-  - {fileID: 1027476916}
+  - {fileID: 1528270780}
+  - {fileID: 8742234295005352930}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -406,6 +411,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8742234293817556372}
+  - component: {fileID: 1966670964}
   m_Layer: 0
   m_Name: SYSTEMS
   m_TagString: Untagged
@@ -431,6 +437,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1966670964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8742234293817556373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ec489a698f1b944b81579f0817595a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objects:
+  - Prefab: {fileID: 4795163912979976228, guid: 958b2fa6ec39a224fa3db3a24520aee3, type: 3}
+    Count: 20
+  - Prefab: {fileID: 4795163912979976228, guid: b4994758d6a28244cb8b3de362e3b37a, type: 3}
+    Count: 5
+  - Prefab: {fileID: 7605164056796649255, guid: f0d1d0fcd0f6f054697c4764a7a0dda8, type: 3}
+    Count: 20
 --- !u!1 &8742234294034949571
 GameObject:
   m_ObjectHideFlags: 0

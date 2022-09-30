@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using ToolBox.Pools;
+using UnityEngine;
 
 public class MortarTurret : BaseTurret
 {
@@ -25,8 +26,7 @@ public class MortarTurret : BaseTurret
 
         if (_launchVelocity != Vector3.zero)
         {
-            MortarShell projectile = Instantiate(_shellPrefab, _shootPivot[ShootPivotIndex].position, Quaternion.identity);
-
+            MortarShell projectile = _shellPrefab.gameObject.Reuse<MortarShell>(_shootPivot[ShootPivotIndex].position, Quaternion.identity);
             projectile.Initialize(_shootPivot[ShootPivotIndex].position, _launchVelocity, _damage, _projectileRadius);
         }
     }
