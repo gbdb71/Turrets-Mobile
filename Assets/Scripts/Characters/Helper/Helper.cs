@@ -12,9 +12,9 @@ public class Helper : MonoBehaviour
     [SerializeField] private int _maxAmmo = 10;
 
     [Label("Transforms", skinStyle: SkinStyle.Box)]
-    [SerializeField] private GameObject contentObject;
     [SerializeField] private Transform[] propellers;
     [SerializeField] private GameObject body;
+    [SerializeField, NotNull] private Transform _inventory;
 
     [Label("Visual Settings", skinStyle: SkinStyle.Box)]
     [SerializeField] private float duration = 1;
@@ -22,18 +22,18 @@ public class Helper : MonoBehaviour
     [SerializeField] private float _riseTime = 0.5f;
     [SerializeField] private float _liftingHeight = 2f;
 
-    [Inject]
-    private Game _game;
-    private int _currentAmmo = 0;
+    [Inject] private Game _game;
     private bool _fansIsActive = false;
+    private Stack<Ammunition> _inventoryAmmo = new Stack<Ammunition>();
 
     public HelperStateMachine StateMachine { get; private set; }
     public NavMeshAgent Agent { get; private set; }
-    public bool InventoryFull => _currentAmmo == _maxAmmo;
-    public bool InventoyEmpty => _currentAmmo <= 0;
-    public bool IsMove => Agent.velocity != Vector3.zero;
+    public bool InventoryFull => _inventoryAmmo.Count == _maxAmmo;
+    public bool InventoyEmpty => _inventoryAmmo.Count == 0;
+    public bool IsMove => Agent.velocity.sqrMagnitude > 0f;
     public Game Game => _game;
 
+    public static List<Ammunition> TargetAmmunitions = new List<Ammunition>();
     public static List<Helper> Helpers { get; private set; } = new List<Helper>();
     public static event Action<Helper> OnHelperCreated;
     public static event Action<Helper> OnHelperDestroyed;
@@ -42,7 +42,6 @@ public class Helper : MonoBehaviour
     {
         Agent = GetComponent<NavMeshAgent>();
         StateMachine = new HelperStateMachine(this);
-        contentObject.SetActive(false);
 
         Helpers.Add(this);
         OnHelperCreated?.Invoke(this);
@@ -61,40 +60,45 @@ public class Helper : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (_currentAmmo >= _maxAmmo)
+        if (_inventoryAmmo.Count >= _maxAmmo)
+        {
+            if (other.CompareTag("Turret"))
+            {
+                if (other.TryGetComponent(out BaseTurret turret))
+                {
+                    if (!turret.CanCharge)
+                        return;
+
+                    body.transform.DOLocalMoveY(1f, _riseTime).OnComplete(() =>
+                    {
+                        while (_inventoryAmmo.Count > 0 && turret.CanCharge)
+                        {
+                            Destroy(_inventoryAmmo.Pop().gameObject);
+                            turret.Charge();
+                        }
+                    });
+                }
+            }
+
             return;
+        }
+
 
         if (other.CompareTag("Ammunition"))
         {
             if (other.TryGetComponent(out Ammunition ammunition))
             {
+                if (!ammunition.enabled)
+                    return;
+
                 body.transform.DOLocalMoveY(0.25f, _riseTime).OnComplete(() =>
                 {
-                    contentObject.SetActive(true);
-                    _currentAmmo++;
 
-                    //REMOVE: 
-                    Destroy(other.gameObject);
-                });
-            }
-        }
-    }
-    private void OnTriggerStay(Collider other)
-    {
-        if (_currentAmmo <= 0)
-        {
-            contentObject.gameObject.SetActive(false);
-            return;
-        }
+                    ammunition.transform.SetParent(_inventory);
+                    ammunition.transform.localPosition = Vector3.zero;
 
-        if (other.CompareTag("Turret"))
-        {
-            if (other.TryGetComponent(out BaseTurret turret))
-            {
-                body.transform.DOLocalMoveY(1f, _riseTime).OnComplete(() =>
-                {
-                    turret.Charge();
-                    _currentAmmo--;
+                    ammunition.enabled = false;
+                    _inventoryAmmo.Push(ammunition);
                 });
             }
         }
@@ -129,4 +133,25 @@ public class Helper : MonoBehaviour
         });
     }
 
+    public Ammunition GetTargetAmmunition(Factory factory)
+    {
+        if (factory == null)
+            return null;
+
+        for (int i = 0; i < factory.Plates.Count; i++)
+        {
+            FactoryPlate plate = factory.Plates[i];
+
+            if (plate.gameObject.activeSelf && plate.CanPlace() == false)
+            {
+                if (plate.Content.TryGetComponent(out Ammunition ammunition))
+                {
+                    if (!TargetAmmunitions.Contains(ammunition))
+                        return ammunition;
+                }
+            }
+        }
+
+        return null;
+    }
 }

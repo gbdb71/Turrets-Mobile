@@ -62,7 +62,6 @@ public class EnemyWave : ScriptableObject
 
                     _sequence = _wave._spawnSequences[_index].Begin(_wave._game);
                     deltaTime = _sequence.Progress(deltaTime);
-                    Debug.Log("Sequence" + _sequence);
                 }
             }
             return -1f;

@@ -2,7 +2,6 @@ using UnityEngine;
 using DG.Tweening;
 using System.Collections.Generic;
 using System.Linq;
-using System;
 
 public class PlayerInventory : MonoBehaviour
 {
@@ -33,7 +32,7 @@ public class PlayerInventory : MonoBehaviour
     public BaseTurret TakedTurret => _takedTurret;
     public Transform backpackPoint;
     public bool HasTurret { get { return _turretSlot.childCount > 0 && TakedTurret != null; } }
-    public bool CanPlace { get; private set; }
+    public bool CanPlace { get; private set; } = true;
     public bool CanUpgrade
     {
         get
@@ -52,7 +51,6 @@ public class PlayerInventory : MonoBehaviour
         UserData.OnUpgradeChanged += UpdateAmmoMax;
         UpdateAmmoMax(UpgradeType.AmmoCount, -1);
     }
-
     private void Update()
     {
         if (_delayTimer > 0)
@@ -137,7 +135,6 @@ public class PlayerInventory : MonoBehaviour
         _nearTurret = null;
     }
 
-
     private void UpdateAmmoMax(UpgradeType type, int index)
     {
         if (type == UpgradeType.AmmoCount)
@@ -160,6 +157,7 @@ public class PlayerInventory : MonoBehaviour
 
         ammunition.transform.DOLocalRotate(Vector3.zero, _ammoRotationSpeed);
         ammunition.transform.DOLocalMove(endPosition, _ammoMoveSpeed);
+        ammunition.enabled = false;
 
     }
     public void ChargeTurret(BaseTurret turret)

@@ -1,9 +1,9 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
 
 public class TakeAmmoState : HelperBaseState
 {
     private Factory _targetFactory;
-    private FactoryPlate _targetPlate;
+    private Ammunition _target;
 
     public TakeAmmoState(HelperStateMachine stateMachine) : base(stateMachine)
     {
@@ -34,48 +34,34 @@ public class TakeAmmoState : HelperBaseState
         }
         else
         {
-            if(_targetPlate != null)
+            if(_target != null)
             {
-                if (_targetPlate.CanPlace())
-                    _targetPlate = null;
+                if (!_target.enabled)
+                {
+                    _target = null;
+                    Helper.TargetAmmunitions.Remove(_target);
+                }
             }
 
-            if(_targetPlate == null)
+            if(_target == null)
             {
-                _targetPlate = GetTargetPlate();
+                _target = _stateMachine.Owner.GetTargetAmmunition(_targetFactory);
 
-                if(_targetPlate == null)
+                if(_target == null)
                 {
                     _targetFactory = null;
                     return;
                 }
+
+                Helper.TargetAmmunitions.Add(_target);
             }
 
-            _stateMachine.Owner.Agent.SetDestination(_targetPlate.transform.position);
+            _stateMachine.Owner.Agent.SetDestination(_target.transform.position);
         }
     }
     public override void Exit()
     {
-
-    }
-
-
-    private FactoryPlate GetTargetPlate()
-    {
-        if (_targetFactory == null)
-            return null;
-
-        for (int i = 0; i < _targetFactory.Plates.Count; i++)
-        {
-            FactoryPlate plate = _targetFactory.Plates[i];
-
-            if (plate.gameObject.activeSelf && plate.CanPlace() == false)
-            {
-                return plate;
-            }
-        }
-
-        return null;
+        Helper.TargetAmmunitions.Remove(_target);
     }
 
 }

@@ -33,13 +33,8 @@ public class IdleState : HelperBaseState
         {
             Factory factory = Factory.Factories[i];
 
-            if (factory.gameObject.activeSelf &&
-                factory.Type == FactoryType.Ammunition &&
-                factory.Plates.Count > 0 &&
-                factory.Plates.Any(x => x.CanPlace() == false))
-            {
+            if (_stateMachine.Owner.GetTargetAmmunition(factory) != null)
                 return factory;
-            }
         }
 
 
