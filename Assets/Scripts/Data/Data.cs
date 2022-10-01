@@ -13,6 +13,8 @@ public class Data : MonoBehaviour
     public UserData User => _userData;
     public UpgradesInfo UpgradesInfo => _upgradesInfo;
 
+    [HideInInspector] public int CurrentLevel;
+
     private void Awake()
     {
         LoadData();

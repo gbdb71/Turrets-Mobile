@@ -27,23 +27,25 @@ public class Map : MonoBehaviour
 
 
     private Grid<GridCell> _grid;
+    private PathGenerator _pathGenerator;
+
     private Transform _mapParent;
     private Transform _pathParent;
     private Transform _barriersParent;
     private Transform _buildingsParent;
 
-    private PathGenerator _pathGenerator;
     [Inject] private Game _game;
     [Inject] private DiContainer _container;
+    [Inject] private LevelManager _levelManager;
 
     public Grid<GridCell> MapGrid => _grid;
     public PathGenerator PathGenerator => _pathGenerator;
-    public event Action OnMapGenerated;
+    public static event Action OnMapGenerated;
 
     private void Start()
     {
-        _grid = new Grid<GridCell>(_game.CurrentLevel.GridWidth, _game.CurrentLevel.GridHeight, _cellSize, (Grid<GridCell> g, int x, int y) => new GridCell(g, x, y));
-        _pathGenerator = new PathGenerator(_game.CurrentLevel.GridWidth, _game.CurrentLevel.GridHeight, _game.CurrentLevel.Offset);
+        _grid = new Grid<GridCell>(_levelManager.CurrentLevel.GridWidth, _levelManager.CurrentLevel.GridHeight, _cellSize, (Grid<GridCell> g, int x, int y) => new GridCell(g, x, y));
+        _pathGenerator = new PathGenerator(_levelManager.CurrentLevel.GridWidth, _levelManager.CurrentLevel.GridHeight, _levelManager.CurrentLevel.Offset);
 
         InitializeTransforms();
 
@@ -69,7 +71,7 @@ public class Map : MonoBehaviour
 
         float timer = 0;
 
-        while (size < UnityEngine.Random.Range(_game.CurrentLevel.PathLength.x, _game.CurrentLevel.PathLength.y))
+        while (size < UnityEngine.Random.Range(_levelManager.CurrentLevel.PathLength.x, _levelManager.CurrentLevel.PathLength.y))
         {
             path = _pathGenerator.GeneratePath();
             size = path.Count;
@@ -87,7 +89,7 @@ public class Map : MonoBehaviour
 
         LayBuildingObjects();
 
-        if (_game.CurrentLevel.BarrierRows > 0 && _game.CurrentLevel.BarrierPrefab != null)
+        if (_levelManager.CurrentLevel.BarrierRows > 0 && _levelManager.CurrentLevel.BarrierPrefab != null)
           LayBarrierObjects();
 
         NavMeshSurface mapSurface = _mapParent.gameObject.AddComponent<NavMeshSurface>();
@@ -114,9 +116,9 @@ public class Map : MonoBehaviour
     }
     private void LaySceneryObjects()
     {
-        for (int x = 0; x < _game.CurrentLevel.GridWidth; x++)
+        for (int x = 0; x < _levelManager.CurrentLevel.GridWidth; x++)
         {
-            for (int y = 0; y < _game.CurrentLevel.GridHeight; y++)
+            for (int y = 0; y < _levelManager.CurrentLevel.GridHeight; y++)
             {
                 GridCell cell = _grid.GetObject(x, y);
 
@@ -136,35 +138,35 @@ public class Map : MonoBehaviour
     }
     private void LayBarrierObjects()
     {
-        for (int x = 0; x < _game.CurrentLevel.GridWidth; x++)
+        for (int x = 0; x < _levelManager.CurrentLevel.GridWidth; x++)
         {
-            for (int y = -1; y > -_game.CurrentLevel.BarrierRows; y--)
+            for (int y = -1; y > -_levelManager.CurrentLevel.BarrierRows; y--)
             {
-                SpawnGridCell(_game.CurrentLevel.BarrierPrefab, x, y, _barriersParent);
+                SpawnGridCell(_levelManager.CurrentLevel.BarrierPrefab, x, y, _barriersParent);
             }
         }
 
-        for (int x = 0; x < _game.CurrentLevel.GridWidth; x++)
+        for (int x = 0; x < _levelManager.CurrentLevel.GridWidth; x++)
         {
-            for (int y = _game.CurrentLevel.GridHeight; y < (_game.CurrentLevel.GridHeight + _game.CurrentLevel.BarrierRows); y++)
+            for (int y = _levelManager.CurrentLevel.GridHeight; y < (_levelManager.CurrentLevel.GridHeight + _levelManager.CurrentLevel.BarrierRows); y++)
             {
-                SpawnGridCell(_game.CurrentLevel.BarrierPrefab, x, y, _barriersParent);
+                SpawnGridCell(_levelManager.CurrentLevel.BarrierPrefab, x, y, _barriersParent);
             }
         }
 
-        for (int x = -1; x > -_game.CurrentLevel.BarrierRows; x--)
+        for (int x = -1; x > -_levelManager.CurrentLevel.BarrierRows; x--)
         {
-            for (int y = (-_game.CurrentLevel.BarrierRows + 1); y < (_game.CurrentLevel.GridHeight + _game.CurrentLevel.BarrierRows); y++)
+            for (int y = (-_levelManager.CurrentLevel.BarrierRows + 1); y < (_levelManager.CurrentLevel.GridHeight + _levelManager.CurrentLevel.BarrierRows); y++)
             {
-                SpawnGridCell(_game.CurrentLevel.BarrierPrefab, x, y, _barriersParent);
+                SpawnGridCell(_levelManager.CurrentLevel.BarrierPrefab, x, y, _barriersParent);
             }
         }
 
-        for (int x = _game.CurrentLevel.GridWidth; x < (_game.CurrentLevel.GridWidth + _game.CurrentLevel.BarrierRows); x++)
+        for (int x = _levelManager.CurrentLevel.GridWidth; x < (_levelManager.CurrentLevel.GridWidth + _levelManager.CurrentLevel.BarrierRows); x++)
         {
-            for (int y = (-_game.CurrentLevel.BarrierRows + 1); y < (_game.CurrentLevel.GridHeight + _game.CurrentLevel.BarrierRows); y++)
+            for (int y = (-_levelManager.CurrentLevel.BarrierRows + 1); y < (_levelManager.CurrentLevel.GridHeight + _levelManager.CurrentLevel.BarrierRows); y++)
             {
-                SpawnGridCell(_game.CurrentLevel.BarrierPrefab, x, y, _barriersParent);
+                SpawnGridCell(_levelManager.CurrentLevel.BarrierPrefab, x, y, _barriersParent);
             }
         }
     }
@@ -172,7 +174,7 @@ public class Map : MonoBehaviour
     {
         var headquarters = SpawnHeadquarters();
 
-        foreach (var b in _game.CurrentLevel.BuildingObjects)
+        foreach (var b in _levelManager.CurrentLevel.BuildingObjects)
         {
             Vector2Int size = b.Size;
 
@@ -197,7 +199,7 @@ public class Map : MonoBehaviour
         Vector2Int roadEndPoint = _pathGenerator.PathCells[_pathGenerator.PathCells.Count - 1];
         roadEndPoint.y -= 1;
 
-        Headquarters headquartes = SpawnBuilding(_game.CurrentLevel.HeadquartersPrefab, roadEndPoint).GetComponent<Headquarters>();
+        Headquarters headquartes = SpawnBuilding(_levelManager.CurrentLevel.HeadquartersPrefab, roadEndPoint).GetComponent<Headquarters>();
 
         _container.Bind<Headquarters>().FromInstance(headquartes).AsSingle();
 
@@ -254,7 +256,7 @@ public class Map : MonoBehaviour
                 int nextX = pos.x + x;
                 int nextY = pos.y + y;
 
-                if (nextX >= _game.CurrentLevel.GridWidth || nextY >= _game.CurrentLevel.GridHeight)
+                if (nextX >= _levelManager.CurrentLevel.GridWidth || nextY >= _levelManager.CurrentLevel.GridHeight)
                     return;
 
                 GridCell gridCell = _grid.GetObject(nextX, nextY);
@@ -271,7 +273,7 @@ public class Map : MonoBehaviour
                 int nextX = pos.x + x;
                 int nextY = pos.y + y;
 
-                if (nextX >= _game.CurrentLevel.GridWidth || nextY >= _game.CurrentLevel.GridHeight)
+                if (nextX >= _levelManager.CurrentLevel.GridWidth || nextY >= _levelManager.CurrentLevel.GridHeight)
                     return false;
 
                 if (_grid.GetObject(nextX, nextY).CanBuild() == false) return false;
@@ -293,15 +295,15 @@ public class Map : MonoBehaviour
             case Dir.Down:
             case Dir.Up:
                 {
-                    width = (_game.CurrentLevel.GridWidth - 1);
-                    height = (_game.CurrentLevel.GridHeight - 1);
+                    width = (_levelManager.CurrentLevel.GridWidth - 1);
+                    height = (_levelManager.CurrentLevel.GridHeight - 1);
                     break;
                 }
             case Dir.Left:
             case Dir.Right:
                 {
-                    height = (_game.CurrentLevel.GridWidth - 1);
-                    width = (_game.CurrentLevel.GridHeight - 1);
+                    height = (_levelManager.CurrentLevel.GridWidth - 1);
+                    width = (_levelManager.CurrentLevel.GridHeight - 1);
                     break;
                 }
         }

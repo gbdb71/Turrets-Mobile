@@ -8,7 +8,7 @@ using System.Linq;
 [SelectionBase]
 public class Headquarters : MonoBehaviour, IInteractable
 {
-    [SerializeField, DisableInPlayMode, Range(100, 1000)] private float _health;
+    [SerializeField, DisableInPlayMode, Range(1, 1000)] private float _health;
     [Label("Data Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
 
     [Label("View Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]

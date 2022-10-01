@@ -10,9 +10,14 @@ public class PlayerSpawner : MonoBehaviour
 
     private Headquarters _headquarters;
 
-    private void Start()
+    private void Awake()
     {
-        _mapGenerator.OnMapGenerated += SpawnPlayer;
+        Map.OnMapGenerated += SpawnPlayer;
+    }
+
+    private void OnDestroy()
+    {
+        Map.OnMapGenerated -= SpawnPlayer;
     }
 
     private void SpawnPlayer()

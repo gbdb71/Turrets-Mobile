@@ -6,9 +6,7 @@ using Zenject;
 
 public class Game : MonoBehaviour
 {
-    //TODO : remove 
-    [SerializeField] private LevelData _startLevel;
-
+    [Inject] private LevelManager _levelManager;
     [Inject] private Map _map;
     [Inject] private Data _data;
     private Headquarters _headquarters;
@@ -19,7 +17,7 @@ public class Game : MonoBehaviour
 
     public bool GameStared { get; private set; } = false;
     public bool GameFinished { get; private set; } = false;
-    public LevelData CurrentLevel { get; private set; }
+
     public LevelScenario.State ActiveScenario => _activeScenario;
     public Headquarters Headquarters => _headquarters;
     public Data Data => _data;
@@ -28,14 +26,12 @@ public class Game : MonoBehaviour
 
     private void Awake()
     {
-        CurrentLevel = _startLevel;
-
-        if (_map != null)
-            _map.OnMapGenerated += OnMapGenerated;
+        Map.OnMapGenerated += OnMapGenerated;
     }
 
-    private void Start()
+    private void OnDestroy()
     {
+        Map.OnMapGenerated -= OnMapGenerated;
     }
 
     public void SetHeadquarters(Headquarters headquarters)
@@ -50,6 +46,8 @@ public class Game : MonoBehaviour
             if (_activeScenario.Progress() == false)
             {
                 GameFinished = true;
+                _levelManager.NextLevel();
+
                 OnGameFinished?.Invoke();
 
                 _data.User.SetCurrencyValue(CurrencyType.Construction, 0);
@@ -59,7 +57,7 @@ public class Game : MonoBehaviour
 
     private void OnMapGenerated()
     {
-        _activeScenario = CurrentLevel.LevelScenario.Begin();
+        _activeScenario = _levelManager.CurrentLevel.LevelScenario.Begin();
 
         GameStared = true;
         _pathPoints.Clear();
@@ -74,7 +72,7 @@ public class Game : MonoBehaviour
             _pathPoints.Add(worldPos);
         }
 
-        _data.User.SetCurrencyValue(CurrencyType.Construction, _startLevel.ConstructionCurrency);
+        _data.User.SetCurrencyValue(CurrencyType.Construction, _levelManager.CurrentLevel.ConstructionCurrency);
     }
 
     public Enemy SpawnEnemy(EnemyFactory factory, EnemyType type)

@@ -24,6 +24,11 @@ public class WaveBar : MonoBehaviour
         DisableProgressBar();
     }
 
+    private void OnDestroy()
+    {
+        LevelScenario.OnWaveChanged -= EnableProgressBar;
+    }
+
     public void Update()
     {
         if (!_game.GameStared)
