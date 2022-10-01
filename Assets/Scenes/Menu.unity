@@ -392,12 +392,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f254ed78973cfa44e81a464b99bf9c40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _text: {fileID: 0}
   _targetScene:
     sceneReference: {fileID: 102900000, guid: 4758fbe3a3da3d8489a2109e11395e8f, type: 3}
     sceneName: Load
     scenePath: Assets/Scenes/Load.unity
     buildIndex: 2
+  _text: {fileID: 0}
 --- !u!114 &773699408
 MonoBehaviour:
   m_ObjectHideFlags: 0

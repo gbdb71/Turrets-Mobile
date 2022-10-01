@@ -146,7 +146,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _particle: {fileID: 7605164056796649255, guid: f0d1d0fcd0f6f054697c4764a7a0dda8, type: 3}
   _damageDrop: 1
-  _mortarDamageParticle: {fileID: 147450, guid: d786954ea58ae6f45b3de29c31ec67f9, type: 3}
+  _mortarDamageParticle: {fileID: 3484759065566192930, guid: 33b735334f647be47b05fdcea880d357, type: 3}
 --- !u!96 &527718454173819205
 TrailRenderer:
   serializedVersion: 2

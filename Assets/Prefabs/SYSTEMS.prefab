@@ -86,7 +86,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11f8dae1bfb7d0944948094b484783a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startLevel: {fileID: 11400000, guid: 65694227e398fb941a091cd16bff2964, type: 2}
 --- !u!1 &925701290
 GameObject:
   m_ObjectHideFlags: 0
@@ -456,6 +455,8 @@ MonoBehaviour:
     Count: 5
   - Prefab: {fileID: 7605164056796649255, guid: f0d1d0fcd0f6f054697c4764a7a0dda8, type: 3}
     Count: 20
+  - Prefab: {fileID: 3484759065566192930, guid: 33b735334f647be47b05fdcea880d357, type: 3}
+    Count: 5
 --- !u!1 &8742234294034949571
 GameObject:
   m_ObjectHideFlags: 0
