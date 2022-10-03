@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnSequences:
   - _factory: {fileID: 11400000, guid: a34f23d2afe8e2941b77c92b6b3e6609, type: 2}
-    _type: 1
-    _amount: 6
-    _cooldown: 2
-  - _factory: {fileID: 11400000, guid: a34f23d2afe8e2941b77c92b6b3e6609, type: 2}
     _type: 0
-    _amount: 4
+    _amount: 9
     _cooldown: 2
+  - _factory: {fileID: 11400000, guid: 4c9fbbff787a4c24ea5c2493e0f54ccc, type: 2}
+    _type: 0
+    _amount: 2
+    _cooldown: 4
   startDelay: 10
