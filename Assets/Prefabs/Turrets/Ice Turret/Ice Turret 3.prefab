@@ -355,7 +355,7 @@ MonoBehaviour:
   _nextGrade: {fileID: 0}
   _chargedAmmoMax: 10
   _ammoMax: 30
-  _ammoPerBox: 15
+  _ammoPerBox: 10
   _damageAngle: 60
   _attackRate: 0.9
   _decelerationPerAttack: 0.7

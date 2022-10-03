@@ -468,7 +468,7 @@ MonoBehaviour:
   _nextGrade: {fileID: 4123050127064966816, guid: 96e25d1f8b2bdfc4498ff3bb4320695d, type: 3}
   _chargedAmmoMax: 8
   _ammoMax: 24
-  _ammoPerBox: 12
+  _ammoPerBox: 8
   _damageAngle: 45
   _attackRate: 1
   _decelerationPerAttack: 0.5

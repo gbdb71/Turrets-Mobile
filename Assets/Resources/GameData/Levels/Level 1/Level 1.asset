@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b5a23ac0c3cee446b535ee79a5cd9f9, type: 3}
   m_Name: Level 1
   m_EditorClassIdentifier: 
-  _gridWidth: 10
-  _gridHeight: 10
-  _pathLength: {x: 10, y: 12}
+  _gridWidth: 8
+  _gridHeight: 6
+  _pathLength: {x: 6, y: 10}
   _offset:
     Top: 2
     Bottom: 2
