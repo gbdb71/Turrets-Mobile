@@ -29,6 +29,7 @@ public class LevelData : ScriptableObject
 
     [Label("Currencies", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField] private int _constructionCurrency;
+    [SerializeField] private RewardSettings _rewardSettings;
 
     public int ConstructionCurrency => _constructionCurrency;
     public int GridWidth { get => _gridWidth; }
@@ -40,4 +41,5 @@ public class LevelData : ScriptableObject
     public int BarrierRows { get => _barrierRows; }
     public GridObject BarrierPrefab { get => _barrierPrefab; }
     public LevelScenario LevelScenario { get => _levelScenario; }
+    public RewardSettings RewardSettings { get => _rewardSettings; }
 }

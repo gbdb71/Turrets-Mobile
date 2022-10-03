@@ -17,14 +17,17 @@ public class Enemy : MonoBehaviour
 
     [Label("Deceleration Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField, Range(.1f, 1.5f)] private float _decelerationDrop = 2f;
-
     [SerializeField] private Texture lightTexture;
+
+    [Label("Reward Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
+    [SerializeField] private RewardSettings _rewardSettings;
     
     private EnemyFactory _originFactory;
     private List<Vector3> _points;
     private Animator _animator;
     private HPBar _hpBar;
     [Inject] private Headquarters _headquarters;
+    [Inject] private Data _data;
     private Rigidbody _rigidbody;
     private Renderer _bodyRenderer;
 
@@ -32,8 +35,7 @@ public class Enemy : MonoBehaviour
     private float _health = 0f;
     private float _speed = 0f;
     private bool _initialized = false;
-
-    private float _timeToDestroy = 0.75f;
+    private bool _isFinished = false;
 
     private int _currentCell = 0;
     private int _nextCell = 0;
@@ -143,6 +145,8 @@ public class Enemy : MonoBehaviour
             transform.DOMove(targetPoint, _dashSpeed);
         });
 
+        _isFinished = true;
+
         Death();
     }
 
@@ -192,6 +196,14 @@ public class Enemy : MonoBehaviour
 
         if (_hpBar != null)
             _hpBar.DisableBar();
+
+        if(!_isFinished)
+        {
+            if(Random.Range(.1f, 1f) <= _rewardSettings.RewardChance)
+            {
+                _data.User.TryAddCurrency(_rewardSettings.RewardType, Random.Range((int)_rewardSettings.RewardAmount.x, (int)_rewardSettings.RewardAmount.y));
+            }
+        }
     }
 
     public void Initialize(float scale, float speed, float pathOffset, float health, float damage)
