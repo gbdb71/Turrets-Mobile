@@ -438,7 +438,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3499ea574fa5f3a4486bed9e40690dd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 15
+  _damage: 75
   _fireDelay: 0
   _reloadTime: 0.8
   _shootPivot:
@@ -447,9 +447,8 @@ MonoBehaviour:
   _indicatorFill: {fileID: 6667220803628488832}
   _nextGrade: {fileID: 7157497047578270226, guid: c6466c6a1f6e13f43b95aa09513fa011, type: 3}
   _chargedAmmoMax: 1
-  _ammoMax: 10
-  _ammoPerBox: 5
-  ShootPivotIndex: 0
+  _ammoMax: 16
+  _ammoPerBox: 8
   _projectileRadius: 1.7
   _shellPrefab: {fileID: 8119367024055230900, guid: b4994758d6a28244cb8b3de362e3b37a, type: 3}
   _muzzleParticle: {fileID: 2694596418002745619}
