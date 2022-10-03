@@ -2,10 +2,12 @@ using UnityEngine;
 using TMPro;
 using System.Linq;
 using System;
+using UnityEngine.UI;
 
 public class UpgradeButton : CustomButton
 {
     [SerializeField] private TextMeshProUGUI levelText;
+    [SerializeField] private Image iconImage;
 
     private Data _data;
     private UpgradeType _upgradeType;
@@ -14,7 +16,7 @@ public class UpgradeButton : CustomButton
     {
         _data = data;
         _upgradeType = upgradeType;
-
+        
         base.Initialization(titleText, -1, () => callback?.Invoke(_upgradeType));
     }
 

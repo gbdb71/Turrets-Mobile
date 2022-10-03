@@ -34,5 +34,5 @@ public class FactoryView : MonoBehaviour
 
         fillImage.fillAmount = _factory.CreateProgress;
         currentValueText.text = $"{_factory.CurrencyAmount.ToString("D2")} / {_cost}";
-}
+    }
 }
