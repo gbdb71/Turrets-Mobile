@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Assets.Scripts.StateMachine;
 using UnityEngine;
 using UnityEngine.AI;
 using DG.Tweening;
@@ -34,6 +33,8 @@ public class Helper : MonoBehaviour
     public Game Game => _game;
 
     public static List<Ammunition> TargetAmmunitions = new List<Ammunition>();
+    public static List<BaseTurret> TargetTurrets = new List<BaseTurret>();
+
     public static List<Helper> Helpers { get; private set; } = new List<Helper>();
     public static event Action<Helper> OnHelperCreated;
     public static event Action<Helper> OnHelperDestroyed;
@@ -133,25 +134,50 @@ public class Helper : MonoBehaviour
         });
     }
 
-    public Ammunition GetTargetAmmunition(Factory factory)
+    public Ammunition GetTargetAmmunition()
     {
-        if (factory == null)
-            return null;
-
-        for (int i = 0; i < factory.Plates.Count; i++)
+        for (int x = 0; x < Factory.Factories.Count; x++)
         {
-            FactoryPlate plate = factory.Plates[i];
+            Factory factory = Factory.Factories[x];
 
-            if (plate.gameObject.activeSelf && plate.CanPlace() == false)
+            for (int i = 0; i < factory.Plates.Count; i++)
             {
-                if (plate.Content.TryGetComponent(out Ammunition ammunition))
+                FactoryPlate plate = factory.Plates[i];
+
+                if (plate.gameObject.activeSelf && plate.CanPlace() == false)
                 {
-                    if (!TargetAmmunitions.Contains(ammunition))
-                        return ammunition;
+                    if (plate.Content.TryGetComponent(out Ammunition ammunition))
+                    {
+                        if (!TargetAmmunitions.Contains(ammunition))
+                            return ammunition;
+                    }
                 }
             }
         }
 
         return null;
+    }
+
+
+    public BaseTurret GetTargetTurret()
+    {
+        int minAmmo = int.MaxValue;
+
+        BaseTurret targetTurret = null;
+
+        for (int i = 0; i < BaseTurret.Turrets.Count; i++)
+        {
+            BaseTurret turret = BaseTurret.Turrets[i];
+
+            if (!TargetTurrets.Contains(turret) && turret.gameObject.activeSelf && turret.CanCharge && turret.enabled)
+            {
+                if (turret.Ammo <= minAmmo)
+                {
+                    targetTurret = turret;
+                }
+            }
+        }
+
+        return targetTurret;
     }
 }

@@ -28,6 +28,7 @@ public abstract class BaseTurret : MonoBehaviour
     [SerializeField] protected int _ammoMax;
     [SerializeField, Range(1, 100)] private int _ammoPerBox = 10;
 
+    protected int _currentShootPivot = 0;
     private Renderer[] _renderers;
     protected BaseBar _baseBar;
     protected TurretAim _aim;
@@ -40,12 +41,14 @@ public abstract class BaseTurret : MonoBehaviour
 
     public Transform IndicatorTransform => _indicatorTransform;
     public Image IndicatorFill => _indicatorFill;
-    public bool IsReloading { get; private set; }
     public BaseTurret NextGrade => _nextGrade;
     public Renderer[] Renderers => _renderers;
+
+    public int Ammo => _ammo;
+    public bool IsReloading { get; private set; }
     public bool CanCharge { get { return _ammo < _ammoMax; } }
+
     public static List<BaseTurret> Turrets { get; private set; } = new List<BaseTurret>();
-    [HideInInspector] public int ShootPivotIndex = 0;
 
     protected virtual void Awake()
     {

@@ -53,9 +53,6 @@ public class PlayerMovement : MonoBehaviour
         float speed = _player.Inventory.HasTurret ? _speedWithTurret : _speed;
         LayerWeight = _player.Inventory.HasTurret ? 1 : 0;
 
-        float animationSpeed = _player.Inventory.HasTurret ? _speedWithTurret * _speedWithTurretCoef : _speed * _speedCoef;
-        _player.PlayerAnimations.AnimationSpeed = animationSpeed;
-
         _cc.SimpleMove(moveDir * speed);
 
         IsMove = moveDir.magnitude > 0 && _cc.isGrounded;

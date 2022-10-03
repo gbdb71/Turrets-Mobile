@@ -28,16 +28,16 @@ public class AutomaticTurret : BaseTurret
     {
         base.Fire();
 
-        if (_muzzleParticles[ShootPivotIndex] != null && _muzzleParticles.Count > 0)
-            _muzzleParticles[ShootPivotIndex].Play();
+        if (_muzzleParticles[_currentShootPivot] != null && _muzzleParticles.Count > 0)
+            _muzzleParticles[_currentShootPivot].Play();
 
-        _shootPivot[ShootPivotIndex].parent.DOLocalMoveZ(gunMove.y, moveDuration.x).OnComplete(() =>
+        _shootPivot[_currentShootPivot].parent.DOLocalMoveZ(gunMove.y, moveDuration.x).OnComplete(() =>
         {
-            _shootPivot[ShootPivotIndex].parent.DOLocalMoveZ(gunMove.x, moveDuration.y);
+            _shootPivot[_currentShootPivot].parent.DOLocalMoveZ(gunMove.x, moveDuration.y);
         });
 
-        HomingProjectile projectile = _projectilePrefab.gameObject.Reuse<BaseProjectile>(_shootPivot[ShootPivotIndex].transform.position, _shootPivot[ShootPivotIndex].transform.rotation) as HomingProjectile;
-        projectile.Initialize(_shootPivot[ShootPivotIndex].transform.position, Vector3.zero, _damage, 0f);
+        HomingProjectile projectile = _projectilePrefab.gameObject.Reuse<BaseProjectile>(_shootPivot[_currentShootPivot].transform.position, _shootPivot[_currentShootPivot].transform.rotation) as HomingProjectile;
+        projectile.Initialize(_shootPivot[_currentShootPivot].transform.position, Vector3.zero, _damage, 0f);
         projectile.SetSpeed(_bulletSpeed);
         projectile.SetTarget(_currentTarget.transform);
 
@@ -46,10 +46,10 @@ public class AutomaticTurret : BaseTurret
 
     private void ChangePivotIndex()
     {
-        ShootPivotIndex += 1;
+        _currentShootPivot += 1;
 
-        if (ShootPivotIndex > _shootPivot.Length - 1)
-            ShootPivotIndex = 0;
+        if (_currentShootPivot > _shootPivot.Length - 1)
+            _currentShootPivot = 0;
     }
 }
 

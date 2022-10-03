@@ -1,6 +1,4 @@
-﻿using Assets.Scripts.StateMachine;
-
-public class ChargeTurretState : HelperBaseState
+﻿public class ChargeTurretState : HelperBaseState
 {
     private BaseTurret _targetTurret;
 
@@ -8,10 +6,17 @@ public class ChargeTurretState : HelperBaseState
     {
     }
 
+    public void SetTarget(BaseTurret turret)
+    {
+        _targetTurret = turret;
+        Helper.TargetTurrets.Add(turret);
+    }
+
     public override void Enter()
     {
        
     }
+
     public override void Update()
     {
         if(_stateMachine.Owner.InventoyEmpty)
@@ -24,41 +29,31 @@ public class ChargeTurretState : HelperBaseState
         {
             if (!_targetTurret.CanCharge)
             {
+                Helper.TargetTurrets.Remove(_targetTurret);
                 _targetTurret = null;
             }
         }
 
         if(_targetTurret == null)
         {
-            _targetTurret = GetTargetTurret();
+            _targetTurret = _stateMachine.Owner.GetTargetTurret();
 
             if( _targetTurret == null)
             {
                 _stateMachine.ChangeState(_stateMachine.IdleState);
                 return;
             }
+
+            Helper.TargetTurrets.Add(_targetTurret);
         }
+
         _stateMachine.Owner.Agent.SetDestination(_targetTurret.transform.position);
     }
 
     public override void Exit()
     {
-       
-    }
-
-    private BaseTurret GetTargetTurret()
-    {
-        for (int i = 0; i < BaseTurret.Turrets.Count; i++)
-        {
-            BaseTurret turret = BaseTurret.Turrets[i];
-
-            if(turret.gameObject.activeSelf && turret.CanCharge && turret.enabled)
-            {
-                return turret;
-            }
-        }
-
-        return null;
+        Helper.TargetTurrets.Remove(_targetTurret);
+        _targetTurret = null;
     }
 }
 

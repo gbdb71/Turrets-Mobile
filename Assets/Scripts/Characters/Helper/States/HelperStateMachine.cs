@@ -1,20 +1,11 @@
-﻿
-using Assets.Scripts.StateMachine;
-using System;
+﻿using Assets.Scripts.StateMachine;
 
 public class HelperStateMachine : StateMachine
 {
-
     public readonly Helper Owner;
-    public IdleState IdleState { get; private set; }
-    public ChargeTurretState ChargeTurretState { get; private set; }
-
-    public static explicit operator HelperStateMachine(HelperBaseState v)
-    {
-        throw new NotImplementedException();
-    }
-
-    public TakeAmmoState TakeAmmoState { get; private set; }
+    public IdleState IdleState { get; }
+    public ChargeTurretState ChargeTurretState { get; }
+    public TakeAmmoState TakeAmmoState { get; }
 
 
     public HelperStateMachine(Helper owner) : base()
@@ -30,6 +21,6 @@ public class HelperStateMachine : StateMachine
     protected override State GetInitialState()
     {
         return new IdleState(this);
-    } 
+    }
 }
 

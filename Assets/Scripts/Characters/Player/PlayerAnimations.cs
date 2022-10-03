@@ -7,8 +7,6 @@ public class PlayerAnimations : MonoBehaviour
     private Animator _animator;
     private PlayerMovement _movement;
 
-    public float AnimationSpeed;
-
     private void Awake()
     {
         _animator = GetComponent<Animator>();

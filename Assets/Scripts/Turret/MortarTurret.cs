@@ -18,7 +18,7 @@ public class MortarTurret : BaseTurret
         base.Start();
 
         float x = _aim.AimDistance + 0.25001f;
-        float y = -_shootPivot[ShootPivotIndex].position.y;
+        float y = -_shootPivot[_currentShootPivot].position.y;
         _launchSpeed = Mathf.Sqrt(9.81f * (y + Mathf.Sqrt(x * x + y * y)));
     }
 
@@ -31,14 +31,14 @@ public class MortarTurret : BaseTurret
             if (_muzzleParticle != null)
                 _muzzleParticle.Play();
 
-            MortarShell projectile = _shellPrefab.gameObject.Reuse<MortarShell>(_shootPivot[ShootPivotIndex].position, Quaternion.identity);
-            projectile.Initialize(_shootPivot[ShootPivotIndex].position, _launchVelocity, _damage, _projectileRadius);
+            MortarShell projectile = _shellPrefab.gameObject.Reuse<MortarShell>(_shootPivot[_currentShootPivot].position, Quaternion.identity);
+            projectile.Initialize(_shootPivot[_currentShootPivot].position, _launchVelocity, _damage, _projectileRadius);
         }
     }
 
     protected override void Aim()
     {
-        Vector3 launchPoint = _shootPivot[ShootPivotIndex].position;
+        Vector3 launchPoint = _shootPivot[_currentShootPivot].position;
         Vector3 targetPoint = _currentTarget.transform.position;
         targetPoint.y = 0f;
 

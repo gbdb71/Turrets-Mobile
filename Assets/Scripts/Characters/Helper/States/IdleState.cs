@@ -10,35 +10,28 @@ public class IdleState : HelperBaseState
     {
         if (!_stateMachine.Owner.InventoyEmpty && BaseTurret.Turrets.Count > 0)
         {
-            _stateMachine.ChangeState(_stateMachine.ChargeTurretState);
+            BaseTurret turret = _stateMachine.Owner.GetTargetTurret();
+
+            if (turret != null)
+            {
+                _stateMachine.ChargeTurretState.SetTarget(turret);
+                _stateMachine.ChangeState(_stateMachine.ChargeTurretState);
+                return;
+            }
         }
         else if (!_stateMachine.Owner.InventoryFull && Factory.Factories.Count > 0)
         {
-            Factory target = GetTargetFactory();
+            Ammunition target = _stateMachine.Owner.GetTargetAmmunition();
 
             if (target != null)
             {
                 _stateMachine.TakeAmmoState.SetTarget(target);
                 _stateMachine.ChangeState(_stateMachine.TakeAmmoState);
+                return;
             }
         }
 
         _stateMachine.Owner.Agent.SetDestination(_stateMachine.Owner.Game.Headquarters.DronePoint.position);
-    }
-
-
-    public Factory GetTargetFactory()
-    {
-        for (int i = 0; i < Factory.Factories.Count; i++)
-        {
-            Factory factory = Factory.Factories[i];
-
-            if (_stateMachine.Owner.GetTargetAmmunition(factory) != null)
-                return factory;
-        }
-
-
-        return null;
     }
 
     public override void Enter()
