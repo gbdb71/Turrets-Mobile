@@ -117,7 +117,10 @@ public class PlayerInventory : MonoBehaviour
                     return;
 
                 if (!_nearTurret.IndicatorTransform.gameObject.activeSelf)
+                {
                     _nearTurret.IndicatorTransform.gameObject.SetActive(true);
+                    _nearTurret.ChangeColorWhenSelected();
+                }
 
                 _takeProgess += Time.deltaTime;
                 _nearTurret.IndicatorFill.fillAmount = _takeProgess;
@@ -216,10 +219,6 @@ public class PlayerInventory : MonoBehaviour
     {
         if (_takedTurret != null && CanPlace)
         {
-            //Vector3 targetPos = _takedTurret.transform.position;
-            //targetPos.y = 0f;
-            //targetPos += _placeOffset;
-
             Vector3 targetPos = placePosition.position;
             targetPos.y = _placeOffset.y;
 
@@ -258,7 +257,9 @@ public class PlayerInventory : MonoBehaviour
     {
         turret.IndicatorTransform.gameObject.SetActive(false);
         _takeProgess = 0f;
+        turret.ReturnColorWhenSelected();
     }
+
     public void Upgrade()
     {
         if (CanUpgrade)
@@ -286,6 +287,7 @@ public class PlayerInventory : MonoBehaviour
             });
         }
     }
+
     private void ChangeTurretColor()
     {
         for (int i = 0; i < TakedTurret.Renderers.Length; i++)
@@ -293,6 +295,7 @@ public class PlayerInventory : MonoBehaviour
             TakedTurret.Renderers[i].material.color = CanPlace ? Color.white : _placeBlockColor;
         }
     }
+
     private bool CheckPlace()
     {
         _player.Map.MapGrid.GetXY(_takedTurret.transform.position, out int x, out int y);

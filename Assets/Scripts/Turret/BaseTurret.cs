@@ -28,8 +28,14 @@ public abstract class BaseTurret : MonoBehaviour
     [SerializeField] protected int _ammoMax;
     [SerializeField, Range(1, 100)] private int _ammoPerBox = 10;
 
-    protected int _currentShootPivot = 0;
+    [Header("Selected settings")]
     private Renderer[] _renderers;
+    [SerializeField] private Material mainMaterial;
+    [SerializeField] private Material selectedMaterial;
+
+    [Space]
+    protected int _currentShootPivot = 0;
+
     protected BaseBar _baseBar;
     protected TurretAim _aim;
     protected Enemy _currentTarget;
@@ -38,7 +44,6 @@ public abstract class BaseTurret : MonoBehaviour
 
     protected int _chargedAmmo = 0;
     protected int _ammo = 0;
-
 
     public Transform IndicatorTransform => _indicatorTransform;
     public Image IndicatorFill => _indicatorFill;
@@ -54,7 +59,7 @@ public abstract class BaseTurret : MonoBehaviour
     protected virtual void Awake()
     {
         _aim = GetComponent<TurretAim>();
-        _renderers = GetComponentsInChildren<Renderer>();
+        _renderers = GetComponentsInChildren<MeshRenderer>();
         _baseBar = GetComponentInChildren<BaseBar>();
 
         _ammo = _ammoMax;
@@ -64,6 +69,24 @@ public abstract class BaseTurret : MonoBehaviour
     }
 
     public virtual void PlayUpgradeParticle() { }
+
+    [ContextMenu("Selecetd Material")]
+    public void ChangeColorWhenSelected()
+    {
+        for (int i = 0; i < _renderers.Length; i++)
+        {
+            _renderers[i].material = selectedMaterial;
+        }
+    }
+
+    [ContextMenu("Return Material")]
+    public void ReturnColorWhenSelected()
+    {
+        for (int i = 0; i < _renderers.Length; i++)
+        {
+            _renderers[i].material = mainMaterial;
+        }
+    }
 
     protected virtual void Start()
     {

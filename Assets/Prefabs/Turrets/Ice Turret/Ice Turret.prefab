@@ -470,6 +470,8 @@ MonoBehaviour:
   _chargedAmmoMax: 8
   _ammoMax: 24
   _ammoPerBox: 8
+  mainMaterial: {fileID: 2100000, guid: 2722dd08cac6a5940929d22a65b31269, type: 2}
+  selectedMaterial: {fileID: 2100000, guid: 5f62031a35a2a214a958e955ff6bc351, type: 2}
   _damageAngle: 45
   _attackRate: 1
   _decelerationPerAttack: 0.5

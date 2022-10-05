@@ -340,6 +340,8 @@ MonoBehaviour:
   _chargedAmmoMax: 30
   _ammoMax: 60
   _ammoPerBox: 30
+  mainMaterial: {fileID: 2100000, guid: 2722dd08cac6a5940929d22a65b31269, type: 2}
+  selectedMaterial: {fileID: 2100000, guid: 5f62031a35a2a214a958e955ff6bc351, type: 2}
   _bulletSpeed: 10
   _projectilePrefab: {fileID: 2147293829527817372, guid: 958b2fa6ec39a224fa3db3a24520aee3, type: 3}
   upgradeParticle: {fileID: 3822925568873739659}
