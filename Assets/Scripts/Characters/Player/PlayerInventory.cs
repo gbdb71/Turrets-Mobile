@@ -88,9 +88,6 @@ public class PlayerInventory : MonoBehaviour
                             return;
                         }
 
-                        if (_nearTurret != null)
-                            ResetProgress(_nearTurret);
-
                         _nearTurret = turret;
                     }
                     break;
@@ -123,27 +120,12 @@ public class PlayerInventory : MonoBehaviour
             {
                 if (HasTurret || _delayTimer > 0f)
                     return;
-
-                if (!_nearTurret.IndicatorTransform.gameObject.activeSelf)
-                    _nearTurret.IndicatorTransform.gameObject.SetActive(true);
-
-                _takeProgess += Time.deltaTime;
-                _nearTurret.IndicatorFill.fillAmount = _takeProgess;
-
-                if (_takeProgess >= 1f)
-                {
-                    Take(_nearTurret);
-                }
-
             }
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (_nearTurret != null)
-            ResetProgress(_nearTurret);
-
         _nearTurret = null;
     }
 
@@ -246,27 +228,22 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
-    private void Take(BaseTurret turret)
+    public void Take()
     {
-        if (turret == _nearTurret)
-            _nearTurret = null;
+        if (_nearTurret == null)
+            return;
 
-        _takedTurret = turret;
+        _takedTurret = _nearTurret;
+        _nearTurret = null;
+
         _takedTurret.transform.SetParent(_turretSlot);
 
-        turret.transform.DOLocalRotate(Vector3.zero, 0.3f);
+        _takedTurret.transform.DOLocalRotate(Vector3.zero, 0.3f);
         _takedTurret.transform.DOLocalMove(Vector3.zero, 0.25f);
      
         _takedTurret.enabled = false;
-
-        ResetProgress(_takedTurret);
     }
 
-    private void ResetProgress(BaseTurret turret)
-    {
-        turret.IndicatorTransform.gameObject.SetActive(false);
-        _takeProgess = 0f;
-    }
     public void Upgrade()
     {
         if (CanUpgrade)

@@ -15,10 +15,6 @@ public abstract class BaseTurret : MonoBehaviour
     [SerializeField, Range(.5f, 5f)] protected float _reloadTime;
     [SerializeField] protected Transform[] _shootPivot;
 
-    [Label("Taking", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
-    [SerializeField] private Transform _indicatorTransform = default;
-    [SerializeField] private Image _indicatorFill = default;
-
     [Label("Upgrade", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField] private BaseTurret _nextGrade = default;
 
@@ -40,8 +36,6 @@ public abstract class BaseTurret : MonoBehaviour
     protected int _chargedAmmo = 0;
     protected int _ammo = 0;
 
-    public Transform IndicatorTransform => _indicatorTransform;
-    public Image IndicatorFill => _indicatorFill;
     public BaseTurret NextGrade => _nextGrade;
     public Renderer[] Renderers => _renderers;
 
