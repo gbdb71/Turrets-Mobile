@@ -43,12 +43,12 @@ public class Game : MonoBehaviour
     {
         if (GameStared && !GameFinished)
         {
-            if (_activeScenario.Progress() == false)
+            if (!_headquarters.IsDead && _activeScenario.Progress() == false)
             {
                 GameFinished = true;
                 _levelManager.NextLevel();
 
-                OnGameFinished?.Invoke();
+                OnGameFinished?.Invoke();            
 
                 _data.User.SetCurrencyValue(CurrencyType.Construction, 0);
             }

@@ -20,22 +20,25 @@ public class PlayerMovement : MonoBehaviour
     private CharacterController _cc;
     private Player _player;
 
+    public float _distance = 0;
+    private Vector3 moveDir;
+
     public float MoveVelocity => _cc.velocity.sqrMagnitude;
     public float LayerWeight;
     public bool IsMove { get; private set; }
-
-    public float _distance = 0;
 
     private void Awake()
     {
         _cc = GetComponent<CharacterController>();
         _player = GetComponent<Player>();
+
+        UserData.OnUpgradeChanged += UpdateSpeed;
+        Game.OnGameFinished += DisableJoystick;
+        Headquarters.OnDeath += DisableJoystick;
     }
 
     private void Start()
     {
-        UserData.OnUpgradeChanged += UpdateSpeed;
-
         UpdateSpeed(UpgradeType.Speed, -1);
         UpdateSpeed(UpgradeType.SpeedWithTurret, -1);
     }
@@ -46,7 +49,6 @@ public class PlayerMovement : MonoBehaviour
         Rotate();
     }
 
-    private Vector3 moveDir;
     private void Movement()
     {
         moveDir.Set(_joystick.Horizontal, 0, _joystick.Vertical);
@@ -96,7 +98,10 @@ public class PlayerMovement : MonoBehaviour
                 break;
         }
     }
-
+    private void DisableJoystick()
+    {
+        _joystick.gameObject.SetActive(false);  
+    }
     private float GetUpgradedSpeed(UpgradeType type)
     {
         int upgradeIndex = _player.Data.User.UpgradesProgress[type];
