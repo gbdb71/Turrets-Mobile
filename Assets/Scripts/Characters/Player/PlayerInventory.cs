@@ -189,7 +189,6 @@ public class PlayerInventory : MonoBehaviour
     #region Turret
 
     [Header("Place Settings")]
-    [SerializeField] private Vector3 lastTargetPosition;
     [SerializeField] private Transform placePosition;
     
     public void Place()
@@ -218,13 +217,6 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
-    [SerializeField] private float radius = 0.25f;
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawSphere(lastTargetPosition, radius);
-    }
-
     private void Take(BaseTurret turret)
     {
         if (turret == _nearTurret)
@@ -234,16 +226,13 @@ public class PlayerInventory : MonoBehaviour
         _takedTurret.transform.SetParent(_turretSlot);
 
         turret.transform.DOLocalRotate(Vector3.zero, 0.3f);
-        _takedTurret.transform.DOMove(_turretSlot.transform.position, 0.5f).SetEase(Ease.InOutBack).OnComplete(() =>
-        {
-            turret.transform.localPosition = new Vector3();
-            //turret.transform.localRotation = Quaternion.identity;
-        });
-
+        _takedTurret.transform.DOLocalMove(Vector3.zero, 0.25f);
+     
         _takedTurret.enabled = false;
 
         ResetProgress(_takedTurret);
     }
+
     private void ResetProgress(BaseTurret turret)
     {
         turret.IndicatorTransform.gameObject.SetActive(false);

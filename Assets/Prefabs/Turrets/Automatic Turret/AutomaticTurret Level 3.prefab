@@ -500,7 +500,7 @@ MonoBehaviour:
   _nextGrade: {fileID: 0}
   _chargedAmmoMax: 40
   _ammoMax: 80
-  _ammoPerBox: 20
+  _ammoPerBox: 40
   _bulletSpeed: 15
   _projectilePrefab: {fileID: 2147293829527817372, guid: 958b2fa6ec39a224fa3db3a24520aee3, type: 3}
   gunMove: {x: 0.001, y: -0.001}

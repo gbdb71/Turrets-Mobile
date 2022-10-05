@@ -50,7 +50,7 @@ public class PlayerMovement : MonoBehaviour
     private void Movement()
     {
         moveDir.Set(_joystick.Horizontal, 0, _joystick.Vertical);
-        float speed = _player.Inventory.HasTurret ? _speedWithTurret : _speed;
+        float speed = _speed;//_player.Inventory.HasTurret ? _speedWithTurret : _speed;
         LayerWeight = _player.Inventory.HasTurret ? 1 : 0;
 
         _cc.SimpleMove(moveDir * speed);
