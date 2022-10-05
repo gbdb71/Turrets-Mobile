@@ -75,38 +75,29 @@ public abstract class BaseTurret : MonoBehaviour
         if (_currentTarget != null)
             Aim();
 
-        if (_chargedAmmo > 0)
+        if (_chargedAmmo > 0 && _currentTarget != null)
         {
-            if (_currentTarget != null)
+            if (_currentTarget.IsDead || Vector3.Distance(_currentTarget.transform.position, transform.position) > _aim.AimDistance)
             {
-                if (_currentTarget.IsDead || Vector3.Distance(_currentTarget.transform.position, transform.position) > _aim.AimDistance)
-                {
-                    _currentTarget = null;
-                    return;
-                }
-
-                if (CanFire())
-                {
-                    Fire();
-                }
+                _currentTarget = null;
+                return;
             }
-            else
-            {
-                StopFire();
 
-                _aim.SetIdle(true);
-                _currentTarget = FindTarget();
+            if (CanFire())
+            {
+                Fire();
             }
         }
         else
         {
+            if(_currentTarget == null)
+            {
+                _currentTarget = FindTarget();
+            }
+
             StopFire();
 
-            if (_ammo == 0)
-            {
-                _aim.SetIdle(true);
-            }
-            else if (!IsReloading)
+            if (_ammo == 0 && !IsReloading)
             {
                 StartCoroutine(nameof(Reload));
             }
