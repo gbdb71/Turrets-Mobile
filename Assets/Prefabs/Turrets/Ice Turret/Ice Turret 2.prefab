@@ -59,7 +59,7 @@ Transform:
   m_GameObject: {fileID: 2699958650359207802}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
+  m_LocalScale: {x: 0.006, y: 0.006, z: 0.006}
   m_Children: []
   m_Father: {fileID: 3805081200559784805}
   m_RootOrder: 0
@@ -275,8 +275,7 @@ MonoBehaviour:
   _chargedAmmoMax: 10
   _ammoMax: 20
   _ammoPerBox: 10
-  _reloadIndicator: {fileID: 0}
-  _damageAngle: 50
+  _damageAngle: 45
   _attackRate: 1
   _decelerationPerAttack: 0.6
   _throwEffect: {fileID: 2699958650359207781}
