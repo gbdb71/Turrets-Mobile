@@ -95,7 +95,7 @@ public class PlayerInventory : MonoBehaviour
             case "Ammunition":
                 {
                     if (other.TryGetComponent(out Ammunition ammunition))
-                    { 
+                    {
                         if (_ammunition.Count > _maxAmmo - 1)
                             return;
 
@@ -120,6 +120,24 @@ public class PlayerInventory : MonoBehaviour
             {
                 if (HasTurret || _delayTimer > 0f)
                     return;
+<<<<<<< HEAD
+=======
+
+                if (!_nearTurret.IndicatorTransform.gameObject.activeSelf)
+                {
+                    _nearTurret.IndicatorTransform.gameObject.SetActive(true);
+                    _nearTurret.ChangeColorWhenSelected();
+                }
+
+                _takeProgess += Time.deltaTime;
+                _nearTurret.IndicatorFill.fillAmount = _takeProgess;
+
+                if (_takeProgess >= 1f)
+                {
+                    Take(_nearTurret);
+                }
+
+>>>>>>> feature/take-turret-indicator
             }
         }
     }
@@ -201,15 +219,11 @@ public class PlayerInventory : MonoBehaviour
 
     [Header("Place Settings")]
     [SerializeField] private Transform placePosition;
-    
+
     public void Place()
     {
         if (_takedTurret != null && CanPlace)
         {
-            //Vector3 targetPos = _takedTurret.transform.position;
-            //targetPos.y = 0f;
-            //targetPos += _placeOffset;
-
             Vector3 targetPos = placePosition.position;
             targetPos.y = _placeOffset.y;
 
@@ -222,7 +236,7 @@ public class PlayerInventory : MonoBehaviour
             });
 
             turret.transform.DORotate(Vector3.zero, 1f);
-            
+
             _takedTurret = null;
             _delayTimer = _takeDelay;
         }
@@ -240,10 +254,20 @@ public class PlayerInventory : MonoBehaviour
 
         _takedTurret.transform.DOLocalRotate(Vector3.zero, 0.3f);
         _takedTurret.transform.DOLocalMove(Vector3.zero, 0.25f);
-     
+
         _takedTurret.enabled = false;
     }
 
+<<<<<<< HEAD
+=======
+    private void ResetProgress(BaseTurret turret)
+    {
+        turret.IndicatorTransform.gameObject.SetActive(false);
+        _takeProgess = 0f;
+        turret.ReturnColorWhenSelected();
+    }
+
+>>>>>>> feature/take-turret-indicator
     public void Upgrade()
     {
         if (CanUpgrade)
@@ -261,8 +285,12 @@ public class PlayerInventory : MonoBehaviour
 
 
                 BaseTurret newTurret = Instantiate(_takedTurret.NextGrade, near.transform.position, near.transform.rotation, null);
+<<<<<<< HEAD
                 _ignoreTurrets.Add(newTurret);
 
+=======
+                newTurret.PlayUpgradeParticle();
+>>>>>>> feature/take-turret-indicator
 
                 Destroy(_takedTurret.gameObject);
                 Destroy(near);
@@ -272,6 +300,7 @@ public class PlayerInventory : MonoBehaviour
             });
         }
     }
+
     private void ChangeTurretColor()
     {
         for (int i = 0; i < TakedTurret.Renderers.Length; i++)
@@ -279,6 +308,7 @@ public class PlayerInventory : MonoBehaviour
             TakedTurret.Renderers[i].material.color = CanPlace ? Color.white : _placeBlockColor;
         }
     }
+
     private bool CheckPlace()
     {
         _player.Map.MapGrid.GetXY(_takedTurret.transform.position, out int x, out int y);
