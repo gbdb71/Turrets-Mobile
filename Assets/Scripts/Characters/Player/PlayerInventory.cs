@@ -144,7 +144,7 @@ public class PlayerInventory : MonoBehaviour
         if (type == UpgradeType.AmmoCount)
         {
             int upgradeIndex = _player.Data.User.UpgradesProgress[type];
-            _maxAmmo = (int)_player.Data.UpgradesInfo.Upgrades.First(x => x.Type == type).Elements[upgradeIndex].Value;
+            _maxAmmo = 20;//(int)_player.Data.UpgradesInfo.Upgrades.First(x => x.Type == type).Elements[upgradeIndex].Value;
         }
     }
 
@@ -155,15 +155,36 @@ public class PlayerInventory : MonoBehaviour
         ammunition.transform.parent = backpackPoint.transform;
 
         int index = _ammunition.Count;
+        ammunition.enabled = false;
+
         _ammunition.Add(ammunition);
 
-        Vector3 endPosition = new Vector3(0, index * _distanceBetweenObjects, 0);
+        Vector3 endPosition = new Vector3(0, (float)index * _distanceBetweenObjects, 0);
+        Debug.Log("Index - " + index + " | End Position - " + endPosition);
 
         ammunition.transform.DOLocalRotate(Vector3.zero, _ammoRotationSpeed);
         ammunition.transform.DOLocalMove(endPosition, _ammoMoveSpeed);
-        ammunition.enabled = false;
 
     }
+
+    [ContextMenu("Debug Index")]
+    private void DebugIndex()
+    {
+        for (int i = 0; i < _ammunition.Count; i++)
+        {
+            _ammunition[i].transform.localPosition = Vector3.zero;
+            _ammunition[i].transform.localEulerAngles = Vector3.zero;//new Vector3(Vector3.zero, _ammoRotationSpeed);
+            _ammunition[i].enabled = false;
+        }
+
+        for (int i = 0; i < _ammunition.Count; i++)
+        {
+            Vector3 endPosition = new Vector3(0, i * _distanceBetweenObjects, 0);
+            Debug.Log("Index - " + i + " | End Position - " + endPosition);
+            _ammunition[i].transform.localPosition = endPosition;//, _ammoMoveSpeed);
+        }
+    }
+
     public void ChargeTurret(BaseTurret turret)
     {
         if (_ammunition.Count == 0 || turret == null)
