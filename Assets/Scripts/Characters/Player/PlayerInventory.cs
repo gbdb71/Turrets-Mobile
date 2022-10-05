@@ -51,6 +51,7 @@ public class PlayerInventory : MonoBehaviour
         UserData.OnUpgradeChanged += UpdateAmmoMax;
         UpdateAmmoMax(UpgradeType.AmmoCount, -1);
     }
+
     private void Update()
     {
         if (_delayTimer > 0)
@@ -70,6 +71,7 @@ public class PlayerInventory : MonoBehaviour
             }
         }
     }
+
     private void OnTriggerEnter(Collider other)
     {
         switch (other.tag)
@@ -98,6 +100,7 @@ public class PlayerInventory : MonoBehaviour
                 }
         }
     }
+
     private void OnTriggerStay(Collider other)
     {
         if (_nearTurret == null || HasTurret) return;
@@ -127,6 +130,7 @@ public class PlayerInventory : MonoBehaviour
             }
         }
     }
+
     private void OnTriggerExit(Collider other)
     {
         if (_nearTurret != null)
@@ -184,13 +188,20 @@ public class PlayerInventory : MonoBehaviour
 
     #region Turret
 
+    [Header("Place Settings")]
+    [SerializeField] private Vector3 lastTargetPosition;
+    [SerializeField] private Transform placePosition;
+    
     public void Place()
     {
         if (_takedTurret != null && CanPlace)
         {
-            Vector3 targetPos = _takedTurret.transform.position;
-            targetPos.y = 0f;
-            targetPos += _placeOffset;
+            //Vector3 targetPos = _takedTurret.transform.position;
+            //targetPos.y = 0f;
+            //targetPos += _placeOffset;
+
+            Vector3 targetPos = placePosition.position;
+            targetPos.y = _placeOffset.y;
 
             BaseTurret turret = _takedTurret;
 
@@ -204,9 +215,16 @@ public class PlayerInventory : MonoBehaviour
             
             _takedTurret = null;
             _delayTimer = _takeDelay;
-
         }
     }
+
+    [SerializeField] private float radius = 0.25f;
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(lastTargetPosition, radius);
+    }
+
     private void Take(BaseTurret turret)
     {
         if (turret == _nearTurret)
