@@ -82,7 +82,7 @@ public class PlayerInventory : MonoBehaviour
                 {
                     if (other.TryGetComponent(out BaseTurret turret))
                     {
-                        if(_ignoreTurrets.Contains(turret))
+                        if (_ignoreTurrets.Contains(turret))
                         {
                             _ignoreTurrets.Remove(turret);
                             return;
@@ -127,7 +127,8 @@ public class PlayerInventory : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        ResetProgress(_nearTurret);
+        if (_nearTurret != null)
+            ResetProgress(_nearTurret);
         _nearTurret = null;
     }
 

@@ -133,6 +133,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: InteractTrigger
       objectReference: {fileID: 0}
+    - target: {fileID: 6370366667459696302, guid: 65ae2a5d2fed9484395f30e5d2073f21, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6370366667459696467, guid: 65ae2a5d2fed9484395f30e5d2073f21, type: 3}
       propertyPath: m_RootOrder
       value: 1
