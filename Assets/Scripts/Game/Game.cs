@@ -17,6 +17,7 @@ public class Game : MonoBehaviour
 
     public bool GameStared { get; private set; } = false;
     public bool GameFinished { get; private set; } = false;
+    public bool IsReady { get; private set; } = false;    
 
     public LevelScenario.State ActiveScenario => _activeScenario;
     public Headquarters Headquarters => _headquarters;
@@ -28,17 +29,10 @@ public class Game : MonoBehaviour
     {
         Map.OnMapGenerated += OnMapGenerated;
     }
-
     private void OnDestroy()
     {
         Map.OnMapGenerated -= OnMapGenerated;
     }
-
-    public void SetHeadquarters(Headquarters headquarters)
-    {
-        _headquarters = headquarters;
-    }
-
     private void Update()
     {
         if (GameStared && !GameFinished)
@@ -53,6 +47,15 @@ public class Game : MonoBehaviour
                 _data.User.SetCurrencyValue(CurrencyType.Construction, 0);
             }
         }
+    }
+
+    public void SetHeadquarters(Headquarters headquarters)
+    {
+        _headquarters = headquarters;
+    }
+    public void SetReady(bool ready)
+    {
+        IsReady = ready;
     }
 
     private void OnMapGenerated()
@@ -74,7 +77,6 @@ public class Game : MonoBehaviour
 
         _data.User.SetCurrencyValue(CurrencyType.Construction, _levelManager.CurrentLevel.ConstructionCurrency);
     }
-
     public Enemy SpawnEnemy(EnemyFactory factory, EnemyType type)
     {
         Enemy enemy = factory.Get(type);

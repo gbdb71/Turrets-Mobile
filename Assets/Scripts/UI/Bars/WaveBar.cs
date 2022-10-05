@@ -6,27 +6,25 @@ using DG.Tweening;
 
 public class WaveBar : MonoBehaviour
 {
-    [Inject]
-    private Game _game;
-    private bool _enabled = false;
-
-    [SerializeField] private Image waveCooldownFill;
     [SerializeField] private Transform content;
     [SerializeField] private TextMeshProUGUI titleText;
+    [SerializeField] private Button _readyButton;
 
     [SerializeField] private Image waveProgressFill;
 
     [SerializeField] private float fillTime = 0.25f;
 
+    [Inject]private Game _game;
+
     private void Awake()
     {
-        LevelScenario.OnWaveChanged += EnableProgressBar;
-        DisableProgressBar();
+        LevelScenario.OnWaveChanged += Show;
+        _readyButton.onClick.AddListener(SetReady);
     }
 
     private void OnDestroy()
     {
-        LevelScenario.OnWaveChanged -= EnableProgressBar;
+        LevelScenario.OnWaveChanged -= Show;
     }
 
     public void Update()
@@ -34,34 +32,30 @@ public class WaveBar : MonoBehaviour
         if (!_game.GameStared)
             return;
 
-        if (!_enabled)
+        if (!content.gameObject.activeSelf)
         {
             float progress = _game.ActiveScenario.Wave.WaveProgress;
             if (waveProgressFill.fillAmount != progress)
                 waveProgressFill.DOFillAmount(progress, fillTime);
             return;
         }
-
-        if (_game.ActiveScenario.Wave.DelayProgress < _game.ActiveScenario.Wave.StartDelay)
-        {
-            float progress = _game.ActiveScenario.Wave.DelayProgress / _game.ActiveScenario.Wave.StartDelay;
-            waveCooldownFill.fillAmount = 1 - progress;
-        }
-        else
-            DisableProgressBar();
     }
 
-    private void EnableProgressBar()
+    private void SetReady()
     {
-        _enabled = true;
+        _game.SetReady(true);
+        Hide();
+    }
+
+    private void Show()
+    {
         waveProgressFill.fillAmount = 0;
         content.gameObject.SetActive(true);
         titleText.text = "Wave " + (_game.ActiveScenario.WaveIndex + 1).ToString();
     }
 
-    private void DisableProgressBar()
+    private void Hide()
     {
-        _enabled = false;
         waveProgressFill.fillAmount = 0;
         content.gameObject.SetActive(false);
     }

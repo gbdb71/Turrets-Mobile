@@ -5,10 +5,7 @@ using Zenject;
 public class EnemyWave : ScriptableObject
 {
     [SerializeField, ReorderableList] private EnemySpawnSequence[] _spawnSequences = { };
-    [Inject]
-    private Game _game;
-
-    [SerializeField] private float startDelay;
+    [Inject] private Game _game;
 
     public State Begin() => new State(this);
 
@@ -21,10 +18,9 @@ public class EnemyWave : ScriptableObject
         private int _index;
         private float delayTimer;
         public float DelayProgress => delayTimer;
-        public float StartDelay => _wave.startDelay;
         public float WaveProgress
         {
-            get 
+            get
             {
                 float prevProgress = (float)_index / _wave._spawnSequences.Length;
                 float progress = prevProgress + (_sequence.SequenceProgress / _wave._spawnSequences.Length);
@@ -45,12 +41,7 @@ public class EnemyWave : ScriptableObject
 
         public float Progress(float deltaTime)
         {
-            if (delayTimer < _wave.startDelay)
-            {
-                delayTimer += deltaTime;
-            }
-
-            if (delayTimer >= _wave.startDelay)
+            if (_wave._game.IsReady)
             {
                 deltaTime = _sequence.Progress(deltaTime);
                 while (deltaTime >= 0f)
@@ -61,9 +52,10 @@ public class EnemyWave : ScriptableObject
                     }
 
                     _sequence = _wave._spawnSequences[_index].Begin(_wave._game);
-                    deltaTime = _sequence.Progress(deltaTime);
+                    _wave._game.SetReady(false);
                 }
             }
+
             return -1f;
         }
     }
