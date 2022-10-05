@@ -233,10 +233,11 @@ public class PlayerInventory : MonoBehaviour
         _takedTurret = turret;
         _takedTurret.transform.SetParent(_turretSlot);
 
-        _takedTurret.transform.DOMove(_turretSlot.transform.position, .25f).OnComplete(() =>
+        turret.transform.DOLocalRotate(Vector3.zero, 0.3f);
+        _takedTurret.transform.DOMove(_turretSlot.transform.position, 0.5f).SetEase(Ease.InOutBack).OnComplete(() =>
         {
             turret.transform.localPosition = new Vector3();
-            turret.transform.localRotation = Quaternion.identity;
+            //turret.transform.localRotation = Quaternion.identity;
         });
 
         _takedTurret.enabled = false;

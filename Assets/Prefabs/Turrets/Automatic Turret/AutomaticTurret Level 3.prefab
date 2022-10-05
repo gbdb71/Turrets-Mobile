@@ -491,7 +491,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damage: 10
-  _fireDelay: 0.1
+  _fireDelay: 0.25
   _reloadTime: 3
   _shootPivot:
   - {fileID: 5215586337753852951}
@@ -501,7 +501,6 @@ MonoBehaviour:
   _chargedAmmoMax: 40
   _ammoMax: 80
   _ammoPerBox: 20
-  ShootPivotIndex: 0
   _bulletSpeed: 15
   _projectilePrefab: {fileID: 2147293829527817372, guid: 958b2fa6ec39a224fa3db3a24520aee3, type: 3}
   gunMove: {x: 0.001, y: -0.001}
