@@ -131,6 +131,8 @@ public abstract class BaseTurret : MonoBehaviour
     {
         if (_baseBar != null)
             _baseBar.EnableBar();
+
+        _aim.SetIdle(false);
     }
 
     private void OnDisable()
