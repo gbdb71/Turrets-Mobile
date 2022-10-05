@@ -333,15 +333,15 @@ MonoBehaviour:
   _shootPivot:
   - {fileID: 5215586337753852951}
   - {fileID: 13617853541934872}
-  _indicatorTransform: {fileID: 1307280066}
-  _indicatorFill: {fileID: 1069694142}
   _nextGrade: {fileID: 1006089489906742133, guid: 790239f2ed226284fbdcf0340b671d94, type: 3}
   _chargedAmmoMax: 30
   _ammoMax: 60
   _ammoPerBox: 30
-  _reloadIndicator: {fileID: 0}
+  mainMaterial: {fileID: 2100000, guid: 2722dd08cac6a5940929d22a65b31269, type: 2}
+  selectedMaterial: {fileID: 2100000, guid: 5f62031a35a2a214a958e955ff6bc351, type: 2}
   _bulletSpeed: 10
   _projectilePrefab: {fileID: 2147293829527817372, guid: 958b2fa6ec39a224fa3db3a24520aee3, type: 3}
+  upgradeParticle: {fileID: 0}
   gunMove: {x: 0.001, y: -0.001}
   moveDuration: {x: 0.075, y: 0.125}
   _muzzleParticles: []

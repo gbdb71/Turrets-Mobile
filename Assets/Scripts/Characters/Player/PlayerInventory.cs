@@ -89,6 +89,7 @@ public class PlayerInventory : MonoBehaviour
                         }
 
                         _nearTurret = turret;
+                        _nearTurret.ChangeColorWhenSelected();
                     }
                     break;
                 }
@@ -120,30 +121,13 @@ public class PlayerInventory : MonoBehaviour
             {
                 if (HasTurret || _delayTimer > 0f)
                     return;
-<<<<<<< HEAD
-=======
-
-                if (!_nearTurret.IndicatorTransform.gameObject.activeSelf)
-                {
-                    _nearTurret.IndicatorTransform.gameObject.SetActive(true);
-                    _nearTurret.ChangeColorWhenSelected();
-                }
-
-                _takeProgess += Time.deltaTime;
-                _nearTurret.IndicatorFill.fillAmount = _takeProgess;
-
-                if (_takeProgess >= 1f)
-                {
-                    Take(_nearTurret);
-                }
-
->>>>>>> feature/take-turret-indicator
             }
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
+        ResetProgress(_nearTurret);
         _nearTurret = null;
     }
 
@@ -248,6 +232,7 @@ public class PlayerInventory : MonoBehaviour
             return;
 
         _takedTurret = _nearTurret;
+        _nearTurret.ReturnColorWhenSelected();
         _nearTurret = null;
 
         _takedTurret.transform.SetParent(_turretSlot);
@@ -258,16 +243,11 @@ public class PlayerInventory : MonoBehaviour
         _takedTurret.enabled = false;
     }
 
-<<<<<<< HEAD
-=======
     private void ResetProgress(BaseTurret turret)
     {
-        turret.IndicatorTransform.gameObject.SetActive(false);
-        _takeProgess = 0f;
         turret.ReturnColorWhenSelected();
     }
 
->>>>>>> feature/take-turret-indicator
     public void Upgrade()
     {
         if (CanUpgrade)
@@ -283,14 +263,10 @@ public class PlayerInventory : MonoBehaviour
 
                 }
 
-
                 BaseTurret newTurret = Instantiate(_takedTurret.NextGrade, near.transform.position, near.transform.rotation, null);
-<<<<<<< HEAD
                 _ignoreTurrets.Add(newTurret);
 
-=======
                 newTurret.PlayUpgradeParticle();
->>>>>>> feature/take-turret-indicator
 
                 Destroy(_takedTurret.gameObject);
                 Destroy(near);
