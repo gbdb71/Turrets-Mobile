@@ -501,6 +501,7 @@ MonoBehaviour:
   _chargedAmmoMax: 40
   _ammoMax: 80
   _ammoPerBox: 40
+  _reloadIndicator: {fileID: 0}
   _bulletSpeed: 15
   _projectilePrefab: {fileID: 2147293829527817372, guid: 958b2fa6ec39a224fa3db3a24520aee3, type: 3}
   gunMove: {x: 0.001, y: -0.001}
@@ -840,7 +841,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5783178000912738086, guid: d65c645277adc2a4f87fc351e3bdc266, type: 3}
       propertyPath: m_Name
-      value: AmmoBar
+      value: TurretInfo
       objectReference: {fileID: 0}
     - target: {fileID: 6207666898349006302, guid: d65c645277adc2a4f87fc351e3bdc266, type: 3}
       propertyPath: m_IsActive

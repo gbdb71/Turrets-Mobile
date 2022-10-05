@@ -1,11 +1,13 @@
 using Cinemachine;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 using Zenject;
 
 public abstract class BaseBar : MonoBehaviour
 {
     [SerializeField] private CanvasGroup _canvasGroup;
+    [SerializeField] private Image _reloadIndicator;
     [SerializeField] private float _fadeDuration = 0.5f;
 
     [Inject] private CinemachineVirtualCamera _playerCamera;
@@ -33,6 +35,19 @@ public abstract class BaseBar : MonoBehaviour
         {
             _canvasGroup.gameObject.SetActive(false);
         });
+    }
+
+    public void EnableReloadIndicator(float time)
+    {
+        if (_reloadIndicator != null)
+        {
+            _reloadIndicator.gameObject.SetActive(true);
+
+            _reloadIndicator.transform.DOLocalRotate(new Vector3(0, 0, 360), time, RotateMode.FastBeyond360).OnComplete(() =>
+            {
+                _reloadIndicator.gameObject.SetActive(false);
+            });
+        }
     }
 
     public virtual void Initialization(int currentValue, int maxValue)

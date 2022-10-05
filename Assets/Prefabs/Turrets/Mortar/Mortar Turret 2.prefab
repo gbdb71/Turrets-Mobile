@@ -648,18 +648,6 @@ PrefabInstance:
       value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 4465599110721165411, guid: d65c645277adc2a4f87fc351e3bdc266, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4465599110721165411, guid: d65c645277adc2a4f87fc351e3bdc266, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4465599110721165411, guid: d65c645277adc2a4f87fc351e3bdc266, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4465599110721165411, guid: d65c645277adc2a4f87fc351e3bdc266, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -709,7 +697,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5783178000912738086, guid: d65c645277adc2a4f87fc351e3bdc266, type: 3}
       propertyPath: m_Name
-      value: Turret AmmoBar
+      value: TurretInfo
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d65c645277adc2a4f87fc351e3bdc266, type: 3}

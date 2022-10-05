@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(TurretAim)), SelectionBase]
@@ -72,11 +73,10 @@ public abstract class BaseTurret : MonoBehaviour
 
     private void Update()
     {
-        if (_currentTarget != null)
-            Aim();
-
         if (_chargedAmmo > 0 && _currentTarget != null)
         {
+            Aim();
+
             if (_currentTarget.IsDead || Vector3.Distance(_currentTarget.transform.position, transform.position) > _aim.AimDistance)
             {
                 _currentTarget = null;
@@ -90,14 +90,14 @@ public abstract class BaseTurret : MonoBehaviour
         }
         else
         {
-            if(_currentTarget == null)
+            if (_currentTarget == null)
             {
                 _currentTarget = FindTarget();
             }
 
             StopFire();
 
-            if (_ammo == 0 && !IsReloading)
+            if (_chargedAmmo == 0 && _ammo > 0 && !IsReloading)
             {
                 StartCoroutine(nameof(Reload));
             }
@@ -140,7 +140,6 @@ public abstract class BaseTurret : MonoBehaviour
     {
         if (_currentTarget != null)
         {
-            _aim.SetIdle(false);
             _aim.SetAim(_currentTarget.transform.position);
         }
     }
@@ -149,6 +148,8 @@ public abstract class BaseTurret : MonoBehaviour
     protected virtual IEnumerator Reload()
     {
         IsReloading = true;
+
+        _baseBar.EnableReloadIndicator(_reloadTime);
 
         yield return new WaitForSeconds(_reloadTime);
 
@@ -162,7 +163,6 @@ public abstract class BaseTurret : MonoBehaviour
             _chargedAmmo = _ammo;
             _ammo = 0;
         }
-
         IsReloading = false;
     }
 

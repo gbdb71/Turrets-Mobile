@@ -275,6 +275,7 @@ MonoBehaviour:
   _chargedAmmoMax: 10
   _ammoMax: 20
   _ammoPerBox: 10
+  _reloadIndicator: {fileID: 0}
   _damageAngle: 50
   _attackRate: 1
   _decelerationPerAttack: 0.6
@@ -761,18 +762,6 @@ PrefabInstance:
     - target: {fileID: 4465599110721165411, guid: dffbc4455cb190b459cc029b560a15a7, type: 3}
       propertyPath: m_SizeDelta.y
       value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 4465599110721165411, guid: dffbc4455cb190b459cc029b560a15a7, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 4465599110721165411, guid: dffbc4455cb190b459cc029b560a15a7, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 4465599110721165411, guid: dffbc4455cb190b459cc029b560a15a7, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1.25
       objectReference: {fileID: 0}
     - target: {fileID: 4465599110721165411, guid: dffbc4455cb190b459cc029b560a15a7, type: 3}
       propertyPath: m_LocalPosition.x
