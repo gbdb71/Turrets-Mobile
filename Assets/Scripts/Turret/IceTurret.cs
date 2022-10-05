@@ -11,7 +11,15 @@ public class IceTurret : BaseTurret
     [Label("Visual Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField, NotNull] protected VisualEffect _throwEffect;
 
+    [SerializeField] private ParticleSystem upgradeParticle;
+
     public bool IsFire { get; private set; }
+
+    public override void PlayUpgradeParticle()
+    {
+        if (upgradeParticle != null)
+            upgradeParticle.Play();
+    }
 
     protected override void Start()
     {

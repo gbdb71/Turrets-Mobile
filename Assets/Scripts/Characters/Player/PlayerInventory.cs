@@ -90,7 +90,7 @@ public class PlayerInventory : MonoBehaviour
             case "Ammunition":
                 {
                     if (other.TryGetComponent(out Ammunition ammunition))
-                    { 
+                    {
                         if (_ammunition.Count > _maxAmmo - 1)
                             return;
 
@@ -211,7 +211,7 @@ public class PlayerInventory : MonoBehaviour
 
     [Header("Place Settings")]
     [SerializeField] private Transform placePosition;
-    
+
     public void Place()
     {
         if (_takedTurret != null && CanPlace)
@@ -232,7 +232,7 @@ public class PlayerInventory : MonoBehaviour
             });
 
             turret.transform.DORotate(Vector3.zero, 1f);
-            
+
             _takedTurret = null;
             _delayTimer = _takeDelay;
         }
@@ -248,7 +248,7 @@ public class PlayerInventory : MonoBehaviour
 
         turret.transform.DOLocalRotate(Vector3.zero, 0.3f);
         _takedTurret.transform.DOLocalMove(Vector3.zero, 0.25f);
-     
+
         _takedTurret.enabled = false;
 
         ResetProgress(_takedTurret);
@@ -276,6 +276,8 @@ public class PlayerInventory : MonoBehaviour
 
 
                 BaseTurret newTurret = Instantiate(_takedTurret.NextGrade, near.transform.position, near.transform.rotation, null);
+                newTurret.PlayUpgradeParticle();
+
                 Destroy(_takedTurret.gameObject);
                 Destroy(near);
 

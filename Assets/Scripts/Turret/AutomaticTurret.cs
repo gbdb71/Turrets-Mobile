@@ -9,15 +9,29 @@ public class AutomaticTurret : BaseTurret
     [SerializeField, Range(2, 40)] protected float _bulletSpeed;
     [SerializeField] protected BaseProjectile _projectilePrefab;
 
+    [SerializeField] private ParticleSystem upgradeParticle;
+
     [SerializeField] private Vector2 gunMove = new Vector2(0.001f, -0.001f);
     [SerializeField] private Vector2 moveDuration = new Vector2(0.075f, 0.125f);
 
     [SerializeField] private List<ParticleSystem> _muzzleParticles;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        upgradeParticle.Stop();
+    }
+
+    public override void PlayUpgradeParticle()
+    {
+        if (upgradeParticle != null)
+            upgradeParticle.Play();
+    }
+
     protected override void Start()
     {
         base.Start();
-        
+
         for (int i = 0; i < _shootPivot.Length; i++)
         {
             _muzzleParticles.Add(_shootPivot[i].parent.gameObject.GetComponentInChildren<ParticleSystem>());

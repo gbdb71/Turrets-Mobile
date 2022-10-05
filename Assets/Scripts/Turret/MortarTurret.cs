@@ -9,9 +9,17 @@ public class MortarTurret : BaseTurret
 
     [SerializeField] private ParticleSystem _muzzleParticle;
 
+    [SerializeField] private ParticleSystem upgradeParticle;
+
     private float _launchSpeed;
     private Vector3 _launchVelocity;
     private Vector3 _aimPos;
+
+    public override void PlayUpgradeParticle()
+    {
+        if (upgradeParticle != null)
+            upgradeParticle.Play();
+    }
 
     protected override void Start()
     {

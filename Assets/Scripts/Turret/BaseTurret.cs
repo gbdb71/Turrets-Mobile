@@ -39,6 +39,7 @@ public abstract class BaseTurret : MonoBehaviour
     protected int _chargedAmmo = 0;
     protected int _ammo = 0;
 
+
     public Transform IndicatorTransform => _indicatorTransform;
     public Image IndicatorFill => _indicatorFill;
     public BaseTurret NextGrade => _nextGrade;
@@ -61,6 +62,8 @@ public abstract class BaseTurret : MonoBehaviour
 
         Turrets.Add(this);
     }
+
+    public virtual void PlayUpgradeParticle() { }
 
     protected virtual void Start()
     {
