@@ -1,14 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 using DG.Tweening;
 
+
 [SelectionBase]
 public class Headquarters : MonoBehaviour
 {
-    [SerializeField, DisableInPlayMode, Range(1, 1000)] private float _health;
-    [Label("Data Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
+    [SerializeField, DisableInPlayMode] private Settings _settings;
 
     [Label("View Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField] private GameObject _headquartersBody;
@@ -22,8 +21,10 @@ public class Headquarters : MonoBehaviour
 
     [Inject] private Game _game;
     private HPBar _hpBar;
+    private float _health = 0;
 
-    public bool IsDead => _health <= 0;
+    public float Health { get { return _health + _health.Percent(SummableAbillity.GetValue(SummableAbillity.Type.HeadquartersHealth)); } private set { _health = value; } }
+    public bool IsDead => Health <= 0;
     public Transform DronePoint => _dronePoint;
     public Transform FinishPoint => _finishPoint;
 
@@ -34,20 +35,22 @@ public class Headquarters : MonoBehaviour
         _game.SetHeadquarters(this);
         _hpBar = GetComponentInChildren<HPBar>();
 
+        _health = _settings.Health;
+
         if (_hpBar != null)
-            _hpBar.InitializationBar(_health);
+            _hpBar.InitializationBar(Health);
     }
     public void ApplyDamage(float damage)
     {
-        _health -= damage;
+        Health -= damage;
 
         if (_hpBar != null)
-            _hpBar.ChangeValue(_health);
+            _hpBar.ChangeValue(Health);
 
         if (_headquartersBody != null)
             _headquartersBody.transform.DOShakeScale(_damageAnimation.Duration, _damageAnimation.Strenght, _damageAnimation.Vibrato, _damageAnimation.Random);
 
-        if (_health <= 0)
+        if (Health <= 0)
         {
             if (_hpBar != null)
                 _hpBar.DisableBar();
@@ -56,5 +59,11 @@ public class Headquarters : MonoBehaviour
 
             this.enabled = false;
         }
+    }
+
+    [System.Serializable]
+    public class Settings
+    {
+        [SerializeField, Range(1, 1000)] public float Health = 400f;
     }
 }

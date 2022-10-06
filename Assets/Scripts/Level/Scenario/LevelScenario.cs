@@ -14,7 +14,7 @@ public class LevelScenario : ScriptableObject
         return new State(this);
     }
 
-    [System.Serializable]
+    [Serializable]
     public struct State
     {
         private EnemyWave.State _wave;

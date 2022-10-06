@@ -77,7 +77,7 @@ public class IceTurret : BaseTurret
 
                 if (angleBetween <= _damageAngle)
                 {
-                    enemy.ApplyDamage(_damage);
+                    enemy.ApplyDamage(Damage);
                     enemy.AddDeceleration(_decelerationPerAttack);
                 }
             }

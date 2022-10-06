@@ -1,63 +1,35 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.AI;
 using DG.Tweening;
 using Zenject;
+using Characters.Drone.Helper;
 
-public class Helper : MonoBehaviour
+public class HelperDrone : BaseDrone<HelperStateMachine>
 {
     [Label("Inventory Settings", skinStyle: SkinStyle.Box)]
     [SerializeField] private int _maxAmmo = 10;
-
-    [Label("Transforms", skinStyle: SkinStyle.Box)]
-    [SerializeField] private Transform[] propellers;
-    [SerializeField] private GameObject body;
-    [SerializeField, NotNull] private Transform _inventory;
-
-    [Label("Visual Settings", skinStyle: SkinStyle.Box)]
-    [SerializeField] private float duration = 1;
-    [SerializeField] private Vector3 rotation;
-    [SerializeField] private float _riseTime = 0.5f;
-    [SerializeField] private float _liftingHeight = 2f;
+    [SerializeField, NotNull] protected Transform _inventory;
 
     [Inject] private Game _game;
-    private bool _fansIsActive = false;
     private Stack<Ammunition> _inventoryAmmo = new Stack<Ammunition>();
 
-    public HelperStateMachine StateMachine { get; private set; }
-    public NavMeshAgent Agent { get; private set; }
     public bool InventoryFull => _inventoryAmmo.Count == _maxAmmo;
     public bool InventoyEmpty => _inventoryAmmo.Count == 0;
-    public bool IsMove => Agent.velocity.sqrMagnitude > 0f;
     public Game Game => _game;
 
     public static List<Ammunition> TargetAmmunitions = new List<Ammunition>();
     public static List<BaseTurret> TargetTurrets = new List<BaseTurret>();
 
-    public static List<Helper> Helpers { get; private set; } = new List<Helper>();
-    public static event Action<Helper> OnHelperCreated;
-    public static event Action<Helper> OnHelperDestroyed;
+    public static List<HelperDrone> Helpers { get; private set; } = new List<HelperDrone>();
+    public static event Action<HelperDrone> OnHelperCreated;
+    public static event Action<HelperDrone> OnHelperDestroyed;
 
-    private void Awake()
+    protected override void Awake()
     {
-        Agent = GetComponent<NavMeshAgent>();
+        base.Awake();
+
         StateMachine = new HelperStateMachine(this);
-
-        Helpers.Add(this);
-        OnHelperCreated?.Invoke(this);
-    }
-    private void Update()
-    {
-        Agent.DOPause();
-
-        StateMachine.Update();
-
-        if (IsMove && !_fansIsActive)
-            RunTheFans();
-
-        if (!IsMove && _fansIsActive)
-            TurnOffTheFans();
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -94,7 +66,6 @@ public class Helper : MonoBehaviour
 
                 body.transform.DOLocalMoveY(0.25f, _riseTime).OnComplete(() =>
                 {
-
                     ammunition.transform.SetParent(_inventory);
                     ammunition.transform.localPosition = Vector3.zero;
 
@@ -108,30 +79,6 @@ public class Helper : MonoBehaviour
     {
         Helpers.Remove(this);
         OnHelperDestroyed?.Invoke(this);
-    }
-
-    public void RunTheFans()
-    {
-        _fansIsActive = true;
-
-        for (int i = 0; i < propellers.Length; i++)
-        {
-            propellers[i].DOLocalRotate(rotation, duration, RotateMode.FastBeyond360).SetRelative(true).SetEase(Ease.Linear).SetLoops(-1, LoopType.Incremental);
-        }
-
-        body.transform.DOLocalMoveY(_liftingHeight, _riseTime);
-    }
-    public void TurnOffTheFans()
-    {
-        _fansIsActive = false;
-
-        body.transform.DOLocalMoveY(0, _riseTime).OnComplete(() =>
-        {
-            for (int i = 0; i < propellers.Length; i++)
-            {
-                propellers[i].DOKill();
-            }
-        });
     }
 
     public Ammunition GetTargetAmmunition()
@@ -157,8 +104,6 @@ public class Helper : MonoBehaviour
 
         return null;
     }
-
-
     public BaseTurret GetTargetTurret()
     {
         int minAmmo = int.MaxValue;

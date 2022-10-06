@@ -7,8 +7,8 @@ public class UI_Helpers : MonoBehaviour
 
     private void Awake()
     {
-        Helper.OnHelperCreated += UpdateInterface;
-        Helper.OnHelperDestroyed += UpdateInterface;    
+        HelperDrone.OnHelperCreated += UpdateInterface;
+        HelperDrone.OnHelperDestroyed += UpdateInterface;    
     }
 
     private void Start()
@@ -18,13 +18,13 @@ public class UI_Helpers : MonoBehaviour
 
     private void OnDestroy()
     {
-        Helper.OnHelperCreated -= UpdateInterface;
-        Helper.OnHelperDestroyed -= UpdateInterface;
+        HelperDrone.OnHelperCreated -= UpdateInterface;
+        HelperDrone.OnHelperDestroyed -= UpdateInterface;
     }
 
-    private void UpdateInterface(Helper helper)
+    private void UpdateInterface(HelperDrone helper)
     {
-        _text.text = Helper.Helpers.Count.ToString();
+        _text.text = HelperDrone.Helpers.Count.ToString();
     }
 }
 

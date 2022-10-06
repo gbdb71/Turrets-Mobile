@@ -77,7 +77,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af0b9f595cdbb884087482bf32dc7d27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 400
+  _settings:
+    Health: 400
   _headquartersBody: {fileID: 8609843843147868682}
   _dronePoint: {fileID: 7216333598831623282}
   _finishPoint: {fileID: 8515274584460209521}
@@ -86,8 +87,6 @@ MonoBehaviour:
     strenght: 15
     vibrato: 10
     random: 25
-  _helperPrefab: {fileID: 6823445674114097691, guid: d94e7e902418ed247a4ed1f3ba6f747e, type: 3}
-  _helperPrice: 20
 --- !u!1 &7075429134554942648
 GameObject:
   m_ObjectHideFlags: 0

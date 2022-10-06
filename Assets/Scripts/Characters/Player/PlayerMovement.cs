@@ -34,7 +34,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (_joystick.enabled)
+        if (_joystick.enabled && _joystick.gameObject.activeSelf)
         {
             Movement();
             Rotate();
@@ -48,7 +48,8 @@ public class PlayerMovement : MonoBehaviour
         moveDir.Set(_joystick.Horizontal, 0, _joystick.Vertical);
         LayerWeight = _player.Inventory.HasTurret ? 1 : 0;
 
-        _cc.SimpleMove(moveDir * _speed);
+        float speed = _speed + _speed.Percent(SummableAbillity.GetValue(SummableAbillity.Type.PlayerMovementSpeed));
+        _cc.SimpleMove(moveDir * speed);
 
         IsMove = moveDir.magnitude > 0 && _cc.isGrounded;
     }
@@ -78,7 +79,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void DisableJoystick()
     {
-        _joystick.enabled = false;
+        _joystick.gameObject.SetActive(false);
     }
     private void UpdateSpeed(UpgradeType type)
     {

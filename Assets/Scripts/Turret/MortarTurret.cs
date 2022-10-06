@@ -40,7 +40,7 @@ public class MortarTurret : BaseTurret
                 _muzzleParticle.Play();
 
             MortarShell projectile = _shellPrefab.gameObject.Reuse<MortarShell>(_shootPivot[_currentShootPivot].position, Quaternion.identity);
-            projectile.Initialize(_shootPivot[_currentShootPivot].position, _launchVelocity, _damage, _projectileRadius);
+            projectile.Initialize(_shootPivot[_currentShootPivot].position, _launchVelocity, Damage, _projectileRadius);
         }
     }
 

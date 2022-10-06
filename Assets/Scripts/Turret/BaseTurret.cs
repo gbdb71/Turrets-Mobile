@@ -46,6 +46,13 @@ public abstract class BaseTurret : MonoBehaviour
     public Renderer[] Renderers => _renderers;
 
     public int Ammo => _ammo;
+    public float Damage
+    {
+        get
+        {
+            return _damage + _damage.Percent(SummableAbillity.GetValue(SummableAbillity.Type.TurretDamage));
+        }
+    }
     public bool IsReloading { get; private set; }
     public bool CanCharge { get { return _ammo < _ammoMax; } }
 
@@ -161,9 +168,10 @@ public abstract class BaseTurret : MonoBehaviour
     {
         IsReloading = true;
 
-        _baseBar.EnableReloadIndicator(_reloadTime);
+        float reloadTime = _reloadTime - _reloadTime.Percent(SummableAbillity.GetValue(SummableAbillity.Type.TurretReload));
+        _baseBar.EnableReloadIndicator(reloadTime);
 
-        yield return new WaitForSeconds(_reloadTime);
+        yield return new WaitForSeconds(reloadTime);
 
         if (_ammo >= _chargedAmmoMax)
         {
@@ -180,7 +188,7 @@ public abstract class BaseTurret : MonoBehaviour
 
     protected virtual void Fire()
     {
-        _fireTimer = _fireDelay;
+        _fireTimer = (_fireDelay - _fireDelay.Percent(SummableAbillity.GetValue(SummableAbillity.Type.TurretFire)));
         _chargedAmmo -= 1;
 
         UpdateAmmoBar();

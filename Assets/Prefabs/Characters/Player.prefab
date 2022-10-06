@@ -500,13 +500,13 @@ CharacterController:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Height: 1.8
+  m_Height: 1.6
   m_Radius: 0.2
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.8, z: 0}
+  m_Center: {x: 0, y: 0.86, z: 0}
 --- !u!114 &3382120190014436759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -520,10 +520,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 5
-  _speedCoef: 0.2
   _rotationPerFrame: 10
-  LayerWeight: 0
   _distance: 0
+  LayerWeight: 0
 --- !u!114 &919132148344753372
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -557,9 +556,7 @@ MonoBehaviour:
   _ammoRotationSpeed: 0.25
   _ammoPutDelay: 0.5
   backpackPoint: {fileID: 7329303657596097285}
-  lastTargetPosition: {x: 0, y: 0, z: 0}
   placePosition: {fileID: 8906694683018242317}
-  radius: 0.5
 --- !u!114 &3810837798286562221
 MonoBehaviour:
   m_ObjectHideFlags: 0

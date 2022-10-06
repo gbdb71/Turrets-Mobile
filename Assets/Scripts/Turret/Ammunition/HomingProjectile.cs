@@ -28,10 +28,11 @@ public class HomingProjectile : BaseProjectile
         if (_target != null)
         {
             direction = (_target.transform.position - transform.position).normalized;
-            direction.y = 0f;
+            direction.y += .1f;
         }
 
         transform.position += direction * _speed * Time.deltaTime;
+        transform.localRotation = Quaternion.LookRotation(direction);
     }
 }
 

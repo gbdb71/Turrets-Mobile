@@ -51,7 +51,7 @@ public class AutomaticTurret : BaseTurret
         });
 
         HomingProjectile projectile = _projectilePrefab.gameObject.Reuse<BaseProjectile>(_shootPivot[_currentShootPivot].transform.position, _shootPivot[_currentShootPivot].transform.rotation) as HomingProjectile;
-        projectile.Initialize(_shootPivot[_currentShootPivot].transform.position, Vector3.zero, _damage, 0f);
+        projectile.Initialize(_shootPivot[_currentShootPivot].transform.position, Vector3.zero, Damage, 0f);
         projectile.SetSpeed(_bulletSpeed);
         projectile.SetTarget(_currentTarget.transform);
 
