@@ -79,7 +79,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _health: 400
-  _interactGroupPrefab: {fileID: 5134897979160479666, guid: 6124358e3a15b544faf4ec3e90bf5dce, type: 3}
+  _interactPanelPrefab: {fileID: 5134897979160479630, guid: 6124358e3a15b544faf4ec3e90bf5dce, type: 3}
   _customButtonPrefab: {fileID: 5794388558723849181, guid: 7a6c9a94fc3816f42a458c75a45faee6, type: 3}
   _upgradeButtonPrefab: {fileID: 6953870278822238118, guid: 8d2e6c07af2ca6c4683a00a9535c1ff6, type: 3}
   _headquartersBody: {fileID: 8609843843147868682}

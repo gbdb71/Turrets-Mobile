@@ -12,7 +12,7 @@ public class Headquarters : MonoBehaviour, IInteractable
     [Label("Data Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
 
     [Label("View Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
-    [SerializeField] private CanvasGroup _interactGroupPrefab;
+    [SerializeField] private RectTransform _interactPanelPrefab;
     [SerializeField] private CustomButton _customButtonPrefab;
     [SerializeField] private UpgradeButton _upgradeButtonPrefab;
     [SerializeField] private GameObject _headquartersBody;
@@ -33,7 +33,7 @@ public class Headquarters : MonoBehaviour, IInteractable
     [Inject] private Game _game;
 
     private HPBar _hpBar;
-    private CanvasGroup _interactGroup;
+    private RectTransform _interactGroup;
     private List<CustomButton> _upgradeButtons = new List<CustomButton>();
 
     public bool IsDead => _health <= 0;
@@ -52,7 +52,7 @@ public class Headquarters : MonoBehaviour, IInteractable
     }
     private void Start()
     {
-        _interactGroup = Instantiate(_interactGroupPrefab, _canvas.transform);
+        _interactGroup = Instantiate(_interactPanelPrefab, _canvas.transform);
 
         OpenViewGroup();
         ClosedViewGroup();
@@ -124,11 +124,11 @@ public class Headquarters : MonoBehaviour, IInteractable
     public void OpenViewGroup()
     {
         InitializationButtons();
-        _interactGroup.alpha = 1;
+        _interactGroup.gameObject.SetActive(true);
     }
     public void ClosedViewGroup()
     {
-        _interactGroup.alpha = 0;
+        _interactGroup.gameObject.SetActive(false);
 
         for (int i = 0; i < _upgradeButtons.Count; i++)
         {
