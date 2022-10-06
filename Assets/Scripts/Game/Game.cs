@@ -17,7 +17,7 @@ public class Game : MonoBehaviour
 
     public bool GameStared { get; private set; } = false;
     public bool GameFinished { get; private set; } = false;
-    public bool IsReady { get; private set; } = false;    
+    public bool IsReady { get; private set; } = false;
 
     public LevelScenario.State ActiveScenario => _activeScenario;
     public Headquarters Headquarters => _headquarters;
@@ -35,16 +35,14 @@ public class Game : MonoBehaviour
     }
     private void Update()
     {
-        if (GameStared && !GameFinished)
+        if (GameStared && !GameFinished && !_headquarters.IsDead && IsReady)
         {
-            if (!_headquarters.IsDead && _activeScenario.Progress() == false)
+            if (!_activeScenario.Progress())
             {
                 GameFinished = true;
+
                 _levelManager.NextLevel();
-
-                OnGameFinished?.Invoke();            
-
-                _data.User.SetCurrencyValue(CurrencyType.Construction, 0);
+                OnGameFinished?.Invoke();
             }
         }
     }

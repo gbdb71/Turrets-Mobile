@@ -58,7 +58,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c05260a35c1d52d448f09aae25e973eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _content: {fileID: 4338276656131540437}
+  _targetScene:
+    sceneReference: {fileID: 102900000, guid: 9fc0d4010bbf28b4594072e72b8655ab, type: 3}
+    sceneName: Game
+    scenePath: Assets/Scenes/Game.unity
+    buildIndex: 0
 --- !u!1 &2619237500423920911
 GameObject:
   m_ObjectHideFlags: 0
@@ -210,7 +214,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4338276656131540437
 RectTransform:
   m_ObjectHideFlags: 0

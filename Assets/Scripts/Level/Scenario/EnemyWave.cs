@@ -41,19 +41,17 @@ public class EnemyWave : ScriptableObject
 
         public float Progress(float deltaTime)
         {
-            if (_wave._game.IsReady)
-            {
-                deltaTime = _sequence.Progress(deltaTime);
-                while (deltaTime >= 0f)
-                {
-                    if (++_index >= _wave._spawnSequences.Length)
-                    {
-                        return deltaTime;
-                    }
+            deltaTime = _sequence.Progress(deltaTime);
 
-                    _sequence = _wave._spawnSequences[_index].Begin(_wave._game);
-                    _wave._game.SetReady(false);
+            while (deltaTime >= 0f)
+            {
+                if (++_index >= _wave._spawnSequences.Length)
+                {
+                    return deltaTime;
                 }
+
+                _sequence = _wave._spawnSequences[_index].Begin(_wave._game);
+                deltaTime = _sequence.Progress(deltaTime);
             }
 
             return -1f;

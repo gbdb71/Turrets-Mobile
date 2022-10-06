@@ -218,26 +218,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4941167013868381881, guid: ffa8729de1f19954b80e87bca33bf2ae, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5866758043832995433, guid: ffa8729de1f19954b80e87bca33bf2ae, type: 3}
-      propertyPath: _targetScene.sceneName
-      value: Game
-      objectReference: {fileID: 0}
-    - target: {fileID: 5866758043832995433, guid: ffa8729de1f19954b80e87bca33bf2ae, type: 3}
-      propertyPath: _targetScene.scenePath
-      value: Assets/Scenes/Game.unity
-      objectReference: {fileID: 0}
-    - target: {fileID: 5866758043832995433, guid: ffa8729de1f19954b80e87bca33bf2ae, type: 3}
-      propertyPath: _targetScene.buildIndex
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5866758043832995433, guid: ffa8729de1f19954b80e87bca33bf2ae, type: 3}
-      propertyPath: _targetScene.sceneReference
-      value: 
-      objectReference: {fileID: 102900000, guid: 9fc0d4010bbf28b4594072e72b8655ab, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ffa8729de1f19954b80e87bca33bf2ae, type: 3}
 --- !u!224 &1333015463 stripped

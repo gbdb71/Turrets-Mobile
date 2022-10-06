@@ -49,9 +49,12 @@ public class WaveBar : MonoBehaviour
 
     private void Show()
     {
-        waveProgressFill.fillAmount = 0;
+        _game.SetReady(false);
+
         content.gameObject.SetActive(true);
         titleText.text = "Wave " + (_game.ActiveScenario.WaveIndex + 1).ToString();
+
+        waveProgressFill.fillAmount = 0;
     }
 
     private void Hide()

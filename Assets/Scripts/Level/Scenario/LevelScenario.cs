@@ -50,8 +50,10 @@ public class LevelScenario : ScriptableObject
 
                     _index = 0;
                 }
+
                 _wave = _scenario.waves[_index].Begin();
                 deltaTime = _wave.Progress(deltaTime);
+
                 OnWaveChanged?.Invoke();
             }
             return true;

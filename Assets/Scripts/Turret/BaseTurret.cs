@@ -199,7 +199,7 @@ public abstract class BaseTurret : MonoBehaviour
     protected void UpdateAmmoBar()
     {
         if (_baseBar != null)
-            _baseBar.ChangeValue(_chargedAmmo + _ammo, _chargedAmmoMax + _ammoMax);
+            _baseBar.ChangeValue(_ammo, _ammoMax);
     }
 
     protected virtual bool CanFire()
