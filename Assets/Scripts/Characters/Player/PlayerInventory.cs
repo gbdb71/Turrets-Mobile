@@ -42,8 +42,6 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
-    private List<BaseTurret> _ignoreTurrets = new List<BaseTurret>();
-
     private void Awake()
     {
         _player = GetComponent<Player>();
@@ -77,12 +75,6 @@ public class PlayerInventory : MonoBehaviour
                 {
                     if (other.TryGetComponent(out BaseTurret turret))
                     {
-                        if (_ignoreTurrets.Contains(turret))
-                        {
-                            _ignoreTurrets.Remove(turret);
-                            return;
-                        }
-
                         if(_nearTurret != null)
                         {
                             _nearTurret.SetSelected(false);
@@ -252,8 +244,6 @@ public class PlayerInventory : MonoBehaviour
                 }
 
                 BaseTurret newTurret = Instantiate(_takedTurret.NextGrade, near.transform.position, near.transform.rotation, null);
-                _ignoreTurrets.Add(newTurret);
-
                 newTurret.PlayUpgradeParticle();
 
                 Destroy(_takedTurret.gameObject);
