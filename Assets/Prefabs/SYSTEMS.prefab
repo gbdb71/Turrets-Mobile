@@ -263,7 +263,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46f4b501189113d4da3e03795ad692a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _joystick: {fileID: 2929252283123773951, guid: aaa2c939c0359ac4dbce3f49e8b90252, type: 3}
+  _joystick: {fileID: 8170153791668043265, guid: 0d230cc8be529a542a08cb878ab14b18, type: 3}
 --- !u!1 &2109132194
 GameObject:
   m_ObjectHideFlags: 0
@@ -457,6 +457,8 @@ MonoBehaviour:
     Count: 20
   - Prefab: {fileID: 3484759065566192930, guid: 33b735334f647be47b05fdcea880d357, type: 3}
     Count: 5
+  - Prefab: {fileID: 9023979252470536555, guid: 0c5fc72adee6ca44ca827bb731f941c6, type: 3}
+    Count: 30
 --- !u!1 &8742234294034949571
 GameObject:
   m_ObjectHideFlags: 0

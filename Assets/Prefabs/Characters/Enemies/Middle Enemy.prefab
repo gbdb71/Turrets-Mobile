@@ -1511,12 +1511,10 @@ MonoBehaviour:
   _dashRotationSpeed: 0.25
   _finishOffset: {x: 0, y: -1.5, z: 0}
   _flickerDuration: 0.25
+  _damageParticle: {fileID: 7605164056796649255, guid: f0d1d0fcd0f6f054697c4764a7a0dda8, type: 3}
+  _damageText: {fileID: 9023979252470536555, guid: 0c5fc72adee6ca44ca827bb731f941c6, type: 3}
   _decelerationDrop: 0.35
   lightTexture: {fileID: 2800000, guid: 9c95ff609a65b0c43899c485c97b20e1, type: 3}
-  _rewardSettings:
-    _rewardChance: 0.7
-    _rewardAmount: {x: 25, y: 50}
-    _rewardType: 1
 --- !u!54 &-3030107636550699320
 Rigidbody:
   m_ObjectHideFlags: 0

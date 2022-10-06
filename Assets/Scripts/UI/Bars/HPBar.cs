@@ -50,7 +50,7 @@ public class HPBar : MonoBehaviour
 
     public void ChangeValue(float newValue)
     {
-        if (!content.gameObject.active)
+        if (!content.gameObject.activeSelf)
             EnableBar();
 
         _valueText.text = ((int)newValue).ToString();

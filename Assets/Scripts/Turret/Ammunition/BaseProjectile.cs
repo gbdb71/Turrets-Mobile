@@ -3,8 +3,6 @@ using ToolBox.Pools;
 
 public abstract class BaseProjectile : MonoBehaviour
 {
-    [SerializeField] private GameObject _particle;
-
     protected float _gravity = 9.81f;
     protected float _damage = 10f;
     protected Vector3 _launchPoint, _launchVelocity;
@@ -33,7 +31,6 @@ public abstract class BaseProjectile : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent(out Enemy damagable))
         {
-            _particle.Reuse(collision.GetContact(0).point, Quaternion.identity);
             damagable.ApplyDamage(_damage);
         }
     }

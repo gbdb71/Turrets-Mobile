@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using ToolBox.Pools;
 using Zenject;
 using System.Collections;
 
@@ -14,6 +15,9 @@ public class Enemy : MonoBehaviour
 
     [Label("Damage Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField] private float _flickerDuration = 0.25f;
+    [SerializeField] private GameObject _damageParticle;
+    [SerializeField] private GameObject _damageText;
+    [SerializeField] private Vector3 _damageTextOffset;
 
     [Label("Deceleration Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField, Range(.1f, 1.5f)] private float _decelerationDrop = 2f;
@@ -41,6 +45,8 @@ public class Enemy : MonoBehaviour
     private float _progress = 0f;
     private float _deceleration = 0;
 
+    private Texture tempTexture;
+
     public float Health => _health;
     public bool IsDead { get; private set; }
     public Rigidbody Rigidbody => _rigidbody;
@@ -64,7 +70,6 @@ public class Enemy : MonoBehaviour
 
         tempTexture = _bodyRenderer.material.mainTexture;
     }
-
     private void Update()
     {
         if (!_initialized || _headquarters.IsDead)
@@ -90,7 +95,6 @@ public class Enemy : MonoBehaviour
         Quaternion targetRot = Quaternion.LookRotation(relativePos, Vector3.up);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, _rotationSpeed * Time.deltaTime);
     }
-
     private void Move()
     {
         if (IsDead)
@@ -122,7 +126,11 @@ public class Enemy : MonoBehaviour
         transform.position =
             Vector3.LerpUnclamped(from, to, _progress);
     }
-
+    public void AddDeceleration(float value)
+    {
+        _deceleration += value;
+        _deceleration = Mathf.Clamp(_deceleration, 0f, .8f);
+    }
     private void Finish()
     {
         _animator.SetBool("Finish", true);
@@ -148,43 +156,30 @@ public class Enemy : MonoBehaviour
         Death();
     }
 
-    public void AddDeceleration(float value)
-    {
-        _deceleration += value;
-        _deceleration = Mathf.Clamp(_deceleration, 0f, .8f);
-    }
-
     public void ApplyDamage(float damage)
     {
         _health -= damage;
+
         if (_hpBar != null)
             _hpBar.ChangeValue(_health);
 
-        TakeDamage();
+        StartCoroutine(DisplayDamage(damage));
 
         if (Health <= 0f)
         {
             Death();
         }
     }
-
-    Coroutine tempCorutine;
-    Texture tempTexture;
-
-    private void TakeDamage()
+    private IEnumerator DisplayDamage(float damage)
     {
         _bodyRenderer.material.mainTexture = lightTexture;
 
-        if (tempCorutine != null)
-            StopCoroutine(tempCorutine);
+        yield return new WaitForSeconds(_flickerDuration);
 
-        StartCoroutine(ClearFill(_flickerDuration));
-    }
-
-    private IEnumerator ClearFill(float time)
-    {
-        yield return new WaitForSeconds(time);
         _bodyRenderer.material.mainTexture = tempTexture;
+
+        _damageParticle.Reuse(transform.position, Quaternion.identity);
+        _damageText.Reuse<DamageText>(transform.position + _damageTextOffset, Quaternion.identity).SetText(((int)damage).ToString());
     }
 
     private void Death()
