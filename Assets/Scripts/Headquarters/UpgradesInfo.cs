@@ -12,8 +12,6 @@ public class UpgradesInfo : ScriptableObject
 public enum UpgradeType
 {
     Speed,
-    SpeedWithTurret,
-    AmmoCount
 }
 
 [Serializable]

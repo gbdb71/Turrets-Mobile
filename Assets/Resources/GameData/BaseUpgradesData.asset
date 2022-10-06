@@ -21,19 +21,3 @@ MonoBehaviour:
       Cost: 20
     - Value: 7
       Cost: 30
-  - Type: 1
-    Elements:
-    - Value: 3
-      Cost: 10
-    - Value: 4
-      Cost: 20
-    - Value: 5
-      Cost: 30
-  - Type: 2
-    Elements:
-    - Value: 1
-      Cost: 10
-    - Value: 2
-      Cost: 20
-    - Value: 3
-      Cost: 30

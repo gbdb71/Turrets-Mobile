@@ -17,7 +17,7 @@ public class UserData
     public Dictionary<UpgradeType, int> UpgradesProgress { get; set;}
 
 
-    public static event Action<UpgradeType, int> OnUpgradeChanged;
+    public static event Action<UpgradeType> OnUpgradeChanged;
     public static event Action<CurrencyType, int> OnCurrencyChanged;
 
     public UserData()
@@ -63,8 +63,7 @@ public class UserData
                 Currencies[type] = 0;
             }
 
-            OnCurrencyChanged?.Invoke(type, Currencies[type]);
-            return true;
+            OnCurrencyChanged?.Invoke(type, Currencies[type]); return true;
         }
 
         return false;
@@ -83,7 +82,7 @@ public class UserData
     {
         UpgradesProgress[type] = value;
 
-        OnUpgradeChanged?.Invoke(type, value);
+        OnUpgradeChanged?.Invoke(type);
     }
 }
 

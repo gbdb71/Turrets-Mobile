@@ -3,8 +3,7 @@ using Zenject;
 
 public class JoystickInstaller : MonoInstaller
 {
-    [SerializeField]
-    private Joystick _joystick;
+    [SerializeField] private Joystick _joystick;
 
     public override void InstallBindings()
     {

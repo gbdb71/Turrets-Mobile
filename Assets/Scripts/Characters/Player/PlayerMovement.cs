@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using UnityEngine;
 using Zenject;
@@ -8,10 +7,6 @@ public class PlayerMovement : MonoBehaviour
 {
     [Label("Speed", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField, Range(5, 15f)] private float _speed = 5f;
-    [SerializeField] private float _speedCoef = 0.2f;
-
-    private float _speedWithTurret = 2f;
-    private float _speedWithTurretCoef = 0.25f;
 
     [Label("Rotation", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField, Range(1, 20)] private float _rotationPerFrame = 10f;
@@ -37,29 +32,26 @@ public class PlayerMovement : MonoBehaviour
         Headquarters.OnDeath += DisableJoystick;
     }
 
-    private void Start()
-    {
-        UpdateSpeed(UpgradeType.Speed, -1);
-        UpdateSpeed(UpgradeType.SpeedWithTurret, -1);
-    }
     private void Update()
     {
+        if (_joystick.enabled)
+        {
+            Movement();
+            Rotate();
+        }
+
         HandleGravity();
-        Movement();
-        Rotate();
     }
 
     private void Movement()
     {
         moveDir.Set(_joystick.Horizontal, 0, _joystick.Vertical);
-        float speed = _speed;//_player.Inventory.HasTurret ? _speedWithTurret : _speed;
         LayerWeight = _player.Inventory.HasTurret ? 1 : 0;
 
-        _cc.SimpleMove(moveDir * speed);
+        _cc.SimpleMove(moveDir * _speed);
 
         IsMove = moveDir.magnitude > 0 && _cc.isGrounded;
     }
-
     private void Rotate()
     {
         if (moveDir.magnitude > 0)
@@ -84,27 +76,16 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-    private void UpdateSpeed(UpgradeType type, int index)
-    {
-        switch (type)
-        {
-            case UpgradeType.Speed:
-                _speed = GetUpgradedSpeed(type);
-                break;
-            case UpgradeType.SpeedWithTurret:
-                _speedWithTurret = GetUpgradedSpeed(type);
-                break;
-            default:
-                break;
-        }
-    }
     private void DisableJoystick()
     {
-        _joystick.gameObject.SetActive(false);  
+        _joystick.enabled = false;
     }
-    private float GetUpgradedSpeed(UpgradeType type)
+    private void UpdateSpeed(UpgradeType type)
     {
-        int upgradeIndex = _player.Data.User.UpgradesProgress[type];
-        return _player.Data.UpgradesInfo.Upgrades.First(x => x.Type == type).Elements[upgradeIndex].Value;
+        if (type == UpgradeType.Speed)
+        {
+            int upgradeIndex = _player.Data.User.UpgradesProgress[type];
+            _speed = _player.Data.UpgradesInfo.Upgrades.First(x => x.Type == type).Elements[upgradeIndex].Value;
+        }
     }
 }

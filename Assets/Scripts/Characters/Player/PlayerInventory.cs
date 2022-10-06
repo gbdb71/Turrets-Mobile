@@ -1,7 +1,6 @@
 using UnityEngine;
 using DG.Tweening;
 using System.Collections.Generic;
-using System.Linq;
 
 public class PlayerInventory : MonoBehaviour
 {
@@ -23,7 +22,6 @@ public class PlayerInventory : MonoBehaviour
     private List<Ammunition> _ammunition = new List<Ammunition>();
 
     private float _distanceBetweenObjects = 0.25f;
-    private float _takeProgess = 0f;
     private float _delayTimer = 0f;
     private float _putTimer = 0.0f;
     private int _maxAmmo = 0;
@@ -49,9 +47,6 @@ public class PlayerInventory : MonoBehaviour
     private void Awake()
     {
         _player = GetComponent<Player>();
-
-        UserData.OnUpgradeChanged += UpdateAmmoMax;
-        UpdateAmmoMax(UpgradeType.AmmoCount, -1);
     }
 
     private void Update()
@@ -130,15 +125,6 @@ public class PlayerInventory : MonoBehaviour
         if (_nearTurret != null)
             ResetProgress(_nearTurret);
         _nearTurret = null;
-    }
-
-    private void UpdateAmmoMax(UpgradeType type, int index)
-    {
-        if (type == UpgradeType.AmmoCount)
-        {
-            int upgradeIndex = _player.Data.User.UpgradesProgress[type];
-            _maxAmmo = 20;//(int)_player.Data.UpgradesInfo.Upgrades.First(x => x.Type == type).Elements[upgradeIndex].Value;
-        }
     }
 
     #region Ammo

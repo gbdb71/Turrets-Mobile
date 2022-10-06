@@ -40,7 +40,14 @@ public class Data : MonoBehaviour
 
     private void LoadData()
     {
-        _userData = PlayerPrefs.HasKey(UserKey) ? JsonConvert.DeserializeObject<UserData>(PlayerPrefs.GetString(UserKey)) : new UserData();
+        try
+        {
+            _userData = PlayerPrefs.HasKey(UserKey) ? JsonConvert.DeserializeObject<UserData>(PlayerPrefs.GetString(UserKey)) : new UserData();
+        }
+        catch
+        {
+            _userData = new UserData();
+        }
     }
 
     [ContextMenu("Clear Data")]
