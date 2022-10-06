@@ -83,8 +83,13 @@ public class PlayerInventory : MonoBehaviour
                             return;
                         }
 
+                        if(_nearTurret != null)
+                        {
+                            _nearTurret.SetSelected(false);
+                        }
+
                         _nearTurret = turret;
-                        _nearTurret.ChangeColorWhenSelected();
+                        _nearTurret.SetSelected(true);
                     }
                     break;
                 }
@@ -123,7 +128,8 @@ public class PlayerInventory : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         if (_nearTurret != null)
-            ResetProgress(_nearTurret);
+            _nearTurret.SetSelected(false);
+
         _nearTurret = null;
     }
 
@@ -219,7 +225,7 @@ public class PlayerInventory : MonoBehaviour
             return;
 
         _takedTurret = _nearTurret;
-        _nearTurret.ReturnColorWhenSelected();
+        _nearTurret.SetSelected(false);
         _nearTurret = null;
 
         _takedTurret.transform.SetParent(_turretSlot);
@@ -228,11 +234,6 @@ public class PlayerInventory : MonoBehaviour
         _takedTurret.transform.DOLocalMove(Vector3.zero, 0.25f);
 
         _takedTurret.enabled = false;
-    }
-
-    private void ResetProgress(BaseTurret turret)
-    {
-        turret.ReturnColorWhenSelected();
     }
 
     public void Upgrade()

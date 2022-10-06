@@ -20,6 +20,8 @@ class EnemyConfig
 
     [Range(1, 300)]
     public float Damage;
+
+    public RewardSettings RewardSettings;
 }
 
 [CreateAssetMenu(fileName = "EnemyFactory", menuName = "TowerDefense/Enemy/Factory")]
@@ -44,7 +46,7 @@ public partial class EnemyFactory : GameObjectFactory<Enemy, EnemyType>
         Enemy instance = CreateGameObjectInstance(config.Prefab);
         instance.OriginFactory = this;
         instance.Initialize(scale,speed,pathOffset,
-            health, config.Damage);
+            health, config.Damage, config.RewardSettings);
 
         return instance;
     }

@@ -18,9 +18,6 @@ public class Enemy : MonoBehaviour
     [Label("Deceleration Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField, Range(.1f, 1.5f)] private float _decelerationDrop = 2f;
     [SerializeField] private Texture lightTexture;
-
-    [Label("Reward Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
-    [SerializeField] private RewardSettings _rewardSettings;
     
     private EnemyFactory _originFactory;
     private List<Vector3> _points;
@@ -34,9 +31,10 @@ public class Enemy : MonoBehaviour
     private float _damage = 0;
     private float _health = 0f;
     private float _speed = 0f;
+    private RewardSettings _rewardSettings;
+
     private bool _initialized = false;
     private bool _isFinished = false;
-
     private int _currentCell = 0;
     private int _nextCell = 0;
     private float _pathOffset;
@@ -206,7 +204,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void Initialize(float scale, float speed, float pathOffset, float health, float damage)
+    public void Initialize(float scale, float speed, float pathOffset, float health, float damage, RewardSettings rewardSettings)
     {
         gameObject.transform.localScale = new Vector3(scale, scale, scale);
 
@@ -214,6 +212,7 @@ public class Enemy : MonoBehaviour
         _pathOffset = pathOffset;
         _health = health;
         _damage = damage;
+        _rewardSettings = rewardSettings;
 
         if (_hpBar != null)
             _hpBar.InitializationBar(health);

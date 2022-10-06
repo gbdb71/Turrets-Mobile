@@ -65,21 +65,11 @@ public abstract class BaseTurret : MonoBehaviour
 
     public virtual void PlayUpgradeParticle() { }
 
-    [ContextMenu("Selecetd Material")]
-    public void ChangeColorWhenSelected()
+    public void SetSelected(bool selected)
     {
         for (int i = 0; i < _renderers.Length; i++)
         {
-            _renderers[i].material = selectedMaterial;
-        }
-    }
-
-    [ContextMenu("Return Material")]
-    public void ReturnColorWhenSelected()
-    {
-        for (int i = 0; i < _renderers.Length; i++)
-        {
-            _renderers[i].material = mainMaterial;
+            _renderers[i].material = selected ? selectedMaterial : mainMaterial;
         }
     }
 
