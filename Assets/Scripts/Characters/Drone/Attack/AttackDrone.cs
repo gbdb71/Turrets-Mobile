@@ -73,6 +73,7 @@ public class AttackDrone : BaseDrone<AttackStateMachine>
         HomingProjectile projectile = _projectilePrefab.gameObject.Reuse<HomingProjectile>(_shootPivot.transform.position, _shootPivot.transform.rotation);
         projectile.Initialize(_shootPivot.transform.position, Vector3.zero, _damage, 0f);
         projectile.SetSpeed(12f);
+        projectile.SetY(true);
         projectile.SetTarget(CurrentTarget.transform);
     }
 

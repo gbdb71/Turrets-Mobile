@@ -23,5 +23,4 @@ public class Player : MonoBehaviour
         _movement = GetComponent<PlayerMovement>();
         _animation = GetComponent<PlayerAnimations>();
     }
-
 }

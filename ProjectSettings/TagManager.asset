@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Turret
   - Ammunition
+  - Diamond
   layers:
   - Default
   - TransparentFX

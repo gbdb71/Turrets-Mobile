@@ -22,13 +22,14 @@ public class Enemy : MonoBehaviour
     [Label("Deceleration Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField, Range(.1f, 1.5f)] private float _decelerationDrop = 2f;
     [SerializeField] private Texture lightTexture;
-    
+
     private EnemyFactory _originFactory;
     private List<Vector3> _points;
     private Animator _animator;
     private HPBar _hpBar;
     [Inject] private Headquarters _headquarters;
     [Inject] private Data _data;
+    [Inject] private DiContainer _container;
     private Rigidbody _rigidbody;
     private Renderer _bodyRenderer;
 
@@ -190,11 +191,23 @@ public class Enemy : MonoBehaviour
         if (_hpBar != null)
             _hpBar.DisableBar();
 
-        if(!_isFinished)
+        if (!_isFinished)
         {
-            if(Random.Range(.1f, 1f) <= _rewardSettings.RewardChance)
+            int amount = _rewardSettings.GetAmount();
+
+            amount = (int)(amount + ((float)amount).Percent(SummableAbillity.GetValue(SummableAbillity.Type.Loot)));
+
+            float r = Random.Range(.5f, .8f);
+
+            for (int i = 0; i < amount; i++)
             {
-                _data.User.TryAddCurrency(_rewardSettings.RewardType, Random.Range((int)_rewardSettings.RewardAmount.x, (int)_rewardSettings.RewardAmount.y));
+                GameObject reward = _container.InstantiatePrefab(_rewardSettings.RewardPrefab, transform.position, Quaternion.identity, null);
+
+                float angle = Random.Range(0, Mathf.PI * 2);
+                Vector3 targetPoint = transform.position + new Vector3(Mathf.Sin(angle * (i + 1)) * r, .5f, Mathf.Cos(angle * (i + 1)) * r);
+
+                reward.transform.DOScale(Vector3.one, .6f).From(Vector3.zero).SetEase(Ease.Linear);
+                reward.transform.DOJump(targetPoint, 1.5f, 1, .6f);
             }
         }
     }

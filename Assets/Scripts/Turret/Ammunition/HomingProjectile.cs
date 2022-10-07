@@ -5,10 +5,16 @@ public class HomingProjectile : BaseProjectile
 {
     private float _speed;
     private Transform _target;
+    private bool _yMove = false;
 
     private void Start()
     {
         transform.position = _launchPoint;
+    }
+
+    public void SetY(bool enabled)
+    {
+        _yMove = enabled;
     }
 
     public void SetTarget(Transform enemy)
@@ -28,7 +34,10 @@ public class HomingProjectile : BaseProjectile
         if (_target != null)
         {
             direction = (_target.transform.position - transform.position).normalized;
-            direction.y += .1f;
+            if (_yMove)
+                direction.y += .1f;
+            else
+                direction.y = 0;
         }
 
         transform.position += direction * _speed * Time.deltaTime;

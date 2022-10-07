@@ -19,6 +19,9 @@ MonoBehaviour:
     PathOffset: {x: -0.7, y: 0.7}
     Health: {x: 35, y: 50}
     Damage: 10
+    RewardSettings:
+      _rewardPrefab: {fileID: 8145354069981301352, guid: 31722adbeecc8d847a5ce18e1e71833f, type: 3}
+      _amount: {x: 1, y: 3}
   _large:
     Prefab: {fileID: -6491075291442993941, guid: 3a05a58aa452f0e4eaa6588023b54db3, type: 3}
     Scale: {x: 1.25, y: 1.25}
@@ -26,6 +29,9 @@ MonoBehaviour:
     PathOffset: {x: -1.2, y: 1.2}
     Health: {x: 85, y: 125}
     Damage: 30
+    RewardSettings:
+      _rewardPrefab: {fileID: 8145354069981301352, guid: 31722adbeecc8d847a5ce18e1e71833f, type: 3}
+      _amount: {x: 1, y: 6}
   _medium:
     Prefab: {fileID: -6491075291442993941, guid: b757fc765daab9d41bcd38c74bcee8d0, type: 3}
     Scale: {x: 1.5, y: 1.5}
@@ -33,3 +39,6 @@ MonoBehaviour:
     PathOffset: {x: -0.7, y: 0.7}
     Health: {x: 500, y: 700}
     Damage: 100
+    RewardSettings:
+      _rewardPrefab: {fileID: 8145354069981301352, guid: 31722adbeecc8d847a5ce18e1e71833f, type: 3}
+      _amount: {x: 1, y: 10}
