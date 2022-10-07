@@ -4,6 +4,15 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Button))]
 public abstract class BaseAbillity : MonoBehaviour
 {
+    [System.Serializable]
+    public class AbillityInfo
+    {
+        public string Title;
+        public string Description;
+    }
+
+    [SerializeField] protected AbillityInfo _info;
+
     private Button _activateButton;
     protected AbillitySystem _system;
 
@@ -19,6 +28,8 @@ public abstract class BaseAbillity : MonoBehaviour
     }
 
     public abstract void Clear();
+
+    public virtual AbillityInfo GetInfo() => _info;
 
     protected virtual void Activate()
     {

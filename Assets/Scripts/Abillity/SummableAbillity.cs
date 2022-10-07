@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -8,27 +9,48 @@ public class SummableAbillity : BaseAbillity
     [SerializeField] protected Type _type;
 
     protected int _currentLevel = 1;
-    private TextMeshProUGUI _title;
 
     protected override void Awake()
     {
         base.Awake();
-
-        _title = GetComponentInChildren<TextMeshProUGUI>();
-        _title.text = _type.ToString();
     }
 
     protected override void Activate()
     {
         base.Activate();
 
-        float value = _currentLevel * _startValue;
+        float percents = _currentLevel * _startValue;
 
         if (_values.ContainsKey(_type))
 
-            _values[_type] += value;
+            _values[_type] += percents;
         else
-            _values.Add(_type, value);
+            _values.Add(_type, percents);
+    }
+
+    public override AbillityInfo GetInfo()
+    {
+        AbillityInfo info = base.GetInfo();
+
+        float percents = _currentLevel * _startValue;
+
+
+        try
+        {
+            return new AbillityInfo
+            {
+                Title = info.Title,
+                Description = string.Format(info.Description, percents),
+            };
+        }
+        catch(Exception e)
+        {
+            Debug.Log(info.Title);
+            Debug.Log(info.Description);
+            Debug.LogError(e);
+        }
+
+        return info;
     }
 
     public override void Clear()

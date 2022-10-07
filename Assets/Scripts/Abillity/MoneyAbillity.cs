@@ -24,6 +24,19 @@ public class MoneyAbillity : BaseAbillity
         _data.User.TryAddCurrency(CurrencyType.Construction, _amount);
     }
 
+
+    public override AbillityInfo GetInfo()
+    {
+        AbillityInfo info = base.GetInfo();
+
+        return new AbillityInfo
+        {
+            Title = info.Title,
+            Description = string.Format(info.Description, _amount),
+        };
+    }
+
+
     public override void Clear()
     {
     }
