@@ -111,7 +111,7 @@ MonoBehaviour:
     Title: Turret Fire
     Description: Increases the firing rate of turrets by {0} percents
   _startValue: 5
-  _type: 0
+  _type: 1
 --- !u!114 &6313176216645559383
 MonoBehaviour:
   m_ObjectHideFlags: 0

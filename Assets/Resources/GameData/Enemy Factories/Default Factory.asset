@@ -15,7 +15,7 @@ MonoBehaviour:
   _small:
     Prefab: {fileID: -6491075291442993941, guid: b527f8899ba57461fbb0f1bd903ac65e, type: 3}
     Scale: {x: 1, y: 1}
-    Speed: {x: 0.25, y: 0.5}
+    Speed: {x: 0.25, y: 0.25}
     PathOffset: {x: -0.7, y: 0.7}
     Health: {x: 35, y: 50}
     Damage: 10

@@ -82,9 +82,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawPoint: {fileID: 3124256463862472698}
   _objectPrefab: {fileID: 1006089489906741386, guid: 30c426210db6bb247a57344874fed413, type: 3}
-  _interactTime: 0.1
+  _interactTime: 0.05
   _type: 1
-  _timeToCreate: 1
+  _timeToCreate: 0.5
   _objectCost: 25
   plateSprite: {fileID: 21300000, guid: 3ebbdd050245743498e1d03fd0ca6369, type: 3}
 --- !u!1001 &2077240235314361201
