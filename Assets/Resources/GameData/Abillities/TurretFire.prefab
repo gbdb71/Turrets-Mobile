@@ -108,8 +108,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _info:
-    Title: Turret Fire
-    Description: Increases the firing rate of turrets by {0} percents
+    Title: Improved cooling
+    Description: Increases the attack speed of all turrets by {0}%
   _startValue: 5
   _type: 1
 --- !u!114 &6313176216645559383

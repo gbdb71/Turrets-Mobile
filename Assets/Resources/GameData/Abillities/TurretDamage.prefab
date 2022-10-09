@@ -108,8 +108,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _info:
-    Title: Turret Damage
-    Description: Adds to the turrets damage {0} percents
+    Title: Sharp bullets
+    Description: Increases the damage of all turrets by {0}%
   _startValue: 5
   _type: 0
 --- !u!114 &8724006866724478952

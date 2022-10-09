@@ -108,8 +108,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _info:
-    Title: Helper Drone
-    Description: Add new helper drone
+    Title: Helper drone
+    Description: Carries ammo to turrets
   _prefab: {fileID: 4803257595097350734, guid: d94e7e902418ed247a4ed1f3ba6f747e, type: 3}
 --- !u!114 &7776566072589650459
 MonoBehaviour:

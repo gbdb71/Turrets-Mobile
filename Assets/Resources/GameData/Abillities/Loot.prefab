@@ -242,8 +242,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _info:
-    Title: Loot
-    Description: Multiplies the dropped loot by {0}
+    Title: Big purse
+    Description: Increases the amount of currency dropped by {0}%
   _startValue: 5
   _type: 5
 --- !u!114 &7394165868629189926

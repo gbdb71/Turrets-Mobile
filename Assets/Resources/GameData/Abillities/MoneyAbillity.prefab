@@ -108,8 +108,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _info:
-    Title: Money
-    Description: Give you {0} money
+    Title: Greed
+    Description: Get {0} currency instantly
   _amount: 50
 --- !u!114 &344303803737682461
 MonoBehaviour:

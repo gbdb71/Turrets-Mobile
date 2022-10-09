@@ -55,7 +55,7 @@ MonoBehaviour:
   _interactTime: 0.1
   _type: 0
   _timeToCreate: 1
-  _objectCost: 20
+  _objectCost: 5
   plateSprite: {fileID: 21300000, guid: a09103f045bf3124ba37654f587f0149, type: 3}
 --- !u!1 &7756266910445936967
 GameObject:

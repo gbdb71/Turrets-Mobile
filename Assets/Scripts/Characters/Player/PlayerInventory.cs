@@ -15,6 +15,7 @@ public class PlayerInventory : MonoBehaviour
     [SerializeField, Range(.1f, 2f)] private float _ammoMoveSpeed = 0.5f;
     [SerializeField, Range(.1f, 2f)] private float _ammoRotationSpeed = 0.25f;
     [SerializeField, Range(.1f, 1f)] private float _ammoPutDelay = .5f;
+    [SerializeField] private int _maxAmmo = 20;
 
     private Player _player;
     private BaseTurret _nearTurret;
@@ -24,7 +25,6 @@ public class PlayerInventory : MonoBehaviour
     private float _distanceBetweenObjects = 0.25f;
     private float _delayTimer = 0f;
     private float _putTimer = 0.0f;
-    private int _maxAmmo = 0;
 
     public BaseTurret NearTurret => _nearTurret;
     public BaseTurret TakedTurret => _takedTurret;
@@ -75,7 +75,7 @@ public class PlayerInventory : MonoBehaviour
                 {
                     if (other.TryGetComponent(out BaseTurret turret))
                     {
-                        if(_nearTurret != null)
+                        if (_nearTurret != null)
                         {
                             _nearTurret.SetSelected(false);
                         }

@@ -242,8 +242,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _info:
-    Title: Headquarters Health
-    Description: Add to helath {0} percents
+    Title: Another coat of paint
+    Description: increases base health by {0}%
   _startValue: 5
   _type: 4
 --- !u!114 &6682960553912394942

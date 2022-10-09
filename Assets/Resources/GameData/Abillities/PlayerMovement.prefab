@@ -108,8 +108,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _info:
-    Title: Player Movement
-    Description: Adds to the speed of movement {0} percents
+    Title: Long legs
+    Description: Increases the hero's speed by {0}%
   _startValue: 5
   _type: 3
 --- !u!114 &4769162321819071740

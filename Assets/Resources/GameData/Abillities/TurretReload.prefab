@@ -108,8 +108,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _info:
-    Title: Turrets Reload
-    Description: Increases the reload speed of turrets by {0} percents
+    Title: Fast reload
+    Description: Speeds up reloading of turrets by {0}%
   _startValue: 5
   _type: 2
 --- !u!114 &1289210906631288115
