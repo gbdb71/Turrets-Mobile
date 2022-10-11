@@ -472,7 +472,7 @@ MonoBehaviour:
   selectedMaterial: {fileID: 2100000, guid: 5f62031a35a2a214a958e955ff6bc351, type: 2}
   _damageAngle: 35
   _attackRate: 1
-  _decelerationPerAttack: 0.5
+  _decelerationPerAttack: 0.3
   _throwEffect: {fileID: 2699958650359207781}
   upgradeParticle: {fileID: 4738893794629367030}
 --- !u!65 &-8876097353109488144

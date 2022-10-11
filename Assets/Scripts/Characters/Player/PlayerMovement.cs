@@ -77,11 +77,11 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-
     private void DisableJoystick()
     {
         _joystick.gameObject.SetActive(false);
     }
+
     private void UpdateSpeed(UpgradeType type)
     {
         if (type == UpgradeType.Speed)
