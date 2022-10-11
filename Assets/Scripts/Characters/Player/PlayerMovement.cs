@@ -34,11 +34,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (_joystick.enabled && _joystick.gameObject.activeSelf)
-        {
+        //if (/*_joystick.enabled &&*/ _joystick.gameObject.activeSelf)
+        //{
             Movement();
             Rotate();
-        }
+        //}
 
         HandleGravity();
     }
@@ -46,6 +46,7 @@ public class PlayerMovement : MonoBehaviour
     private void Movement()
     {
         moveDir.Set(_joystick.Horizontal, 0, _joystick.Vertical);
+
         LayerWeight = _player.Inventory.HasTurret ? 1 : 0;
 
         float speed = _speed + _speed.Percent(SummableAbillity.GetValue(SummableAbillity.Type.PlayerMovementSpeed));
