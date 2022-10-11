@@ -52,7 +52,8 @@ public class WaveBar : MonoBehaviour
         _game.SetReady(false);
 
         content.gameObject.SetActive(true);
-        titleText.text = "Wave " + (_game.ActiveScenario.WaveIndex + 1).ToString();
+        titleText.text = "Wave " + (_game.ActiveScenario.WaveIndex + 1).ToString() + " of " + _game.ActiveScenario.WaveCount.ToString();
+        Debug.Log(_game.ActiveScenario.WaveCount);
 
         waveProgressFill.fillAmount = 0;
     }

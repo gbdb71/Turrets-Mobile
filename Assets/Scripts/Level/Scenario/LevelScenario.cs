@@ -10,8 +10,8 @@ public class LevelScenario : ScriptableObject
     public static event Action<int> OnWaveChanged;
     public State Begin()
     {
-        OnWaveChanged?.Invoke(0);
-        return new State(this);
+        State state = new State(this);
+        return state;
     }
 
     [Serializable]
@@ -23,6 +23,7 @@ public class LevelScenario : ScriptableObject
 
         public EnemyWave.State Wave => _wave;
         public int WaveIndex => _index;
+        public int WaveCount => _scenario.waves.Length;
 
         public State(LevelScenario scenario)
         {
@@ -32,8 +33,12 @@ public class LevelScenario : ScriptableObject
             _index = 0;
 
             Debug.Assert(scenario.waves.Length > 0, "Empty scenario!");
+            _wave = _scenario.waves[0].Begin();
+        }
 
-            _wave = scenario.waves[0].Begin();
+        public void Initialization()
+        {
+            OnWaveChanged?.Invoke(0);
         }
 
         public bool Progress()
