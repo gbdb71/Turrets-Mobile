@@ -36,8 +36,8 @@ public class PlayerMovement : MonoBehaviour
     {
         //if (/*_joystick.enabled &&*/ _joystick.gameObject.activeSelf)
         //{
-            Movement();
-            Rotate();
+        Movement();
+        Rotate();
         //}
 
         HandleGravity();
@@ -79,7 +79,16 @@ public class PlayerMovement : MonoBehaviour
 
     private void DisableJoystick()
     {
-        _joystick.gameObject.SetActive(false);
+        if (_joystick != null)
+            _joystick.gameObject.SetActive(false);
+
+        Destroy();
+    }
+
+    private void Destroy()
+    {
+        Game.OnGameFinished -= DisableJoystick;
+        Headquarters.OnDeath -= DisableJoystick;
     }
 
     private void UpdateSpeed(UpgradeType type)
