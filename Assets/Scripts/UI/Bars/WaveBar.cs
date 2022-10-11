@@ -14,7 +14,7 @@ public class WaveBar : MonoBehaviour
 
     [SerializeField] private float fillTime = 0.25f;
 
-    [Inject]private Game _game;
+    [Inject] private Game _game;
 
     private void Awake()
     {
@@ -47,7 +47,7 @@ public class WaveBar : MonoBehaviour
         Hide();
     }
 
-    private void Show()
+    private void Show(int index)
     {
         _game.SetReady(false);
 

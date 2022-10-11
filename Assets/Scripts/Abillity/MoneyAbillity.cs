@@ -32,10 +32,10 @@ public class MoneyAbillity : BaseAbillity
         return new AbillityInfo
         {
             Title = info.Title,
+            Icon = info.Icon,
             Description = string.Format(info.Description, _amount),
         };
     }
-
 
     public override void Clear()
     {

@@ -7,10 +7,10 @@ public class LevelScenario : ScriptableObject
     [SerializeField, ReorderableList] private EnemyWave[] waves = { };
     [SerializeField, Range(0, 10)] private int cycles = 1;
 
-    public static event Action OnWaveChanged;
+    public static event Action<int> OnWaveChanged;
     public State Begin()
     {
-        OnWaveChanged?.Invoke();
+        OnWaveChanged?.Invoke(0);
         return new State(this);
     }
 
@@ -21,7 +21,7 @@ public class LevelScenario : ScriptableObject
         private LevelScenario _scenario;
         private int _index, _cycle;
 
-        public EnemyWave.State Wave => _wave; 
+        public EnemyWave.State Wave => _wave;
         public int WaveIndex => _index;
 
         public State(LevelScenario scenario)
@@ -52,9 +52,10 @@ public class LevelScenario : ScriptableObject
                 }
 
                 _wave = _scenario.waves[_index].Begin();
-                deltaTime = _wave.Progress(deltaTime);
+                // deltaTime = _wave.Progress(deltaTime);
+                deltaTime = -1;
 
-                OnWaveChanged?.Invoke();
+                OnWaveChanged?.Invoke(_index);
             }
             return true;
         }

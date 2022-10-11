@@ -40,10 +40,11 @@ public class SummableAbillity : BaseAbillity
             return new AbillityInfo
             {
                 Title = info.Title,
+                Icon = info.Icon,
                 Description = string.Format(info.Description, percents),
             };
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             Debug.Log(info.Title);
             Debug.Log(info.Description);
@@ -74,7 +75,7 @@ public class SummableAbillity : BaseAbillity
         if (_values == null)
             return 0f;
 
-        if(_values.TryGetValue(type, out var value))
+        if (_values.TryGetValue(type, out var value))
             return value;
 
         return 0f;

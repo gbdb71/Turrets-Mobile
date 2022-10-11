@@ -19,6 +19,5 @@ MonoBehaviour:
     _cooldown: 2
   - _factory: {fileID: 11400000, guid: 4c9fbbff787a4c24ea5c2493e0f54ccc, type: 2}
     _type: 0
-    _amount: 2
+    _amount: 1
     _cooldown: 4
-  startDelay: 10

@@ -11,7 +11,6 @@ public class AbillitySystem : MonoBehaviour
     [Inject] private Joystick _joystick;
     [Inject] private DiContainer _container;
 
-
     private void Awake()
     {
         LoadAbillities();
@@ -35,11 +34,6 @@ public class AbillitySystem : MonoBehaviour
     private void OnDestroy()
     {
         LevelScenario.OnWaveChanged -= ShowPanel;
-
-        for (int i = 0; i < _abillities.Count; i++)
-        {
-            _abillities[i].Clear();
-        }
     }
 
     public void OnAbillityActivated(BaseAbillity abillity)
@@ -50,18 +44,26 @@ public class AbillitySystem : MonoBehaviour
 
     public void RemoveAbillity(BaseAbillity abillity)
     {
-        if(abillity != null)
+        if (abillity != null)
         {
-            if(_abillities.Contains(abillity))
+            if (_abillities.Contains(abillity))
                 _abillities.Remove(abillity);
 
             Destroy(abillity.gameObject);
         }
     }
 
-    private void ShowPanel()
+    private void ShowPanel(int index)
     {
+        if (index == 0)
+            return;
+
         _content.gameObject.SetActive(true);
+
+        foreach (var item in _abillities)
+        {
+            item.gameObject.SetActive(false);
+        }
 
         ShowCards();
     }

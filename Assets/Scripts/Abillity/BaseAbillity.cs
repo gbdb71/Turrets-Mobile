@@ -7,6 +7,7 @@ public abstract class BaseAbillity : MonoBehaviour
     [System.Serializable]
     public class AbillityInfo
     {
+        public Sprite Icon;
         public string Title;
         public string Description;
     }

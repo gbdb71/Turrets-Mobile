@@ -17,11 +17,11 @@ MonoBehaviour:
     Scale: {x: 1, y: 1}
     Speed: {x: 0.25, y: 0.25}
     PathOffset: {x: -0.7, y: 0.7}
-    Health: {x: 35, y: 50}
+    Health: {x: 35, y: 45}
     Damage: 10
     RewardSettings:
       _rewardPrefab: {fileID: 8145354069981301352, guid: 31722adbeecc8d847a5ce18e1e71833f, type: 3}
-      _amount: {x: 1, y: 3}
+      _amount: {x: 1, y: 2}
   _large:
     Prefab: {fileID: -6491075291442993941, guid: 3a05a58aa452f0e4eaa6588023b54db3, type: 3}
     Scale: {x: 1.25, y: 1.25}

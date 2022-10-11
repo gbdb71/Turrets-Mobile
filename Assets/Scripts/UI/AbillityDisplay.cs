@@ -1,10 +1,12 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class AbillityDisplay : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _title;
     [SerializeField] private TextMeshProUGUI _description;
+    [SerializeField] private Image _icon;
 
     private BaseAbillity _abillity;
 
@@ -19,6 +21,7 @@ public class AbillityDisplay : MonoBehaviour
         {
             BaseAbillity.AbillityInfo abillityInfo = _abillity.GetInfo();
 
+            _icon.sprite = abillityInfo.Icon;
             _title.text = abillityInfo.Title;
             _description.text = abillityInfo.Description;
         }
