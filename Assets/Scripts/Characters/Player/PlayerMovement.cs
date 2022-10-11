@@ -81,11 +81,9 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_joystick != null)
             _joystick.gameObject.SetActive(false);
-
-        Destroy();
     }
 
-    private void Destroy()
+    private void OnDestroy()
     {
         Game.OnGameFinished -= DisableJoystick;
         Headquarters.OnDeath -= DisableJoystick;
