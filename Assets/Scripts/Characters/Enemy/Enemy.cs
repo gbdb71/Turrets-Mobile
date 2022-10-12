@@ -166,7 +166,7 @@ public class Enemy : MonoBehaviour
 
         StartCoroutine(DisplayDamage(damage));
 
-        if (Health <= 0f)
+        if (Health <= 0f && !IsDead)
         {
             Death();
         }
@@ -194,8 +194,9 @@ public class Enemy : MonoBehaviour
         if (!_isFinished)
         {
             int amount = _rewardSettings.GetAmount();
-
             amount = (int)(amount + ((float)amount).Percent(SummableAbillity.GetValue(SummableAbillity.Type.Loot)));
+            
+            Debug.Log($"{name} Amount {amount}");
 
             float r = Random.Range(.5f, .8f);
 
