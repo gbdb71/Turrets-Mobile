@@ -27,7 +27,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bacd8c9dcbb9e024595bfec5f5d54149, type: 2}
   _barrierRows: 4
   _barrierPrefab: {fileID: 11400000, guid: fd3eb40a6358e1541b251cc74714e3db, type: 2}
-  _levelScenario: {fileID: 11400000, guid: 301a89ff9d0ab5048a501cd467740853, type: 2}
+  _levelScenario: {fileID: 11400000, guid: 5f602d9c1d118c44790f70bb258f4703, type: 2}
   _constructionCurrency: 70
   _rewardSettings:
     _rewardPrefab: {fileID: 0}
