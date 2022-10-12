@@ -853,7 +853,7 @@ MonoBehaviour:
   _riseTime: 0.5
   _liftingHeight: 2
   _canLifting: 0
-  _damage: 2
+  _damage: 4
   _fireDelay: 1.2
   _shootPivot: {fileID: 5933778698816026024}
   _projectilePrefab: {fileID: 2147293829527817372, guid: 958b2fa6ec39a224fa3db3a24520aee3, type: 3}

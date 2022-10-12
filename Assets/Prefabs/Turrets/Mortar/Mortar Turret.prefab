@@ -414,7 +414,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9b651ef94780214ba228636ea2f382a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _aimDistance: 8
+  _aimDistance: 10
   _turretBase: {fileID: 9174259786913328795}
   _barrels: {fileID: 5410680659002907278}
   _elevationSpeed: 50
@@ -441,7 +441,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _damage: 30
   _fireDelay: 0
-  _reloadTime: 1
+  _reloadTime: 3
   _shootPivot:
   - {fileID: 3642958238143821735}
   _nextGrade: {fileID: 7157497047578270226, guid: c6466c6a1f6e13f43b95aa09513fa011, type: 3}

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0, g: 0.99999905, b: 0.99999905, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1339,6 +1339,38 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1139166808}
     m_Modifications:
+    - target: {fileID: 4600991587463981157, guid: 784930e77bdd052468c5369127c1038c, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4600991587463981157, guid: 784930e77bdd052468c5369127c1038c, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4600991587463981157, guid: 784930e77bdd052468c5369127c1038c, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4600991587463981157, guid: 784930e77bdd052468c5369127c1038c, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4600991587463981157, guid: 784930e77bdd052468c5369127c1038c, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 4600991587463981157, guid: 784930e77bdd052468c5369127c1038c, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 200
+      objectReference: {fileID: 0}
+    - target: {fileID: 4600991587463981157, guid: 784930e77bdd052468c5369127c1038c, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4600991587463981157, guid: 784930e77bdd052468c5369127c1038c, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -100.00001
+      objectReference: {fileID: 0}
     - target: {fileID: 7292116403063709200, guid: 784930e77bdd052468c5369127c1038c, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
