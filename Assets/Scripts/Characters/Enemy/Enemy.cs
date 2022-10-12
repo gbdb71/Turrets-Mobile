@@ -195,8 +195,8 @@ public class Enemy : MonoBehaviour
         {
             int amount = _rewardSettings.GetAmount();
             amount = (int)(amount + ((float)amount).Percent(SummableAbillity.GetValue(SummableAbillity.Type.Loot)));
-            
-            Debug.Log($"{name} Amount {amount}");
+
+            //Debug.Log($"{name} Amount {amount}");
 
             float r = Random.Range(.5f, .8f);
 

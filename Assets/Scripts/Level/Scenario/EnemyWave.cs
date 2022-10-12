@@ -6,8 +6,24 @@ public class EnemyWave : ScriptableObject
 {
     [SerializeField, ReorderableList] private EnemySpawnSequence[] _spawnSequences = { };
     [Inject] private Game _game;
+    //public int EnemyCount;
 
     public State Begin() => new State(this);
+
+    public int CheckEnemyCount()
+    {
+        int spawnCounts = 0;
+
+        for (int i = 0; i < _spawnSequences.Length; i++)
+        {
+            int waveEnemyCount = _spawnSequences[i].Amount;
+            spawnCounts += waveEnemyCount;
+            //Debug.Log($"In Enemy Wave {i} | Enemy Count {waveEnemyCount} All {spawnCounts}");
+        }
+
+        Debug.Log($"All Enemy Count {spawnCounts} In");
+        return spawnCounts;
+    }
 
     [System.Serializable]
     public struct State

@@ -24,16 +24,25 @@ public class LevelScenario : ScriptableObject
         public EnemyWave.State Wave => _wave;
         public int WaveIndex => _index;
         public int WaveCount => _scenario.waves.Length;
+        public int WaveEnemyCount;
 
         public State(LevelScenario scenario)
         {
             this._scenario = scenario;
+            WaveEnemyCount = 0;
 
             _cycle = 0;
             _index = 0;
 
             Debug.Assert(scenario.waves.Length > 0, "Empty scenario!");
             _wave = _scenario.waves[0].Begin();
+        }
+
+        public int InitializationEnemyCount()
+        {
+            WaveEnemyCount = _scenario.waves[_index].CheckEnemyCount();
+            Debug.Log($"End {WaveEnemyCount} | Index {_index}");
+            return WaveEnemyCount;
         }
 
         public void Initialization()

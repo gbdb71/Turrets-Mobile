@@ -18,6 +18,7 @@ public class EnemySpawnSequence
     private float _cooldown = 1f;
 
     public State Begin(Game game) => new State(this, game);
+    public int Amount => _amount;
 
 
     [System.Serializable]

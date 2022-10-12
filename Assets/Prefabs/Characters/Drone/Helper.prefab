@@ -434,18 +434,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 316e3974a46d1e04aaede11a4790dd36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxAmmo: 1
   propellers:
   - {fileID: 6990497884859506711}
   - {fileID: 1152669680682870791}
   - {fileID: 6193962298610508365}
   - {fileID: 4259233235753831979}
   body: {fileID: 5140282779174431798}
-  _inventory: {fileID: 7013241981753338210}
   duration: 1
   rotation: {x: 0, y: 360, z: 0}
   _riseTime: 0.5
   _liftingHeight: 2
+  _canLifting: 1
+  _maxAmmo: 1
+  _inventory: {fileID: 7013241981753338210}
 --- !u!195 &6510721697310303455
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -719,6 +720,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 378822365110915422}
     m_Modifications:
+    - target: {fileID: 428077499610038456, guid: ab892305951239140af927532dc62b83, type: 3}
+      propertyPath: m_Time
+      value: 0.65
+      objectReference: {fileID: 0}
     - target: {fileID: 2526607077531181158, guid: ab892305951239140af927532dc62b83, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -781,6 +786,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8304383230139336906}
     m_Modifications:
+    - target: {fileID: 428077499610038456, guid: ab892305951239140af927532dc62b83, type: 3}
+      propertyPath: m_Time
+      value: 0.65
+      objectReference: {fileID: 0}
     - target: {fileID: 2526607077531181158, guid: ab892305951239140af927532dc62b83, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -843,6 +852,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4615969662918460342}
     m_Modifications:
+    - target: {fileID: 428077499610038456, guid: ab892305951239140af927532dc62b83, type: 3}
+      propertyPath: m_Time
+      value: 0.65
+      objectReference: {fileID: 0}
     - target: {fileID: 2526607077531181158, guid: ab892305951239140af927532dc62b83, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -905,6 +918,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4911038505644810661}
     m_Modifications:
+    - target: {fileID: 428077499610038456, guid: ab892305951239140af927532dc62b83, type: 3}
+      propertyPath: m_Time
+      value: 0.65
+      objectReference: {fileID: 0}
     - target: {fileID: 2526607077531181158, guid: ab892305951239140af927532dc62b83, type: 3}
       propertyPath: m_RootOrder
       value: 0

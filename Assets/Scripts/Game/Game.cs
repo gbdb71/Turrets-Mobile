@@ -59,6 +59,8 @@ public class Game : MonoBehaviour
     private void OnMapGenerated()
     {
         _activeScenario = _levelManager.CurrentLevel.LevelScenario.Begin();
+
+        _activeScenario.InitializationEnemyCount();
         _activeScenario.Initialization();
 
         GameStared = true;

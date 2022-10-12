@@ -14,12 +14,16 @@ public class WaveBar : MonoBehaviour
 
     [SerializeField] private float fillTime = 0.25f;
 
+    [SerializeField] private TextMeshProUGUI enemyCount;
+
     [Inject] private Game _game;
 
     private void Awake()
     {
         LevelScenario.OnWaveChanged += Show;
         _readyButton.onClick.AddListener(SetReady);
+
+        enemyCount.text = "";
     }
 
     private void OnDestroy()
@@ -53,8 +57,17 @@ public class WaveBar : MonoBehaviour
 
         content.gameObject.SetActive(true);
         titleText.text = "Wave " + (_game.ActiveScenario.WaveIndex + 1).ToString() + " of " + _game.ActiveScenario.WaveCount.ToString();
-      
+        UpdateEnemyCount();
+
         waveProgressFill.fillAmount = 0;
+    }
+
+    public void UpdateEnemyCount()
+    {
+        int count = _game.ActiveScenario.InitializationEnemyCount();
+
+        enemyCount.text = "Enemy Count = " + count;//_game.ActiveScenario.WaveEnemyCount.ToString();
+        Debug.Log("Main Update -- " + count);//_game.ActiveScenario.WaveEnemyCount.ToString());
     }
 
     private void Hide()

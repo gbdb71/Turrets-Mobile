@@ -9,6 +9,8 @@ public class Diamond : MonoBehaviour
     [SerializeField] private float _rotationDuration = 1f;
     [SerializeField] private float _scaleDuration = .7f;
 
+    [SerializeField] private ParticleSystem particle;
+
     [Inject] private Data _data;
 
     private void Start()
@@ -20,8 +22,11 @@ public class Diamond : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Player"))
         {
+            particle.Play();
+
             transform.DOScale(Vector3.zero, _scaleDuration).From(Vector3.one).SetEase(Ease.Linear).OnComplete(() =>
             {
+                particle.Stop();
                 Destroy(gameObject);
             });
 
