@@ -90,9 +90,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8145354069981206088}
-  - component: {fileID: 8145354069981334730}
   - component: {fileID: 8337591554695307621}
   - component: {fileID: -7961128031378600065}
+  - component: {fileID: 7556974890218227115}
   m_Layer: 0
   m_Name: Diamond
   m_TagString: Diamond
@@ -115,19 +115,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &8145354069981334730
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8145354069981301352}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.6415828, y: 0.5634403, z: 0.7312448}
-  m_Center: {x: 0, y: 0.000475958, z: -0.08780536}
 --- !u!54 &8337591554695307621
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -158,5 +145,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _amount: 2
   _currencyType: 1
-  _rotationDuration: 3.5
-  _scaleDuration: 0.45
+  _rotationDuration: 1.5
+  _scaleDuration: 0.25
+--- !u!135 &7556974890218227115
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8145354069981301352}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0}
