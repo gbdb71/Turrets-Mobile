@@ -5,6 +5,7 @@ using ToolBox.Pools;
 using Zenject;
 using System.Collections;
 
+[RequireComponent(typeof(Rigidbody), typeof(Collider))]
 public class Enemy : MonoBehaviour
 {
     [Label("Movement Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
@@ -34,6 +35,7 @@ public class Enemy : MonoBehaviour
     [Inject] private Headquarters _headquarters;
     [Inject] private DiContainer _container;
     private Rigidbody _rigidbody;
+    private Collider _collider;
     private Renderer _bodyRenderer;
 
     private float _damage = 0;
@@ -65,8 +67,8 @@ public class Enemy : MonoBehaviour
 
     private void Awake()
     {
-        if (_rigidbody == null)
-            _rigidbody = GetComponent<Rigidbody>();
+        _rigidbody = GetComponent<Rigidbody>();
+        _collider = GetComponent<Collider>();
 
         _animator = GetComponent<Animator>();
         _hpBar = GetComponentInChildren<HPBar>();
@@ -214,6 +216,8 @@ public class Enemy : MonoBehaviour
     private void Death()
     {
         _animator.SetBool("Die", true);
+        _collider.enabled = false;
+
         IsDead = true;
 
         if (_hpBar != null)
