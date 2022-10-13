@@ -6,6 +6,8 @@ public class HomingProjectile : BaseProjectile
     private Transform _target;
     private bool _yMove = false;
 
+    private bool _initialized = false;
+
     private void Start()
     {
         transform.position = _launchPoint;
@@ -19,6 +21,12 @@ public class HomingProjectile : BaseProjectile
     public void SetTarget(Transform enemy)
     {
         _target = enemy;
+        _initialized = true;
+    }
+
+    private void OnDisable()
+    {
+        _initialized = false;
     }
 
     public void SetSpeed(float speed)
@@ -26,18 +34,23 @@ public class HomingProjectile : BaseProjectile
         _speed = speed;
     }
 
+    private Vector3 _lastTarget;
+
     protected override void Move()
     {
-        Vector3 direction = transform.forward;
+        if (!_initialized) return;
 
         if (_target != null)
         {
-            Vector3 target = (_target.transform.position + (_yMove ? new Vector3(0, .15f, 0f) : Vector3.zero));
-            direction = (target - transform.position).normalized;
-
-            if (!_yMove)
-                direction.y = 0;
+            _lastTarget = _target.transform.position;
         }
+
+        Vector3 direction = (_lastTarget - transform.position).normalized;
+
+        if (!_yMove)
+            direction.y = 0;
+        else
+            direction.y += .5f;
 
         transform.position += direction * _speed * Time.deltaTime;
         transform.localRotation = Quaternion.LookRotation(direction);
