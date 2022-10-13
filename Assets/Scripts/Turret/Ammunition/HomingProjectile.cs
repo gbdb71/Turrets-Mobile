@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using DG.Tweening;
 
 public class HomingProjectile : BaseProjectile
 {
@@ -33,11 +32,8 @@ public class HomingProjectile : BaseProjectile
 
         if (_target != null)
         {
-            direction = (_target.transform.position - transform.position).normalized;
-            if (_yMove)
-                direction.y += .1f;
-            else
-                direction.y = 0;
+            Vector3 target = (_target.transform.position + (_yMove ? new Vector3(0, .15f, 0f) : Vector3.zero));
+            direction = (target - transform.position).normalized;
         }
 
         transform.position += direction * _speed * Time.deltaTime;
