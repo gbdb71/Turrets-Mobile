@@ -17,7 +17,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private float _flickerDuration = 0.25f;
     [SerializeField] private GameObject _damageParticle;
     [SerializeField] private GameObject _damageText;
-    [SerializeField] private Vector3 _damageTextOffset;
+    [SerializeField, Range(0, 5f)] private float _damageTextOffset;
 
     [Label("Deceleration Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField, Range(.1f, 1.5f)] private float _decelerationDrop = 2f;
@@ -28,7 +28,6 @@ public class Enemy : MonoBehaviour
     private Animator _animator;
     private HPBar _hpBar;
     [Inject] private Headquarters _headquarters;
-    [Inject] private Data _data;
     [Inject] private DiContainer _container;
     private Rigidbody _rigidbody;
     private Renderer _bodyRenderer;
@@ -180,7 +179,11 @@ public class Enemy : MonoBehaviour
         _bodyRenderer.material.mainTexture = tempTexture;
 
         _damageParticle.Reuse(transform.position, Quaternion.identity);
-        _damageText.Reuse<DamageText>(transform.position + _damageTextOffset, Quaternion.identity).SetText(((int)damage).ToString());
+
+        Vector3 targetPos = transform.position;
+        targetPos.y += _damageTextOffset * transform.localScale.y;
+
+        _damageText.Reuse<DamageText>(targetPos, Quaternion.identity).SetText(((int)damage).ToString());
     }
 
     private void Death()

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class SummableAbillity : BaseAbillity
@@ -34,7 +33,6 @@ public class SummableAbillity : BaseAbillity
 
         float percents = _currentLevel * _startValue;
 
-
         try
         {
             return new AbillityInfo
@@ -46,9 +44,7 @@ public class SummableAbillity : BaseAbillity
         }
         catch (Exception e)
         {
-            Debug.Log(info.Title);
-            Debug.Log(info.Description);
-            Debug.LogError(e);
+            Debug.LogError($"Error while get info card: {info}, error: {e}");
         }
 
         return info;

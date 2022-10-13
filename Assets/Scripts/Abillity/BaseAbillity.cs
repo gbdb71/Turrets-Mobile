@@ -10,6 +10,11 @@ public abstract class BaseAbillity : MonoBehaviour
         public Sprite Icon;
         public string Title;
         public string Description;
+
+        public override string ToString()
+        {
+            return $"{Title}\n\n{Description}";
+        }
     }
 
     [SerializeField] protected AbillityInfo _info;
