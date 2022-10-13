@@ -5,7 +5,6 @@ using System.Linq;
 
 public enum CurrencyType
 {
-    Upgrade,
     Construction
 }
 
@@ -16,6 +15,7 @@ public class UserData
     public Dictionary<CurrencyType, int> Currencies {get; set;}
     public Dictionary<UpgradeType, int> UpgradesProgress { get; set;}
 
+    public int CurrentLevel;
 
     public static event Action<UpgradeType> OnUpgradeChanged;
     public static event Action<CurrencyType, int> OnCurrencyChanged;

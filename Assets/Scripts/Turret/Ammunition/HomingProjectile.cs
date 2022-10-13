@@ -34,6 +34,9 @@ public class HomingProjectile : BaseProjectile
         {
             Vector3 target = (_target.transform.position + (_yMove ? new Vector3(0, .15f, 0f) : Vector3.zero));
             direction = (target - transform.position).normalized;
+
+            if (!_yMove)
+                direction.y = 0;
         }
 
         transform.position += direction * _speed * Time.deltaTime;

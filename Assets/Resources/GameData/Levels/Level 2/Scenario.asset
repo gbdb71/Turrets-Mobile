@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Scenario
   m_EditorClassIdentifier: 
   waves:
-  - {fileID: 11400000, guid: aab41dfd4c267314db85634551fb1d15, type: 2}
+  - {fileID: 11400000, guid: e9530dc54ba9ec24fae7b6bc32f35047, type: 2}
   - {fileID: 11400000, guid: 24437f074a06f97428bd8a5f6cbd0e2f, type: 2}
   - {fileID: 11400000, guid: f8518b02a8522ec4fa17f41a58ba9ae3, type: 2}
   cycles: 1

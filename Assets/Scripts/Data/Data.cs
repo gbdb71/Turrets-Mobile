@@ -2,17 +2,16 @@
 using UnityEngine;
 
 
+[DefaultExecutionOrder(-1)]
 public class Data : MonoBehaviour
 {
-    [SerializeField] private UpgradesInfo _upgradesInfo;
-
     private const string UserKey = nameof(UserData);
+
+    [SerializeField] private UpgradesInfo _upgradesInfo;
     private UserData _userData = default(UserData);
 
     public UserData User => _userData;
     public UpgradesInfo UpgradesInfo => _upgradesInfo;
-
-    [HideInInspector] public int CurrentLevel;
 
     private void Awake()
     {

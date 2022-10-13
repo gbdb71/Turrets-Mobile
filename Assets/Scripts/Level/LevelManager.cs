@@ -7,15 +7,15 @@ public class LevelManager : MonoBehaviour
     [Inject] private Data _data;
     [SerializeField] private List<LevelData> _levels = new List<LevelData>();
 
-    public LevelData CurrentLevel => _levels[_data.CurrentLevel];
+    public LevelData CurrentLevel => _levels[_data.User.CurrentLevel];
 
     public void NextLevel()
     {
-        _data.CurrentLevel++;
+        _data.User.CurrentLevel++;
 
-        if(_data.CurrentLevel >= _levels.Count)
+        if(_data.User.CurrentLevel >= _levels.Count)
         {
-            _data.CurrentLevel = 0;
+            _data.User.CurrentLevel = 0;
         }
     }
 }

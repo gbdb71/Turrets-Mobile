@@ -44,7 +44,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _upgradesInfo: {fileID: 11400000, guid: 6501667c695beab40ae89defb0902824, type: 2}
-  CurrentLevel: 0
 --- !u!1 &3966892268602328469
 GameObject:
   m_ObjectHideFlags: 0
