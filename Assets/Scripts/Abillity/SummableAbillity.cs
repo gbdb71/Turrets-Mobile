@@ -61,7 +61,6 @@ public class SummableAbillity : BaseAbillity
     {
         TurretDamage,
         TurretFire,
-        TurretReload,
         PlayerMovementSpeed,
         HeadquartersHealth,
         Loot
