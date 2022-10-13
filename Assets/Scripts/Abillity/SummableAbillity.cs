@@ -25,6 +25,8 @@ public class SummableAbillity : BaseAbillity
             _values[_type] += percents;
         else
             _values.Add(_type, percents);
+
+        _currentLevel++;
     }
 
     public override AbillityInfo GetInfo()
