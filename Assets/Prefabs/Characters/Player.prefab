@@ -556,8 +556,12 @@ MonoBehaviour:
   _ammoRotationSpeed: 0.25
   _ammoPutDelay: 0.5
   _maxAmmo: 20
-  backpackPoint: {fileID: 7329303657596097285}
-  placePosition: {fileID: 8906694683018242317}
+  _interactRadius: 1.25
+  _interactableMask:
+    serializedVersion: 2
+    m_Bits: 4160
+  _placePosition: {fileID: 8906694683018242317}
+  _backpackPoint: {fileID: 7329303657596097285}
 --- !u!114 &3810837798286562221
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -394,10 +394,9 @@ GameObject:
   - component: {fileID: 7157497047578270230}
   - component: {fileID: 7157497047578270187}
   - component: {fileID: 7157497047578270226}
-  - component: {fileID: 2802504676723262349}
   m_Layer: 6
   m_Name: Mortar Turret 2
-  m_TagString: Turret
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -485,19 +484,6 @@ MonoBehaviour:
   _shellPrefab: {fileID: 8119367024055230900, guid: b4994758d6a28244cb8b3de362e3b37a, type: 3}
   _muzzleParticle: {fileID: 8129687392901034020}
   upgradeParticle: {fileID: 3466368123008839576}
---- !u!65 &2802504676723262349
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7157497047578270229}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1.8, y: 2, z: 1.8}
-  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &8366091649632105505
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,9 +1,12 @@
 using UnityEngine;
 using DG.Tweening;
 using System.Collections.Generic;
+using System;
 
 public class PlayerInventory : MonoBehaviour
 {
+    private const float _interactCheckTime = .025f;
+
     [Label("Turrets", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField, NotNull] private Transform _turretSlot;
     [SerializeField] private GameObject _upgradeEffect;
@@ -17,6 +20,14 @@ public class PlayerInventory : MonoBehaviour
     [SerializeField, Range(.1f, 1f)] private float _ammoPutDelay = .5f;
     [SerializeField] private int _maxAmmo = 20;
 
+    [Label("Interaction", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
+    [SerializeField, Range(.5f, 3f)] private float _interactRadius = 2f;
+    [SerializeField] private LayerMask _interactableMask;
+
+    [Label("Place Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
+    [SerializeField] private Transform _placePosition;
+    [SerializeField] private Transform _backpackPoint;
+
     private Player _player;
     private BaseTurret _nearTurret;
     private BaseTurret _takedTurret;
@@ -24,11 +35,12 @@ public class PlayerInventory : MonoBehaviour
 
     private float _distanceBetweenObjects = 0.25f;
     private float _delayTimer = 0f;
-    private float _putTimer = 0.0f;
+    private float _putTimer = 0f;
+    private float _interactTimer = 0f;
+    private Collider[] _nearColliders = new Collider[5];
 
     public BaseTurret NearTurret => _nearTurret;
     public BaseTurret TakedTurret => _takedTurret;
-    public Transform backpackPoint;
     public bool HasTurret { get { return _turretSlot.childCount > 0 && TakedTurret != null; } }
     public bool CanPlace { get; private set; } = true;
     public bool CanUpgrade
@@ -55,6 +67,24 @@ public class PlayerInventory : MonoBehaviour
         if (_putTimer >= 0)
             _putTimer -= Time.deltaTime;
 
+        _interactTimer += Time.deltaTime;
+
+        if (_interactTimer >= _interactCheckTime)
+        {
+            _interactTimer = 0;
+
+            CheckInteract();
+        }
+
+        if (_nearTurret != null)
+        {
+            if (Vector3.Distance(_nearTurret.transform.position, transform.position) > _interactRadius)
+            {
+                _nearTurret.SetSelected(false);
+                _nearTurret = null;
+            }
+        }
+
         if (HasTurret)
         {
             bool canPlace = CheckPlace();
@@ -67,69 +97,60 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void CheckInteract()
     {
-        switch (other.tag)
+        int count = Physics.OverlapSphereNonAlloc(transform.position, _interactRadius, _nearColliders, _interactableMask);
+
+        for (int i = 0; i < count; i++)
         {
-            case "Turret":
-                {
-                    if (other.TryGetComponent(out BaseTurret turret))
-                    {
-                        if (_nearTurret != null)
-                        {
-                            _nearTurret.SetSelected(false);
-                        }
+            Collider other = _nearColliders[i];
 
-                        _nearTurret = turret;
-                        _nearTurret.SetSelected(true);
-                    }
-                    break;
-                }
-            case "Ammunition":
-                {
-                    if (other.TryGetComponent(out Ammunition ammunition))
-                    {
-                        if (_ammunition.Count > _maxAmmo - 1)
-                            return;
-
-                        PutAmmo(ammunition);
-                    }
-                    break;
-                }
-        }
-    }
-
-    private void OnTriggerStay(Collider other)
-    {
-        if (_nearTurret == null || HasTurret) return;
-
-        if (_nearTurret.gameObject == other.gameObject)
-        {
-            if (_ammunition.Count > 0 && _putTimer <= 0 && _nearTurret.CanCharge)
+            if (_nearTurret == null || HasTurret)
             {
-                ChargeTurret(_nearTurret);
+                if (other.TryGetComponent(out BaseTurret turret))
+                {
+                    if (_nearTurret != null)
+                    {
+                        _nearTurret.SetSelected(false);
+                    }
+
+                    _nearTurret = turret;
+                    _nearTurret.SetSelected(true);
+
+                    break;
+                }
             }
             else
             {
-                if (HasTurret || _delayTimer > 0f)
+                if (_nearTurret.gameObject == other.gameObject)
+                {
+                    if (_ammunition.Count > 0 && _putTimer <= 0 && _nearTurret.CanCharge)
+                    {
+                        ChargeTurret(_nearTurret);
+                    }
+                    else if (_delayTimer > 0f)
+                    {
+                        return;
+                    }
+                }
+            }
+
+            if (other.TryGetComponent(out Ammunition ammunition))
+            {
+                if (_ammunition.Count > _maxAmmo - 1)
                     return;
+
+                PutAmmo(ammunition);
+                break;
             }
         }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (_nearTurret != null)
-            _nearTurret.SetSelected(false);
-
-        _nearTurret = null;
     }
 
     #region Ammo
 
     public void PutAmmo(Ammunition ammunition)
     {
-        ammunition.transform.parent = backpackPoint.transform;
+        ammunition.transform.parent = _backpackPoint.transform;
 
         int index = _ammunition.Count;
         ammunition.enabled = false;
@@ -186,14 +207,11 @@ public class PlayerInventory : MonoBehaviour
 
     #region Turret
 
-    [Header("Place Settings")]
-    [SerializeField] private Transform placePosition;
-
     public void Place()
     {
         if (_takedTurret != null && CanPlace)
         {
-            Vector3 targetPos = placePosition.position;
+            Vector3 targetPos = _placePosition.position;
             targetPos.y = _placeOffset.y;
 
             BaseTurret turret = _takedTurret;

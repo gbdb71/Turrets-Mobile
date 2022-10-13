@@ -106,9 +106,9 @@ GameObject:
   - component: {fileID: 5509807287610740075}
   - component: {fileID: 5078849466022875373}
   - component: {fileID: -7880434779860522548}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Ammo Prefab
-  m_TagString: Ammunition
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
