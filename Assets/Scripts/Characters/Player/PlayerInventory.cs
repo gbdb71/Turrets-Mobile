@@ -1,24 +1,16 @@
 using UnityEngine;
 using DG.Tweening;
-using System.Collections.Generic;
-using System;
 
 public class PlayerInventory : MonoBehaviour
 {
-    private const float _interactCheckTime = .025f;
+    private const float _interactCheckTime = .01f;
 
     [Label("Turrets", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField, NotNull] private Transform _turretSlot;
     [SerializeField] private GameObject _upgradeEffect;
     [SerializeField] private Color _placeBlockColor;
     [SerializeField, Range(.2f, 1f)] private float _takeDelay = .5f;
-
-    [Label("Ammunition", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField] private Vector3 _placeOffset;
-    [SerializeField, Range(.1f, 2f)] private float _ammoMoveSpeed = 0.5f;
-    [SerializeField, Range(.1f, 2f)] private float _ammoRotationSpeed = 0.25f;
-    [SerializeField, Range(.1f, 1f)] private float _ammoPutDelay = .5f;
-    [SerializeField] private int _maxAmmo = 20;
 
     [Label("Interaction", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField, Range(.5f, 3f)] private float _interactRadius = 2f;
@@ -26,18 +18,15 @@ public class PlayerInventory : MonoBehaviour
 
     [Label("Place Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField] private Transform _placePosition;
-    [SerializeField] private Transform _backpackPoint;
 
     private Player _player;
     private BaseTurret _nearTurret;
     private BaseTurret _takedTurret;
-    private List<Ammunition> _ammunition = new List<Ammunition>();
 
-    private float _distanceBetweenObjects = 0.25f;
     private float _delayTimer = 0f;
     private float _putTimer = 0f;
     private float _interactTimer = 0f;
-    private Collider[] _nearColliders = new Collider[5];
+    private Collider[] _nearColliders = new Collider[3];
 
     public BaseTurret NearTurret => _nearTurret;
     public BaseTurret TakedTurret => _takedTurret;
@@ -58,7 +47,6 @@ public class PlayerInventory : MonoBehaviour
     {
         _player = GetComponent<Player>();
     }
-
     private void Update()
     {
         if (_delayTimer > 0)
@@ -105,105 +93,20 @@ public class PlayerInventory : MonoBehaviour
         {
             Collider other = _nearColliders[i];
 
-            if (_nearTurret == null || HasTurret)
+            if (other.TryGetComponent(out BaseTurret turret))
             {
-                if (other.TryGetComponent(out BaseTurret turret))
+                if (_nearTurret != null)
                 {
-                    if (_nearTurret != null)
-                    {
-                        _nearTurret.SetSelected(false);
-                    }
-
-                    _nearTurret = turret;
-                    _nearTurret.SetSelected(true);
-
-                    break;
+                    _nearTurret.SetSelected(false);
                 }
-            }
-            else
-            {
-                if (_nearTurret.gameObject == other.gameObject)
-                {
-                    if (_ammunition.Count > 0 && _putTimer <= 0 && _nearTurret.CanCharge)
-                    {
-                        ChargeTurret(_nearTurret);
-                    }
-                    else if (_delayTimer > 0f)
-                    {
-                        return;
-                    }
-                }
-            }
 
-            if (other.TryGetComponent(out Ammunition ammunition))
-            {
-                if (_ammunition.Count > _maxAmmo - 1)
-                    return;
+                _nearTurret = turret;
+                _nearTurret.SetSelected(true);
 
-                PutAmmo(ammunition);
                 break;
             }
         }
     }
-
-    #region Ammo
-
-    public void PutAmmo(Ammunition ammunition)
-    {
-        ammunition.transform.parent = _backpackPoint.transform;
-
-        int index = _ammunition.Count;
-        ammunition.enabled = false;
-
-        _ammunition.Add(ammunition);
-
-        Vector3 endPosition = new Vector3(0, (float)index * _distanceBetweenObjects, 0);
-        Debug.Log("Index - " + index + " | End Position - " + endPosition);
-
-        ammunition.transform.DOLocalRotate(Vector3.zero, _ammoRotationSpeed);
-        ammunition.transform.DOLocalMove(endPosition, _ammoMoveSpeed);
-
-    }
-
-    [ContextMenu("Debug Index")]
-    private void DebugIndex()
-    {
-        for (int i = 0; i < _ammunition.Count; i++)
-        {
-            _ammunition[i].transform.localPosition = Vector3.zero;
-            _ammunition[i].transform.localEulerAngles = Vector3.zero;//new Vector3(Vector3.zero, _ammoRotationSpeed);
-            _ammunition[i].enabled = false;
-        }
-
-        for (int i = 0; i < _ammunition.Count; i++)
-        {
-            Vector3 endPosition = new Vector3(0, i * _distanceBetweenObjects, 0);
-            Debug.Log("Index - " + i + " | End Position - " + endPosition);
-            _ammunition[i].transform.localPosition = endPosition;//, _ammoMoveSpeed);
-        }
-    }
-
-    public void ChargeTurret(BaseTurret turret)
-    {
-        if (_ammunition.Count == 0 || turret == null)
-            return;
-
-        Ammunition ammunition = _ammunition[_ammunition.Count - 1];
-
-        _ammunition.Remove(ammunition);
-
-        ammunition.transform.DOMove(turret.transform.position, _ammoMoveSpeed).OnComplete(() =>
-        {
-            turret.Charge();
-            Destroy(ammunition.gameObject);
-        });
-
-        _putTimer = _ammoPutDelay;
-        _delayTimer = _takeDelay;
-
-    }
-
-    #endregion
 
     #region Turret
 

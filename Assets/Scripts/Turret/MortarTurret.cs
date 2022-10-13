@@ -21,10 +21,8 @@ public class MortarTurret : BaseTurret
             upgradeParticle.Play();
     }
 
-    protected override void Start()
+    protected virtual void Start()
     {
-        base.Start();
-
         float x = _aim.AimDistance + 0.25001f;
         float y = -_shootPivot[_currentShootPivot].position.y;
         _launchSpeed = Mathf.Sqrt(9.81f * (y + Mathf.Sqrt(x * x + y * y)));

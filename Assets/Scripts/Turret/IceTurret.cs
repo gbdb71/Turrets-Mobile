@@ -21,16 +21,8 @@ public class IceTurret : BaseTurret
             upgradeParticle.Play();
     }
 
-    protected override void Start()
+    protected virtual void Start()
     {
-        if(_baseBar != null)
-        {
-            IceTurretBar iceTurretBar = (IceTurretBar)_baseBar;
-            iceTurretBar.SetStepsCount((_chargedAmmoMax + _ammoMax) / _chargedAmmoMax);
-        }
-
-        base.Start();
-
         _throwEffect.SetFloat("Angle", _damageAngle);
     }
 
