@@ -44,6 +44,8 @@ public partial class EnemyFactory : GameObjectFactory<Enemy, EnemyType>
         float health = Random.Range(config.Health.x, config.Health.y);
 
         Enemy instance = CreateGameObjectInstance(config.Prefab);
+        instance.transform.eulerAngles = new Vector3(0, 90, 0);
+
         instance.OriginFactory = this;
         instance.Initialize(scale,speed,pathOffset,
             health, config.Damage, config.RewardSettings);

@@ -1426,7 +1426,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 682ee7405c060bd4bb6e2bb946dc9883, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotationSpeed: 4.26
+  _rotationSpeed: 60
   _dashSpeed: 1
   _dashRotationSpeed: 0.05
   _finishOffset: {x: 0, y: 0, z: 0}
@@ -1436,6 +1436,8 @@ MonoBehaviour:
   _damageTextOffset: 1
   _decelerationDrop: 0.2
   lightTexture: {fileID: 2800000, guid: 9c95ff609a65b0c43899c485c97b20e1, type: 3}
+  _spawnScaleAnimation: 0
+  _scaleAnaimtionDuration: 0.5
 --- !u!54 &-3030107636550699320
 Rigidbody:
   m_ObjectHideFlags: 0

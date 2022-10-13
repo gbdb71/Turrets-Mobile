@@ -8,7 +8,7 @@ using System.Collections;
 public class Enemy : MonoBehaviour
 {
     [Label("Movement Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
-    [SerializeField, Range(1, 10f)] private float _rotationSpeed = 5f;
+    [SerializeField, Range(1, 100f)] private float _rotationSpeed = 5f;
     [SerializeField] private float _dashSpeed = 1f;
     [SerializeField] private float _dashRotationSpeed = 0.25f;
     [SerializeField] private Vector3 _finishOffset = Vector3.zero;
@@ -22,6 +22,10 @@ public class Enemy : MonoBehaviour
     [Label("Deceleration Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField, Range(.1f, 1.5f)] private float _decelerationDrop = 2f;
     [SerializeField] private Texture lightTexture;
+
+    [Label("Procedural animations", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
+    [SerializeField] private bool _spawnScaleAnimation = false;
+    [SerializeField, EnableIf(nameof(_spawnScaleAnimation), true, Comparison = UnityComparisonMethod.Equal)] private float _scaleAnaimtionDuration = .5f;
 
     private EnemyFactory _originFactory;
     private List<Vector3> _points;
@@ -83,6 +87,40 @@ public class Enemy : MonoBehaviour
         Move();
         Rotate();
     }
+    private void Start()
+    {
+        if (_spawnScaleAnimation)
+        {
+            transform.DOScale(Vector3.one, _scaleAnaimtionDuration).From(Vector3.zero).SetEase(Ease.Linear);
+        }
+    }
+
+    public void Initialize(float scale, float speed, float pathOffset, float health, float damage, RewardSettings rewardSettings)
+    {
+        gameObject.transform.localScale = new Vector3(scale, scale, scale);
+
+        _speed = speed;
+        _pathOffset = pathOffset;
+        _health = health;
+        _damage = damage;
+        _rewardSettings = rewardSettings;
+
+        if (_hpBar != null)
+            _hpBar.InitializationBar(health);
+
+        _initialized = true;
+    }
+    public void SpawnOn(List<Vector3> points)
+    {
+        _currentCell = 0;
+        _nextCell = 1;
+        _progress = 0f;
+
+        _points = points;
+
+        Vector3 spawnPoint = points[0];
+        transform.position = spawnPoint;
+    }
 
     private void Rotate()
     {
@@ -92,8 +130,8 @@ public class Enemy : MonoBehaviour
         Vector3 offset = transform.right * _pathOffset;
         Vector3 relativePos = (_points[_nextCell] + offset) - transform.position;
 
-        Quaternion targetRot = Quaternion.LookRotation(relativePos, Vector3.up);
-        transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, _rotationSpeed * Time.deltaTime);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(relativePos, Vector3.up),
+                                 _rotationSpeed * Time.deltaTime);
     }
     private void Move()
     {
@@ -126,11 +164,6 @@ public class Enemy : MonoBehaviour
         transform.position =
             Vector3.LerpUnclamped(from, to, _progress);
     }
-    public void AddDeceleration(float value)
-    {
-        _deceleration += value;
-        _deceleration = Mathf.Clamp(_deceleration, 0f, .8f);
-    }
     private void Finish()
     {
         _animator.SetBool("Finish", true);
@@ -156,8 +189,16 @@ public class Enemy : MonoBehaviour
         Death();
     }
 
+    public void AddDeceleration(float value)
+    {
+        _deceleration += value;
+        _deceleration = Mathf.Clamp(_deceleration, 0f, .8f);
+    }
     public void ApplyDamage(float damage)
     {
+        if (damage < 0)
+            damage = 0;
+
         _health -= damage;
 
         if (_hpBar != null)
@@ -170,22 +211,6 @@ public class Enemy : MonoBehaviour
             Death();
         }
     }
-    private IEnumerator DisplayDamage(float damage)
-    {
-        _bodyRenderer.material.mainTexture = lightTexture;
-
-        yield return new WaitForSeconds(_flickerDuration);
-
-        _bodyRenderer.material.mainTexture = tempTexture;
-
-        _damageParticle.Reuse(transform.position, Quaternion.identity);
-
-        Vector3 targetPos = transform.position;
-        targetPos.y += _damageTextOffset * transform.localScale.y;
-
-        _damageText.Reuse<DamageText>(targetPos, Quaternion.identity).SetText(((int)damage).ToString());
-    }
-
     private void Death()
     {
         _animator.SetBool("Die", true);
@@ -198,8 +223,6 @@ public class Enemy : MonoBehaviour
         {
             int amount = _rewardSettings.GetAmount();
             amount = (int)(amount + ((float)amount).Percent(SummableAbillity.GetValue(SummableAbillity.Type.Loot)));
-
-            //Debug.Log($"{name} Amount {amount}");
 
             float r = Random.Range(.5f, .8f);
 
@@ -216,33 +239,22 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void Initialize(float scale, float speed, float pathOffset, float health, float damage, RewardSettings rewardSettings)
+    private IEnumerator DisplayDamage(float damage)
     {
-        gameObject.transform.localScale = new Vector3(scale, scale, scale);
+        _bodyRenderer.material.mainTexture = lightTexture;
 
-        _speed = speed;
-        _pathOffset = pathOffset;
-        _health = health;
-        _damage = damage;
-        _rewardSettings = rewardSettings;
+        yield return new WaitForSeconds(_flickerDuration);
 
-        if (_hpBar != null)
-            _hpBar.InitializationBar(health);
+        _bodyRenderer.material.mainTexture = tempTexture;
 
-        _initialized = true;
+        _damageParticle.Reuse(transform.position, Quaternion.identity);
+
+        Vector3 targetPos = transform.position;
+        targetPos.y += _damageTextOffset * transform.localScale.y;
+
+        _damageText.Reuse<DamageText>(targetPos, Quaternion.identity).SetText(((int)damage).ToString());
     }
 
-    public void SpawnOn(List<Vector3> points)
-    {
-        _currentCell = 0;
-        _nextCell = 1;
-        _progress = 0f;
-
-        _points = points;
-
-        Vector3 spawnPoint = points[0];
-        transform.position = spawnPoint;
-    }
 
     public void Recycle()
     {
