@@ -48,8 +48,9 @@ public class Factory : MonoBehaviour, IInteractable
         Factories.Add(this);
 
         _plates.AddRange(GetComponentsInChildren<FactoryPlate>());
-        
+
         FactoryView _factoryView = GetComponentInChildren<FactoryView>();
+
         if (_factoryView != null)
             _factoryView.InitializationPanel(plateSprite, _objectCost, this);
     }
@@ -97,7 +98,14 @@ public class Factory : MonoBehaviour, IInteractable
             if (_game.Data.User.TryWithdrawCurrency(CurrencyType.Construction, 1))
             {
                 _currencyAmount += 1;
-                _intertactTimer = 0;
+
+                if (_currencyAmount % _objectCost == 0)
+                {
+                    _intertactTimer = (-_interactTime * 4);
+                    
+                }
+                else
+                    _intertactTimer = 0;
             }
         }
     }
