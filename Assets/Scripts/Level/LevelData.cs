@@ -29,7 +29,6 @@ public class LevelData : ScriptableObject
 
     [Label("Currencies", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField] private int _constructionCurrency;
-    [SerializeField] private RewardSettings _rewardSettings;
 
     public int ConstructionCurrency => _constructionCurrency;
     public int GridWidth { get => _gridWidth; }
