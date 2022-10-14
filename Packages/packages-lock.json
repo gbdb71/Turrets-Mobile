@@ -9,18 +9,23 @@
       },
       "hash": "497e049a63cd104bb79d3c66196dbb067ba46874"
     },
-    "com.intothedev.objectpooling": {
-      "version": "https://github.com/IntoTheDev/Object-Pooling-for-Unity.git",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "c6df521bc30bc0ee4762dd7232dd6dfbc470552b"
-    },
-    "com.unity.2d.sprite": {
+    "com.unity.2d.tilemap": {
       "version": "1.0.0",
-      "depth": 0,
+      "depth": 1,
       "source": "builtin",
       "dependencies": {}
+    },
+    "com.unity.2d.tilemap.extras": {
+      "version": "1.8.3-preview",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.modules.tilemap": "1.0.0",
+        "com.unity.2d.tilemap": "1.0.0",
+        "com.unity.ugui": "1.0.0",
+        "com.unity.modules.jsonserialize": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
     },
     "com.unity.adaptiveperformance": {
       "version": "2.2.4",

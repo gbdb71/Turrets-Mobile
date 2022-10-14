@@ -6,12 +6,9 @@ using UnityEngine;
 public class Data : MonoBehaviour
 {
     private const string UserKey = nameof(UserData);
-
-    [SerializeField] private UpgradesInfo _upgradesInfo;
     private UserData _userData = default(UserData);
 
     public UserData User => _userData;
-    public UpgradesInfo UpgradesInfo => _upgradesInfo;
 
     private void Awake()
     {

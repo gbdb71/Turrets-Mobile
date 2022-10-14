@@ -5,7 +5,7 @@ public class HelperAbillity : BaseAbillity
 {
     [SerializeField] private GameObject _prefab;
 
-    [Inject] private Game _game;
+    [Inject] private GameLogic _game;
     [Inject] private DiContainer _container;
     protected override void Activate()
     {

@@ -12,7 +12,7 @@ public class AttackDroneAbillity : BaseAbillity
         base.Activate();
 
         _container.InstantiatePrefab(_prefab, _player.transform.position, Quaternion.identity, null);
-        _system.RemoveAbillity(this);
+        //_system.RemoveAbillity(this);
     }
 
     public override void Clear()

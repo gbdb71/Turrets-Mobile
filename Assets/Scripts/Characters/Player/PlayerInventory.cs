@@ -75,7 +75,7 @@ public class PlayerInventory : MonoBehaviour
 
         if (HasTurret)
         {
-            bool canPlace = CheckPlace();
+            bool canPlace = true;
 
             if (CanPlace != canPlace)
             {
@@ -182,18 +182,6 @@ public class PlayerInventory : MonoBehaviour
         {
             TakedTurret.Renderers[i].material.color = CanPlace ? Color.white : _placeBlockColor;
         }
-    }
-
-    private bool CheckPlace()
-    {
-        _player.Map.MapGrid.GetXY(_takedTurret.transform.position, out int x, out int y);
-
-        GridCell cell = _player.Map.MapGrid.GetObject(x, y);
-
-        if (cell == null)
-            return false;
-
-        return cell.CanBuild() && cell.Type != CellType.Path;
     }
 
     #endregion

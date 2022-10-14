@@ -4,12 +4,12 @@ using DG.Tweening;
 using ToolBox.Pools;
 using Zenject;
 using System.Collections;
+using Dreamteck.Splines;
 
-[RequireComponent(typeof(Rigidbody), typeof(Collider))]
+[RequireComponent(typeof(Rigidbody), typeof(Collider), typeof(SplineFollower))]
 public class Enemy : MonoBehaviour
 {
     [Label("Movement Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
-    [SerializeField, Range(1, 100f)] private float _rotationSpeed = 5f;
     [SerializeField] private float _dashSpeed = 1f;
     [SerializeField] private float _dashRotationSpeed = 0.25f;
     [SerializeField] private Vector3 _finishOffset = Vector3.zero;
@@ -37,18 +37,14 @@ public class Enemy : MonoBehaviour
     private Rigidbody _rigidbody;
     private Collider _collider;
     private Renderer _bodyRenderer;
+    private SplineFollower _follower;
 
     private float _damage = 0;
     private float _health = 0f;
-    private float _speed = 0f;
     private RewardSettings _rewardSettings;
 
     private bool _initialized = false;
     private bool _isFinished = false;
-    private int _currentCell = 0;
-    private int _nextCell = 0;
-    private float _pathOffset;
-    private float _progress = 0f;
     private float _deceleration = 0;
 
     private Texture tempTexture;
@@ -69,8 +65,9 @@ public class Enemy : MonoBehaviour
     {
         _rigidbody = GetComponent<Rigidbody>();
         _collider = GetComponent<Collider>();
-
+        _follower = GetComponent<SplineFollower>();
         _animator = GetComponent<Animator>();
+
         _hpBar = GetComponentInChildren<HPBar>();
         _bodyRenderer = GetComponentInChildren<Renderer>();
 
@@ -86,8 +83,10 @@ public class Enemy : MonoBehaviour
             _deceleration -= _decelerationDrop * Time.deltaTime;
         }
 
-        Move();
-        Rotate();
+        if(!_isFinished && _follower.GetPercent() >= .95f)
+        {
+            Finish();
+        }
     }
     private void Start()
     {
@@ -97,12 +96,12 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    public void Initialize(float scale, float speed, float pathOffset, float health, float damage, RewardSettings rewardSettings)
+    public void Initialize(float speed, float scale, float health, float damage, RewardSettings rewardSettings)
     {
+        _follower.followSpeed = speed;
+
         gameObject.transform.localScale = new Vector3(scale, scale, scale);
 
-        _speed = speed;
-        _pathOffset = pathOffset;
         _health = health;
         _damage = damage;
         _rewardSettings = rewardSettings;
@@ -112,60 +111,11 @@ public class Enemy : MonoBehaviour
 
         _initialized = true;
     }
-    public void SpawnOn(List<Vector3> points)
+    public void SpawnOn(SplineComputer spline)
     {
-        _currentCell = 0;
-        _nextCell = 1;
-        _progress = 0f;
-
-        _points = points;
-
-        Vector3 spawnPoint = points[0];
-        transform.position = spawnPoint;
+        _follower.spline = spline;
     }
 
-    private void Rotate()
-    {
-        if (IsDead)
-            return;
-
-        Vector3 offset = transform.right * _pathOffset;
-        Vector3 relativePos = (_points[_nextCell] + offset) - transform.position;
-
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(relativePos, Vector3.up),
-                                 _rotationSpeed * Time.deltaTime);
-    }
-    private void Move()
-    {
-        if (IsDead)
-            return;
-
-        _progress += (_speed - (_speed * _deceleration)) * Time.deltaTime;
-
-        while (_progress >= 1f)
-        {
-            _currentCell = _nextCell;
-            _nextCell++;
-
-            if (_nextCell >= (_points.Count - 1))
-            {
-                Finish();
-            }
-
-            _progress -= 1f;
-        }
-
-        Vector3 offset = transform.right * _pathOffset;
-
-        Vector3 from = _points[_currentCell];
-        from += offset;
-
-        Vector3 to = _points[_nextCell];
-        to += offset;
-
-        transform.position =
-            Vector3.LerpUnclamped(from, to, _progress);
-    }
     private void Finish()
     {
         _animator.SetBool("Finish", true);
@@ -217,6 +167,7 @@ public class Enemy : MonoBehaviour
     {
         _animator.SetBool("Die", true);
         _collider.enabled = false;
+        _follower.enabled = false;
 
         IsDead = true;
 

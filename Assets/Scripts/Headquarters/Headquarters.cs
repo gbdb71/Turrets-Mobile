@@ -7,6 +7,8 @@ using DG.Tweening;
 [SelectionBase]
 public class Headquarters : MonoBehaviour
 {
+    [Range(1, 500)] public int StartCurrency = 0;
+
     [SerializeField, DisableInPlayMode] private Settings _settings;
 
     [Label("View Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
@@ -19,7 +21,7 @@ public class Headquarters : MonoBehaviour
     [Label("Animation Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField] private DamageAnimationSettings _damageAnimation;
 
-    [Inject] private Game _game;
+    [Inject] private GameLogic _game;
     private HPBar _hpBar;
     private float _health = 0;
 
@@ -27,8 +29,6 @@ public class Headquarters : MonoBehaviour
     public bool IsDead => Health <= 0;
     public Transform DronePoint => _dronePoint;
     public Transform FinishPoint => _finishPoint;
-
-    public static event Action OnDeath;
 
     private void Awake()
     {
@@ -55,13 +55,11 @@ public class Headquarters : MonoBehaviour
             if (_hpBar != null)
                 _hpBar.DisableBar();
 
-            OnDeath?.Invoke();
-
-            this.enabled = false;
+            enabled = false;
         }
     }
 
-    [System.Serializable]
+    [Serializable]
     public class Settings
     {
         [SerializeField, Range(1, 1000)] public float Health = 400f;

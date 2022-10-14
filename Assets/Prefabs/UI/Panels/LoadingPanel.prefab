@@ -59,10 +59,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _targetScene:
-    sceneReference: {fileID: 102900000, guid: 9fc0d4010bbf28b4594072e72b8655ab, type: 3}
-    sceneName: Game
-    scenePath: Assets/Scenes/Game.unity
-    buildIndex: 0
+    sceneReference: {fileID: 0}
+    sceneName: 
+    scenePath: 
+    buildIndex: -1
 --- !u!1 &2619237500423920911
 GameObject:
   m_ObjectHideFlags: 0

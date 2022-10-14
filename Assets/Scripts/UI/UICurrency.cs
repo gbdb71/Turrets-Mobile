@@ -6,7 +6,7 @@ public class UICurrency : MonoBehaviour
 {
     [SerializeField] private CurrencyType currencyType;
     [SerializeField] private TextMeshProUGUI amountText;
-    [Inject] private Game _game;
+    [Inject] private GameLogic _game;
 
     private void Start()
     {

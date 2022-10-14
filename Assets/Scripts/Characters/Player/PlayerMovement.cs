@@ -14,12 +14,10 @@ public class PlayerMovement : MonoBehaviour
     [Inject] private Joystick _joystick;
     private CharacterController _cc;
     private Player _player;
-
-    public float _distance = 0;
     private Vector3 moveDir;
 
+    [HideInInspector] public float LayerWeight;
     public float MoveVelocity => _cc.velocity.sqrMagnitude;
-    public float LayerWeight;
     public bool IsMove { get; private set; }
 
     private void Awake()
@@ -27,18 +25,13 @@ public class PlayerMovement : MonoBehaviour
         _cc = GetComponent<CharacterController>();
         _player = GetComponent<Player>();
 
-        UserData.OnUpgradeChanged += UpdateSpeed;
-        Game.OnGameFinished += DisableJoystick;
-        Headquarters.OnDeath += DisableJoystick;
+        GameLogic.OnGameFinished += DisableJoystick;
     }
 
     private void Update()
     {
-        //if (/*_joystick.enabled &&*/ _joystick.gameObject.activeSelf)
-        //{
         Movement();
         Rotate();
-        //}
 
         HandleGravity();
     }
@@ -85,16 +78,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnDestroy()
     {
-        Game.OnGameFinished -= DisableJoystick;
-        Headquarters.OnDeath -= DisableJoystick;
-    }
-
-    private void UpdateSpeed(UpgradeType type)
-    {
-        if (type == UpgradeType.Speed)
-        {
-            int upgradeIndex = _player.Data.User.UpgradesProgress[type];
-            _speed = _player.Data.UpgradesInfo.Upgrades.First(x => x.Type == type).Elements[upgradeIndex].Value;
-        }
+        GameLogic.OnGameFinished -= DisableJoystick;
     }
 }

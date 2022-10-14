@@ -23,25 +23,18 @@ public class Factory : MonoBehaviour, IInteractable
     [Label("Factory Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField, SearchableEnum] private FactoryType _type;
 
-    [SerializeField] private float _timeToCreate = 0.75f;
     [SerializeField] private int _objectCost = 25;
 
     private List<FactoryPlate> _plates = new List<FactoryPlate>();
     private int _currencyAmount;
     private float _intertactTimer;
-    private float _workTimer;
+    [Inject] private GameLogic _game;
 
-    [Inject] private Player _player;
-    [Inject] private Game _game;
-
-    public bool IsWorking { get; private set; } = false;
     public List<FactoryPlate> Plates => _plates;
     public FactoryType Type => _type;
     public static List<Factory> Factories { get; private set; } = new List<Factory>();
-
     public Sprite plateSprite;
     public int CurrencyAmount => _currencyAmount;
-    public float CreateProgress => _workTimer / _timeToCreate;
 
     private void Awake()
     {
@@ -62,24 +55,9 @@ public class Factory : MonoBehaviour, IInteractable
         if (plate == null)
             return;
 
-        if (IsWorking)
-        {
-            _workTimer += Time.deltaTime;
-
-            if (_workTimer >= _timeToCreate)
-            {
-                CreatingObject(plate);
-
-                _workTimer = 0;
-                IsWorking = false;
-            }
-
-            return;
-        }
-
         if (_currencyAmount >= _objectCost)
         {
-            IsWorking = true;
+            CreatingObject(plate);
             _currencyAmount -= _objectCost;
         }
 

@@ -1,16 +1,13 @@
 ﻿using UnityEngine;
-using Zenject;
 
-[CreateAssetMenu(fileName = "Wave", menuName = "TowerDefense/Level/Wave")]
-public class EnemyWave : ScriptableObject
+[System.Serializable]
+public class EnemyWave 
 {
     [SerializeField, ReorderableList] private EnemySpawnSequence[] _spawnSequences = { };
-    [Inject] private Game _game;
-    //public int EnemyCount;
 
-    public State Begin() => new State(this);
+    public State Begin(Road road) => new State(this, road);
 
-    public int CheckEnemyCount()
+    public int GetEnemyCount()
     {
         int spawnCounts = 0;
 
@@ -18,18 +15,17 @@ public class EnemyWave : ScriptableObject
         {
             int waveEnemyCount = _spawnSequences[i].Amount;
             spawnCounts += waveEnemyCount;
-            //Debug.Log($"In Enemy Wave {i} | Enemy Count {waveEnemyCount} All {spawnCounts}");
         }
 
-        Debug.Log($"All Enemy Count {spawnCounts} In");
         return spawnCounts;
     }
 
     [System.Serializable]
-    public struct State
+    public class State
     {
         private EnemyWave _wave;
         private EnemySpawnSequence.State _sequence;
+        private Road _road;
 
         private int _index;
         private float delayTimer;
@@ -44,15 +40,17 @@ public class EnemyWave : ScriptableObject
             }
         }
 
-        public State(EnemyWave wave)
+        public State(EnemyWave wave, Road road)
         {
-            this._wave = wave;
+            _wave = wave;
+            _road = road;
+
             _index = 0;
             delayTimer = 0;
 
             Debug.Assert(wave._spawnSequences.Length > 0, "Empty wave!");
 
-            _sequence = wave._spawnSequences[0].Begin(_wave._game);
+            _sequence = wave._spawnSequences[0].Begin(_road);
         }
 
         public float Progress(float deltaTime)
@@ -66,7 +64,7 @@ public class EnemyWave : ScriptableObject
                     return deltaTime;
                 }
 
-                _sequence = _wave._spawnSequences[_index].Begin(_wave._game);
+                _sequence = _wave._spawnSequences[_index].Begin(_road);
                 deltaTime = _sequence.Progress(deltaTime);
             }
 

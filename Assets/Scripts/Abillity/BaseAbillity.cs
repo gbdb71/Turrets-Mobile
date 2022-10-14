@@ -20,7 +20,7 @@ public abstract class BaseAbillity : MonoBehaviour
     [SerializeField] protected AbillityInfo _info;
 
     private Button _activateButton;
-    protected AbillitySystem _system;
+    //protected AbillitySystem _system;
 
     protected virtual void Awake()
     {
@@ -28,10 +28,10 @@ public abstract class BaseAbillity : MonoBehaviour
         _activateButton.onClick.AddListener(Activate);
     }
 
-    public void SetSystem(AbillitySystem system)
-    {
-        _system = system;
-    }
+    //public void SetSystem(AbillitySystem system)
+    //{
+    //    _system = system;
+    //}
 
     public abstract void Clear();
 
@@ -39,7 +39,7 @@ public abstract class BaseAbillity : MonoBehaviour
 
     protected virtual void Activate()
     {
-        if (_system != null)
-            _system.OnAbillityActivated(this);
+        //if (_system != null)
+        //    _system.OnAbillityActivated(this);
     }
 }

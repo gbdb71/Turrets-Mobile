@@ -1,17 +1,22 @@
+using Zenject;
+
 public class FinishPanel : BasePanel
 {
+    [Inject] private GameLogic _game;
+
     private void Awake()
     {
-        Game.OnGameFinished += Show;
+        GameLogic.OnGameFinished += Show;
     }
 
     private void OnDestroy()
     {
-        Game.OnGameFinished -= Show;
+        GameLogic.OnGameFinished -= Show;
     }
 
     protected override void Show()
     {
-        _content.gameObject.SetActive(true);
+        if (_game.IsWin)
+            _content.gameObject.SetActive(true);
     }
 }

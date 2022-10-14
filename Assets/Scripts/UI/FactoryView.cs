@@ -12,7 +12,6 @@ public class FactoryView : MonoBehaviour
     [Inject] private CinemachineVirtualCamera _playerCamera;
 
     [SerializeField] private Image iconImage;
-    [SerializeField] private Image fillImage;
     [SerializeField] private TextMeshProUGUI currentValueText;
 
     public void InitializationPanel(Sprite iconSprite, int cost, Factory factory)
@@ -21,7 +20,6 @@ public class FactoryView : MonoBehaviour
         iconImage.sprite = iconSprite;
         _cost = cost;
 
-        fillImage.fillAmount = 0;
     }
 
     private void Update()
@@ -32,7 +30,6 @@ public class FactoryView : MonoBehaviour
         if (_factory == null)
             return;
 
-        fillImage.fillAmount = _factory.CreateProgress;
         currentValueText.text = $"{_factory.CurrencyAmount.ToString("D2")} / {_cost}";
     }
 }

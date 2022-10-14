@@ -9,11 +9,8 @@ class EnemyConfig
     [MinMaxSlider(0.5f, 2f)]
     public Vector2 Scale;
 
-    [MinMaxSlider(0.2f, 5f)]
+    [MinMaxSlider(.1f, 4f)]
     public Vector2 Speed;
-
-    [MinMaxSlider(-2f, 2f)]
-    public Vector2 PathOffset;
 
     [MinMaxSlider(10f, 4000f)]
     public Vector2 Health;
@@ -39,16 +36,14 @@ public partial class EnemyFactory : GameObjectFactory<Enemy, EnemyType>
         EnemyConfig config = GetConfig(type);
 
         float scale = Random.Range(config.Scale.x, config.Scale.y);
-        float speed = Random.Range(config.Speed.x, config.Speed.y);
-        float pathOffset = Random.Range(config.PathOffset.x, config.PathOffset.y);
         float health = Random.Range(config.Health.x, config.Health.y);
+        float speed = Random.Range(config.Speed.x, config.Speed.y);
 
         Enemy instance = CreateGameObjectInstance(config.Prefab);
         instance.transform.eulerAngles = new Vector3(0, 90, 0);
 
         instance.OriginFactory = this;
-        instance.Initialize(scale,speed,pathOffset,
-            health, config.Damage, config.RewardSettings);
+        instance.Initialize(speed, scale, health, config.Damage, config.RewardSettings);
 
         return instance;
     }

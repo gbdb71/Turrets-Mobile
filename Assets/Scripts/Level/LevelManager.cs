@@ -5,9 +5,9 @@ using Zenject;
 public class LevelManager : MonoBehaviour
 {
     [Inject] private Data _data;
-    [SerializeField] private List<LevelData> _levels = new List<LevelData>();
+    [SerializeField] private List<SerializedScene> _levels;
 
-    public LevelData CurrentLevel => _levels[_data.User.CurrentLevel];
+    public SerializedScene CurrentLevel => _levels[_data.User.CurrentLevel];
 
     public void NextLevel()
     {

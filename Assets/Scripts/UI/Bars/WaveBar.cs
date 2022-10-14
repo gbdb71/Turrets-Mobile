@@ -16,11 +16,11 @@ public class WaveBar : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI enemyCount;
 
-    [Inject] private Game _game;
+    [Inject] private GameLogic _game;
 
     private void Awake()
     {
-        LevelScenario.OnWaveChanged += Show;
+        RoadScenario.OnWaveChanged += Show;
         _readyButton.onClick.AddListener(SetReady);
 
         enemyCount.text = "";
@@ -28,21 +28,21 @@ public class WaveBar : MonoBehaviour
 
     private void OnDestroy()
     {
-        LevelScenario.OnWaveChanged -= Show;
+        RoadScenario.OnWaveChanged -= Show;
     }
 
     public void Update()
     {
-        if (!_game.GameStared)
-            return;
+        //if (!_game.IsReady)
+        //    return;
 
-        if (!content.gameObject.activeSelf)
-        {
-            float progress = _game.ActiveScenario.Wave.WaveProgress;
-            if (waveProgressFill.fillAmount != progress)
-                waveProgressFill.DOFillAmount(progress, fillTime);
-            return;
-        }
+        //if (!content.gameObject.activeSelf)
+        //{
+        //    float progress = _game.ActiveScenario.Wave.WaveProgress;
+        //    if (waveProgressFill.fillAmount != progress)
+        //        waveProgressFill.DOFillAmount(progress, fillTime);
+        //    return;
+        //}
     }
 
     private void SetReady()
@@ -56,7 +56,6 @@ public class WaveBar : MonoBehaviour
         _game.SetReady(false);
 
         content.gameObject.SetActive(true);
-        titleText.text = "Wave " + (_game.ActiveScenario.WaveIndex + 1).ToString() + " of " + _game.ActiveScenario.WaveCount.ToString();
         UpdateEnemyCount();
 
         waveProgressFill.fillAmount = 0;
@@ -64,10 +63,7 @@ public class WaveBar : MonoBehaviour
 
     public void UpdateEnemyCount()
     {
-        int count = _game.ActiveScenario.InitializationEnemyCount();
-
-        enemyCount.text = "Enemy Count = " + count;//_game.ActiveScenario.WaveEnemyCount.ToString();
-        Debug.Log("Main Update -- " + count);//_game.ActiveScenario.WaveEnemyCount.ToString());
+        enemyCount.text = "Enemy Count = ";
     }
 
     private void Hide()

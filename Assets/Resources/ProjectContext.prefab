@@ -163,6 +163,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _levels:
-  - {fileID: 11400000, guid: 65694227e398fb941a091cd16bff2964, type: 2}
-  - {fileID: 11400000, guid: 895becbadf1f10e449dad2c39074e94b, type: 2}
-  - {fileID: 11400000, guid: 7a3f2e7a708e36243a3350d27fd5e624, type: 2}
+  - sceneReference: {fileID: 102900000, guid: 9fc0d4010bbf28b4594072e72b8655ab, type: 3}
+    sceneName: Level 1
+    scenePath: Assets/Scenes/Level 1.unity
+    buildIndex: 0

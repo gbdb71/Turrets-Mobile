@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-using Zenject;
+﻿using UnityEngine;
 
 [System.Serializable]
 public class EnemySpawnSequence
@@ -17,26 +15,26 @@ public class EnemySpawnSequence
     [SerializeField, Range(0.1f, 30f)]
     private float _cooldown = 1f;
 
-    public State Begin(Game game) => new State(this, game);
+    public State Begin(Road road) => new State(this, road);
     public int Amount => _amount;
 
 
     [System.Serializable]
-    public struct State
+    public class State
     {
         private EnemySpawnSequence _sequence;
 
         private int _count;
         private float _cooldown;
-        private Game _game;
         private Enemy[] spawnedEnemy;
+        private Road _road;
 
         public float SequenceProgress => (float)_count / _sequence._amount;
 
-        public State(EnemySpawnSequence sequence, Game game)
+        public State(EnemySpawnSequence sequence, Road road)
         {
-            this._sequence = sequence;
-            this._game = game;
+            _sequence = sequence;
+            _road = road;
 
             _count = 0;
             _cooldown = sequence._cooldown;
@@ -46,6 +44,7 @@ public class EnemySpawnSequence
         public float Progress(float deltaTime)
         {
             _cooldown += deltaTime;
+
             while (_cooldown >= _sequence._cooldown)
             {
                 _cooldown -= _sequence._cooldown;
@@ -59,7 +58,9 @@ public class EnemySpawnSequence
                     return _cooldown;
                 }
 
-                spawnedEnemy[_count] = _game.SpawnEnemy(_sequence._factory, _sequence._type);
+                Enemy enemy = _sequence._factory.Get(_sequence._type);
+                enemy.SpawnOn(_road.Spline);
+                spawnedEnemy[_count] = enemy;
 
                 _count += 1;
             }

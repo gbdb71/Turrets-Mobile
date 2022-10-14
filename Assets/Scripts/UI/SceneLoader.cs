@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public abstract class SceneLoader : MonoBehaviour
 {
-    [SerializeField] private SerializedScene _targetScene;
+    [SerializeField] protected SerializedScene _targetScene;
 
     private IEnumerator LoadScene()
     {

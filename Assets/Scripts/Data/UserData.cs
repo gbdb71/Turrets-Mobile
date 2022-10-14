@@ -12,31 +12,21 @@ public enum CurrencyType
 [System.Serializable]
 public class UserData
 {
-    public Dictionary<CurrencyType, int> Currencies {get; set;}
-    public Dictionary<UpgradeType, int> UpgradesProgress { get; set;}
+    private Dictionary<CurrencyType, int> _currencies {get; set;}
 
     public int CurrentLevel;
-
-    public static event Action<UpgradeType> OnUpgradeChanged;
+    public IReadOnlyDictionary<CurrencyType, int> Currencies => _currencies;
     public static event Action<CurrencyType, int> OnCurrencyChanged;
 
     public UserData()
     {
-        Currencies = new Dictionary<CurrencyType, int>();
-        UpgradesProgress = new Dictionary<UpgradeType, int>();
-
+        _currencies = new Dictionary<CurrencyType, int>();
 
         var currenciesTypes = Enum.GetValues(typeof(CurrencyType)).Cast<CurrencyType>();
-        var upgradeTypes = Enum.GetValues(typeof(UpgradeType)).Cast<UpgradeType>();
 
         foreach (var cType in currenciesTypes)
         {
-            Currencies.Add(cType, 0);
-        }
-
-        foreach (var uType in upgradeTypes)
-        {
-            UpgradesProgress.Add(uType, 0);
+            _currencies.Add(cType, 0);
         }
     }
 
@@ -44,26 +34,26 @@ public class UserData
     {
         if (amount > 0)
         {
-            if (Currencies.ContainsKey(type))
-               Currencies[type] += amount;
+            if (_currencies.ContainsKey(type))
+               _currencies[type] += amount;
             else
-                Currencies.Add(type, amount);
+                _currencies.Add(type, amount);
 
-            OnCurrencyChanged?.Invoke(type, Currencies[type]);
+            OnCurrencyChanged?.Invoke(type, _currencies[type]);
         }
     }
     public bool TryWithdrawCurrency(CurrencyType type, int amount)
     {
-        if (Currencies.ContainsKey(type) && Currencies[type] >= amount)
+        if (_currencies.ContainsKey(type) && _currencies[type] >= amount)
         {
-            Currencies[type] -= amount;
+            _currencies[type] -= amount;
 
-            if (Currencies[type] < 0)
+            if (_currencies[type] < 0)
             {
-                Currencies[type] = 0;
+                _currencies[type] = 0;
             }
 
-            OnCurrencyChanged?.Invoke(type, Currencies[type]); return true;
+            OnCurrencyChanged?.Invoke(type, _currencies[type]); return true;
         }
 
         return false;
@@ -73,16 +63,9 @@ public class UserData
     {
         if(value >= 0)
         {
-            Currencies[type] = value;
-            OnCurrencyChanged?.Invoke(type, Currencies[type]);
+            _currencies[type] = value;
+            OnCurrencyChanged?.Invoke(type, _currencies[type]);
         }
-    }
-
-    public void UpdateUpgradeProgress(UpgradeType type, int value)
-    {
-        UpgradesProgress[type] = value;
-
-        OnUpgradeChanged?.Invoke(type);
     }
 }
 
