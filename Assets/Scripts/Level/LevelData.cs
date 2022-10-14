@@ -40,5 +40,4 @@ public class LevelData : ScriptableObject
     public int BarrierRows { get => _barrierRows; }
     public GridObject BarrierPrefab { get => _barrierPrefab; }
     public LevelScenario LevelScenario { get => _levelScenario; }
-    public RewardSettings RewardSettings { get => _rewardSettings; }
 }
