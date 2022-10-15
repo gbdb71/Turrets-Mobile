@@ -33,16 +33,25 @@ public class WaveBar : MonoBehaviour
 
     public void Update()
     {
-        //if (!_game.IsReady)
-        //    return;
+        if (!_game.IsReady)
+            return;
 
-        //if (!content.gameObject.activeSelf)
-        //{
-        //    float progress = _game.ActiveScenario.Wave.WaveProgress;
-        //    if (waveProgressFill.fillAmount != progress)
-        //        waveProgressFill.DOFillAmount(progress, fillTime);
-        //    return;
-        //}
+        if (!content.gameObject.activeSelf)
+        {
+            float progress = 0f;
+            int roadsCount = Road.Instances.Count;
+
+            for (int i = 0; i < roadsCount; i++)
+            {
+                progress += Road.Instances[i].ScenarioState.Wave.WaveProgress;
+            }
+
+            progress /= roadsCount;
+
+            if (waveProgressFill.fillAmount != progress)
+                waveProgressFill.DOFillAmount(progress, fillTime);
+            return;
+        }
     }
 
     private void SetReady()
