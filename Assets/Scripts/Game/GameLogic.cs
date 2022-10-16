@@ -4,9 +4,12 @@ using Zenject;
 
 public class GameLogic : MonoBehaviour
 {
+    [SerializeField] private LevelScenario _scenario;
+
     [Inject] private Data _data;
     [Inject] private LevelManager _levelManager;
     private Headquarters _headquarters;
+    private LevelScenario.State _scenarioState;
 
     public bool GameFinished { get; private set; } = false;
     public bool IsWin { get; private set; } = false;
@@ -16,6 +19,11 @@ public class GameLogic : MonoBehaviour
     public Data Data => _data;
 
     public static event Action OnGameFinished;
+
+    private void Start()
+    {
+        _scenarioState = _scenario.Begin();
+    }
 
     private void Update()
     {
@@ -31,26 +39,14 @@ public class GameLogic : MonoBehaviour
                 return;
             }
 
-            for (int i = 0; i < Road.Instances.Count; i++)
+            if (!_scenarioState.Progress())
             {
-                Road road = Road.Instances[i];
+                IsWin = true;
 
-                bool allFinished = true;
+                _levelManager.NextLevel();
 
-                if (road.ScenarioState.Progress())
-                {
-                    allFinished = false;
-                }
-
-                if (allFinished)
-                {
-                    IsWin = true;
-
-                    _levelManager.NextLevel();
-
-                    GameFinished = true;
-                    OnGameFinished?.Invoke();
-                }
+                GameFinished = true;
+                OnGameFinished?.Invoke();
             }
         }
     }

@@ -20,7 +20,7 @@ public class WaveBar : MonoBehaviour
 
     private void Awake()
     {
-        RoadScenario.OnWaveChanged += Show;
+        LevelScenario.OnWaveChanged += Show;
         _readyButton.onClick.AddListener(SetReady);
 
         enemyCount.text = "";
@@ -28,7 +28,7 @@ public class WaveBar : MonoBehaviour
 
     private void OnDestroy()
     {
-        RoadScenario.OnWaveChanged -= Show;
+        LevelScenario.OnWaveChanged -= Show;
     }
 
     public void Update()
@@ -38,19 +38,19 @@ public class WaveBar : MonoBehaviour
 
         if (!content.gameObject.activeSelf)
         {
-            float progress = 0f;
-            int roadsCount = Road.Instances.Count;
+            //float progress = 0f;
+            //int roadsCount = Road.Instances.Count;
 
-            for (int i = 0; i < roadsCount; i++)
-            {
-                progress += Road.Instances[i].ScenarioState.Wave.WaveProgress;
-            }
+            //for (int i = 0; i < roadsCount; i++)
+            //{
+            //    progress += Road.Instances[i].ScenarioState.Wave.WaveProgress;
+            //}
 
-            progress /= roadsCount;
+            //progress /= roadsCount;
 
-            if (waveProgressFill.fillAmount != progress)
-                waveProgressFill.DOFillAmount(progress, fillTime);
-            return;
+            //if (waveProgressFill.fillAmount != progress)
+            //    waveProgressFill.DOFillAmount(progress, fillTime);
+            //return;
         }
     }
 

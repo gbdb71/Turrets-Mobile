@@ -43,6 +43,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11f8dae1bfb7d0944948094b484783a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _scenario:
+    _waves:
+    - _roads:
+      - Road: {fileID: 0}
+        EnemySequences:
+        - _factory: {fileID: 11400000, guid: a34f23d2afe8e2941b77c92b6b3e6609, type: 2}
+          _type: 0
+          _amount: 5
+          _cooldown: 1
+        Index: 0
+      - Road: {fileID: 0}
+        EnemySequences:
+        - _factory: {fileID: 11400000, guid: a34f23d2afe8e2941b77c92b6b3e6609, type: 2}
+          _type: 0
+          _amount: 5
+          _cooldown: 1
+        Index: 0
 --- !u!1 &925701290
 GameObject:
   m_ObjectHideFlags: 0
