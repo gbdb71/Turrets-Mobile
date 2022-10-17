@@ -3,19 +3,18 @@ using Zenject;
 
 public class AttackDroneAbillity : BaseAbillity
 {
-    [SerializeField] private GameObject _prefab;
-
     [Inject] private Player _player;
     [Inject] private DiContainer _container;
-    protected override void Activate()
-    {
-        base.Activate();
 
-        _container.InstantiatePrefab(_prefab, _player.transform.position, Quaternion.identity, null);
-        //_system.RemoveAbillity(this);
-    }
-
-    public override void Clear()
+    public override void Activate()
     {
+        AttackDrone attackDrone = Resources.Load<AttackDrone>("GameData/Characters/AttackDrone");
+
+        if (attackDrone != null)
+        {
+            _container.InstantiatePrefab(attackDrone, _player.transform.position, Quaternion.identity, null);
+
+            Clear();
+        }
     }
 }

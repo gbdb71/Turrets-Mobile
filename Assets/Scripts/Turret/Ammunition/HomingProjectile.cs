@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using ToolBox.Pools;
+using UnityEngine;
 
 public class HomingProjectile : BaseProjectile
 {
@@ -54,6 +55,9 @@ public class HomingProjectile : BaseProjectile
 
         transform.position += direction * _speed * Time.deltaTime;
         transform.localRotation = Quaternion.LookRotation(direction);
+
+        if(transform.position == _lastTarget)
+            gameObject.Release();
     }
 }
 

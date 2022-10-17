@@ -4,28 +4,29 @@ using DG.Tweening;
 [RequireComponent(typeof(Animator))]
 public class PlayerAnimations : MonoBehaviour
 {
+    private const int _animationLayer = 1;
+
     private Animator _animator;
-    private PlayerMovement _movement;
+    private Player _player;
 
     private void Awake()
     {
         _animator = GetComponent<Animator>();
-        _movement = GetComponent<PlayerMovement>();
+        _player = GetComponent<Player>();
     }
 
     private void Update()
     {
-        if (_movement != null)
+        if (_player.Movement != null)
         {
-            _animator.SetFloat(nameof(_movement.MoveVelocity), _movement.MoveVelocity);
+            _animator.SetFloat(nameof(_player.Movement.MoveVelocity), _player.Movement.MoveVelocity);
 
-            float targetLayer = _animator.GetLayerWeight(1);
-            if (_movement.LayerWeight != targetLayer)
+            float currentLayer = _animator.GetLayerWeight(_animationLayer);
+            float targetLayer = _player.Inventory.HasTurret ? 1 : 0;
+
+            if (targetLayer != currentLayer)
             {
-                DOTween.To(() => targetLayer, x => targetLayer = x, _movement.LayerWeight, Random.Range(0.25f, 0.375f)).OnUpdate(() =>
-                {
-                    _animator.SetLayerWeight(1, targetLayer);
-                });
+                DOTween.To(() => currentLayer, x => _animator.SetLayerWeight(_animationLayer, x), targetLayer, 1);
             }
         }
     }

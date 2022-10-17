@@ -176,21 +176,40 @@ public class Enemy : MonoBehaviour
 
         if (!_isFinished)
         {
-            int amount = _rewardSettings.GetAmount();
-            amount = (int)(amount + ((float)amount).Percent(SummableAbillity.GetValue(SummableAbillity.Type.Loot)));
+            SpawnRewards();
+        }
+    }
 
-            float r = Random.Range(.5f, .8f);
+    private void SpawnRewards()
+    {
+        int amount = _rewardSettings.GetAmount();
 
-            for (int i = 0; i < amount; i++)
-            {
-                GameObject reward = _container.InstantiatePrefab(_rewardSettings.RewardPrefab, transform.position, Quaternion.identity, null);
+        float r = Random.Range(.5f, .8f);
 
-                float angle = Random.Range(0, Mathf.PI * 2);
-                Vector3 targetPoint = transform.position + new Vector3(Mathf.Sin(angle * (i + 1)) * r, .5f, Mathf.Cos(angle * (i + 1)) * r);
+        for (int i = 0; i < amount; i++)
+        {
+            GameObject reward = _container.InstantiatePrefab(_rewardSettings.CurrencyPrefab, transform.position, Quaternion.identity, null);
 
-                reward.transform.DOScale(Vector3.one, .6f).From(Vector3.zero).SetEase(Ease.Linear);
-                reward.transform.DOJump(targetPoint, 1.5f, 1, .6f);
-            }
+            float angle = Random.Range(0, Mathf.PI * 2);
+            Vector3 targetPoint = transform.position + new Vector3(Mathf.Sin(angle * (i + 1)) * r, .5f, Mathf.Cos(angle * (i + 1)) * r);
+
+            reward.transform.DOScale(Vector3.one, .6f).From(Vector3.zero).SetEase(Ease.Linear);
+            reward.transform.DOJump(targetPoint, 1.5f, 1, .6f);
+        }
+
+        BaseAbillity abillity = _rewardSettings.GetAbillity();
+
+        if (abillity != null)
+        {
+            _container.Inject(abillity);
+
+            float angle = Random.Range(0, Mathf.PI * 2);
+
+            Vector3 targetPoint = transform.position + new Vector3(Mathf.Sin(angle) * r, .5f, Mathf.Cos(angle) * r);
+
+            abillity.transform.position = transform.position;
+            abillity.transform.DOScale(Vector3.one, .6f).From(Vector3.zero).SetEase(Ease.Linear);
+            abillity.transform.DOJump(targetPoint, 2.5f, 1, .6f);
         }
     }
 
@@ -209,7 +228,6 @@ public class Enemy : MonoBehaviour
 
         _damageText.Reuse<DamageText>(targetPos, Quaternion.identity).SetText(((int)damage).ToString());
     }
-
 
     public void Recycle()
     {

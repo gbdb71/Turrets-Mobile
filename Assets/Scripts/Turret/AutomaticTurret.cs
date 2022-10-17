@@ -9,8 +9,6 @@ public class AutomaticTurret : BaseTurret
     [SerializeField, Range(2, 40)] protected float _bulletSpeed;
     [SerializeField] protected BaseProjectile _projectilePrefab;
 
-    [SerializeField] private ParticleSystem upgradeParticle;
-
     [SerializeField] private Vector2 gunMove = new Vector2(0.001f, -0.001f);
     [SerializeField] private Vector2 moveDuration = new Vector2(0.075f, 0.125f);
 
@@ -19,15 +17,7 @@ public class AutomaticTurret : BaseTurret
     protected override void Awake()
     {
         base.Awake();
-        upgradeParticle.Stop();
     }
-
-    public override void PlayUpgradeParticle()
-    {
-        if (upgradeParticle != null)
-            upgradeParticle.Play();
-    }
-
     protected virtual void Start()
     {
         for (int i = 0; i < _shootPivot.Length; i++)
@@ -49,7 +39,7 @@ public class AutomaticTurret : BaseTurret
         });
 
         HomingProjectile projectile = _projectilePrefab.gameObject.Reuse<BaseProjectile>(_shootPivot[_currentShootPivot].transform.position, _shootPivot[_currentShootPivot].transform.rotation) as HomingProjectile;
-        projectile.Initialize(_shootPivot[_currentShootPivot].transform.position, Vector3.zero, Damage, 0f);
+        projectile.Initialize(_shootPivot[_currentShootPivot].transform.position, Vector3.zero, _damage, 0f);
         projectile.SetSpeed(_bulletSpeed);
         projectile.SetY(false);
         projectile.SetTarget(_currentTarget.transform);

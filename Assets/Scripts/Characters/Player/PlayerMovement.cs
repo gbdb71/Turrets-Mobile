@@ -16,7 +16,6 @@ public class PlayerMovement : MonoBehaviour
     private Player _player;
     private Vector3 moveDir;
 
-    [HideInInspector] public float LayerWeight;
     public float MoveVelocity => _cc.velocity.sqrMagnitude;
     public bool IsMove { get; private set; }
 
@@ -40,11 +39,7 @@ public class PlayerMovement : MonoBehaviour
     {
         moveDir.Set(_joystick.Horizontal, 0, _joystick.Vertical);
 
-        LayerWeight = _player.Inventory.HasTurret ? 1 : 0;
-
-        float speed = _speed + _speed.Percent(SummableAbillity.GetValue(SummableAbillity.Type.PlayerMovementSpeed));
-        _cc.SimpleMove(moveDir * speed);
-
+        _cc.SimpleMove(moveDir * _speed);
         IsMove = moveDir.magnitude > 0 && _cc.isGrounded;
     }
     private void Rotate()

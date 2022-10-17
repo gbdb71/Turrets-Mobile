@@ -79,7 +79,7 @@ public class Factory : MonoBehaviour, IInteractable
 
                 if (_currencyAmount % _objectCost == 0)
                 {
-                    _intertactTimer = (-_interactTime * 4);
+                    _intertactTimer = -.6f;
                     
                 }
                 else

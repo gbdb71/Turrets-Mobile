@@ -1,13 +1,19 @@
 using UnityEngine;
 using DG.Tweening;
+using System.Collections.Generic;
 
 public class PlayerInventory : MonoBehaviour
 {
     private const float _interactCheckTime = .01f;
 
+    [Label("Backpack", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
+    [SerializeField] private Transform _backpackPoint;
+    [SerializeField] private float _distanceBetweenObjects = 0.25f;
+    [SerializeField, Range(.1f, 2f)] private float _objectMoveSpeed = 0.5f;
+    [SerializeField, Range(.1f, 2f)] private float _objectRotationSpeed = 0.25f;
+
     [Label("Turrets", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField, NotNull] private Transform _turretSlot;
-    [SerializeField] private GameObject _upgradeEffect;
     [SerializeField] private Color _placeBlockColor;
     [SerializeField, Range(.2f, 1f)] private float _takeDelay = .5f;
     [SerializeField] private Vector3 _placeOffset;
@@ -19,14 +25,14 @@ public class PlayerInventory : MonoBehaviour
     [Label("Place Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField] private Transform _placePosition;
 
-    private Player _player;
     private BaseTurret _nearTurret;
     private BaseTurret _takedTurret;
+    private List<BaseAbillity> _inventoryAbillities = new List<BaseAbillity>();
 
     private float _delayTimer = 0f;
     private float _putTimer = 0f;
     private float _interactTimer = 0f;
-    private Collider[] _nearColliders = new Collider[3];
+    private Collider[] _nearColliders = new Collider[10];
 
     public BaseTurret NearTurret => _nearTurret;
     public BaseTurret TakedTurret => _takedTurret;
@@ -43,12 +49,25 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
-    private void Awake()
-    {
-        _player = GetComponent<Player>();
-    }
     private void Update()
     {
+        for (int i = _inventoryAbillities.Count - 1; i >= 0; i--)
+        {
+            BaseAbillity abillity = _inventoryAbillities[i];
+
+            if(abillity == null)
+            {
+                _inventoryAbillities.RemoveAt(i);
+                continue;
+            }
+
+            if(abillity.CanActivate)
+            {
+                abillity.Activate();
+                _inventoryAbillities.RemoveAt(i);
+            }
+        }
+
         if (_delayTimer > 0)
             _delayTimer -= Time.deltaTime;
 
@@ -105,6 +124,23 @@ public class PlayerInventory : MonoBehaviour
 
                 break;
             }
+
+            if(other.TryGetComponent(out BaseAbillity abillity))
+            {
+                if (_inventoryAbillities.Contains(abillity))
+                    return;
+
+                abillity.Collider.enabled = false;
+                abillity.transform.parent = _backpackPoint.transform;
+
+                int index = _inventoryAbillities.Count;
+
+                _inventoryAbillities.Add(abillity);
+
+                Vector3 endPosition = new Vector3(0, (float)index * _distanceBetweenObjects, 0);
+                abillity.transform.DOLocalRotate(Vector3.zero, _objectRotationSpeed);
+                abillity.transform.DOLocalMove(endPosition, _objectMoveSpeed);
+            }
         }
     }
 
@@ -157,13 +193,6 @@ public class PlayerInventory : MonoBehaviour
 
             _takedTurret.transform.DOJump(near.transform.position, 1f, 1, .25f).OnComplete(() =>
             {
-                if (_upgradeEffect != null)
-                {
-                    _upgradeEffect.transform.position = _nearTurret.transform.position;
-                    _upgradeEffect.gameObject.SetActive(true);
-
-                }
-
                 BaseTurret newTurret = Instantiate(_takedTurret.NextGrade, near.transform.position, near.transform.rotation, null);
                 newTurret.PlayUpgradeParticle();
 

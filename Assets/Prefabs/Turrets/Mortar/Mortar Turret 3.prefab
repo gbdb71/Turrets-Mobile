@@ -311,7 +311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damage: 37.5
-  _fireDelay: 0
+  _fireDelay: 1
   _shootPivot:
   - {fileID: 3642958238143821735}
   _nextGrade: {fileID: 7157497047578270226, guid: c28485ba04aff5b49a1ed98168c6568d, type: 3}

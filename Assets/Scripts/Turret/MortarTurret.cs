@@ -9,17 +9,9 @@ public class MortarTurret : BaseTurret
 
     [SerializeField] private ParticleSystem _muzzleParticle;
 
-    [SerializeField] private ParticleSystem upgradeParticle;
-
     private float _launchSpeed;
     private Vector3 _launchVelocity;
     private Vector3 _aimPos;
-
-    public override void PlayUpgradeParticle()
-    {
-        if (upgradeParticle != null)
-            upgradeParticle.Play();
-    }
 
     protected virtual void Start()
     {
@@ -38,7 +30,7 @@ public class MortarTurret : BaseTurret
                 _muzzleParticle.Play();
 
             MortarShell projectile = _shellPrefab.gameObject.Reuse<MortarShell>(_shootPivot[_currentShootPivot].position, Quaternion.identity);
-            projectile.Initialize(_shootPivot[_currentShootPivot].position, _launchVelocity, Damage, _projectileRadius);
+            projectile.Initialize(_shootPivot[_currentShootPivot].position, _launchVelocity, _damage, _projectileRadius);
         }
     }
 

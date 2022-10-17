@@ -23,9 +23,7 @@ public class Headquarters : MonoBehaviour
 
     [Inject] private GameLogic _game;
     private HPBar _hpBar;
-    private float _health = 0;
-
-    public float Health { get { return _health + _health.Percent(SummableAbillity.GetValue(SummableAbillity.Type.HeadquartersHealth)); } private set { _health = value; } }
+    public float Health {get; private set;} 
     public bool IsDead => Health <= 0;
     public Transform DronePoint => _dronePoint;
     public Transform FinishPoint => _finishPoint;
@@ -35,7 +33,7 @@ public class Headquarters : MonoBehaviour
         _game.SetHeadquarters(this);
         _hpBar = GetComponentInChildren<HPBar>();
 
-        _health = _settings.Health;
+        Health = _settings.Health;
 
         if (_hpBar != null)
             _hpBar.InitializationBar(Health);

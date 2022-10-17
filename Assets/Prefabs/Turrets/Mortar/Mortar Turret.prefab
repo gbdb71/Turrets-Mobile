@@ -280,13 +280,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damage: 30
-  _fireDelay: 0
+  _fireDelay: 1.5
   _shootPivot:
   - {fileID: 3642958238143821735}
   _nextGrade: {fileID: 7157497047578270226, guid: c6466c6a1f6e13f43b95aa09513fa011, type: 3}
   mainMaterial: {fileID: 2100000, guid: 751228c6183f65c49933f23d7f97e19b, type: 2}
   selectedMaterial: {fileID: 2100000, guid: 5f62031a35a2a214a958e955ff6bc351, type: 2}
-  _projectileRadius: 1.25
+  _projectileRadius: 2.2
   _shellPrefab: {fileID: 8119367024055230900, guid: b4994758d6a28244cb8b3de362e3b37a, type: 3}
   _muzzleParticle: {fileID: 2694596418002745619}
   upgradeParticle: {fileID: 9134716023088021651}

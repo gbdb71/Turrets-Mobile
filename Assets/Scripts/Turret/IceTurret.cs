@@ -11,22 +11,15 @@ public class IceTurret : BaseTurret
     [Label("Visual Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField, NotNull] protected VisualEffect _throwEffect;
 
-    [SerializeField] private ParticleSystem upgradeParticle;
+    private float _fireTime, _attack = 0f;
 
     public bool IsFire { get; private set; }
-
-    public override void PlayUpgradeParticle()
-    {
-        if (upgradeParticle != null)
-            upgradeParticle.Play();
-    }
 
     protected virtual void Start()
     {
         _throwEffect.SetFloat("Angle", _damageAngle);
     }
 
-    float fireTime, attack = 0f;
     protected override void Fire()
     {
         if (!IsFire)
@@ -35,23 +28,22 @@ public class IceTurret : BaseTurret
             _throwEffect.Play();
         }
 
-        fireTime += Time.deltaTime;
-        attack += Time.deltaTime;
+        _fireTime += Time.deltaTime;
+        _attack += Time.deltaTime;
 
-        if (attack >= _attackRate)
+        if (_attack >= _attackRate)
         {
-            attack = 0f;
+            _attack = 0f;
             DamageArea();
         }
 
-        if (fireTime >= 1f)
+        if (_fireTime >= 1f)
         {
-            fireTime = 0f;
+            _fireTime = 0f;
 
             base.Fire();    
         }
     }
-
     private void DamageArea()
     {
         if (TargetPoint.FillBuffer(_shootPivot[_currentShootPivot].position, _aim.AimDistance))
@@ -69,13 +61,12 @@ public class IceTurret : BaseTurret
 
                 if (angleBetween <= _damageAngle)
                 {
-                    enemy.ApplyDamage(Damage);
+                    enemy.ApplyDamage(_damage);
                     enemy.AddDeceleration(_decelerationPerAttack);
                 }
             }
         }
     }
-
     protected override void StopFire()
     {
         if (IsFire)
@@ -84,6 +75,7 @@ public class IceTurret : BaseTurret
             _throwEffect.Stop();
         }
     }
+
 
 #if UNITY_EDITOR
     // This should probably go in an Editor script, but dealing with Editor scripts
@@ -117,4 +109,5 @@ public class IceTurret : BaseTurret
         }
     }
 #endif
+
 }

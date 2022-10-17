@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
+using System;
 
 [RequireComponent(typeof(TurretAim)), SelectionBase]
 public abstract class BaseTurret : MonoBehaviour
@@ -16,6 +17,7 @@ public abstract class BaseTurret : MonoBehaviour
 
     [Label("Upgrade", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField] private BaseTurret _nextGrade = default;
+    [SerializeField] private ParticleSystem upgradeParticle;
 
     [Header("Selected settings")]
     private Renderer[] _renderers;
@@ -33,14 +35,6 @@ public abstract class BaseTurret : MonoBehaviour
     public BaseTurret NextGrade => _nextGrade;
     public Renderer[] Renderers => _renderers;
 
-    public float Damage
-    {
-        get
-        {
-            return _damage + _damage.Percent(SummableAbillity.GetValue(SummableAbillity.Type.TurretDamage));
-        }
-    }
-
     public static List<BaseTurret> Turrets { get; private set; } = new List<BaseTurret>();
 
     protected virtual void Awake()
@@ -49,16 +43,6 @@ public abstract class BaseTurret : MonoBehaviour
         _renderers = GetComponentsInChildren<MeshRenderer>();
 
         Turrets.Add(this);
-    }
-
-    public virtual void PlayUpgradeParticle() { }
-
-    public void SetSelected(bool selected)
-    {
-        for (int i = 0; i < _renderers.Length; i++)
-        {
-            _renderers[i].material = selected ? selectedMaterial : mainMaterial;
-        }
     }
 
     private void Update()
@@ -91,17 +75,14 @@ public abstract class BaseTurret : MonoBehaviour
         if (_fireTimer > 0f)
             _fireTimer -= Time.deltaTime;
     }
-
     private void OnEnable()
     {
         _aim.SetIdle(false);
     }
-
     private void OnDisable()
     {
         _aim.SetIdle(true);
     }
-
     private void OnDestroy()
     {
         Turrets.Remove(this);
@@ -124,16 +105,46 @@ public abstract class BaseTurret : MonoBehaviour
             _aim.SetAim(_currentTarget.transform.position);
         }
     }
-
     protected virtual void StopFire() { }
-
     protected virtual void Fire()
     {
-        _fireTimer = (_fireDelay - _fireDelay.Percent(SummableAbillity.GetValue(SummableAbillity.Type.TurretFire)));
+        _fireTimer = _fireDelay;
     }
-
     protected virtual bool CanFire()
     {
         return _aim.IsAimed && _fireTimer <= 0f;
+    }
+
+    public virtual void PlayUpgradeParticle()
+    {
+        if (upgradeParticle != null)
+            upgradeParticle.Play();
+    }
+    public void SetSelected(bool selected)
+    {
+        for (int i = 0; i < _renderers.Length; i++)
+        {
+            _renderers[i].material = selected ? selectedMaterial : mainMaterial;
+        }
+    }
+
+    public void AddDamageValue(float percents)
+    {
+        if (percents < 0f)
+            throw new ArgumentException(string.Format("{0} is not an positive number", percents),
+                                      "value");
+
+        _damage += _damage.Percent(percents);
+    }
+    public void DecreaseFireDelay(float percents)
+    {
+        if (percents < 0f)
+            throw new ArgumentException(string.Format("{0} is not an positive number", percents),
+                                      "value");
+
+        _fireDelay -= _damage.Percent(percents);
+
+        if(_fireDelay < 0.5f)
+            _fireDelay = 0.5f;
     }
 }

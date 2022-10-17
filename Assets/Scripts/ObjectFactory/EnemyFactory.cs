@@ -16,8 +16,7 @@ class EnemyConfig
     public Vector2 Health;
 
     [Range(1, 300)]
-    public float Damage;
-
+    public float Damage;    
     public RewardSettings RewardSettings;
 }
 
