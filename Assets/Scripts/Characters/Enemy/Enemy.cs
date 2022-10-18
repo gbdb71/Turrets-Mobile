@@ -34,7 +34,6 @@ public class Enemy : MonoBehaviour
     private HPBar _hpBar;
     [Inject] private Headquarters _headquarters;
     [Inject] private DiContainer _container;
-    private Rigidbody _rigidbody;
     private Collider _collider;
     private Renderer _bodyRenderer;
     private SplineFollower _follower;
@@ -47,11 +46,13 @@ public class Enemy : MonoBehaviour
     private bool _isFinished = false;
     private float _deceleration = 0;
 
+    private Vector3 _lastPosition;
+
     private Texture tempTexture;
 
     public float Health => _health;
     public bool IsDead { get; private set; }
-    public Rigidbody Rigidbody => _rigidbody;
+    public Vector3 Velocity { get; private set; }
     public EnemyFactory OriginFactory
     {
         get => _originFactory;
@@ -63,7 +64,6 @@ public class Enemy : MonoBehaviour
 
     private void Awake()
     {
-        _rigidbody = GetComponent<Rigidbody>();
         _collider = GetComponent<Collider>();
         _follower = GetComponent<SplineFollower>();
         _animator = GetComponent<Animator>();
@@ -83,7 +83,10 @@ public class Enemy : MonoBehaviour
             _deceleration -= _decelerationDrop * Time.deltaTime;
         }
 
-        if(!_isFinished && _follower.GetPercent() >= .95f)
+        Velocity = (transform.position - _lastPosition) / Time.deltaTime;
+        _lastPosition = transform.position;
+
+        if (!_isFinished && _follower.GetPercent() >= .95f)
         {
             Finish();
         }

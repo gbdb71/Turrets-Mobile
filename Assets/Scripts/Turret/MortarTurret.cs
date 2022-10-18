@@ -12,6 +12,7 @@ public class MortarTurret : BaseTurret
     private float _launchSpeed;
     private Vector3 _launchVelocity;
     private Vector3 _aimPos;
+    private Vector3[] _velocitySolutions = new Vector3[2];
 
     protected virtual void Start()
     {
@@ -34,31 +35,30 @@ public class MortarTurret : BaseTurret
         }
     }
 
+
     protected override void Aim()
     {
         Vector3 launchPoint = _shootPivot[_currentShootPivot].position;
         Vector3 targetPoint = _currentTarget.transform.position;
         targetPoint.y = 0f;
 
-        Vector2 dir;
-        dir.x = targetPoint.x - launchPoint.x;
-        dir.y = targetPoint.z - launchPoint.z;
-        float x = dir.magnitude;
-        float y = -launchPoint.y;
-        dir /= x;
-
         float g = 9.81f;
-        float s = _launchSpeed;
-        float s2 = s * s;
+        Vector2 dir = (Vector2)(targetPoint - launchPoint);
 
-        float r = s2 * s2 - g * (g * x * x + 2f * y * s2);
-        float tanTheta = (s2 + Mathf.Sqrt(r)) / (g * x);
-        float cosTheta = Mathf.Cos(Mathf.Atan(tanTheta));
-        float sinTheta = cosTheta * tanTheta;
+        int numSolutions = fts.solve_ballistic_arc(launchPoint, _launchSpeed, targetPoint, _currentTarget.Velocity, g, out _velocitySolutions[0], out _velocitySolutions[1]);
 
-        if (r >= 0)
+        if (numSolutions > 0)
         {
-            _launchVelocity = new Vector3(s * cosTheta * dir.x, s * sinTheta, s * cosTheta * dir.y);
+            _launchVelocity = _velocitySolutions[1];
+
+            float x = dir.magnitude;
+            float y = -launchPoint.y;
+
+            float s = _launchSpeed;
+            float s2 = s * s;
+
+            float r = s2 * s2 - g * (g * x * x + 2f * y * s2);
+            float tanTheta = (s2 + Mathf.Sqrt(r)) / (g * x);
 
             _aimPos = targetPoint;
             _aimPos.y = tanTheta;
