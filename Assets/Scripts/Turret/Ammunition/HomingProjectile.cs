@@ -56,8 +56,22 @@ public class HomingProjectile : BaseProjectile
         transform.position += direction * _speed * Time.deltaTime;
         transform.localRotation = Quaternion.LookRotation(direction);
 
-        if(transform.position == _lastTarget)
+        if(TargetReached())
             gameObject.Release();
+    }
+
+    private bool TargetReached()
+    {
+        Vector3 target = _lastTarget;
+        Vector3 current = transform.position;
+
+        if(!_yMove)
+        {
+            target.y = 0;
+            current.y = 0;
+        }
+
+        return target == current;
     }
 }
 

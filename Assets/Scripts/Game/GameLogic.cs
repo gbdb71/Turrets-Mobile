@@ -9,8 +9,8 @@ public class GameLogic : MonoBehaviour
     [Inject] private Data _data;
     [Inject] private LevelManager _levelManager;
     private Headquarters _headquarters;
-    private LevelScenario.State _scenarioState;
 
+    public LevelScenario.State ScenarioState { get; private set; }
     public bool GameFinished { get; private set; } = false;
     public bool IsWin { get; private set; } = false;
     public bool IsReady { get; private set; } = false;
@@ -22,7 +22,7 @@ public class GameLogic : MonoBehaviour
 
     private void Start()
     {
-        _scenarioState = _scenario.Begin();
+        ScenarioState = _scenario.Begin();
     }
 
     private void Update()
@@ -39,7 +39,7 @@ public class GameLogic : MonoBehaviour
                 return;
             }
 
-            if (!_scenarioState.Progress())
+            if (!ScenarioState.Progress())
             {
                 IsWin = true;
 

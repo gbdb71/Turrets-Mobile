@@ -209,7 +209,7 @@ public class Enemy : MonoBehaviour
 
             abillity.transform.position = transform.position;
             abillity.transform.DOScale(Vector3.one, .6f).From(Vector3.zero).SetEase(Ease.Linear);
-            abillity.transform.DOJump(targetPoint, 2.5f, 1, .6f);
+            abillity.transform.DOJump(targetPoint, 4f, 1, 1f);
         }
     }
 

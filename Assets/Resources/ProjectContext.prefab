@@ -43,7 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23c73a14150042c40ba17e0198aa928f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _upgradesInfo: {fileID: 11400000, guid: 6501667c695beab40ae89defb0902824, type: 2}
 --- !u!1 &3966892268602328469
 GameObject:
   m_ObjectHideFlags: 0
@@ -167,3 +166,11 @@ MonoBehaviour:
     sceneName: Level 1
     scenePath: Assets/Scenes/Level 1.unity
     buildIndex: 0
+  - sceneReference: {fileID: 102900000, guid: d7c1699cb34b44f4497c11325e61b923, type: 3}
+    sceneName: Level 2
+    scenePath: Assets/Scenes/Level 2.unity
+    buildIndex: -1
+  - sceneReference: {fileID: 102900000, guid: c38ca9b681d965a409a3045f2deb1538, type: 3}
+    sceneName: Level 3
+    scenePath: Assets/Scenes/Level 3.unity
+    buildIndex: -1

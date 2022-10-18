@@ -77,6 +77,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af0b9f595cdbb884087482bf32dc7d27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  StartCurrency: 0
   _settings:
     Health: 400
   _headquartersBody: {fileID: 8609843843147868682}
@@ -327,3 +328,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.03283778, y: 0.026068008, z: 0.03134828}
   m_Center: {x: 0.001296056, y: 0.01247511, z: 0.0022737528}
+--- !u!208 &152219132787493752
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8609843843147868682}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.016, y: 0.013, z: 0.016}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 0
+  m_Center: {x: 0.001, y: 0.012, z: 0.002}
+  m_TimeToStationary: 0.5

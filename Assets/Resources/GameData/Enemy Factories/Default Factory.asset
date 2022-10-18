@@ -24,13 +24,13 @@ MonoBehaviour:
       _abillities:
       - Abillity:
           typeReference: AttackDroneAbillity, Assembly-CSharp
-        AbillityChance: 0.05
+        AbillityChance: 0.07
       - Abillity:
           typeReference: TurretDamageAbillity, Assembly-CSharp
-        AbillityChance: 0.15
+        AbillityChance: 0.17
       - Abillity:
           typeReference: TurretFireAbillity, Assembly-CSharp
-        AbillityChance: 0.15
+        AbillityChance: 0.17
       _abillityPrefab: {fileID: 1253945432546544441, guid: de3aaae0d263dd147872f1460889346a, type: 3}
   _large:
     Prefab: {fileID: -6491075291442993941, guid: b757fc765daab9d41bcd38c74bcee8d0, type: 3}
