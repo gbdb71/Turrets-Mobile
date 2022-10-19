@@ -19,10 +19,12 @@ public abstract class BaseTurret : MonoBehaviour
     [SerializeField] private BaseTurret _nextGrade = default;
     [SerializeField] private ParticleSystem upgradeParticle;
 
-    [Header("Selected settings")]
+    [Label("Selected settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     private Renderer[] _renderers;
     [SerializeField] private Material mainMaterial;
     [SerializeField] private Material selectedMaterial;
+    [SerializeField] private Image _rangeImage;
+    [SerializeField] private Color _rangeColor;
 
     [Space]
     protected int _currentShootPivot = 0;
@@ -43,6 +45,14 @@ public abstract class BaseTurret : MonoBehaviour
         _renderers = GetComponentsInChildren<MeshRenderer>();
 
         Turrets.Add(this);
+    }
+    protected virtual void Start()
+    {
+        if(_rangeImage != null)
+        {
+            _rangeImage.color = _rangeColor;
+            _rangeImage.transform.localScale = new Vector3(_aim.AimDistance, _aim.AimDistance, _aim.AimDistance);
+        }
     }
 
     private void Update()
@@ -126,6 +136,8 @@ public abstract class BaseTurret : MonoBehaviour
         {
             _renderers[i].material = selected ? selectedMaterial : mainMaterial;
         }
+
+        SetActiveRangeImage(selected);
     }
 
     public void AddDamageValue(float percents)
@@ -144,7 +156,13 @@ public abstract class BaseTurret : MonoBehaviour
 
         _fireDelay -= _damage.Percent(percents);
 
-        if(_fireDelay < 0.5f)
+        if (_fireDelay < 0.5f)
             _fireDelay = 0.5f;
+    }
+
+    public void SetActiveRangeImage(bool enabled)
+    {
+        if (_rangeImage != null)
+            _rangeImage.gameObject.SetActive(enabled);
     }
 }

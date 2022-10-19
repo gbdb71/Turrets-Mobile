@@ -15,8 +15,10 @@ public class IceTurret : BaseTurret
 
     public bool IsFire { get; private set; }
 
-    protected virtual void Start()
+    protected override void Start()
     {
+        base.Start();
+
         _throwEffect.SetFloat("Angle", _damageAngle);
     }
 

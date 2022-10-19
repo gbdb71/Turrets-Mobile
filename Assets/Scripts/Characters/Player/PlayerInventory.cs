@@ -121,7 +121,6 @@ public class PlayerInventory : MonoBehaviour
 
                 _nearTurret = turret;
                 _nearTurret.SetSelected(true);
-
                 break;
             }
 

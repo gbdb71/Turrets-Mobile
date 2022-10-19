@@ -18,8 +18,10 @@ public class AutomaticTurret : BaseTurret
     {
         base.Awake();
     }
-    protected virtual void Start()
+    protected override void Start()
     {
+        base.Start();
+
         for (int i = 0; i < _shootPivot.Length; i++)
         {
             _muzzleParticles.Add(_shootPivot[i].parent.gameObject.GetComponentInChildren<ParticleSystem>());
