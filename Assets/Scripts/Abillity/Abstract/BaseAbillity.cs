@@ -1,11 +1,13 @@
-using System;
 using System.Linq;
 using ToolBox.Pools;
 using UnityEngine;
+using Zenject;
 
 [RequireComponent(typeof(Collider))]
 public abstract class BaseAbillity<ConfigType> : MonoBehaviour, IAbillity where ConfigType : BaseAbillityConfig
 {
+    [Inject] protected Player _player;
+
     protected ConfigType _config;
     protected PopupText _popupPrefab;
     public Collider Collider { get; private set; }
@@ -15,18 +17,13 @@ public abstract class BaseAbillity<ConfigType> : MonoBehaviour, IAbillity where 
         _config = Resources.LoadAll<ConfigType>("GameData/Abillities").FirstOrDefault();
         _popupPrefab = Resources.Load<PopupText>("GameData/Effects/PopupText");
 
-        if (_config == null)
-        {
-            _config = (ConfigType)Activator.CreateInstance(typeof(ConfigType), null);
-        }
-
         Collider = GetComponent<Collider>();
     }
 
     public virtual void Clear() => Destroy(gameObject);
     public virtual void Activate()
     {
-        PopupText popup = _popupPrefab.gameObject.Reuse<PopupText>(transform.position, Quaternion.identity);
+        PopupText popup = _popupPrefab.gameObject.Reuse<PopupText>(_player.transform.position + new Vector3(0, 1.5f, 0), Quaternion.identity);
         popup.SetColor(_config.TextColor);
         popup.SetText(_config.ActivateText);
     }

@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: 93fa814e9bd4cf645a418b1926caadbd, type: 3}
   m_Name: FireAbillity
-  m_EditorClassIdentifier: Assembly-CSharp::FireAbillitySettings
-  ActivateText: UP!
-  TextColor: {r: 0.055802763, g: 0.6226415, b: 0.070815735, a: 1}
+  m_EditorClassIdentifier: 
+  ActivateText: FIRE UP!
+  TextColor: {r: 0.07062123, g: 0.6509434, b: 0.122799955, a: 1}
   _firePercents: {x: 1, y: 10}

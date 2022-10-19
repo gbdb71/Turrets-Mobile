@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: e7ccd33fab00ba943be94c86a9805f3d, type: 3}
   m_Name: DamageAbillity
-  m_EditorClassIdentifier: Assembly-CSharp::DamageAbillitySettings
-  ActivateText: UP!
-  TextColor: {r: 0.055802763, g: 0.6226415, b: 0.070815735, a: 1}
+  m_EditorClassIdentifier: 
+  ActivateText: DAMAGE UP!
+  TextColor: {r: 0.07058824, g: 0.6509804, b: 0.12156863, a: 1}
   _damagePercents: {x: 1, y: 10}

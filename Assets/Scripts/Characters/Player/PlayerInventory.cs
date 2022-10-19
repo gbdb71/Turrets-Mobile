@@ -63,8 +63,8 @@ public class PlayerInventory : MonoBehaviour
 
             if(abillity.CanActivate())
             {
-                abillity.Activate();
                 _inventoryAbillities.RemoveAt(i);
+                abillity.Activate();
             }
         }
 
@@ -130,6 +130,7 @@ public class PlayerInventory : MonoBehaviour
                     return;
 
                 Transform abillityTransform = abillity.GetTransform();
+                abillityTransform.GetComponent<Collider>().enabled = false;
 
                 abillityTransform.parent = _backpackPoint.transform;
 
