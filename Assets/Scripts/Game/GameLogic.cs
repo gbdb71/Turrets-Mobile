@@ -54,7 +54,7 @@ public class GameLogic : MonoBehaviour
     public void SetHeadquarters(Headquarters headquarters)
     {
         _headquarters = headquarters;
-        _data.User.TryAddCurrency(CurrencyType.Construction, headquarters.StartCurrency);
+        _data.User.SetCurrencyValue(CurrencyType.Construction, headquarters.StartCurrency);
     }
 
     public void SetReady(bool ready)

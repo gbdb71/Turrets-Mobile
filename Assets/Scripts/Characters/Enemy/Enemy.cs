@@ -17,7 +17,6 @@ public class Enemy : MonoBehaviour
     [Label("Damage Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField] private float _flickerDuration = 0.25f;
     [SerializeField] private GameObject _damageParticle;
-    [SerializeField] private GameObject _damageText;
     [SerializeField, Range(0, 5f)] private float _damageTextOffset;
 
     [Label("Deceleration Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
@@ -28,6 +27,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private bool _spawnScaleAnimation = false;
     [SerializeField, EnableIf(nameof(_spawnScaleAnimation), true, Comparison = UnityComparisonMethod.Equal)] private float _scaleAnaimtionDuration = .5f;
 
+    private PopupText _popupPrefab;
     private EnemyFactory _originFactory;
     private List<Vector3> _points;
     private Animator _animator;
@@ -64,6 +64,8 @@ public class Enemy : MonoBehaviour
 
     private void Awake()
     {
+        _popupPrefab = Resources.Load<PopupText>("GameData/Effects/PopupText");
+
         _collider = GetComponent<Collider>();
         _follower = GetComponent<SplineFollower>();
         _animator = GetComponent<Animator>();
@@ -200,7 +202,7 @@ public class Enemy : MonoBehaviour
             reward.transform.DOJump(targetPoint, 1.5f, 1, .6f);
         }
 
-        BaseAbillity abillity = _rewardSettings.GetAbillity();
+        IAbillity abillity = _rewardSettings.GetAbillity();
 
         if (abillity != null)
         {
@@ -209,10 +211,11 @@ public class Enemy : MonoBehaviour
             float angle = Random.Range(0, Mathf.PI * 2);
 
             Vector3 targetPoint = transform.position + new Vector3(Mathf.Sin(angle) * r, .5f, Mathf.Cos(angle) * r);
+            Transform abillityTransform = abillity.GetTransform();
 
-            abillity.transform.position = transform.position;
-            abillity.transform.DOScale(Vector3.one, .6f).From(Vector3.zero).SetEase(Ease.Linear);
-            abillity.transform.DOJump(targetPoint, 4f, 1, 1f);
+            abillityTransform.position = transform.position;
+            abillityTransform.DOScale(Vector3.one, .6f).From(Vector3.zero).SetEase(Ease.Linear);
+            abillityTransform.DOJump(targetPoint, 4f, 1, 1f);
         }
     }
 
@@ -229,7 +232,9 @@ public class Enemy : MonoBehaviour
         Vector3 targetPos = transform.position;
         targetPos.y += _damageTextOffset * transform.localScale.y;
 
-        _damageText.Reuse<DamageText>(targetPos, Quaternion.identity).SetText(((int)damage).ToString());
+        PopupText popup = _popupPrefab.gameObject.Reuse<PopupText>(targetPos, Quaternion.identity);
+        popup.SetColor(Color.white);
+        popup.SetText(((int)damage).ToString());
     }
 
     public void Recycle()

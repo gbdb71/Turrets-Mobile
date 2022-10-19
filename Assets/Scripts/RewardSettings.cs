@@ -7,7 +7,7 @@ public class RewardSettings
     [System.Serializable]
     public class AbillityInfo
     {
-        [TypeConstraint(typeof(BaseAbillity), AllowAbstract = false, AllowObsolete = false, TypeSettings = TypeSettings.Class, TypeGrouping = TypeGrouping.None)]
+        [TypeConstraint(typeof(BaseAbillity<>), AllowAbstract = false, AllowObsolete = false, TypeSettings = TypeSettings.Class, TypeGrouping = TypeGrouping.None)]
         public SerializedType Abillity;
         [Range(0f, 1f)] public float AbillityChance = .5f;
     }
@@ -23,7 +23,7 @@ public class RewardSettings
     public GameObject CurrencyPrefab => _currencyPrefab;
     public int GetAmount() => (int)Random.Range(_amount.x, _amount.y);
 
-    public BaseAbillity GetAbillity()
+    public IAbillity GetAbillity()
     {
         AbillityInfo info = _abillities[Random.Range(0, _abillities.Length)];
 
@@ -33,7 +33,7 @@ public class RewardSettings
         if (info.Abillity.Type != null)
         {
             GameObject abillityObject = Object.Instantiate(_abillityPrefab);
-            BaseAbillity abillity = (BaseAbillity)abillityObject.AddComponent(info.Abillity.Type);
+            IAbillity abillity = (IAbillity)abillityObject.AddComponent(info.Abillity.Type);
 
 
             return abillity;

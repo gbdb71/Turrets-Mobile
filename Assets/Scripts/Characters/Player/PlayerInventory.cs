@@ -27,7 +27,7 @@ public class PlayerInventory : MonoBehaviour
 
     private BaseTurret _nearTurret;
     private BaseTurret _takedTurret;
-    private List<BaseAbillity> _inventoryAbillities = new List<BaseAbillity>();
+    private List<IAbillity> _inventoryAbillities = new List<IAbillity>();
 
     private float _delayTimer = 0f;
     private float _putTimer = 0f;
@@ -53,7 +53,7 @@ public class PlayerInventory : MonoBehaviour
     {
         for (int i = _inventoryAbillities.Count - 1; i >= 0; i--)
         {
-            BaseAbillity abillity = _inventoryAbillities[i];
+            IAbillity abillity = _inventoryAbillities[i];
 
             if(abillity == null)
             {
@@ -61,7 +61,7 @@ public class PlayerInventory : MonoBehaviour
                 continue;
             }
 
-            if(abillity.CanActivate)
+            if(abillity.CanActivate())
             {
                 abillity.Activate();
                 _inventoryAbillities.RemoveAt(i);
@@ -124,21 +124,22 @@ public class PlayerInventory : MonoBehaviour
                 break;
             }
 
-            if(other.TryGetComponent(out BaseAbillity abillity))
+            if(other.TryGetComponent(out IAbillity abillity))
             {
                 if (_inventoryAbillities.Contains(abillity))
                     return;
 
-                abillity.Collider.enabled = false;
-                abillity.transform.parent = _backpackPoint.transform;
+                Transform abillityTransform = abillity.GetTransform();
+
+                abillityTransform.parent = _backpackPoint.transform;
 
                 int index = _inventoryAbillities.Count;
 
                 _inventoryAbillities.Add(abillity);
 
                 Vector3 endPosition = new Vector3(0, (float)index * _distanceBetweenObjects, 0);
-                abillity.transform.DOLocalRotate(Vector3.zero, _objectRotationSpeed);
-                abillity.transform.DOLocalMove(endPosition, _objectMoveSpeed);
+                abillityTransform.DOLocalRotate(Vector3.zero, _objectRotationSpeed);
+                abillityTransform.DOLocalMove(endPosition, _objectMoveSpeed);
             }
         }
     }

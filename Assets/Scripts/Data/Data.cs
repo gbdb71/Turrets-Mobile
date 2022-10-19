@@ -1,25 +1,23 @@
 ﻿using Newtonsoft.Json;
 using UnityEngine;
-
+using Zenject;
 
 [DefaultExecutionOrder(-1)]
-public class Data : MonoBehaviour
+public class Data : MonoBehaviour, IInitializable
 {
     private const string UserKey = nameof(UserData);
-    private UserData _userData = default(UserData);
+    private UserData _userData = new UserData();
 
     public UserData User => _userData;
 
-    private void Awake()
+    private void Start()
     {
-        LoadData();
+        User.PropertyChanged += delegate { SaveData(); };
     }
-
     private void OnDisable()
     {
         SaveData();
     }
-
     private void OnApplicationPause(bool pause)
     {
         if (pause)
@@ -46,10 +44,9 @@ public class Data : MonoBehaviour
         }
     }
 
-    [ContextMenu("Clear Data")]
-    private void ClearData()
+    public void Initialize()
     {
-        PlayerPrefs.DeleteAll();
+        LoadData();
     }
 }
 
