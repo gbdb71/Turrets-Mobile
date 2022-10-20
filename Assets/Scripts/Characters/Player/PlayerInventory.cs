@@ -52,6 +52,8 @@ public class PlayerInventory : MonoBehaviour
 
     private void Update()
     {
+        UpdateTimers();
+
         if (_abillityDelayTimer <= 0f)
         {
             for (int i = _inventoryAbillities.Count - 1; i >= 0; i--)
@@ -75,8 +77,6 @@ public class PlayerInventory : MonoBehaviour
                 }
             }
         }
-
-        UpdateTimers();
 
         if (_interactTimer >= _interactCheckTime)
         {
@@ -130,6 +130,9 @@ public class PlayerInventory : MonoBehaviour
 
             if (other.TryGetComponent(out BaseTurret turret))
             {
+                if (turret == _takedTurret)
+                    return;
+
                 if (_nearTurret != null)
                 {
                     _nearTurret.SetSelected(false);
@@ -180,10 +183,10 @@ public class PlayerInventory : MonoBehaviour
 
             turret.transform.DORotate(Vector3.zero, 1f);
 
-            _takedTurret = null;
-            _takeDelayTimer = _takeDelay;
-
             _takedTurret.SetSelected(false);
+            _takedTurret = null;
+
+            _takeDelayTimer = _takeDelay;
         }
     }
 
@@ -193,7 +196,6 @@ public class PlayerInventory : MonoBehaviour
             return;
 
         _takedTurret = _nearTurret;
-        _nearTurret.SetSelected(false);
         _nearTurret = null;
 
         _takedTurret.transform.SetParent(_turretSlot);
@@ -201,9 +203,9 @@ public class PlayerInventory : MonoBehaviour
         _takedTurret.transform.DOLocalRotate(Vector3.zero, 0.3f);
         _takedTurret.transform.DOLocalMove(Vector3.zero, 0.25f);
 
+        _takedTurret.SetSelected(true);
         _takedTurret.enabled = false;
 
-        _takedTurret.SetSelected(true);
     }
 
     public void Upgrade()
