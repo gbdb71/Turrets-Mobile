@@ -59,9 +59,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 608c0376431e790409b0f99ed2d03232, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hideDuration: 1
+  _hideDuration: 1.15
   _yMovement: 0.5
-  _moveDuration: 1
 --- !u!23 &796524306992642184
 MeshRenderer:
   m_ObjectHideFlags: 0

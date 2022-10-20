@@ -23,13 +23,15 @@ public abstract class BaseAbillity<ConfigType> : MonoBehaviour, IAbillity where 
     public virtual void Clear() => Destroy(gameObject);
     public virtual void Activate()
     {
-        PopupText popup = _popupPrefab.gameObject.Reuse<PopupText>(_player.transform.position + new Vector3(0, 1.5f, 0), Quaternion.identity);
+        PopupText popup = _popupPrefab.gameObject.Reuse<PopupText>(PopupPosition, Quaternion.identity);
         popup.SetColor(_config.TextColor);
-        popup.SetText(_config.ActivateText);
+        popup.SetText(_config.ActivateText, PopupText.DurationType.Long);
     }
     public virtual bool CanActivate() => true;
 
     public Transform GetTransform() => transform;
+
+    public virtual Vector3 PopupPosition => _player.transform.position + new Vector3(0, 2.2f, 0);
 }
 
 public abstract class BaseAbillityConfig : ScriptableObject

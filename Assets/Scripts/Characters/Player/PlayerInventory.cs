@@ -29,7 +29,8 @@ public class PlayerInventory : MonoBehaviour
     private BaseTurret _takedTurret;
     private List<IAbillity> _inventoryAbillities = new List<IAbillity>();
 
-    private float _delayTimer = 0f;
+    private float _takeDelayTimer = 0f;
+    private float _abillityDelayTimer = 0f;
     private float _putTimer = 0f;
     private float _interactTimer = 0f;
     private Collider[] _nearColliders = new Collider[10];
@@ -51,30 +52,31 @@ public class PlayerInventory : MonoBehaviour
 
     private void Update()
     {
-        for (int i = _inventoryAbillities.Count - 1; i >= 0; i--)
+        if (_abillityDelayTimer <= 0f)
         {
-            IAbillity abillity = _inventoryAbillities[i];
-
-            if(abillity == null)
+            for (int i = _inventoryAbillities.Count - 1; i >= 0; i--)
             {
-                _inventoryAbillities.RemoveAt(i);
-                continue;
-            }
+                IAbillity abillity = _inventoryAbillities[i];
 
-            if(abillity.CanActivate())
-            {
-                _inventoryAbillities.RemoveAt(i);
-                abillity.Activate();
+                if (abillity == null)
+                {
+                    _inventoryAbillities.RemoveAt(i);
+                    continue;
+                }
+
+                if (abillity.CanActivate())
+                {
+                    _abillityDelayTimer = .8f;
+
+                    _inventoryAbillities.RemoveAt(i);
+                    abillity.Activate();
+
+                    break;
+                }
             }
         }
 
-        if (_delayTimer > 0)
-            _delayTimer -= Time.deltaTime;
-
-        if (_putTimer >= 0)
-            _putTimer -= Time.deltaTime;
-
-        _interactTimer += Time.deltaTime;
+        UpdateTimers();
 
         if (_interactTimer >= _interactCheckTime)
         {
@@ -104,6 +106,20 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
+    private void UpdateTimers()
+    {
+        if (_takeDelayTimer > 0)
+            _takeDelayTimer -= Time.deltaTime;
+
+        if (_putTimer >= 0)
+            _putTimer -= Time.deltaTime;
+
+        if (_abillityDelayTimer > 0)
+            _abillityDelayTimer -= Time.deltaTime;
+
+        _interactTimer += Time.deltaTime;
+    }
+
     private void CheckInteract()
     {
         int count = Physics.OverlapSphereNonAlloc(transform.position, _interactRadius, _nearColliders, _interactableMask);
@@ -124,7 +140,7 @@ public class PlayerInventory : MonoBehaviour
                 break;
             }
 
-            if(other.TryGetComponent(out IAbillity abillity))
+            if (other.TryGetComponent(out IAbillity abillity))
             {
                 if (_inventoryAbillities.Contains(abillity))
                     return;
@@ -165,7 +181,9 @@ public class PlayerInventory : MonoBehaviour
             turret.transform.DORotate(Vector3.zero, 1f);
 
             _takedTurret = null;
-            _delayTimer = _takeDelay;
+            _takeDelayTimer = _takeDelay;
+
+            _takedTurret.SetSelected(false);
         }
     }
 
@@ -184,6 +202,8 @@ public class PlayerInventory : MonoBehaviour
         _takedTurret.transform.DOLocalMove(Vector3.zero, 0.25f);
 
         _takedTurret.enabled = false;
+
+        _takedTurret.SetSelected(true);
     }
 
     public void Upgrade()

@@ -6,9 +6,14 @@ using TMPro;
 [RequireComponent(typeof(TextMeshPro))]
 public class PopupText : MonoBehaviour
 {
-    [SerializeField, Range(.2f, 2f)] private float _hideDuration = .5f;
+    public enum DurationType
+    {
+        Default = 1,
+        Long = 2
+    }
+
+    [SerializeField, Range(.2f, 2f)] private float _hideDuration = .7f;
     [SerializeField, Range(.2f, 5f)] private float _yMovement;
-    [SerializeField, Range(.2f, 2f)] private float _moveDuration = 1f;
 
     private TextMeshPro _text;
     private RectTransform _transform;
@@ -24,16 +29,18 @@ public class PopupText : MonoBehaviour
         _text.color = color;
     }
 
-    public void SetText(string value)
+    public void SetText(string value, DurationType durationType = DurationType.Default)
     {
         _text.text = value; 
 
-        _transform.DOLocalMoveY(transform.localPosition.y + _yMovement, _moveDuration).OnComplete(() =>
+        float duration = _hideDuration * (int)durationType;
+
+        _transform.DOLocalMoveY(transform.localPosition.y + _yMovement, duration * .8f).OnComplete(() =>
         {
             _transform.SetParent(null);
             gameObject.Release();
         });
 
-        _text.DOFade(0f, _hideDuration);
+        _text.DOFade(0f, duration);
     }
 }

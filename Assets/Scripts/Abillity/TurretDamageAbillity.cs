@@ -1,4 +1,5 @@
-﻿using Zenject;
+﻿
+using UnityEngine;
 
 public class TurretDamageAbillity : BaseAbillity<DamageAbillitySettings>
 {
@@ -16,4 +17,5 @@ public class TurretDamageAbillity : BaseAbillity<DamageAbillitySettings>
     }
 
     public override bool CanActivate() => _player.Inventory.NearTurret != null;
+    public override Vector3 PopupPosition => _player.Inventory.NearTurret.transform.position + new Vector3(0, 2.2f, 0);
 }
