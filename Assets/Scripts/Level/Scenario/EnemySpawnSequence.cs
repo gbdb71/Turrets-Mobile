@@ -17,23 +17,24 @@ public class EnemySpawnSequence
 
     public State Begin(Road road) => new State(this, road);
     public int Amount => _amount;
+    public EnemyType Type => _type;
 
 
     [System.Serializable]
     public class State
     {
-        private EnemySpawnSequence _sequence;
+        public EnemySpawnSequence Sequence { get; private set; }
 
         private int _count;
         private float _cooldown;
         private Enemy[] spawnedEnemy;
         private Road _road;
 
-        public float SequenceProgress => (float)_count / _sequence._amount;
+        public float SequenceProgress => (float)_count / Sequence._amount;
 
         public State(EnemySpawnSequence sequence, Road road)
         {
-            _sequence = sequence;
+            Sequence = sequence;
             _road = road;
 
             _count = 0;
@@ -45,11 +46,11 @@ public class EnemySpawnSequence
         {
             _cooldown += deltaTime;
 
-            while (_cooldown >= _sequence._cooldown)
+            while (_cooldown >= Sequence._cooldown)
             {
-                _cooldown -= _sequence._cooldown;
+                _cooldown -= Sequence._cooldown;
 
-                if (_count >= _sequence._amount)
+                if (_count >= Sequence._amount)
                 {
                     for (int i = 0; i < spawnedEnemy.Length; i++)
                         if (spawnedEnemy[i] != null || !spawnedEnemy[i].IsDead)
@@ -58,7 +59,7 @@ public class EnemySpawnSequence
                     return _cooldown;
                 }
 
-                Enemy enemy = _sequence._factory.Get(_sequence._type);
+                Enemy enemy = Sequence._factory.Get(Sequence._type);
                 enemy.SpawnOn(_road.Spline);
                 spawnedEnemy[_count] = enemy;
 

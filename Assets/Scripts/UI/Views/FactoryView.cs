@@ -1,15 +1,11 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Zenject;
-using Cinemachine;
 
-public class FactoryView : MonoBehaviour
+public class FactoryView : BaseView
 {
     private Factory _factory;
     private int _cost;
-
-    [Inject] private CinemachineVirtualCamera _playerCamera;
 
     [SerializeField] private Image iconImage;
     [SerializeField] private TextMeshProUGUI currentValueText;
@@ -22,11 +18,8 @@ public class FactoryView : MonoBehaviour
 
     }
 
-    private void Update()
+    protected override void UpdateLogic()
     {
-        if (_playerCamera != null)
-            transform.LookAt(_playerCamera.transform);
-
         if (_factory == null)
             return;
 

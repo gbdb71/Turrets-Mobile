@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 [System.Serializable]
 public class EnemyWave
@@ -16,25 +17,6 @@ public class EnemyWave
 
     public State Begin() => new State(this);
 
-    public int GetEnemyCount()
-    {
-        int spawnCounts = 0;
-
-        for (int i = 0; i < _roads.Length; i++)
-        {
-            RoadSequence sequence = _roads[i];
-
-            if (sequence.Road != null && sequence.EnemySequences.Length > 0)
-            {
-                for (int x = 0; x < sequence.EnemySequences.Length; x++)
-                {
-                    spawnCounts += sequence.EnemySequences[x].Amount;
-                }
-            }
-        }
-
-        return spawnCounts;
-    }
 
     [System.Serializable]
     public class State
@@ -52,6 +34,31 @@ public class EnemyWave
             {
                 _sequences[i] = _wave._roads[i].EnemySequences[0].Begin(_wave._roads[i].Road);
             }
+        }
+
+        public Dictionary<EnemyType, int> GetEnemiesCount(Road road)
+        {
+            Dictionary<EnemyType, int> count = new Dictionary<EnemyType, int>
+            {
+                {EnemyType.Small, 0},
+                {EnemyType.Medium, 0},
+                {EnemyType.Large, 0},
+            };
+            
+            for (int i = 0; i < _wave._roads.Length; i++)
+            {
+                if (road == _wave._roads[i].Road)
+                {
+                    for (int j = 0; j < _wave._roads[i].EnemySequences.Length; j++)
+                    {
+                        EnemySpawnSequence sequence = _wave._roads[i].EnemySequences[j];
+
+                        count[sequence.Type] += sequence.Amount;
+                    }
+                }
+            }
+
+            return count;
         }
 
         public float Progress(float deltaTime)
