@@ -1,3 +1,4 @@
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using Zenject;
@@ -20,22 +21,38 @@ public class WaveView : BaseView
 
     protected override void UpdateLogic()
     {
-        if(_game.IsReady)
+        if (_game.IsReady)
         {
             _canvasGroup.alpha = 0;
             return;
         }
 
-        _canvasGroup.alpha = 1;
 
         if (_road != null)
         {
             var enemiesCount = _game.ScenarioState.Wave.GetEnemiesCount(_road);
 
+            if (!enemiesCount.Any(x => x.Value > 0))
+            {
+                _canvasGroup.alpha = 0;
+                return;
+            }
+
+            _canvasGroup.alpha = 1;
+
             foreach (var enemy in enemiesCount)
             {
-                if(_countText.ContainsKey(enemy.Key))
+                if (_countText.ContainsKey(enemy.Key))
                 {
+                    TextMeshProUGUI text = _countText[enemy.Key];
+
+                    if (enemy.Value == 0)
+                    {
+                        text.transform.parent.gameObject.SetActive(false);
+                        continue;
+                    }
+
+                    text.transform.parent.gameObject.SetActive(true);
                     _countText[enemy.Key].text = enemy.Value.ToString();
                 }
             }
