@@ -1,11 +1,19 @@
 using UnityEngine;
 using ToolBox.Pools;
 
+[RequireComponent(typeof(LineRenderer))]
 public abstract class BaseProjectile : MonoBehaviour
 {
+    protected LineRenderer _lineRenderer;
+
     protected float _gravity = 9.81f;
     protected float _damage = 10f;
     protected Vector3 _launchPoint, _launchVelocity;
+
+    protected virtual void Awake()
+    {
+        _lineRenderer = GetComponent<LineRenderer>();
+    }
 
     public virtual void Initialize(Vector3 launchPoint, Vector3 launchVelocity, float damage, float physicsDrop)
     {
@@ -25,6 +33,8 @@ public abstract class BaseProjectile : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         Damage(collision);
+
+        _lineRenderer.positionCount = 0;
         gameObject.Release();
     }
 

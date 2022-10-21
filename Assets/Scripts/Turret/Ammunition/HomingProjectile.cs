@@ -9,11 +9,6 @@ public class HomingProjectile : BaseProjectile
 
     private bool _initialized = false;
 
-    private void Start()
-    {
-        transform.position = _launchPoint;
-    }
-
     public void SetY(bool enabled)
     {
         _yMove = enabled;
