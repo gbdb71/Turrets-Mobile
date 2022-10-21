@@ -35,12 +35,12 @@ public class PopupText : MonoBehaviour
 
         float duration = _hideDuration * (int)durationType;
 
-        _transform.DOLocalMoveY(transform.localPosition.y + _yMovement, duration * .8f).OnComplete(() =>
+        _transform.DOLocalMoveY(transform.localPosition.y + _yMovement, duration * .6f).OnComplete(() =>
         {
             _transform.SetParent(null);
             gameObject.Release();
         });
 
-        _text.DOFade(0f, duration);
+        _text.DOFade(0f, duration).From(1f).SetEase(Ease.OutFlash);
     }
 }

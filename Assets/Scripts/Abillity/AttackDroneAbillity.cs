@@ -16,4 +16,6 @@ public class AttackDroneAbillity : BaseAbillity<DroneAbillitySettings>
             Clear();
         }
     }
+
+    public override bool HasDelay() => false;
 }

@@ -25,13 +25,15 @@ MonoBehaviour:
       - Abillity:
           typeReference: AttackDroneAbillity, Assembly-CSharp
         AbillityChance: 0.07
+        AbillityPrefab: {fileID: 1253945432546544441, guid: b8a6f791ba8a9474aa06c171e306bd0c, type: 3}
       - Abillity:
           typeReference: TurretDamageAbillity, Assembly-CSharp
         AbillityChance: 0.17
+        AbillityPrefab: {fileID: 1253945432546544441, guid: de3aaae0d263dd147872f1460889346a, type: 3}
       - Abillity:
           typeReference: TurretFireAbillity, Assembly-CSharp
         AbillityChance: 0.17
-      _abillityPrefab: {fileID: 1253945432546544441, guid: de3aaae0d263dd147872f1460889346a, type: 3}
+        AbillityPrefab: {fileID: 1253945432546544441, guid: de3aaae0d263dd147872f1460889346a, type: 3}
   _large:
     Prefab: {fileID: -6491075291442993941, guid: b757fc765daab9d41bcd38c74bcee8d0, type: 3}
     Scale: {x: 1.5, y: 1.5}
@@ -45,13 +47,15 @@ MonoBehaviour:
       - Abillity:
           typeReference: AttackDroneAbillity, Assembly-CSharp
         AbillityChance: 0.5
+        AbillityPrefab: {fileID: 1253945432546544441, guid: b8a6f791ba8a9474aa06c171e306bd0c, type: 3}
       - Abillity:
           typeReference: TurretDamageAbillity, Assembly-CSharp
         AbillityChance: 0.8
+        AbillityPrefab: {fileID: 1253945432546544441, guid: de3aaae0d263dd147872f1460889346a, type: 3}
       - Abillity:
           typeReference: TurretFireAbillity, Assembly-CSharp
         AbillityChance: 0.8
-      _abillityPrefab: {fileID: 1253945432546544441, guid: de3aaae0d263dd147872f1460889346a, type: 3}
+        AbillityPrefab: {fileID: 1253945432546544441, guid: de3aaae0d263dd147872f1460889346a, type: 3}
   _medium:
     Prefab: {fileID: -6491075291442993941, guid: 3a05a58aa452f0e4eaa6588023b54db3, type: 3}
     Scale: {x: 1.25, y: 1.25}
@@ -65,10 +69,12 @@ MonoBehaviour:
       - Abillity:
           typeReference: AttackDroneAbillity, Assembly-CSharp
         AbillityChance: 0.18
+        AbillityPrefab: {fileID: 1253945432546544441, guid: b8a6f791ba8a9474aa06c171e306bd0c, type: 3}
       - Abillity:
           typeReference: TurretDamageAbillity, Assembly-CSharp
         AbillityChance: 0.25
+        AbillityPrefab: {fileID: 1253945432546544441, guid: de3aaae0d263dd147872f1460889346a, type: 3}
       - Abillity:
           typeReference: TurretFireAbillity, Assembly-CSharp
         AbillityChance: 0.25
-      _abillityPrefab: {fileID: 1253945432546544441, guid: de3aaae0d263dd147872f1460889346a, type: 3}
+        AbillityPrefab: {fileID: 1253945432546544441, guid: de3aaae0d263dd147872f1460889346a, type: 3}

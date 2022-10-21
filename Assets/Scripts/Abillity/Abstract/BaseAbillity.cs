@@ -18,6 +18,13 @@ public abstract class BaseAbillity<ConfigType> : MonoBehaviour, IAbillity where 
         _popupPrefab = Resources.Load<PopupText>("GameData/Effects/PopupText");
 
         Collider = GetComponent<Collider>();
+
+        if(Collider == null)
+        {
+            Collider = gameObject.AddComponent<Collider>();
+        }
+
+        Collider.isTrigger = true;
     }
 
     public virtual void Clear() => Destroy(gameObject);
@@ -28,9 +35,9 @@ public abstract class BaseAbillity<ConfigType> : MonoBehaviour, IAbillity where 
         popup.SetText(_config.ActivateText, PopupText.DurationType.Long);
     }
     public virtual bool CanActivate() => true;
+    public virtual bool HasDelay() => true;
 
     public Transform GetTransform() => transform;
-
     public virtual Vector3 PopupPosition => _player.transform.position + new Vector3(0, 2.2f, 0);
 }
 

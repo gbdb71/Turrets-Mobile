@@ -54,36 +54,7 @@ public class PlayerInventory : MonoBehaviour
     {
         UpdateTimers();
 
-        if (_abillityDelayTimer <= 0f)
-        {
-            for (int i = _inventoryAbillities.Count - 1; i >= 0; i--)
-            {
-                IAbillity abillity = _inventoryAbillities[i];
-
-                if (abillity == null)
-                {
-                    _inventoryAbillities.RemoveAt(i);
-                    continue;
-                }
-
-                if (abillity.CanActivate())
-                {
-                    _abillityDelayTimer = .8f;
-
-                    _inventoryAbillities.RemoveAt(i);
-                    abillity.Activate();
-
-                    break;
-                }
-            }
-        }
-
-        if (_interactTimer >= _interactCheckTime)
-        {
-            _interactTimer = 0;
-
-            CheckInteract();
-        }
+        UpdateAbillities();
 
         if (_nearTurret != null)
         {
@@ -106,6 +77,34 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
+    private void UpdateAbillities()
+    {
+        for (int i = _inventoryAbillities.Count - 1; i >= 0; i--)
+        {
+            IAbillity abillity = _inventoryAbillities[i];
+
+            if (abillity == null)
+            {
+                _inventoryAbillities.RemoveAt(i);
+                continue;
+            }
+
+            if (abillity.CanActivate())
+            {
+                if (abillity.HasDelay() && _abillityDelayTimer > 0)
+                    continue;
+
+                _abillityDelayTimer = .8f;
+
+                _inventoryAbillities.RemoveAt(i);
+                abillity.Activate();
+
+                break;
+            }
+        }
+
+    }
+
     private void UpdateTimers()
     {
         if (_takeDelayTimer > 0)
@@ -118,6 +117,13 @@ public class PlayerInventory : MonoBehaviour
             _abillityDelayTimer -= Time.deltaTime;
 
         _interactTimer += Time.deltaTime;
+
+        if (_interactTimer >= _interactCheckTime)
+        {
+            _interactTimer = 0;
+
+            CheckInteract();
+        }
     }
 
     private void CheckInteract()
@@ -151,7 +157,8 @@ public class PlayerInventory : MonoBehaviour
                 Transform abillityTransform = abillity.GetTransform();
                 abillityTransform.GetComponent<Collider>().enabled = false;
 
-                abillityTransform.parent = _backpackPoint.transform;
+                abillityTransform.SetParent(_backpackPoint.transform, true);
+                abillityTransform.localScale = Vector3.one;
 
                 int index = _inventoryAbillities.Count;
 

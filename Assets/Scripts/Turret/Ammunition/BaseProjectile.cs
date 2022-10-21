@@ -21,6 +21,7 @@ public abstract class BaseProjectile : MonoBehaviour
     {
         Move();
     }
+
     private void OnCollisionEnter(Collision collision)
     {
         Damage(collision);
