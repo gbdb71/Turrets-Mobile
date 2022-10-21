@@ -38,6 +38,7 @@ public class Enemy : MonoBehaviour
     private Renderer _bodyRenderer;
     private SplineFollower _follower;
 
+    private float _speed = 0;
     private float _damage = 0;
     private float _health = 0f;
     private RewardSettings _rewardSettings;
@@ -87,6 +88,7 @@ public class Enemy : MonoBehaviour
 
         Velocity = (transform.position - _lastPosition) / Time.deltaTime;
         _lastPosition = transform.position;
+        _follower.followSpeed = (_speed - (_speed * _deceleration));
 
         if (!_isFinished && _follower.GetPercent() >= .95f)
         {
@@ -103,7 +105,7 @@ public class Enemy : MonoBehaviour
 
     public void Initialize(float speed, float scale, float health, float damage, RewardSettings rewardSettings)
     {
-        _follower.followSpeed = speed;
+        _speed = speed;
 
         gameObject.transform.localScale = new Vector3(scale, scale, scale);
 
