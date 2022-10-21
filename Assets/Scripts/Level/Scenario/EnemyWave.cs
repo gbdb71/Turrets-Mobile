@@ -77,11 +77,15 @@ public class EnemyWave
                 float prevProgress = (float)sequence.Index / sequence.EnemySequences.Length;
                 roadsProgress += prevProgress + (_sequences[i].SequenceProgress / sequence.EnemySequences.Length);
 
+                if (deltaTime < 0)
+                {
+                    allFinished = false;
+                }
+
                 while (deltaTime >= 0f)
                 {
                     if (++sequence.Index < sequence.EnemySequences.Length)
                     {
-                        allFinished = false;
                         _sequences[i] = sequence.EnemySequences[sequence.Index].Begin(sequence.Road);
                         deltaTime = _sequences[i].Progress(deltaTime);
                     }

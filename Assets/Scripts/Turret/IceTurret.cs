@@ -6,7 +6,7 @@ public class IceTurret : BaseTurret
     [Label("Attack Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField, Range(1, 180)] protected float _damageAngle = 20f;
     [SerializeField, Range(.001f, 1f)] protected float _attackRate = .1f;
-    [SerializeField, Range(.1f, 1.5f)] protected float _decelerationPerAttack = 1f; 
+    [SerializeField, Range(.1f, 1.5f)] protected float _decelerationPerAttack = 1f;
 
     [Label("Visual Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField, NotNull] protected VisualEffect _throwEffect;
@@ -19,7 +19,10 @@ public class IceTurret : BaseTurret
     {
         base.Start();
 
-        _throwEffect.SetFloat("Angle", _damageAngle);
+        if (_throwEffect != null)
+        {
+            _throwEffect.SetFloat("Angle", _damageAngle);
+        }
     }
 
     protected override void Fire()
@@ -43,7 +46,7 @@ public class IceTurret : BaseTurret
         {
             _fireTime = 0f;
 
-            base.Fire();    
+            base.Fire();
         }
     }
     private void DamageArea()
