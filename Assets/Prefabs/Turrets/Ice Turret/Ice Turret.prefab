@@ -457,7 +457,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32631c9c3a97d444987569d91cecf2a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 5
+  _damage: 6
   _fireDelay: 0.5
   _shootPivot:
   - {fileID: 3805081200559784805}
@@ -469,7 +469,7 @@ MonoBehaviour:
   _rangeColor: {r: 0.32941177, g: 0.7843138, b: 0.8470589, a: 1}
   _damageAngle: 35
   _attackRate: 1
-  _decelerationPerAttack: 0.45
+  _decelerationPerAttack: 1.5
   _throwEffect: {fileID: 2699958650359207781}
 --- !u!1001 &565902665737822422
 PrefabInstance:
