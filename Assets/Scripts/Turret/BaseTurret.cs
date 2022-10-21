@@ -20,15 +20,13 @@ public abstract class BaseTurret : MonoBehaviour
     [SerializeField] private ParticleSystem upgradeParticle;
 
     [Label("Selected settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
-    private Renderer[] _renderers;
-    [SerializeField] private Material mainMaterial;
-    [SerializeField] private Material selectedMaterial;
     [SerializeField] private Image _rangeImage;
     [SerializeField] private Color _rangeColor;
+    [SerializeField, ColorUsage(true, true)] private Color _selectedColor;
 
-    [Space]
     protected int _currentShootPivot = 0;
 
+    private Renderer[] _renderers;
     protected TurretAim _aim;
     protected Enemy _currentTarget;
 
@@ -48,7 +46,7 @@ public abstract class BaseTurret : MonoBehaviour
     }
     protected virtual void Start()
     {
-        if(_rangeImage != null)
+        if (_rangeImage != null)
         {
             _rangeImage.color = _rangeColor;
             _rangeImage.transform.localScale = new Vector3(_aim.AimDistance, _aim.AimDistance, _aim.AimDistance);
@@ -134,7 +132,8 @@ public abstract class BaseTurret : MonoBehaviour
     {
         for (int i = 0; i < _renderers.Length; i++)
         {
-            _renderers[i].material = selected ? selectedMaterial : mainMaterial;
+            _renderers[i].material.EnableKeyword("_EMISSION");
+            _renderers[i].material.SetColor("_EmissionColor", selected ? _selectedColor : new Color(0, 0, 0, 0));
         }
 
         SetActiveRangeImage(selected);

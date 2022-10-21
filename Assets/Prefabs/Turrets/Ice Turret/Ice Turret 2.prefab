@@ -269,10 +269,9 @@ MonoBehaviour:
   - {fileID: 3805081200559784805}
   _nextGrade: {fileID: 4123050127064966816, guid: 3c614fc68da5e774f8f4893c8d79bc5c, type: 3}
   upgradeParticle: {fileID: 5539242188147041897}
-  mainMaterial: {fileID: 2100000, guid: 2722dd08cac6a5940929d22a65b31269, type: 2}
-  selectedMaterial: {fileID: 2100000, guid: 5f62031a35a2a214a958e955ff6bc351, type: 2}
   _rangeImage: {fileID: 7440713582881072198}
   _rangeColor: {r: 0.32941177, g: 0.7843138, b: 0.8470589, a: 1}
+  _selectedColor: {r: 0.42745098, g: 0.42745098, b: 0.42745098, a: 0}
   _damageAngle: 45
   _attackRate: 1
   _decelerationPerAttack: 0.6
@@ -337,7 +336,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2722dd08cac6a5940929d22a65b31269, type: 2}
+  - {fileID: 2100000, guid: 751228c6183f65c49933f23d7f97e19b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -418,7 +417,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2722dd08cac6a5940929d22a65b31269, type: 2}
+  - {fileID: 2100000, guid: 751228c6183f65c49933f23d7f97e19b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

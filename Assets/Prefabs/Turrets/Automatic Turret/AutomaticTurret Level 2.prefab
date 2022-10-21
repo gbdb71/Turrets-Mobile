@@ -100,10 +100,9 @@ MonoBehaviour:
   - {fileID: 13617853541934872}
   _nextGrade: {fileID: 1006089489906742133, guid: 790239f2ed226284fbdcf0340b671d94, type: 3}
   upgradeParticle: {fileID: 805503858319687265}
-  mainMaterial: {fileID: 2100000, guid: 2722dd08cac6a5940929d22a65b31269, type: 2}
-  selectedMaterial: {fileID: 2100000, guid: 5f62031a35a2a214a958e955ff6bc351, type: 2}
   _rangeImage: {fileID: 5979728218563216568}
   _rangeColor: {r: 0.9960785, g: 0.70980394, b: 0.38431376, a: 1}
+  _selectedColor: {r: 0.42745098, g: 0.42745098, b: 0.42745098, a: 0}
   _bulletSpeed: 10
   _projectilePrefab: {fileID: 2147293829527817372, guid: 958b2fa6ec39a224fa3db3a24520aee3, type: 3}
   gunMove: {x: 0.001, y: -0.001}
@@ -223,7 +222,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2722dd08cac6a5940929d22a65b31269, type: 2}
+  - {fileID: 2100000, guid: 751228c6183f65c49933f23d7f97e19b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -306,7 +305,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2722dd08cac6a5940929d22a65b31269, type: 2}
+  - {fileID: 2100000, guid: 751228c6183f65c49933f23d7f97e19b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -389,7 +388,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2722dd08cac6a5940929d22a65b31269, type: 2}
+  - {fileID: 2100000, guid: 751228c6183f65c49933f23d7f97e19b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -502,7 +501,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2722dd08cac6a5940929d22a65b31269, type: 2}
+  - {fileID: 2100000, guid: 751228c6183f65c49933f23d7f97e19b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
