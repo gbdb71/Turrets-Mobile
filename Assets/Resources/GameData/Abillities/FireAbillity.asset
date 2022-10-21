@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ActivateText: FIRE UP!
   TextColor: {r: 0.07062123, g: 0.6509434, b: 0.122799955, a: 1}
-  _firePercents: {x: 1, y: 10}
+  _firePercents: {x: 10, y: 20}

@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ActivateText: DAMAGE UP!
   TextColor: {r: 0.07058824, g: 0.6509804, b: 0.12156863, a: 1}
-  _damagePercents: {x: 1, y: 10}
+  _damagePercents: {x: 15, y: 20}
