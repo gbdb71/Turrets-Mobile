@@ -18,17 +18,18 @@ public class MortarShell : BaseProjectile
 
     protected override void Damage(Collision collision)
     {
-        TargetPoint.FillBuffer(collision.transform.position, _blastRadius);
 
-        _mortarDamageParticle.Reuse(collision.GetContact(0).point, Quaternion.identity);
+        Vector3 collisionPoint = collision.GetContact(0).point;
+        _mortarDamageParticle.Reuse(collisionPoint, Quaternion.identity);
 
+        TargetPoint.FillBuffer(collisionPoint, _blastRadius);
         for (int i = 0; i < TargetPoint.BufferedCount; i++)
         {
             Enemy enemy = TargetPoint.GetBuffered(i);
             if (enemy == null)
-                break;
+                continue;
 
-            float distance = Vector3.Distance(collision.transform.position, enemy.transform.position);
+            float distance = Vector3.Distance(collisionPoint, enemy.transform.position);
 
             float percent = distance / _blastRadius;
             float minDamage = (_damage / 3);
