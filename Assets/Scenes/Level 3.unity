@@ -1522,6 +1522,10 @@ PrefabInstance:
       value: Gun Factory
       objectReference: {fileID: 0}
     - target: {fileID: 6140268463261831372, guid: 57655a98714a50e42929f19d2504faef, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6140268463261831372, guid: 57655a98714a50e42929f19d2504faef, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
@@ -15614,6 +15618,10 @@ PrefabInstance:
       value: Ice Factory
       objectReference: {fileID: 0}
     - target: {fileID: 7909025906447340614, guid: 742f8a67d8843584cab0572e861ba6d0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7909025906447340614, guid: 742f8a67d8843584cab0572e861ba6d0, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 4294967295
       objectReference: {fileID: 0}
@@ -16761,7 +16769,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2315681298973498248, guid: aa92310a671f08e49b1784f91f7a9ce8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 33.87
+      value: 25.17
       objectReference: {fileID: 0}
     - target: {fileID: 2315681298973498248, guid: aa92310a671f08e49b1784f91f7a9ce8, type: 3}
       propertyPath: m_LocalPosition.y

@@ -280,8 +280,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3499ea574fa5f3a4486bed9e40690dd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 30
-  _fireDelay: 1.5
+  _damage: 10
+  _fireDelay: 2
   _shootPivot:
   - {fileID: 3642958238143821735}
   _nextGrade: {fileID: 7157497047578270226, guid: c6466c6a1f6e13f43b95aa09513fa011, type: 3}

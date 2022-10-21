@@ -9,9 +9,12 @@ public class InteractTrigger : MonoBehaviour
     private IInteractable interactable;
     private bool triggerIsActive;
 
+    private float defaultLocalYPosition;
+
     private void Awake()
     {
         interactable = GetComponentInParent<IInteractable>();
+        defaultLocalYPosition = transform.localPosition.y;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -21,7 +24,7 @@ public class InteractTrigger : MonoBehaviour
             triggerIsActive = true;
             interactable.OnEnter(player);
 
-            transform.DOScale(_interactScale, .3f).SetEase(Ease.InBounce);
+            transform.DOScale(_interactScale, .3f).SetEase(Ease.InOutBack);
         }
     }
 
@@ -42,7 +45,6 @@ public class InteractTrigger : MonoBehaviour
         {
             triggerIsActive = false;
             interactable.OnExit(player);
-
 
             transform.DOScale(Vector3.one, .3f).SetEase(Ease.InOutBack);
         }

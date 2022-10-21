@@ -165,12 +165,16 @@ MonoBehaviour:
   - sceneReference: {fileID: 102900000, guid: 9fc0d4010bbf28b4594072e72b8655ab, type: 3}
     sceneName: Level 1
     scenePath: Assets/Scenes/Level 1.unity
-    buildIndex: 0
+    buildIndex: 1
   - sceneReference: {fileID: 102900000, guid: d7c1699cb34b44f4497c11325e61b923, type: 3}
     sceneName: Level 2
     scenePath: Assets/Scenes/Level 2.unity
-    buildIndex: -1
+    buildIndex: 3
   - sceneReference: {fileID: 102900000, guid: c38ca9b681d965a409a3045f2deb1538, type: 3}
     sceneName: Level 3
     scenePath: Assets/Scenes/Level 3.unity
+    buildIndex: 2
+  - sceneReference: {fileID: 102900000, guid: 0bc0923f91beecf40aa5f2f15bd2749f, type: 3}
+    sceneName: Level 4
+    scenePath: Assets/Scenes/Level 4.unity
     buildIndex: -1
