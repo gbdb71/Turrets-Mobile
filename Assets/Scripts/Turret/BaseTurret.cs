@@ -52,7 +52,6 @@ public abstract class BaseTurret : MonoBehaviour
         if (_rangeImage != null)
         {
             _rangeImage.color = _rangeColor;
-            _rangeImage.transform.localScale = new Vector3(_aim.AimDistance, _aim.AimDistance, _aim.AimDistance);
         }
     }
 
@@ -167,7 +166,10 @@ public abstract class BaseTurret : MonoBehaviour
 
     public void SetActiveRangeImage(bool enabled)
     {
-        if (_rangeImage != null)
-            _rangeImage.gameObject.SetActive(enabled);
+        if (_rangeImage == null)
+            return;
+
+        _rangeImage.gameObject.SetActive(enabled);
+        _rangeImage.transform.DOScale(new Vector3(_aim.AimDistance, _aim.AimDistance, _aim.AimDistance), .3f).From(Vector3.zero).SetEase(Ease.OutBack);
     }
 }

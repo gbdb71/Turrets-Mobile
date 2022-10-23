@@ -21,6 +21,8 @@ public class LevelScenario
         private EnemyWave.State _wave;
         private LevelScenario _scenario;
         private int _index;
+
+        public int WaveIndex => _index;
         public EnemyWave.State Wave => _wave;
 
         public State(LevelScenario scenario)

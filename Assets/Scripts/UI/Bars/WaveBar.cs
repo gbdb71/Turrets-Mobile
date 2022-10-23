@@ -8,6 +8,7 @@ public class WaveBar : MonoBehaviour
 {
     [SerializeField] private Transform content;
     [SerializeField] private Button _readyButton;
+    [SerializeField] private TextMeshProUGUI _titleText;
 
     [Inject] private GameLogic _game;
 
@@ -24,8 +25,10 @@ public class WaveBar : MonoBehaviour
 
     public void Update()
     {
-        if (!_game.IsReady)
-            return;
+        if(!_game.IsReady && _game.ScenarioState != null)
+        {
+            _titleText.text = $"Wave {_game.ScenarioState.WaveIndex + 1}";
+        }
     }
 
     private void SetReady()
@@ -37,7 +40,6 @@ public class WaveBar : MonoBehaviour
     private void Show(int index)
     {
         _game.SetReady(false);
-
         content.gameObject.SetActive(true);
     }
 

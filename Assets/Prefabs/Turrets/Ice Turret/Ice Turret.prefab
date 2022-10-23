@@ -28,6 +28,7 @@ Transform:
   m_LocalRotation: {x: 0.000000021855694, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.2022782, z: 0}
   m_LocalScale: {x: 100, y: 100, z: 100}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3805081200559784805}
   m_Father: {fileID: 856421760991539132}
@@ -52,6 +53,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -110,6 +112,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.005, y: 0.005, z: 0.005}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3805081200559784805}
   m_RootOrder: 0
@@ -156,6 +159,7 @@ VisualEffect:
       m_Array: []
 --- !u!73398921 &2699958650359207780
 VFXRenderer:
+  serializedVersion: 1
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -165,6 +169,7 @@ VFXRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 0
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
@@ -172,10 +177,6 @@ VFXRenderer:
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -224,6 +225,7 @@ Transform:
   m_LocalRotation: {x: 0.000000021855694, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.19395626, z: 0}
   m_LocalScale: {x: 100, y: 100, z: 100}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6989716615632269596}
   m_RootOrder: 0
@@ -247,6 +249,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -303,6 +306,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4293119473046330120}
   m_Father: {fileID: 6989716615632269596}
@@ -334,6 +338,7 @@ Transform:
   m_LocalRotation: {x: -0.000000021855694, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0.00626}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2699958650359207803}
   m_Father: {fileID: 4293119473046330120}
@@ -365,6 +370,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.37, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1114267297474218889}
   - {fileID: 856421760991539132}
@@ -400,6 +406,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6989716615632269596}
   - {fileID: 4738893794609951964}
@@ -478,6 +485,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4123050127064966491}
     m_Modifications:
+    - target: {fileID: 5570951227468730369, guid: 0a9756bcac4de8745a8c2d320ca5e038, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5570951227468730370, guid: 0a9756bcac4de8745a8c2d320ca5e038, type: 3}
       propertyPath: m_Name
       value: TurretCanvas
@@ -572,11 +583,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0a9756bcac4de8745a8c2d320ca5e038, type: 3}
---- !u!224 &5374346702242394325 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 5570951227468730371, guid: 0a9756bcac4de8745a8c2d320ca5e038, type: 3}
-  m_PrefabInstance: {fileID: 565902665737822422}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &5374346701734548478 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5570951227766862632, guid: 0a9756bcac4de8745a8c2d320ca5e038, type: 3}
@@ -588,6 +594,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &5374346702242394325 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 5570951227468730371, guid: 0a9756bcac4de8745a8c2d320ca5e038, type: 3}
+  m_PrefabInstance: {fileID: 565902665737822422}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4738893794609542488
 PrefabInstance:
   m_ObjectHideFlags: 0
