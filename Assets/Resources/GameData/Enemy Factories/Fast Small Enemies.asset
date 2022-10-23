@@ -1,0 +1,80 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8255919a8b658314b81b2629cae999cc, type: 3}
+  m_Name: Fast Small Enemies
+  m_EditorClassIdentifier: 
+  _small:
+    Prefab: {fileID: -6491075291442993941, guid: b527f8899ba57461fbb0f1bd903ac65e, type: 3}
+    Scale: {x: 1, y: 1}
+    Speed: {x: 1.2, y: 1.2}
+    Health: {x: 50, y: 50}
+    Damage: 30
+    RewardSettings:
+      _currencyPrefab: {fileID: 8145354069981301352, guid: 31722adbeecc8d847a5ce18e1e71833f, type: 3}
+      _amount: {x: 2, y: 3}
+      _abillities:
+      - Abillity:
+          typeReference: AttackDroneAbillity, Assembly-CSharp
+        AbillityChance: 0.2
+        AbillityPrefab: {fileID: 1253945432546544441, guid: b8a6f791ba8a9474aa06c171e306bd0c, type: 3}
+      - Abillity:
+          typeReference: TurretDamageAbillity, Assembly-CSharp
+        AbillityChance: 0.25
+        AbillityPrefab: {fileID: 1253945432546544441, guid: de3aaae0d263dd147872f1460889346a, type: 3}
+      - Abillity:
+          typeReference: TurretFireAbillity, Assembly-CSharp
+        AbillityChance: 0.25
+        AbillityPrefab: {fileID: 1253945432546544441, guid: de3aaae0d263dd147872f1460889346a, type: 3}
+  _large:
+    Prefab: {fileID: -6491075291442993941, guid: b757fc765daab9d41bcd38c74bcee8d0, type: 3}
+    Scale: {x: 2, y: 2}
+    Speed: {x: 0.7, y: 0.7}
+    Health: {x: 350, y: 550}
+    Damage: 90
+    RewardSettings:
+      _currencyPrefab: {fileID: 8145354069981301352, guid: 31722adbeecc8d847a5ce18e1e71833f, type: 3}
+      _amount: {x: 20, y: 40}
+      _abillities:
+      - Abillity:
+          typeReference: AttackDroneAbillity, Assembly-CSharp
+        AbillityChance: 0.5
+        AbillityPrefab: {fileID: 1253945432546544441, guid: b8a6f791ba8a9474aa06c171e306bd0c, type: 3}
+      - Abillity:
+          typeReference: TurretDamageAbillity, Assembly-CSharp
+        AbillityChance: 0.8
+        AbillityPrefab: {fileID: 1253945432546544441, guid: de3aaae0d263dd147872f1460889346a, type: 3}
+      - Abillity:
+          typeReference: TurretFireAbillity, Assembly-CSharp
+        AbillityChance: 0.8
+        AbillityPrefab: {fileID: 1253945432546544441, guid: de3aaae0d263dd147872f1460889346a, type: 3}
+  _medium:
+    Prefab: {fileID: -6491075291442993941, guid: 3a05a58aa452f0e4eaa6588023b54db3, type: 3}
+    Scale: {x: 1.25, y: 1.25}
+    Speed: {x: 1.3, y: 1.3}
+    Health: {x: 150, y: 200}
+    Damage: 60
+    RewardSettings:
+      _currencyPrefab: {fileID: 8145354069981301352, guid: 31722adbeecc8d847a5ce18e1e71833f, type: 3}
+      _amount: {x: 10, y: 20}
+      _abillities:
+      - Abillity:
+          typeReference: AttackDroneAbillity, Assembly-CSharp
+        AbillityChance: 0.3
+        AbillityPrefab: {fileID: 1253945432546544441, guid: b8a6f791ba8a9474aa06c171e306bd0c, type: 3}
+      - Abillity:
+          typeReference: TurretDamageAbillity, Assembly-CSharp
+        AbillityChance: 0.35
+        AbillityPrefab: {fileID: 1253945432546544441, guid: de3aaae0d263dd147872f1460889346a, type: 3}
+      - Abillity:
+          typeReference: TurretFireAbillity, Assembly-CSharp
+        AbillityChance: 0.35
+        AbillityPrefab: {fileID: 1253945432546544441, guid: de3aaae0d263dd147872f1460889346a, type: 3}

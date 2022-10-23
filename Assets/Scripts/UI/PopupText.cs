@@ -31,7 +31,7 @@ public class PopupText : MonoBehaviour
 
     public void SetText(string value, DurationType durationType = DurationType.Default)
     {
-        _text.text = value; 
+        _text.text = value;
 
         float duration = _hideDuration * (int)durationType;
 
@@ -41,6 +41,6 @@ public class PopupText : MonoBehaviour
             gameObject.Release();
         });
 
-        _text.DOFade(0f, duration).From(1f).SetEase(Ease.OutFlash);
+        _text.DOFade(0f, duration * .6f).From(1f).SetEase(Ease.OutFlash).SetDelay(0.2f);
     }
 }

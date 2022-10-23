@@ -1507,13 +1507,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 682ee7405c060bd4bb6e2bb946dc9883, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotationSpeed: 55
   _dashSpeed: 1
   _dashRotationSpeed: 0.25
   _finishOffset: {x: 0, y: -1.5, z: 0}
   _flickerDuration: 0.25
-  _damageParticle: {fileID: 7605164056796649255, guid: f0d1d0fcd0f6f054697c4764a7a0dda8, type: 3}
-  _damageText: {fileID: 9023979252470536555, guid: 0c5fc72adee6ca44ca827bb731f941c6, type: 3}
+  _damageParticle: {fileID: 7605164056796649255, guid: ef825ade180aba44b9355da4f5aca8c3, type: 3}
   _damageTextOffset: 1.8
   _decelerationDrop: 0.35
   lightTexture: {fileID: 2800000, guid: 9c95ff609a65b0c43899c485c97b20e1, type: 3}

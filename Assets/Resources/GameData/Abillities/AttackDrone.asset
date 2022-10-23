@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3894e213c7895d4987cb102f4eb7e23, type: 3}
   m_Name: AttackDrone
   m_EditorClassIdentifier: 
-  ActivateText: DRONE!
+  ActivateText: Attack drone!
   TextColor: {r: 0.6509804, g: 0.09813873, b: 0.07058823, a: 1}
   _dronePrefab: {fileID: 7487901703973412298, guid: 2bdccc114c76d5647910a9af745d5510, type: 3}

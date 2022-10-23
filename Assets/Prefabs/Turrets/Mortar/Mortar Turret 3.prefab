@@ -311,8 +311,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3499ea574fa5f3a4486bed9e40690dd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _damage: 37.5
-  _fireDelay: 1
+  _damage: 50
+  _fireDelay: 2.5
   _shootPivot:
   - {fileID: 3642958238143821735}
   _nextGrade: {fileID: 7157497047578270226, guid: c28485ba04aff5b49a1ed98168c6568d, type: 3}
@@ -320,7 +320,7 @@ MonoBehaviour:
   _rangeImage: {fileID: 853045824304759070}
   _rangeColor: {r: 0.15294118, g: 0.7686275, b: 0.52156866, a: 1}
   _selectedColor: {r: 0.42745098, g: 0.42745098, b: 0.42745098, a: 0}
-  _projectileRadius: 1.5
+  _projectileRadius: 2.2
   _shellPrefab: {fileID: 8119367024055230900, guid: b4994758d6a28244cb8b3de362e3b37a, type: 3}
   _muzzleParticle: {fileID: 8441845825057252693}
 --- !u!1 &8366091649632105505

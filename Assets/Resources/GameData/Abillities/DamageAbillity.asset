@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7ccd33fab00ba943be94c86a9805f3d, type: 3}
   m_Name: DamageAbillity
   m_EditorClassIdentifier: 
-  ActivateText: DAMAGE UP!
+  ActivateText: Turret damage up!
   TextColor: {r: 0.07058824, g: 0.6509804, b: 0.12156863, a: 1}
-  _damagePercents: {x: 15, y: 20}
+  _damagePercents: {x: 10, y: 10}

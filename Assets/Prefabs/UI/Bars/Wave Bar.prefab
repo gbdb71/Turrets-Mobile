@@ -439,10 +439,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   content: {fileID: 573397348888492917}
-  titleText: {fileID: 4267018681151975136}
   _readyButton: {fileID: 5153455333437434043}
-  waveProgressFill: {fileID: 0}
-  fillTime: 0.25
 --- !u!1 &8896439223916523717
 GameObject:
   m_ObjectHideFlags: 0

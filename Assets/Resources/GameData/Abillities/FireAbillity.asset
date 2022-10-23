@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 93fa814e9bd4cf645a418b1926caadbd, type: 3}
   m_Name: FireAbillity
   m_EditorClassIdentifier: 
-  ActivateText: FIRE UP!
+  ActivateText: Turret attack speed up!
   TextColor: {r: 0.07062123, g: 0.6509434, b: 0.122799955, a: 1}
-  _firePercents: {x: 10, y: 20}
+  _firePercents: {x: 10, y: 10}

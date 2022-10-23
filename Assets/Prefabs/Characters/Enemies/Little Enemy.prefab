@@ -1427,13 +1427,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 682ee7405c060bd4bb6e2bb946dc9883, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotationSpeed: 60
   _dashSpeed: 1
   _dashRotationSpeed: 0.05
   _finishOffset: {x: 0, y: 0, z: 0}
   _flickerDuration: 0.05
   _damageParticle: {fileID: 7605164056796649255, guid: f0d1d0fcd0f6f054697c4764a7a0dda8, type: 3}
-  _damageText: {fileID: 9023979252470536555, guid: 0c5fc72adee6ca44ca827bb731f941c6, type: 3}
   _damageTextOffset: 1.1
   _decelerationDrop: 0.2
   lightTexture: {fileID: 2800000, guid: 9c95ff609a65b0c43899c485c97b20e1, type: 3}
@@ -1687,6 +1685,10 @@ PrefabInstance:
     - target: {fileID: 4465599110721165411, guid: 8980583eab94b9d42bffb9605b70ac48, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4931033081180387044, guid: 8980583eab94b9d42bffb9605b70ac48, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5261326126693367125, guid: 8980583eab94b9d42bffb9605b70ac48, type: 3}
       propertyPath: moveHeight
