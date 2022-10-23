@@ -18,6 +18,7 @@ public class Diamond : MonoBehaviour
     {
         if (destroyed)
             return;
+
         destroyed = true;
         transform.transform.DOScale(Vector3.zero, _scaleDuration).From(Vector3.one).SetEase(Ease.InBack);
         transform.DOLocalMove(new Vector3(0, 1, 0), _scaleDuration).SetEase(Ease.InBack).OnComplete(() =>
