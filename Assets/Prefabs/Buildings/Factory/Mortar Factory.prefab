@@ -85,7 +85,7 @@ MonoBehaviour:
   _interactTime: 0.05
   _type: 1
   _objectCost: 40
-  plateSprite: {fileID: 21300000, guid: 50d9f25b1c60c2a4c830e32dbb381388, type: 3}
+  plateSprite: {fileID: 21300000, guid: 7f3047b0b122bdc45988e8e43e9dbfc9, type: 3}
 --- !u!1001 &2315681298056769503
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -234,6 +234,8 @@ public class PlayerInventory : MonoBehaviour
             {
                 BaseTurret newTurret = Instantiate(_takedTurret.NextGrade, near.transform.position, near.transform.rotation, null);
                 newTurret.PlayUpgradeParticle();
+                newTurret.transform.DOScale(1, 0.5f).SetEase(Ease.OutBack).From(0);
+
 
                 Destroy(_takedTurret.gameObject);
                 Destroy(near);
