@@ -23,6 +23,8 @@ public abstract class BaseTurret : MonoBehaviour
     [SerializeField] private Image _rangeImage;
     [SerializeField] private Color _rangeColor;
     [SerializeField, ColorUsage(true, true)] private Color _selectedColor;
+    [SerializeField] private Material _selectedMaterial;
+    private Material _defaultMaterial;
 
     protected int _currentShootPivot = 0;
 
@@ -41,6 +43,7 @@ public abstract class BaseTurret : MonoBehaviour
     {
         _aim = GetComponent<TurretAim>();
         _renderers = GetComponentsInChildren<MeshRenderer>();
+        _defaultMaterial = _renderers[0].material;
 
         Turrets.Add(this);
     }
@@ -132,8 +135,11 @@ public abstract class BaseTurret : MonoBehaviour
     {
         for (int i = 0; i < _renderers.Length; i++)
         {
-            _renderers[i].material.EnableKeyword("_EMISSION");
-            _renderers[i].material.SetColor("_EmissionColor", selected ? _selectedColor : new Color(0, 0, 0, 0));
+            // _renderers[i].material.EnableKeyword("_EMISSION");
+            if (selected)
+                _renderers[i].material = _selectedMaterial;
+            else
+                _renderers[i].material = _defaultMaterial;
         }
 
         SetActiveRangeImage(selected);

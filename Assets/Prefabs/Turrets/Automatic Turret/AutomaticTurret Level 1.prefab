@@ -132,6 +132,7 @@ MonoBehaviour:
   _rangeImage: {fileID: 7419880670542679785}
   _rangeColor: {r: 0.9960785, g: 0.70980394, b: 0.38431376, a: 1}
   _selectedColor: {r: 0.42745098, g: 0.42745098, b: 0.42745098, a: 0}
+  _selectedMaterial: {fileID: 2100000, guid: ad67c3820a054994895758dc2e46021b, type: 2}
   _bulletSpeed: 10
   _projectilePrefab: {fileID: 2147293829527817372, guid: 958b2fa6ec39a224fa3db3a24520aee3, type: 3}
   gunMove: {x: -0.25, y: -0.375}

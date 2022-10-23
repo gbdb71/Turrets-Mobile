@@ -1,5 +1,7 @@
 using UnityEngine;
 using Zenject;
+using System.Collections;
+using System.Collections.Generic;
 
 [SelectionBase]
 public class Player : MonoBehaviour

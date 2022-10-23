@@ -92,7 +92,7 @@ GameObject:
   - component: {fileID: 8145354069981206088}
   - component: {fileID: 8337591554695307621}
   - component: {fileID: -7961128031378600065}
-  - component: {fileID: 8386407750425682135}
+  - component: {fileID: 54817602604585062}
   m_Layer: 0
   m_Name: Diamond
   m_TagString: Diamond
@@ -147,9 +147,9 @@ MonoBehaviour:
   Amount: 1
   _currencyType: 0
   _rotationDuration: 1.5
-  _scaleDuration: 0.75
---- !u!65 &8386407750425682135
-BoxCollider:
+  _scaleDuration: 0.45
+--- !u!135 &54817602604585062
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -159,7 +159,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2, y: 1, z: 2}
+  m_Radius: 1.74
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &8379996103592640311
 PrefabInstance:
@@ -171,6 +171,10 @@ PrefabInstance:
     - target: {fileID: 145256, guid: 7b117ab47ae99e74fbb811d488c1eb17, type: 3}
       propertyPath: m_Name
       value: Upgrade Particle
+      objectReference: {fileID: 0}
+    - target: {fileID: 145256, guid: 7b117ab47ae99e74fbb811d488c1eb17, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 409988, guid: 7b117ab47ae99e74fbb811d488c1eb17, type: 3}
       propertyPath: m_RootOrder

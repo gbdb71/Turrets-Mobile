@@ -466,6 +466,7 @@ MonoBehaviour:
   _rangeImage: {fileID: 5374346701734548478}
   _rangeColor: {r: 0.32941177, g: 0.7843138, b: 0.8470589, a: 1}
   _selectedColor: {r: 0.42745098, g: 0.42745098, b: 0.42745098, a: 0}
+  _selectedMaterial: {fileID: 2100000, guid: ad67c3820a054994895758dc2e46021b, type: 2}
   _damageAngle: 35
   _attackRate: 1
   _decelerationPerAttack: 1.5
