@@ -26,7 +26,7 @@ public class PlayerAnimations : MonoBehaviour
 
             if (targetLayer != currentLayer)
             {
-                DOTween.To(() => currentLayer, x => _animator.SetLayerWeight(_animationLayer, x), targetLayer, 1);
+                DOTween.To(() => currentLayer, x => _animator.SetLayerWeight(_animationLayer, x), targetLayer, 0.25f);
             }
         }
     }

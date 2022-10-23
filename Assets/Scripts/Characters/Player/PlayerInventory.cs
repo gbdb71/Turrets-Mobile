@@ -181,12 +181,15 @@ public class PlayerInventory : MonoBehaviour
             targetPos.y = _placeOffset.y;
 
             BaseTurret turret = _takedTurret;
-
-            turret.transform.DOJump(targetPos, 1f, 1, .6f).OnComplete(() =>
+            turret.transform.DOScale(new Vector3(1f, 1f, 1f), 0.2f).SetEase(Ease.InOutBack);
+            turret.transform.DOJump(targetPos, 2f, 1, .6f).OnComplete(() =>
             {
                 turret.enabled = true;
                 turret.transform.SetParent(null);
             });
+            var s = DOTween.Sequence();
+            s.Append(turret.transform.DOScale(new Vector3(1.3f, 0.7f, 1.3f), 0.1f)).SetDelay(0.5f);
+            s.Append(turret.transform.DOScale(new Vector3(1f, 1f, 1f), 0.1f));
 
             turret.transform.DORotate(Vector3.zero, 1f);
 
@@ -208,7 +211,13 @@ public class PlayerInventory : MonoBehaviour
         _takedTurret.transform.SetParent(_turretSlot);
 
         _takedTurret.transform.DOLocalRotate(Vector3.zero, 0.3f);
-        _takedTurret.transform.DOLocalMove(Vector3.zero, 0.25f);
+        // _takedTurret.transform.DOLocalMove(Vector3.zero, 0.25f);
+        _takedTurret.transform.DOScale(new Vector3(0.8f, 1.3f, 0.8f), 0.3f);
+
+        var s = DOTween.Sequence();
+        s.Append(_takedTurret.transform.DOLocalJump(Vector3.zero, 1f, 1, 0.3f));
+        s.Append(_takedTurret.transform.DOScale(new Vector3(1.3f, 0.7f, 1.3f), 0.1f));
+        s.Append(_takedTurret.transform.DOScale(new Vector3(1f, 1f, 1f), 0.1f));
 
         _takedTurret.SetSelected(true);
         _takedTurret.enabled = false;
