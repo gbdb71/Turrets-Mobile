@@ -17,7 +17,6 @@ public class Player : MonoBehaviour
     public PlayerInventory Inventory => _inventory;
     public PlayerMovement Movement => _movement;
     public PlayerAnimations PlayerAnimations => _animation;
-    public Data Data => _data;
 
     private void Awake()
     {

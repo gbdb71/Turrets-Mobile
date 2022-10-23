@@ -10,11 +10,11 @@ public class Data : MonoBehaviour, IInitializable
 
     public UserData User => _userData;
 
-    private void Start()
-    {
-        User.PropertyChanged += delegate { SaveData(); };
-    }
     private void OnDisable()
+    {
+        SaveData();
+    }
+    private void OnApplicationQuit()
     {
         SaveData();
     }
