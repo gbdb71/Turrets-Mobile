@@ -38,6 +38,7 @@ public class Enemy : MonoBehaviour
     private Renderer _bodyRenderer;
     private SplineFollower _follower;
 
+    private float _scale;
     private float _speed = 0;
     private float _damage = 0;
     private float _health = 0f;
@@ -99,16 +100,16 @@ public class Enemy : MonoBehaviour
     {
         if (_spawnScaleAnimation)
         {
-            transform.DOScale(Vector3.one, _scaleAnaimtionDuration).From(Vector3.zero).SetEase(Ease.Linear);
+            transform.DOScale(_scale, _scaleAnaimtionDuration).From(Vector3.zero).SetEase(Ease.Linear);
         }
     }
 
     public void Initialize(float speed, float scale, float health, float damage, RewardSettings rewardSettings)
     {
-        _speed = speed;
-
         gameObject.transform.localScale = new Vector3(scale, scale, scale);
 
+        _speed = speed;
+        _scale = scale;
         _health = health;
         _damage = damage;
         _rewardSettings = rewardSettings;
