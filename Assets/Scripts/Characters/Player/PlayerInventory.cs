@@ -38,7 +38,7 @@ public class PlayerInventory : MonoBehaviour
     public BaseTurret NearTurret => _nearTurret;
     public BaseTurret TakedTurret => _takedTurret;
     public bool HasTurret { get { return _turretSlot.childCount > 0 && TakedTurret != null; } }
-    public bool CanPlace { get; private set; } = true;
+    public bool CanPlace => !_isPlacing;
     public bool CanUpgrade
     {
         get
@@ -62,17 +62,6 @@ public class PlayerInventory : MonoBehaviour
             {
                 _nearTurret.SetSelected(false);
                 _nearTurret = null;
-            }
-        }
-
-        if (HasTurret)
-        {
-            bool canPlace = true;
-
-            if (CanPlace != canPlace)
-            {
-                CanPlace = canPlace;
-                ChangeTurretColor();
             }
         }
     }
@@ -179,6 +168,8 @@ public class PlayerInventory : MonoBehaviour
 
     #region Turret
 
+    private bool _isPlacing;
+
     public void Place()
     {
         if (_takedTurret != null && CanPlace)
@@ -187,20 +178,26 @@ public class PlayerInventory : MonoBehaviour
             targetPos.y = _placeOffset.y;
 
             BaseTurret turret = _takedTurret;
+
+            _isPlacing = true;
+
             turret.transform.DOScale(new Vector3(1f, 1f, 1f), 0.2f).SetEase(Ease.InOutBack);
             turret.transform.DOJump(targetPos, 2f, 1, .6f).OnComplete(() =>
             {
                 turret.enabled = true;
                 turret.transform.SetParent(null);
+
+                _isPlacing = false;
+                _takedTurret = null;
             });
+
             var s = DOTween.Sequence();
             s.Append(turret.transform.DOScale(new Vector3(1.3f, 0.7f, 1.3f), 0.1f)).SetDelay(0.5f);
             s.Append(turret.transform.DOScale(new Vector3(1f, 1f, 1f), 0.1f));
 
             turret.transform.DORotate(Vector3.zero, 1f);
+            turret.SetSelected(false);
 
-            _takedTurret.SetSelected(false);
-            _takedTurret = null;
 
             _takeDelayTimer = _takeDelay;
         }
@@ -251,14 +248,5 @@ public class PlayerInventory : MonoBehaviour
             });
         }
     }
-
-    private void ChangeTurretColor()
-    {
-        for (int i = 0; i < TakedTurret.Renderers.Length; i++)
-        {
-            TakedTurret.Renderers[i].material.color = CanPlace ? Color.white : _placeBlockColor;
-        }
-    }
-
     #endregion
 }

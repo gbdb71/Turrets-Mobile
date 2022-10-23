@@ -563,7 +563,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _backpackPoint: {fileID: 7329303657596097285}
-  _distanceBetweenObjects: 0.0025
+  _distanceBetweenObjects: 0.25
   _objectMoveSpeed: 0.5
   _objectRotationSpeed: 0.25
   _turretSlot: {fileID: 806539327}
