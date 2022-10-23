@@ -12,7 +12,7 @@ public class HPBar : MonoBehaviour
     [Inject]
     private CinemachineVirtualCamera _playerCamera;
 
-    [SerializeField] private Image fillImage;
+    [SerializeField] private Slider fillImage;
     [SerializeField] private TextMeshProUGUI _valueText;
 
     [SerializeField] private Transform content;
@@ -25,20 +25,24 @@ public class HPBar : MonoBehaviour
 
     [SerializeField] private float fillTime = 0.5f;
 
+    [SerializeField] private float rotateTime = 0.05f;
+    [SerializeField] private float rotateStrength = 3f;
+
+
     public void InitializationBar(float value)
     {
         _startValue = value;
         _hpCoefficient = 1 / _startValue;
-        fillImage.fillAmount = 1f;
+        fillImage.value = 1f;
 
         _valueText.text = _startValue.ToString();
         DisableBar();
     }
-    
+
     [ContextMenu("Enable")]
     public void EnableBar()
     {
-        content.DOLocalMoveY(moveHeight, moveDuration).SetLoops(-1, LoopType.Yoyo);
+        // content.DOLocalMoveY(moveHeight, moveDuration).SetLoops(-1, LoopType.Yoyo);
         content.gameObject.SetActive(true);
     }
 
@@ -56,7 +60,13 @@ public class HPBar : MonoBehaviour
         _valueText.text = ((int)newValue).ToString();
 
         newValue *= _hpCoefficient;
-        fillImage.DOFillAmount(newValue, fillTime);
+        fillImage.DOValue(newValue, fillTime).SetEase(Ease.OutBack);
+
+        var s = DOTween.Sequence();
+        s.Append(content.transform.DOLocalRotate(new Vector3(0, 0, rotateStrength), rotateTime));
+        s.Append(content.transform.DOLocalRotate(new Vector3(0, 0, -rotateStrength), rotateTime));
+        s.Append(content.transform.DOLocalRotate(new Vector3(0, 0, 0), rotateTime));
+
     }
 
     public void DisableBar()

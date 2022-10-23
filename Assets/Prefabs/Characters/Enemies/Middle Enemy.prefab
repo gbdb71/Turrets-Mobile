@@ -1759,6 +1759,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5261326126693367125, guid: 8980583eab94b9d42bffb9605b70ac48, type: 3}
+      propertyPath: fillTime
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5261326126693367125, guid: 8980583eab94b9d42bffb9605b70ac48, type: 3}
       propertyPath: moveHeight
       value: 0.2
       objectReference: {fileID: 0}

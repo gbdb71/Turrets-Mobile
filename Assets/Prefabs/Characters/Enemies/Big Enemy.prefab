@@ -2416,6 +2416,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 5324180518727178484}
     m_Modifications:
     - target: {fileID: 867028743666841791, guid: 8980583eab94b9d42bffb9605b70ac48, type: 3}
+      propertyPath: m_fontSize
+      value: 43.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 867028743666841791, guid: 8980583eab94b9d42bffb9605b70ac48, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 6ecbe1defc55a463ba1172f67f84844b, type: 2}
+    - target: {fileID: 867028743666841791, guid: 8980583eab94b9d42bffb9605b70ac48, type: 3}
       propertyPath: m_fontColor.b
       value: 1
       objectReference: {fileID: 0}
@@ -2428,12 +2436,28 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 867028743666841791, guid: 8980583eab94b9d42bffb9605b70ac48, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 5568139486216784236, guid: 6ecbe1defc55a463ba1172f67f84844b, type: 2}
+    - target: {fileID: 867028743666841791, guid: 8980583eab94b9d42bffb9605b70ac48, type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 867028743666841791, guid: 8980583eab94b9d42bffb9605b70ac48, type: 3}
       propertyPath: m_fontColor32.rgba
       value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 1226661612108440520, guid: 8980583eab94b9d42bffb9605b70ac48, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1370039129158278392, guid: 8980583eab94b9d42bffb9605b70ac48, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1370039129158278392, guid: 8980583eab94b9d42bffb9605b70ac48, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2711297789755013521, guid: 8980583eab94b9d42bffb9605b70ac48, type: 3}
       propertyPath: m_AnchorMax.x
@@ -2555,6 +2579,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4798295166680337450, guid: 8980583eab94b9d42bffb9605b70ac48, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5261326126693367125, guid: 8980583eab94b9d42bffb9605b70ac48, type: 3}
+      propertyPath: fillTime
+      value: 0.3
+      objectReference: {fileID: 0}
     - target: {fileID: 5261326126693367125, guid: 8980583eab94b9d42bffb9605b70ac48, type: 3}
       propertyPath: moveHeight
       value: 0.1
@@ -2562,6 +2594,14 @@ PrefabInstance:
     - target: {fileID: 5783178000912738086, guid: 8980583eab94b9d42bffb9605b70ac48, type: 3}
       propertyPath: m_Name
       value: HpBar
+      objectReference: {fileID: 0}
+    - target: {fileID: 8573688375539564015, guid: 8980583eab94b9d42bffb9605b70ac48, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9186015366547995386, guid: 8980583eab94b9d42bffb9605b70ac48, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8980583eab94b9d42bffb9605b70ac48, type: 3}
