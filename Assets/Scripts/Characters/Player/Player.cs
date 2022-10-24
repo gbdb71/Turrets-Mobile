@@ -29,13 +29,11 @@ public class Player : MonoBehaviour
     {
         if (other.TryGetComponent(out Diamond diamond))
         {
-            _data.User.TryAddCurrency(CurrencyType.Construction, diamond.Amount);
-
             if (_diamondParticle != null)
                 _diamondParticle.Play();
 
-            diamond.transform.SetParent(transform);
-            diamond.Destroy();
+            _data.User.TryAddCurrency(CurrencyType.Construction, diamond.Amount);
+            diamond.Activate(transform);
         }
     }
 }
