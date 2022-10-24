@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class LevelScenario 
+public class LevelScenario
 {
     [SerializeField, ReorderableList] private EnemyWave[] _waves = { };
 
     public static event Action<int> OnWaveChanged;
-    public int WavesCount => _waves.Length;
     public State Begin()
     {
         State state = new State(this);
@@ -23,6 +22,7 @@ public class LevelScenario
         private int _index;
 
         public int WaveIndex => _index;
+        public int WavesCount => _scenario._waves.Length;
         public EnemyWave.State Wave => _wave;
 
         public State(LevelScenario scenario)

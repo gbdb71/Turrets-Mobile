@@ -27,7 +27,7 @@ public class WaveBar : MonoBehaviour
     {
         if(!_game.IsReady && _game.ScenarioState != null)
         {
-            _titleText.text = $"Wave {_game.ScenarioState.WaveIndex + 1}";
+            _titleText.text = $"Wave {_game.ScenarioState.WaveIndex + 1}/{_game.ScenarioState.WavesCount}";
         }
     }
 
