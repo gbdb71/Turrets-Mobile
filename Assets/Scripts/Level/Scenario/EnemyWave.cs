@@ -54,6 +54,7 @@ public class EnemyWave
                         EnemySpawnSequence sequence = _wave._roads[i].EnemySequences[j];
 
                         count[sequence.Type] += sequence.Amount;
+                        count[sequence.Type] -= _sequences[j].Count;
                     }
                 }
             }

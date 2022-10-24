@@ -30,6 +30,7 @@ public class EnemySpawnSequence
         private Enemy[] spawnedEnemy;
         private Road _road;
 
+        public int Count => _count; 
         public float SequenceProgress => (float)_count / Sequence._amount;
 
         public State(EnemySpawnSequence sequence, Road road)

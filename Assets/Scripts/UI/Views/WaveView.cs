@@ -21,13 +21,6 @@ public class WaveView : BaseView
 
     protected override void UpdateLogic()
     {
-        if (_game.IsReady)
-        {
-            _canvasGroup.alpha = 0;
-            return;
-        }
-
-
         if (_road != null)
         {
             var enemiesCount = _game.ScenarioState.Wave.GetEnemiesCount(_road);

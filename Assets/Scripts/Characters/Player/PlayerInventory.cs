@@ -119,8 +119,6 @@ public class PlayerInventory : MonoBehaviour
     {
         int count = Physics.OverlapSphereNonAlloc(transform.position, _interactRadius, _nearColliders, _interactableMask);
 
-        Debug.Log(count);
-
         for (int i = 0; i < count; i++)
         {
             Collider other = _nearColliders[i];
