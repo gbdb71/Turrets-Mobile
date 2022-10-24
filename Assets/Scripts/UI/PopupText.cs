@@ -41,6 +41,6 @@ public class PopupText : MonoBehaviour
             gameObject.Release();
         });
 
-        _text.DOFade(0f, duration * .6f).From(1f).SetEase(Ease.OutFlash).SetDelay(0.2f);
+        _text.DOFade(0f, duration * .6f).From(1f).SetEase(Ease.Linear).SetDelay(0.2f);
     }
 }
