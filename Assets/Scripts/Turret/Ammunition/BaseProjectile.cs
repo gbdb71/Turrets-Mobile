@@ -1,10 +1,10 @@
 using UnityEngine;
 using ToolBox.Pools;
 
-[RequireComponent(typeof(LineRenderer))]
+[RequireComponent(typeof(TrailRenderer))]
 public abstract class BaseProjectile : MonoBehaviour
 {
-    protected LineRenderer _lineRenderer;
+    protected TrailRenderer _trailRenderer;
 
     protected float _gravity = 9.81f;
     protected float _damage = 10f;
@@ -12,7 +12,7 @@ public abstract class BaseProjectile : MonoBehaviour
 
     protected virtual void Awake()
     {
-        _lineRenderer = GetComponent<LineRenderer>();
+        _trailRenderer = GetComponent<TrailRenderer>();
     }
 
     public virtual void Initialize(Vector3 launchPoint, Vector3 launchVelocity, float damage, float physicsDrop)
@@ -21,6 +21,8 @@ public abstract class BaseProjectile : MonoBehaviour
         this._launchVelocity = launchVelocity;
         this._damage = damage;
         this._gravity = physicsDrop;
+
+        _trailRenderer.Clear();
     }
 
     protected abstract void Move();
@@ -30,11 +32,10 @@ public abstract class BaseProjectile : MonoBehaviour
         Move();
     }
 
+
     private void OnCollisionEnter(Collision collision)
     {
         Damage(collision);
-
-        _lineRenderer.positionCount = 0;
         gameObject.Release();
     }
 

@@ -74,6 +74,8 @@ namespace ToolBox.Pools
         {
             var instance = GetInstance();
 
+            instance.transform.SetParent(null);
+
             return instance.gameObject;
         }
 
@@ -100,6 +102,7 @@ namespace ToolBox.Pools
             var instance = GetInstance();
 
             instance.transform.SetPositionAndRotation(position, rotation);
+            instance.transform.SetParent(null);
 
             return instance.gameObject;
         }
@@ -123,11 +126,9 @@ namespace ToolBox.Pools
             instance.SetActive(false);
 
             var instanceTransform = instance.transform;
-            instanceTransform.SetParent(null);
+            instanceTransform.SetParent(_pool);
             instanceTransform.rotation = _rotation;
             instanceTransform.localScale = _scale;
-
-            poolable.transform.parent = _pool;
 
             _instances.Push(poolable);
         }
