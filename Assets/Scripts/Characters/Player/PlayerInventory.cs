@@ -117,10 +117,9 @@ public class PlayerInventory : MonoBehaviour
 
     private void CheckInteract()
     {
-        Vector3 targetPos = _placePosition.position;
-        targetPos.y = _placeOffset.y;
+        int count = Physics.OverlapSphereNonAlloc(transform.position, _interactRadius, _nearColliders, _interactableMask);
 
-        int count = Physics.OverlapSphereNonAlloc(targetPos, _interactRadius, _nearColliders, _interactableMask);
+        Debug.Log(count);
 
         for (int i = 0; i < count; i++)
         {
@@ -128,11 +127,8 @@ public class PlayerInventory : MonoBehaviour
 
             if (other.TryGetComponent(out BaseTurret turret))
             {
-                if (turret == _takedTurret)
-                    return;
-
-                if (_nearTurret == turret)
-                    return;
+                if (turret == _takedTurret || turret == _nearTurret)
+                    continue;
 
                 if (_nearTurret != null)
                 {
