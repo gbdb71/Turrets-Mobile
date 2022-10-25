@@ -44,17 +44,25 @@ public class EnemyWave
                 {EnemyType.Medium, 0},
                 {EnemyType.Large, 0},
             };
-            
+
             for (int i = 0; i < _wave._roads.Length; i++)
             {
                 if (road == _wave._roads[i].Road)
                 {
-                    for (int j = 0; j < _wave._roads[i].EnemySequences.Length; j++)
+                    RoadSequence roadSequence = _wave._roads[i];
+                    int enemySequencesCount = roadSequence.EnemySequences.Length;
+
+                    if (roadSequence.Index == (enemySequencesCount - 1) && _sequences[i].SequenceProgress == 1)
+                        continue;
+
+                    for (int j = 0; j < enemySequencesCount; j++)
                     {
-                        EnemySpawnSequence sequence = _wave._roads[i].EnemySequences[j];
+                        EnemySpawnSequence sequence = roadSequence.EnemySequences[j];
 
                         count[sequence.Type] += sequence.Amount;
-                        count[sequence.Type] -= _sequences[j].Count;
+
+                        if (_sequences[i].Sequence == sequence)
+                            count[sequence.Type] -= _sequences[i].Count;
                     }
                 }
             }
