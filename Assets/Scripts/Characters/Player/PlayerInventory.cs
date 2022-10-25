@@ -55,15 +55,6 @@ public class PlayerInventory : MonoBehaviour
         UpdateTimers();
 
         UpdateAbillities();
-
-        if (_nearTurret != null)
-        {
-            if (Vector3.Distance(_nearTurret.transform.position, transform.position) > _interactRadius)
-            {
-                _nearTurret.SetSelected(false);
-                _nearTurret = null;
-            }
-        }
     }
 
     private void UpdateAbillities()
@@ -119,6 +110,16 @@ public class PlayerInventory : MonoBehaviour
     private void CheckInteract()
     {
         int count = Physics.OverlapSphereNonAlloc(transform.position, _interactRadius, _nearColliders, _interactableMask);
+
+        if (count == 0)
+        {
+            if (_nearTurret != null)
+            {
+                _nearTurret.SetSelected(false);
+            }
+
+            _nearTurret = null;
+        }
 
         for (int i = 0; i < count; i++)
         {
@@ -216,7 +217,6 @@ public class PlayerInventory : MonoBehaviour
         _takedTurret.transform.SetParent(_turretSlot);
 
         _takedTurret.transform.DOLocalRotate(Vector3.zero, 0.3f);
-        // _takedTurret.transform.DOLocalMove(Vector3.zero, 0.25f);
         _takedTurret.transform.DOScale(new Vector3(0.8f, 1.3f, 0.8f), 0.3f);
 
         var s = DOTween.Sequence();

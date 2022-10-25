@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Linq;
 using ToolBox.Pools;
 using UnityEngine;
@@ -27,7 +28,10 @@ public abstract class BaseAbillity<ConfigType> : MonoBehaviour, IAbillity where 
         Collider.isTrigger = true;
     }
 
-    public virtual void Clear() => Destroy(gameObject);
+    public virtual void Clear()
+    {
+        transform.DOScale(0f, .3f).SetEase(Ease.Linear).OnComplete(() => Destroy(gameObject));
+    }
     public virtual void Activate()
     {
         PopupText popup = _popupPrefab.gameObject.Reuse<PopupText>(PopupPosition, Quaternion.identity);
