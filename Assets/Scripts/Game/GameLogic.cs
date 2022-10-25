@@ -20,6 +20,13 @@ public class GameLogic : MonoBehaviour
 
     public static event Action OnGameFinished;
 
+    void Awake()
+    {
+        QualitySettings.vSyncCount = 1;
+        Application.targetFrameRate = 60;
+    }
+
+
     private void Start()
     {
         ScenarioState = _scenario.Begin();
