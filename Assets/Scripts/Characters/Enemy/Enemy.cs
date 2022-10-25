@@ -16,12 +16,13 @@ public class Enemy : MonoBehaviour
 
     [Label("Damage Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField] private float _flickerDuration = 0.25f;
+    [SerializeField, ColorUsage(false, hdr: true)] private Color _flickerEmission;
     [SerializeField] private GameObject _damageParticle;
     [SerializeField, Range(0, 5f)] private float _damageTextOffset;
 
     [Label("Deceleration Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField, Range(.1f, 1.5f)] private float _decelerationDrop = 2f;
-    [SerializeField] private Texture lightTexture;
+    [SerializeField, ColorUsage(false, hdr: true)] private Color _iceEmission;
 
     [Label("Procedural animations", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField] private bool _spawnScaleAnimation = false;
@@ -38,6 +39,7 @@ public class Enemy : MonoBehaviour
     private Renderer _bodyRenderer;
     private SplineFollower _follower;
 
+    private bool _damageFlickAnimation = false;
     private float _scale;
     private float _speed = 0;
     private float _damage = 0;
@@ -49,8 +51,6 @@ public class Enemy : MonoBehaviour
     private float _deceleration = 0;
 
     private Vector3 _lastPosition;
-
-    private Texture tempTexture;
 
     public float Health => _health;
     public bool IsDead { get; private set; }
@@ -74,8 +74,15 @@ public class Enemy : MonoBehaviour
 
         _hpBar = GetComponentInChildren<HPBar>();
         _bodyRenderer = GetComponentInChildren<Renderer>();
+    }
+    private void Start()
+    {
+        _bodyRenderer.material.EnableKeyword("_EMISSION");
 
-        tempTexture = _bodyRenderer.material.mainTexture;
+        if (_spawnScaleAnimation)
+        {
+            transform.DOScale(_scale, _scaleAnaimtionDuration).From(Vector3.zero).SetEase(Ease.Linear);
+        }
     }
     private void Update()
     {
@@ -85,6 +92,12 @@ public class Enemy : MonoBehaviour
         if (_deceleration > 0)
         {
             _deceleration -= _decelerationDrop * Time.deltaTime;
+
+            if(!_damageFlickAnimation)
+            {
+                Color targetEmission = Color.LerpUnclamped(Color.black, _iceEmission, _deceleration / .8f);
+                _bodyRenderer.material.SetColor("_EmissionColor", targetEmission);
+            }
         }
 
         Velocity = (transform.position - _lastPosition) / Time.deltaTime;
@@ -94,13 +107,6 @@ public class Enemy : MonoBehaviour
         if (!_isFinished && _follower.GetPercent() >= .95f)
         {
             Finish();
-        }
-    }
-    private void Start()
-    {
-        if (_spawnScaleAnimation)
-        {
-            transform.DOScale(_scale, _scaleAnaimtionDuration).From(Vector3.zero).SetEase(Ease.Linear);
         }
     }
 
@@ -123,7 +129,6 @@ public class Enemy : MonoBehaviour
     {
         _follower.spline = spline;
     }
-
     private void Finish()
     {
         _animator.SetBool("Finish", true);
@@ -154,6 +159,7 @@ public class Enemy : MonoBehaviour
         _deceleration += value;
         _deceleration = Mathf.Clamp(_deceleration, 0f, .8f);
     }
+
     public void ApplyDamage(float damage)
     {
         if (damage < 0)
@@ -224,14 +230,20 @@ public class Enemy : MonoBehaviour
 
     private IEnumerator DisplayDamage(float damage)
     {
-        _bodyRenderer.material.mainTexture = lightTexture;
+        _damageFlickAnimation = true;
+        _bodyRenderer.material.SetColor("_EmissionColor", _flickerEmission);
 
         yield return new WaitForSeconds(_flickerDuration);
 
-        _bodyRenderer.material.mainTexture = tempTexture;
+        _damageFlickAnimation = false;
+        _bodyRenderer.material.SetColor("_EmissionColor", Color.black);
 
         _damageParticle.Reuse(transform.position, Quaternion.identity);
 
+        ShowDamagePopup(damage);
+    }
+    private void ShowDamagePopup(float damage)
+    {
         Vector3 targetPos = transform.position;
         targetPos.y += _damageTextOffset * transform.localScale.y;
 

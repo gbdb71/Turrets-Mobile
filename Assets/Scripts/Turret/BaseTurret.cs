@@ -134,7 +134,6 @@ public abstract class BaseTurret : MonoBehaviour
     {
         for (int i = 0; i < _renderers.Length; i++)
         {
-            // _renderers[i].material.EnableKeyword("_EMISSION");
             if (selected)
                 _renderers[i].material = _selectedMaterial;
             else
