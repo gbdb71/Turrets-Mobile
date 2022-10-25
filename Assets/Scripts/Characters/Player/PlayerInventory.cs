@@ -93,7 +93,6 @@ public class PlayerInventory : MonoBehaviour
         }
 
     }
-
     private void UpdateTimers()
     {
         if (_takeDelayTimer > 0)
@@ -115,6 +114,8 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
+    #region Interaction
+
     private void CheckInteract()
     {
         int count = Physics.OverlapSphereNonAlloc(transform.position, _interactRadius, _nearColliders, _interactableMask);
@@ -125,8 +126,11 @@ public class PlayerInventory : MonoBehaviour
 
             if (other.TryGetComponent(out BaseTurret turret))
             {
-                if (turret == _takedTurret || turret == _nearTurret)
+                if (turret == _takedTurret)
                     continue;
+
+                if (turret == _nearTurret)
+                    break;
 
                 if (_nearTurret != null)
                 {
@@ -139,26 +143,30 @@ public class PlayerInventory : MonoBehaviour
             }
 
             if (other.TryGetComponent(out IAbillity abillity))
-            {
-                if (_inventoryAbillities.Contains(abillity))
-                    return;
-
-                Transform abillityTransform = abillity.GetTransform();
-                abillityTransform.GetComponent<Collider>().enabled = false;
-
-                abillityTransform.SetParent(_backpackPoint.transform, true);
-                abillityTransform.localScale = Vector3.one;
-
-                int index = _inventoryAbillities.Count;
-
-                _inventoryAbillities.Add(abillity);
-
-                Vector3 endPosition = new Vector3(0, (float)index * _distanceBetweenObjects, 0);
-                abillityTransform.DOLocalRotate(Vector3.zero, _objectRotationSpeed);
-                abillityTransform.DOLocalMove(endPosition, _objectMoveSpeed);
-            }
+                TryTakeAbillity(abillity);
         }
     }
+    private void TryTakeAbillity(IAbillity abillity)
+    {
+        if (_inventoryAbillities.Contains(abillity))
+            return;
+
+        Transform abillityTransform = abillity.GetTransform();
+        abillityTransform.GetComponent<Collider>().enabled = false;
+
+        abillityTransform.SetParent(_backpackPoint.transform, true);
+        abillityTransform.localScale = Vector3.one;
+
+        int index = _inventoryAbillities.Count;
+
+        _inventoryAbillities.Add(abillity);
+
+        Vector3 endPosition = new Vector3(0, (float)index * _distanceBetweenObjects, 0);
+        abillityTransform.DOLocalRotate(Vector3.zero, _objectRotationSpeed);
+        abillityTransform.DOLocalMove(endPosition, _objectMoveSpeed);
+    }
+
+    #endregion
 
     #region Turret
 
