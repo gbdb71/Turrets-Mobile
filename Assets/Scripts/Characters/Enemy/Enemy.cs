@@ -217,7 +217,7 @@ public class Enemy : MonoBehaviour
             Transform abillityTransform = abillity.GetTransform();
 
             abillityTransform.position = transform.position;
-            abillityTransform.DOScale(Vector3.one, .6f).From(Vector3.zero).SetEase(Ease.Linear);
+            abillityTransform.DOScale(Vector3.one * 1.6f, .6f).From(Vector3.zero).SetEase(Ease.Linear);
             abillityTransform.DOJump(targetPoint, 4f, 1, 1f);
         }
     }

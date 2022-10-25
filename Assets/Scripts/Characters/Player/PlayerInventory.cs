@@ -154,16 +154,16 @@ public class PlayerInventory : MonoBehaviour
         Transform abillityTransform = abillity.GetTransform();
         abillityTransform.GetComponent<Collider>().enabled = false;
 
-        abillityTransform.SetParent(_backpackPoint.transform, true);
-        abillityTransform.localScale = Vector3.one;
-
         int index = _inventoryAbillities.Count;
 
-        _inventoryAbillities.Add(abillity);
-
         Vector3 endPosition = new Vector3(0, (float)index * _distanceBetweenObjects, 0);
-        abillityTransform.DOLocalRotate(Vector3.zero, _objectRotationSpeed);
+
+        abillityTransform.SetParent(_backpackPoint.transform, true);
+        abillityTransform.localRotation = Quaternion.identity;
         abillityTransform.DOLocalMove(endPosition, _objectMoveSpeed);
+        abillityTransform.DOScale(Vector3.one, _objectMoveSpeed * .8f).SetEase(Ease.InBack);
+
+        _inventoryAbillities.Add(abillity);
     }
 
     #endregion
