@@ -6851,27 +6851,23 @@ MonoBehaviour:
         EnemySequences:
         - _factory: {fileID: 11400000, guid: 5de74ef778989b94db36a28787ab5f8c, type: 2}
           _type: 0
-          _amount: 6
-          _cooldown: 2
+          _amount: 3
+          _cooldown: 3
         - _factory: {fileID: 11400000, guid: a34f23d2afe8e2941b77c92b6b3e6609, type: 2}
           _type: 0
-          _amount: 4
-          _cooldown: 1
+          _amount: 3
+          _cooldown: 3
         Index: 0
       - Road: {fileID: 1602508107}
         EnemySequences:
         - _factory: {fileID: 11400000, guid: 5de74ef778989b94db36a28787ab5f8c, type: 2}
           _type: 0
-          _amount: 6
-          _cooldown: 2
+          _amount: 3
+          _cooldown: 3
         - _factory: {fileID: 11400000, guid: a34f23d2afe8e2941b77c92b6b3e6609, type: 2}
           _type: 0
-          _amount: 4
-          _cooldown: 1
-        - _factory: {fileID: 11400000, guid: a34f23d2afe8e2941b77c92b6b3e6609, type: 2}
-          _type: 0
-          _amount: 8
-          _cooldown: 2
+          _amount: 3
+          _cooldown: 3
         Index: 0
       - Road: {fileID: 2103534855}
         EnemySequences:
@@ -6889,38 +6885,38 @@ MonoBehaviour:
         EnemySequences:
         - _factory: {fileID: 11400000, guid: 5de74ef778989b94db36a28787ab5f8c, type: 2}
           _type: 0
-          _amount: 6
-          _cooldown: 2
+          _amount: 5
+          _cooldown: 3
         - _factory: {fileID: 11400000, guid: 5de74ef778989b94db36a28787ab5f8c, type: 2}
           _type: 0
           _amount: 4
-          _cooldown: 1
+          _cooldown: 2
         - _factory: {fileID: 11400000, guid: a34f23d2afe8e2941b77c92b6b3e6609, type: 2}
           _type: 2
           _amount: 1
-          _cooldown: 2
+          _cooldown: 3
         Index: 0
       - Road: {fileID: 1602508107}
         EnemySequences:
         - _factory: {fileID: 11400000, guid: 5de74ef778989b94db36a28787ab5f8c, type: 2}
           _type: 0
-          _amount: 6
-          _cooldown: 2
+          _amount: 5
+          _cooldown: 3
         - _factory: {fileID: 11400000, guid: 5de74ef778989b94db36a28787ab5f8c, type: 2}
           _type: 0
-          _amount: 4
-          _cooldown: 1
+          _amount: 5
+          _cooldown: 2
         - _factory: {fileID: 11400000, guid: a34f23d2afe8e2941b77c92b6b3e6609, type: 2}
           _type: 2
           _amount: 1
-          _cooldown: 2
+          _cooldown: 3
         Index: 0
       - Road: {fileID: 2103534855}
         EnemySequences:
         - _factory: {fileID: 11400000, guid: a34f23d2afe8e2941b77c92b6b3e6609, type: 2}
           _type: 1
           _amount: 2
-          _cooldown: 5
+          _cooldown: 8
         Index: 0
 --- !u!4 &788864366
 Transform:
@@ -15282,7 +15278,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6310374680869426547, guid: 34873f1fae93333449fbede359cd33f1, type: 3}
       propertyPath: StartCurrency
-      value: 80
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 6310374680869426548, guid: 34873f1fae93333449fbede359cd33f1, type: 3}
       propertyPath: m_RootOrder
