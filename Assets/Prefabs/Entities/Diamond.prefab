@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3857464683667717456}
   - component: {fileID: 6997072421110695128}
   - component: {fileID: 5653085975119080370}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28,6 +28,7 @@ Transform:
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8145354069981206088}
   m_RootOrder: 0
@@ -51,6 +52,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -93,7 +95,7 @@ GameObject:
   - component: {fileID: 8337591554695307621}
   - component: {fileID: -7961128031378600065}
   - component: {fileID: 54817602604585062}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Diamond
   m_TagString: Diamond
   m_Icon: {fileID: 0}
@@ -110,6 +112,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3857464683667717456}
   - {fileID: 8379996103592754867}
@@ -144,10 +147,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d6aefc302eb53b468b9b8e4fef6fe12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Amount: 1
   _currencyType: 0
   _rotationDuration: 1.5
   _scaleDuration: 0.45
+  Amount: 1
 --- !u!135 &54817602604585062
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -168,9 +171,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8145354069981206088}
     m_Modifications:
+    - target: {fileID: 123380, guid: 7b117ab47ae99e74fbb811d488c1eb17, type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 145256, guid: 7b117ab47ae99e74fbb811d488c1eb17, type: 3}
       propertyPath: m_Name
       value: Upgrade Particle
+      objectReference: {fileID: 0}
+    - target: {fileID: 145256, guid: 7b117ab47ae99e74fbb811d488c1eb17, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 145256, guid: 7b117ab47ae99e74fbb811d488c1eb17, type: 3}
       propertyPath: m_IsActive
@@ -231,6 +242,10 @@ PrefabInstance:
     - target: {fileID: 409988, guid: 7b117ab47ae99e74fbb811d488c1eb17, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1099344919378908, guid: 7b117ab47ae99e74fbb811d488c1eb17, type: 3}
+      propertyPath: m_Layer
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7b117ab47ae99e74fbb811d488c1eb17, type: 3}

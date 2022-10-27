@@ -1,22 +1,22 @@
 using System.Linq;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using Zenject;
 
-[RequireComponent(typeof(CanvasGroup))]
 public class WaveView : BaseView
 {
     [SerializeField] private SerializedDictionary<EnemyType, TextMeshProUGUI> _countText;
 
-    private CanvasGroup _canvasGroup;
+    private bool _isShowed = false;
     private Road _road;
     [Inject] private GameLogic _game;
 
 
     private void Awake()
     {
-        _canvasGroup = GetComponent<CanvasGroup>();
         _road = GetComponentInParent<Road>();
+        transform.localScale = Vector3.zero;
     }
 
     protected override void UpdateLogic()
@@ -27,11 +27,22 @@ public class WaveView : BaseView
 
             if (!enemiesCount.Any(x => x.Value > 0))
             {
-                _canvasGroup.alpha = 0;
+                if (_isShowed && transform.localScale != Vector3.zero)
+                {
+                    transform.DOScale(0f, .7f).From(1f).SetEase(Ease.OutBack);
+                }
+
+                _isShowed = false;
+
                 return;
             }
 
-            _canvasGroup.alpha = 1;
+            if (!_isShowed && transform.localScale != Vector3.one)
+            {
+                transform.DOScale(1f, .7f).From(0f).SetEase(Ease.InBack);
+            }
+
+            _isShowed = true;
 
             foreach (var enemy in enemiesCount)
             {
