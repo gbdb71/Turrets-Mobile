@@ -29,7 +29,7 @@ public class WaveView : BaseView
             {
                 if (_isShowed && transform.localScale != Vector3.zero)
                 {
-                    transform.DOScale(0f, .7f).From(1f).SetEase(Ease.OutBack);
+                    transform.DOScale(0f, .7f).From(1f).SetEase(Ease.InBack);
                 }
 
                 _isShowed = false;
@@ -39,7 +39,7 @@ public class WaveView : BaseView
 
             if (!_isShowed && transform.localScale != Vector3.one)
             {
-                transform.DOScale(1f, .7f).From(0f).SetEase(Ease.InBack);
+                transform.DOScale(1f, .7f).From(0f).SetEase(Ease.OutBack);
             }
 
             _isShowed = true;

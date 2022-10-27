@@ -51,12 +51,12 @@ public class EnemyWave
                 {
                     RoadSequence roadSequence = _wave._roads[i];
                     int enemySequencesCount = roadSequence.EnemySequences.Length;
-
-                    if (roadSequence.Index == (enemySequencesCount - 1) && _sequences[i].SequenceProgress == 1)
-                        continue;
-
+                    
                     for (int j = 0; j < enemySequencesCount; j++)
                     {
+                        if(roadSequence.Index > j)
+                            continue;
+                        
                         EnemySpawnSequence sequence = roadSequence.EnemySequences[j];
 
                         count[sequence.Type] += sequence.Amount;

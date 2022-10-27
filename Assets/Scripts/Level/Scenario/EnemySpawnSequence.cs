@@ -57,7 +57,7 @@ public class EnemySpawnSequence
                         if (spawnedEnemy[i] != null || !spawnedEnemy[i].IsDead)
                             return -1f;
 
-                    return _cooldown;
+                    return 0f;
                 }
 
                 Enemy enemy = Sequence._factory.Get(Sequence._type);
