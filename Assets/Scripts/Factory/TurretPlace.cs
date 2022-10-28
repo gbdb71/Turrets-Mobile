@@ -14,6 +14,8 @@ public class TurretPlace : MonoBehaviour
     {
         turret.transform.SetParent(_contentTransform, true);
         turret.transform.DOMove(_contentTransform.position, _moveTime);
+        
         PlacedTurret = turret;
+        PlacedTurret.Fill.fillAmount = 0;
     }
 }

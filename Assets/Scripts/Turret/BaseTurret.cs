@@ -21,6 +21,7 @@ public abstract class BaseTurret : MonoBehaviour
 
     [Label("Selected settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField] private Image _rangeImage;
+    [SerializeField] private Image _fillImage;
     [SerializeField] private Color _rangeColor;
     [SerializeField, ColorUsage(true, true)] private Color _selectedColor;
     [SerializeField] private Material _selectedMaterial;
@@ -35,6 +36,7 @@ public abstract class BaseTurret : MonoBehaviour
     protected float _fireTimer = 0f;
 
     public BaseTurret NextGrade => _nextGrade;
+    public Image Fill => _fillImage;
     public Renderer[] Renderers => _renderers;
 
     public static List<BaseTurret> Turrets { get; private set; } = new List<BaseTurret>();

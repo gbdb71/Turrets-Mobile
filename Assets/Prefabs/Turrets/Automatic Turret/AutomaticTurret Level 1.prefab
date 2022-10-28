@@ -26,6 +26,7 @@ Transform:
   m_LocalRotation: {x: -0.000000021855694, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.00092, y: 0.0045, z: 0.00889}
   m_LocalScale: {x: 0.002, y: 0.002, z: 0.008}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2946534783411290696}
   m_RootOrder: 1
@@ -56,6 +57,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6545655999547002837}
   - {fileID: 811073308637566026}
@@ -91,6 +93,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 101009405794660879}
   - {fileID: 2299691059652755261}
@@ -130,6 +133,7 @@ MonoBehaviour:
   _nextGrade: {fileID: 1006089489906742133, guid: 3100a976dd0241647911920dcedd6b62, type: 3}
   upgradeParticle: {fileID: 2299691059633372951}
   _rangeImage: {fileID: 7419880670542679785}
+  _fillImage: {fileID: 5706992497965059503}
   _rangeColor: {r: 0.9960785, g: 0.70980394, b: 0.38431376, a: 1}
   _selectedColor: {r: 0.42745098, g: 0.42745098, b: 0.42745098, a: 0}
   _selectedMaterial: {fileID: 2100000, guid: ad67c3820a054994895758dc2e46021b, type: 2}
@@ -191,6 +195,7 @@ Transform:
   m_LocalRotation: {x: 0.000000021855694, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -0.5, z: -0.25}
   m_LocalScale: {x: 100, y: 100, z: 100}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2582556241818448239}
   - {fileID: 1880167752}
@@ -216,6 +221,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -274,6 +280,7 @@ Transform:
   m_LocalRotation: {x: 0.000000021855694, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 100, y: 100, z: 100}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 101009405794660879}
   m_RootOrder: 0
@@ -297,6 +304,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -353,6 +361,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.25, z: 0.25}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2946534783411290696}
   m_Father: {fileID: 811073308637566026}
@@ -384,6 +393,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.25, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6588673404814755637}
   - {fileID: 4254265437646780943}
@@ -418,6 +428,7 @@ Transform:
   m_LocalRotation: {x: 0.000000021855694, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -0.25, z: 0}
   m_LocalScale: {x: 100, y: 100, z: 100}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 811073308637566026}
   m_RootOrder: 0
@@ -441,6 +452,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -528,14 +540,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7b117ab47ae99e74fbb811d488c1eb17, type: 3}
---- !u!4 &2299691059652755261 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 409988, guid: 7b117ab47ae99e74fbb811d488c1eb17, type: 3}
-  m_PrefabInstance: {fileID: 2299691059652345529}
-  m_PrefabAsset: {fileID: 0}
 --- !u!198 &2299691059633372951 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 19825070, guid: 7b117ab47ae99e74fbb811d488c1eb17, type: 3}
+  m_PrefabInstance: {fileID: 2299691059652345529}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2299691059652755261 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 409988, guid: 7b117ab47ae99e74fbb811d488c1eb17, type: 3}
   m_PrefabInstance: {fileID: 2299691059652345529}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2582556241818151385
@@ -619,6 +631,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1006089489906742134}
     m_Modifications:
+    - target: {fileID: 5570951227468730369, guid: 0a9756bcac4de8745a8c2d320ca5e038, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5570951227468730370, guid: 0a9756bcac4de8745a8c2d320ca5e038, type: 3}
       propertyPath: m_Name
       value: TurretCanvas
@@ -693,7 +709,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5570951227468730371, guid: 0a9756bcac4de8745a8c2d320ca5e038, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 1.2999998
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5570951227468730371, guid: 0a9756bcac4de8745a8c2d320ca5e038, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -709,11 +725,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0a9756bcac4de8745a8c2d320ca5e038, type: 3}
---- !u!224 &7419880670973324738 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 5570951227468730371, guid: 0a9756bcac4de8745a8c2d320ca5e038, type: 3}
+--- !u!114 &5706992497965059503 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7242922866116456558, guid: 0a9756bcac4de8745a8c2d320ca5e038, type: 3}
   m_PrefabInstance: {fileID: 3150066215392263617}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &7419880670542679785 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5570951227766862632, guid: 0a9756bcac4de8745a8c2d320ca5e038, type: 3}
@@ -725,3 +747,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &7419880670973324738 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 5570951227468730371, guid: 0a9756bcac4de8745a8c2d320ca5e038, type: 3}
+  m_PrefabInstance: {fileID: 3150066215392263617}
+  m_PrefabAsset: {fileID: 0}

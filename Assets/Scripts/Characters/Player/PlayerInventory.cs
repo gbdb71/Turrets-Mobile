@@ -6,6 +6,8 @@ public class PlayerInventory : MonoBehaviour
 {
     private const float _interactCheckTime = .01f;
 
+    #region Serialized
+
     [Label("Backpack", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)] [SerializeField]
     private Transform _backpackPoint;
 
@@ -23,15 +25,24 @@ public class PlayerInventory : MonoBehaviour
 
     [SerializeField] private LayerMask _interactableMask;
 
+    #endregion
+
+    #region State
+
     private TurretPlace _nearPlace;
     private BaseTurret _takedTurret;
     private List<IAbillity> _inventoryAbillities = new List<IAbillity>();
 
     private float _takeDelayTimer = 0f;
+    private float _autoInteractTimer = 0;
     private float _abillityDelayTimer = 0f;
     private float _putTimer = 0f;
     private float _interactTimer = 0f;
     private Collider[] _nearColliders = new Collider[10];
+
+    #endregion
+    
+    #region Public
 
     public TurretPlace NearPlace => _nearPlace;
     public BaseTurret TakedTurret => _takedTurret;
@@ -41,8 +52,23 @@ public class PlayerInventory : MonoBehaviour
         get { return _turretSlot.childCount > 0 && TakedTurret != null; }
     }
 
-    public bool CanPlace => !_isPlacing && _nearPlace != null;
+    public bool CanPlace => !_isPlacing && HasTurret && _nearPlace != null;
 
+    public bool CanTake
+    {
+        get
+        {
+            if (!HasTurret && _nearPlace != null && _nearPlace.HasTurret ||
+                HasTurret && _nearPlace != null && _nearPlace.PlacedTurret != null &&
+                _nearPlace.PlacedTurret.NextGrade != TakedTurret.NextGrade)
+            {
+                
+                return true;
+            }
+            return false;
+        }
+    }
+    
     public bool CanUpgrade
     {
         get
@@ -55,6 +81,10 @@ public class PlayerInventory : MonoBehaviour
         }
     }
 
+    #endregion
+    
+    #region Update
+    
     private void Update()
     {
         UpdateTimers();
@@ -66,6 +96,35 @@ public class PlayerInventory : MonoBehaviour
             _interactTimer = 0;
 
             CheckInteract();
+        }
+
+        if (_autoInteractTimer >= 2)
+        {
+            if (_nearPlace == null)
+            {
+                _autoInteractTimer = 0;
+                return;
+            }
+
+            if (CanUpgrade)
+            {
+                Upgrade();
+                _autoInteractTimer = 0;
+                return;
+            }
+            
+            if (CanTake)
+            {
+                Take();
+                _autoInteractTimer = 0;
+            }
+            
+            if (CanPlace)
+            {
+                Place();
+                _autoInteractTimer = 0;
+                return;
+            }
         }
     }
 
@@ -107,24 +166,45 @@ public class PlayerInventory : MonoBehaviour
         if (_abillityDelayTimer > 0)
             _abillityDelayTimer -= Time.deltaTime;
 
+        if (_autoInteractTimer < 2 && _nearPlace != null)
+        {
+            float progress = _autoInteractTimer / 2f;
+            
+            if (_nearPlace != null && _nearPlace.PlacedTurret != null)
+            {
+                _nearPlace.PlacedTurret.Fill.fillAmount = progress;
+            }
+            else if(HasTurret)
+            {
+                TakedTurret.Fill.fillAmount = progress;
+            }
+            
+            _autoInteractTimer += Time.deltaTime;
+        }
+        
         _interactTimer += Time.deltaTime;
     }
+    
+    #endregion
 
     #region Interaction
 
     private void CheckInteract()
     {
-        int count = Physics.OverlapSphereNonAlloc(transform.position + (transform.forward * .5f), _interactRadius, _nearColliders,
+        int count = Physics.OverlapSphereNonAlloc(transform.position + (transform.forward * .5f), _interactRadius,
+            _nearColliders,
             _interactableMask);
 
         if (count == 0)
         {
-            if (_nearPlace != null && _nearPlace.HasTurret)
-            {
-                _nearPlace.PlacedTurret.SetSelected(false);
-            }
+            ResetPlaceSelected(_nearPlace);
 
             _nearPlace = null;
+
+            if (HasTurret)
+            {
+                _takedTurret.Fill.fillAmount = 0;
+            }
         }
 
         for (int i = 0; i < count; i++)
@@ -138,17 +218,15 @@ public class PlayerInventory : MonoBehaviour
 
                 if (place == _nearPlace)
                     break;
-                
-                if(!HasTurret && !place.HasTurret)
+
+                if (!HasTurret && !place.HasTurret)
                     continue;
 
                 TurretPlace oldPlace = _nearPlace;
                 _nearPlace = place;
+                _autoInteractTimer = 0;
 
-                if (oldPlace != null && oldPlace.HasTurret)
-                {
-                    oldPlace.PlacedTurret.SetSelected(false);
-                }
+                ResetPlaceSelected(oldPlace);
 
                 if (_nearPlace.HasTurret)
                 {
@@ -186,6 +264,15 @@ public class PlayerInventory : MonoBehaviour
         _inventoryAbillities.Add(abillity);
     }
 
+    private void ResetPlaceSelected(TurretPlace place)
+    {
+        if (place != null && place.PlacedTurret != null)
+        {
+            _nearPlace.PlacedTurret.SetSelected(false);
+            _nearPlace.PlacedTurret.Fill.fillAmount = 0;
+        }
+    }
+    
     #endregion
 
     #region Turret
@@ -203,6 +290,8 @@ public class PlayerInventory : MonoBehaviour
             Vector3 targetPos = _nearPlace.transform.position;
             TurretPlace targetPlace = _nearPlace;
 
+
+            turret.Fill.fillAmount = 0;
             _isPlacing = true;
             _takedTurret = null;
 
@@ -211,16 +300,16 @@ public class PlayerInventory : MonoBehaviour
             {
                 turret.enabled = true;
                 targetPlace.Place(turret);
-
-                _isPlacing = false;
             });
 
             var sequence = DOTween.Sequence();
-            
+
             turret.transform.DORotate(Vector3.zero, 1f);
             sequence.Append(turret.transform.DOScale(new Vector3(1.3f, 0.7f, 1.3f), 0.1f)).SetDelay(0.5f);
             sequence.Append(turret.transform.DOScale(new Vector3(1f, 1f, 1f), 0.1f));
-            
+
+            sequence.OnComplete(() => _isPlacing = false);
+
             turret.SetSelected(false);
             _takeDelayTimer = _takeDelay;
         }
@@ -237,6 +326,7 @@ public class PlayerInventory : MonoBehaviour
         }
 
         _takedTurret = _nearPlace.PlacedTurret;
+        _takedTurret.Fill.fillAmount = 0;
         _nearPlace.PlacedTurret = null;
         _nearPlace = null;
 
