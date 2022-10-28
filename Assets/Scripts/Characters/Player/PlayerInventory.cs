@@ -102,28 +102,27 @@ public class PlayerInventory : MonoBehaviour
         {
             if (_nearPlace == null)
             {
-                _autoInteractTimer = 0;
+                _autoInteractTimer = -.3f;
                 return;
             }
 
             if (CanUpgrade)
             {
                 Upgrade();
-                _autoInteractTimer = 0;
+                _autoInteractTimer = -.3f;
                 return;
             }
             
             if (CanTake)
             {
                 Take();
-                _autoInteractTimer = 0;
+                _autoInteractTimer = -.3f;
             }
             
             if (CanPlace)
             {
                 Place();
-                _autoInteractTimer = 0;
-                return;
+                _autoInteractTimer = -.3f;
             }
         }
     }
