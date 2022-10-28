@@ -15,7 +15,7 @@ public class Factory : MonoBehaviour, IInteractable
 {
     [Label("Spawning Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField, NotNull] private Transform _spawPoint;
-    [SerializeField, NotNull] private GameObject _objectPrefab;
+    [SerializeField, NotNull] private BaseTurret _turretPrefab;
 
     [Label("Intertact Settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField] private float _interactTime = 0.25f;
@@ -25,12 +25,12 @@ public class Factory : MonoBehaviour, IInteractable
 
     [SerializeField] private int _objectCost = 25;
 
-    private List<FactoryPlate> _plates = new List<FactoryPlate>();
+    private List<TurretPlace> _plates = new List<TurretPlace>();
     private int _currencyAmount;
     private float _intertactTimer;
     [Inject] private GameLogic _game;
 
-    public List<FactoryPlate> Plates => _plates;
+    public List<TurretPlace> Plates => _plates;
     public FactoryType Type => _type;
     public static List<Factory> Factories { get; private set; } = new List<Factory>();
     public Sprite plateSprite;
@@ -40,7 +40,7 @@ public class Factory : MonoBehaviour, IInteractable
     {
         Factories.Add(this);
 
-        _plates.AddRange(GetComponentsInChildren<FactoryPlate>());
+        _plates.AddRange(GetComponentsInChildren<TurretPlace>());
 
         FactoryView _factoryView = GetComponentInChildren<FactoryView>();
 
@@ -50,14 +50,14 @@ public class Factory : MonoBehaviour, IInteractable
 
     private void Update()
     {
-        FactoryPlate plate = GetEmptyPlate();
+        TurretPlace place = GetEmptyPlate();
 
-        if (plate == null)
+        if (place == null)
             return;
 
         if (_currencyAmount >= _objectCost)
         {
-            CreatingObject(plate);
+            CreatingObject(place);
             _currencyAmount -= _objectCost;
         }
 
@@ -91,20 +91,20 @@ public class Factory : MonoBehaviour, IInteractable
     public void OnEnter(Player player) { }
     public void OnExit(Player player) { }
 
-    private FactoryPlate GetEmptyPlate()
+    private TurretPlace GetEmptyPlate()
     {
         for (int i = 0; i < _plates.Count; i++)
         {
-            if (_plates[i].CanPlace())
+            if (!_plates[i].HasTurret)
                 return _plates[i];
         }
 
         return null;
     }
 
-    private void CreatingObject(FactoryPlate plate)
+    private void CreatingObject(TurretPlace place)
     {
-        GameObject newObject = Instantiate(_objectPrefab, _spawPoint.position, Quaternion.identity);
-        plate.Place(newObject.transform);
+        BaseTurret newObject = Instantiate(_turretPrefab, _spawPoint.position, Quaternion.identity);
+        place.Place(newObject);
     }
 }

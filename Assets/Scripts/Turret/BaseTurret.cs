@@ -100,7 +100,7 @@ public abstract class BaseTurret : MonoBehaviour
 
     protected Enemy FindTarget()
     {
-        if (TargetPoint.FillBuffer(transform.localPosition, _aim.AimDistance))
+        if (TargetPoint.FillBuffer(transform.position, _aim.AimDistance))
         {
             return TargetPoint.RandomBuffered;
         }

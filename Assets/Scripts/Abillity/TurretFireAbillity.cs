@@ -6,15 +6,15 @@ public class TurretFireAbillity : BaseAbillity<FireAbillitySettings>
     {
         base.Activate();
 
-        if (_player.Inventory.NearTurret != null)
+        if (_player.Inventory.NearPlace != null && _player.Inventory.NearPlace.PlacedTurret != null)
         {
-            _player.Inventory.NearTurret.DecreaseFireDelay(_config.GetFirePercents());
-            _player.Inventory.NearTurret.PlayUpgradeParticle();
+            _player.Inventory.NearPlace.PlacedTurret.DecreaseFireDelay(_config.GetFirePercents());
+            _player.Inventory.NearPlace.PlacedTurret.PlayUpgradeParticle();
 
             Clear();
         }
     }
 
-    public override bool CanActivate() => _player.Inventory.NearTurret != null;
-    public override Vector3 PopupPosition => _player.Inventory.NearTurret.transform.position + new Vector3(0, 2.2f, 0);
+    public override bool CanActivate() => _player.Inventory.NearPlace != null;
+    public override Vector3 PopupPosition => _player.Inventory.NearPlace.transform.position + new Vector3(0, 2.2f, 0);
 }
