@@ -171,11 +171,11 @@ public class PlayerInventory : MonoBehaviour
             
             if (_nearPlace != null && _nearPlace.PlacedTurret != null)
             {
-                _nearPlace.PlacedTurret.Fill.fillAmount = progress;
+                _nearPlace.PlacedTurret.Canvas.Fill.fillAmount = progress;
             }
             else if(HasTurret)
             {
-                TakedTurret.Fill.fillAmount = progress;
+                TakedTurret.Canvas.Fill.fillAmount = progress;
             }
             
             _autoInteractTimer += Time.deltaTime;
@@ -202,7 +202,7 @@ public class PlayerInventory : MonoBehaviour
 
             if (HasTurret)
             {
-                _takedTurret.Fill.fillAmount = 0;
+                _takedTurret.Canvas.Fill.fillAmount = 0;
             }
         }
 
@@ -268,7 +268,7 @@ public class PlayerInventory : MonoBehaviour
         if (place != null && place.PlacedTurret != null)
         {
             _nearPlace.PlacedTurret.SetSelected(false);
-            _nearPlace.PlacedTurret.Fill.fillAmount = 0;
+            _nearPlace.PlacedTurret.Canvas.Fill.fillAmount = 0;
         }
     }
     
@@ -290,7 +290,7 @@ public class PlayerInventory : MonoBehaviour
             TurretPlace targetPlace = _nearPlace;
 
 
-            turret.Fill.fillAmount = 0;
+            turret.Canvas.Fill.fillAmount = 0;
             _isPlacing = true;
             _takedTurret = null;
 
@@ -325,7 +325,7 @@ public class PlayerInventory : MonoBehaviour
         }
 
         _takedTurret = _nearPlace.PlacedTurret;
-        _takedTurret.Fill.fillAmount = 0;
+        _takedTurret.Canvas.Fill.fillAmount = 0;
         _nearPlace.PlacedTurret = null;
         _nearPlace = null;
 

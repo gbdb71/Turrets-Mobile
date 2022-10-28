@@ -15,6 +15,9 @@ public class TurretFireAbillity : BaseAbillity<FireAbillitySettings>
         }
     }
 
-    public override bool CanActivate() => _player.Inventory.NearPlace != null;
+    public override bool CanActivate() => _player.Inventory.NearPlace != null &&
+                                          _player.Inventory.NearPlace.PlacedTurret != null &&
+                                          _player.Inventory.NearPlace.PlacedTurret.CanUseAbillity;
+
     public override Vector3 PopupPosition => _player.Inventory.NearPlace.transform.position + new Vector3(0, 2.2f, 0);
 }
