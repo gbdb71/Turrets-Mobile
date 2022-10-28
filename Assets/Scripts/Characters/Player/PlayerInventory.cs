@@ -198,27 +198,28 @@ public class PlayerInventory : MonoBehaviour
         if (_takedTurret != null && CanPlace)
         {
             BaseTurret turret = _takedTurret;
+            Vector3 targetPos = _nearPlace.transform.position;
+            TurretPlace targetPlace = _nearPlace;
 
             _isPlacing = true;
             _takedTurret = null;
 
             turret.transform.DOScale(new Vector3(1f, 1f, 1f), 0.2f).SetEase(Ease.InOutBack);
-            turret.transform.DOJump(_nearPlace.transform.position, 2f, 1, .6f).OnComplete(() =>
+            turret.transform.DOJump(targetPos, 2f, 1, .6f).OnComplete(() =>
             {
                 turret.enabled = true;
-                _nearPlace.Place(turret);
+                targetPlace.Place(turret);
 
                 _isPlacing = false;
             });
 
-            var s = DOTween.Sequence();
-            s.Append(turret.transform.DOScale(new Vector3(1.3f, 0.7f, 1.3f), 0.1f)).SetDelay(0.5f);
-            s.Append(turret.transform.DOScale(new Vector3(1f, 1f, 1f), 0.1f));
-
-            turret.transform.DORotate(Vector3.zero, 1f);
+            var sequence = DOTween.Sequence();
+            
+            sequence.Append(turret.transform.DORotate(Vector3.zero, 1f));
+            sequence.Append(turret.transform.DOScale(new Vector3(1.3f, 0.7f, 1.3f), 0.1f)).SetDelay(0.5f);
+            sequence.Append(turret.transform.DOScale(new Vector3(1f, 1f, 1f), 0.1f));
+            
             turret.SetSelected(false);
-
-
             _takeDelayTimer = _takeDelay;
         }
     }
