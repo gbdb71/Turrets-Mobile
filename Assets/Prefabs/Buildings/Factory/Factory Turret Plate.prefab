@@ -51,7 +51,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveTime: 0.5
   _contentTransform: {fileID: 5324745009981431068}
-  _canPlace: 0
   PlacedTurret: {fileID: 0}
 --- !u!65 &66683862204701038
 BoxCollider:
@@ -64,7 +63,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.562087, y: 0.24191648, z: 1.5365503}
+  m_Size: {x: 1.5, y: 0.24191648, z: 1.5}
   m_Center: {x: 0, y: 0.042523563, z: -0.0078366995}
 --- !u!1 &5324745008209143286
 GameObject:

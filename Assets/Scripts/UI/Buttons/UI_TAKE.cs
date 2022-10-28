@@ -24,7 +24,7 @@ public class UI_TAKE : MonoBehaviour
         TurretPlace nearPlace = playerInventory.NearPlace;
 
         bool canInteract = !playerInventory.HasTurret && nearPlace != null && nearPlace.HasTurret ||
-                           playerInventory.HasTurret && nearPlace != null && nearPlace.CanPlace && nearPlace.PlacedTurret != null && nearPlace.PlacedTurret.NextGrade != playerInventory.TakedTurret.NextGrade;
+                           playerInventory.HasTurret && nearPlace != null && nearPlace.PlacedTurret != null && nearPlace.PlacedTurret.NextGrade != playerInventory.TakedTurret.NextGrade;
 
         _group.alpha = canInteract ? 1 : 0;
         _group.blocksRaycasts = canInteract;

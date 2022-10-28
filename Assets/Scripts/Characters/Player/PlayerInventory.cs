@@ -41,14 +41,13 @@ public class PlayerInventory : MonoBehaviour
         get { return _turretSlot.childCount > 0 && TakedTurret != null; }
     }
 
-    public bool CanPlace => !_isPlacing && (_nearPlace != null && _nearPlace.CanPlace);
+    public bool CanPlace => !_isPlacing && _nearPlace != null;
 
     public bool CanUpgrade
     {
         get
         {
             return HasTurret && NearPlace != null &&
-                   NearPlace.CanPlace &&
                    NearPlace.PlacedTurret != null &&
                    NearPlace.PlacedTurret != TakedTurret &&
                    NearPlace.PlacedTurret.NextGrade != null &&
@@ -115,7 +114,7 @@ public class PlayerInventory : MonoBehaviour
 
     private void CheckInteract()
     {
-        int count = Physics.OverlapSphereNonAlloc(transform.position, _interactRadius, _nearColliders,
+        int count = Physics.OverlapSphereNonAlloc(transform.position + (transform.forward * .5f), _interactRadius, _nearColliders,
             _interactableMask);
 
         if (count == 0)
@@ -139,6 +138,9 @@ public class PlayerInventory : MonoBehaviour
 
                 if (place == _nearPlace)
                     break;
+                
+                if(!HasTurret && !place.HasTurret)
+                    continue;
 
                 TurretPlace oldPlace = _nearPlace;
                 _nearPlace = place;
@@ -215,7 +217,7 @@ public class PlayerInventory : MonoBehaviour
 
             var sequence = DOTween.Sequence();
             
-            sequence.Append(turret.transform.DORotate(Vector3.zero, 1f));
+            turret.transform.DORotate(Vector3.zero, 1f);
             sequence.Append(turret.transform.DOScale(new Vector3(1.3f, 0.7f, 1.3f), 0.1f)).SetDelay(0.5f);
             sequence.Append(turret.transform.DOScale(new Vector3(1f, 1f, 1f), 0.1f));
             
