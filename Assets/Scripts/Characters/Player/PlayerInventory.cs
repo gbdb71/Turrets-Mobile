@@ -8,14 +8,15 @@ public class PlayerInventory : MonoBehaviour
 
     #region Serialized
 
-    [Label("Backpack", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)] [SerializeField]
-    private Transform _backpackPoint;
+    [Label("Backpack", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)] 
+    [SerializeField] private Transform _backpackPoint;
 
     [SerializeField] private float _distanceBetweenObjects = 0.25f;
     [SerializeField, Range(.1f, 2f)] private float _objectMoveSpeed = 0.5f;
 
-    [Label("Turrets", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)] [SerializeField, NotNull]
-    private Transform _turretSlot;
+    [Label("Turrets", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)] 
+    [SerializeField, NotNull] private Transform _turretSlot;
+    [SerializeField, Range(.5f, 3f)] private float _autoInteractionTime = 2f;
 
     [SerializeField, Range(.2f, 1f)] private float _takeDelay = .5f;
 
@@ -41,7 +42,7 @@ public class PlayerInventory : MonoBehaviour
     private Collider[] _nearColliders = new Collider[10];
 
     #endregion
-    
+
     #region Public
 
     public TurretPlace NearPlace => _nearPlace;
@@ -62,13 +63,13 @@ public class PlayerInventory : MonoBehaviour
                 HasTurret && _nearPlace != null && _nearPlace.PlacedTurret != null &&
                 _nearPlace.PlacedTurret.NextGrade != TakedTurret.NextGrade)
             {
-                
                 return true;
             }
+
             return false;
         }
     }
-    
+
     public bool CanUpgrade
     {
         get
@@ -82,9 +83,9 @@ public class PlayerInventory : MonoBehaviour
     }
 
     #endregion
-    
+
     #region Update
-    
+
     private void Update()
     {
         UpdateTimers();
@@ -98,7 +99,7 @@ public class PlayerInventory : MonoBehaviour
             CheckInteract();
         }
 
-        if (_autoInteractTimer >= 2)
+        if (_autoInteractTimer >= _autoInteractionTime)
         {
             if (_nearPlace == null)
             {
@@ -112,13 +113,13 @@ public class PlayerInventory : MonoBehaviour
                 _autoInteractTimer = -.3f;
                 return;
             }
-            
+
             if (CanTake)
             {
                 Take();
                 _autoInteractTimer = -.3f;
             }
-            
+
             if (CanPlace)
             {
                 Place();
@@ -165,25 +166,25 @@ public class PlayerInventory : MonoBehaviour
         if (_abillityDelayTimer > 0)
             _abillityDelayTimer -= Time.deltaTime;
 
-        if (_autoInteractTimer < 2 && _nearPlace != null)
+        if (_autoInteractTimer < _autoInteractionTime && _nearPlace != null)
         {
-            float progress = _autoInteractTimer / 2f;
-            
+            float progress = _autoInteractTimer / _autoInteractionTime;
+
             if (_nearPlace != null && _nearPlace.PlacedTurret != null)
             {
                 _nearPlace.PlacedTurret.Canvas.Fill.fillAmount = progress;
             }
-            else if(HasTurret)
+            else if (HasTurret)
             {
-                TakedTurret.Canvas.Fill.fillAmount = progress;
+                _nearPlace.Canvas.Fill.fillAmount = progress;
             }
-            
+
             _autoInteractTimer += Time.deltaTime;
         }
-        
+
         _interactTimer += Time.deltaTime;
     }
-    
+
     #endregion
 
     #region Interaction
@@ -265,13 +266,18 @@ public class PlayerInventory : MonoBehaviour
 
     private void ResetPlaceSelected(TurretPlace place)
     {
-        if (place != null && place.PlacedTurret != null)
+        if (place != null)
         {
-            _nearPlace.PlacedTurret.SetSelected(false);
-            _nearPlace.PlacedTurret.Canvas.Fill.fillAmount = 0;
+            if (place.PlacedTurret != null)
+            {
+                place.PlacedTurret.SetSelected(false);
+                place.PlacedTurret.Canvas.Fill.fillAmount = 0;
+            }
+
+            place.Canvas.Fill.fillAmount = 0;
         }
     }
-    
+
     #endregion
 
     #region Turret
@@ -291,6 +297,8 @@ public class PlayerInventory : MonoBehaviour
 
 
             turret.Canvas.Fill.fillAmount = 0;
+            targetPlace.Canvas.Fill.fillAmount = 0;
+
             _isPlacing = true;
             _takedTurret = null;
 
@@ -298,6 +306,7 @@ public class PlayerInventory : MonoBehaviour
             turret.transform.DOJump(targetPos, 2f, 1, .6f).OnComplete(() =>
             {
                 turret.enabled = true;
+                turret.Canvas.SetStarsEnabled(true);
                 targetPlace.Place(turret);
             });
 
@@ -326,6 +335,8 @@ public class PlayerInventory : MonoBehaviour
 
         _takedTurret = _nearPlace.PlacedTurret;
         _takedTurret.Canvas.Fill.fillAmount = 0;
+        _takedTurret.Canvas.SetStarsEnabled(false);
+
         _nearPlace.PlacedTurret = null;
         _nearPlace = null;
 

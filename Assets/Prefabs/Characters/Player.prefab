@@ -566,6 +566,7 @@ MonoBehaviour:
   _distanceBetweenObjects: 0.25
   _objectMoveSpeed: 0.5
   _turretSlot: {fileID: 806539327}
+  _autoInteractionTime: 1.3
   _takeDelay: 0.2
   _interactRadius: 0.5
   _interactableMask:

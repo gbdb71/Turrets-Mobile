@@ -255,7 +255,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rangeImage: {fileID: 5570951227766862632}
   _fillImage: {fileID: 7242922866116456558}
-  _stars: []
+  _stars:
+  - {fileID: 5273178017890601959}
+  - {fileID: 7052984447489313876}
+  - {fileID: 4667078600198862096}
 --- !u!1 &5570951227766862634
 GameObject:
   m_ObjectHideFlags: 0

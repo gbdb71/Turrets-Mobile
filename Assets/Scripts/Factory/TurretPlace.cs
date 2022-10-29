@@ -1,3 +1,4 @@
+using System;
 using DG.Tweening;
 using UnityEngine;
 
@@ -7,8 +8,13 @@ public class TurretPlace : MonoBehaviour
     [SerializeField, NotNull] private Transform _contentTransform;
 
     public BaseTurret PlacedTurret;
-    
+    public TurretCanvas Canvas { get; private set; }
     public bool HasTurret => PlacedTurret != null;
+
+    private void Awake()
+    {
+        Canvas = GetComponentInChildren<TurretCanvas>();
+    }
 
     public void Place(BaseTurret turret)
     {

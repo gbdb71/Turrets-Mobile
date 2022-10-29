@@ -17,10 +17,7 @@ public class TurretCanvas : MonoBehaviour
 
     private void Start()
     {
-        for (int i = 0; i < _stars.Count; i++)
-        {
-            _stars[i].gameObject.SetActive(false);
-        }
+        SetStarsEnabled(false);
     }
 
     public void AddStar()
@@ -33,5 +30,19 @@ public class TurretCanvas : MonoBehaviour
         star.transform.DOScale(1f, .5f).From(0f).SetEase(Ease.OutBack);
 
         _starIndex++;
+    }
+
+    public void SetStarsEnabled(bool enabled)
+    {
+        for (int i = 0; i < _stars.Count; i++)
+        {
+            if (_stars[i] != null)
+            {
+                if(enabled && i >= _starIndex)
+                    continue;
+                
+                _stars[i].gameObject.SetActive(enabled);
+            }
+        }
     }
 }
