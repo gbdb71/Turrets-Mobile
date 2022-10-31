@@ -254,11 +254,12 @@ public class PlayerInventory : MonoBehaviour
     {
         if (_inventoryAbillities.Contains(abillity))
             return;
-
+        
         Transform abillityTransform = abillity.GetTransform();
         abillityTransform.GetComponent<Collider>().enabled = false;
 
         int index = _inventoryAbillities.Count;
+        _inventoryAbillities.Add(abillity);
 
         Vector3 endPosition = new Vector3(0, (float)index * _distanceBetweenObjects, 0);
 
@@ -266,8 +267,6 @@ public class PlayerInventory : MonoBehaviour
         abillityTransform.localRotation = Quaternion.identity;
         abillityTransform.DOLocalMove(endPosition, _objectMoveSpeed);
         abillityTransform.DOScale(Vector3.one, _objectMoveSpeed * .8f).SetEase(Ease.InBack);
-
-        _inventoryAbillities.Add(abillity);
     }
 
     private void ResetPlaceSelected(TurretPlace place)
