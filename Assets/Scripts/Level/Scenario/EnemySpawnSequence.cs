@@ -3,17 +3,13 @@
 [System.Serializable]
 public class EnemySpawnSequence
 {
-    [SerializeField]
-    private EnemyFactory _factory = default;
+    [SerializeField] private EnemyFactory _factory = default;
 
-    [SerializeField]
-    private EnemyType _type = EnemyType.Medium;
+    [SerializeField] private EnemyType _type = EnemyType.Medium;
 
-    [SerializeField, Range(1, 100)]
-    private int _amount = 1;
+    [SerializeField, Range(1, 100)] private int _amount = 1;
 
-    [SerializeField, Range(0.1f, 30f)]
-    private float _cooldown = 1f;
+    [SerializeField, Range(0.1f, 30f)] private float _cooldown = 1f;
 
     public State Begin(Road road) => new State(this, road);
     public int Amount => _amount;
@@ -30,7 +26,7 @@ public class EnemySpawnSequence
         private Enemy[] spawnedEnemy;
         private Road _road;
 
-        public int Count => _count; 
+        public int Count => _count;
         public float SequenceProgress => (float)_count / Sequence._amount;
 
         public State(EnemySpawnSequence sequence, Road road)
@@ -45,7 +41,9 @@ public class EnemySpawnSequence
 
         public float Progress(float deltaTime)
         {
-            _cooldown += deltaTime;
+            
+                _cooldown += _count < Sequence._amount ? deltaTime : Sequence._cooldown;
+
 
             while (_cooldown >= Sequence._cooldown)
             {

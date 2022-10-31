@@ -8,14 +8,15 @@ public class PlayerInventory : MonoBehaviour
 
     #region Serialized
 
-    [Label("Backpack", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)] 
-    [SerializeField] private Transform _backpackPoint;
+    [Label("Backpack", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)] [SerializeField]
+    private Transform _backpackPoint;
 
     [SerializeField] private float _distanceBetweenObjects = 0.25f;
     [SerializeField, Range(.1f, 2f)] private float _objectMoveSpeed = 0.5f;
 
-    [Label("Turrets", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)] 
-    [SerializeField, NotNull] private Transform _turretSlot;
+    [Label("Turrets", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)] [SerializeField, NotNull]
+    private Transform _turretSlot;
+
     [SerializeField, Range(.5f, 3f)] private float _autoInteractionTime = 2f;
 
     [SerializeField, Range(.2f, 1f)] private float _takeDelay = .5f;
@@ -228,13 +229,18 @@ public class PlayerInventory : MonoBehaviour
 
                 ResetPlaceSelected(oldPlace);
 
-                if (_nearPlace.HasTurret)
+                if (_nearPlace.HasTurret && _nearPlace.ShowRange && !(HasTurret && !CanUpgrade))
                 {
-                    if (HasTurret && !CanUpgrade)
-                        return;
-
                     _nearPlace.PlacedTurret.SetSelected(true);
                 }
+                else if (HasTurret && _nearPlace.ShowRange)
+                {
+                    place.Canvas.InitRange(
+                        new Vector3(_takedTurret.Aim.AimDistance, _takedTurret.Aim.AimDistance,
+                            _takedTurret.Aim.AimDistance), _takedTurret.RangeColor);
+                    place.Canvas.SetRangeActive(true);
+                }
+
 
                 break;
             }
@@ -274,6 +280,7 @@ public class PlayerInventory : MonoBehaviour
                 place.PlacedTurret.Canvas.Fill.fillAmount = 0;
             }
 
+            place.Canvas.SetRangeActive(false);
             place.Canvas.Fill.fillAmount = 0;
         }
     }
@@ -336,12 +343,12 @@ public class PlayerInventory : MonoBehaviour
         _takedTurret = _nearPlace.PlacedTurret;
         _takedTurret.Canvas.Fill.fillAmount = 0;
         _takedTurret.Canvas.SetStarsEnabled(false);
+        _takedTurret.SetSelected(false);
 
         _nearPlace.PlacedTurret = null;
         _nearPlace = null;
 
         _takedTurret.transform.SetParent(_turretSlot);
-
         _takedTurret.transform.DOLocalRotate(Vector3.zero, 0.3f);
         _takedTurret.transform.DOScale(new Vector3(0.8f, 1.3f, 0.8f), 0.3f);
 
@@ -350,7 +357,6 @@ public class PlayerInventory : MonoBehaviour
         s.Append(_takedTurret.transform.DOScale(new Vector3(1.3f, 0.7f, 1.3f), 0.1f));
         s.Append(_takedTurret.transform.DOScale(new Vector3(1f, 1f, 1f), 0.1f));
 
-        _takedTurret.SetSelected(true);
         _takedTurret.enabled = false;
     }
 

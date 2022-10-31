@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
-using UnityEngine.UI;
 using System;
 
 [RequireComponent(typeof(TurretAim)), SelectionBase]
@@ -35,7 +33,6 @@ public abstract class BaseTurret : MonoBehaviour
 
     private Material _defaultMaterial;
     private Renderer[] _renderers;
-    protected TurretAim _aim;
     protected Enemy _currentTarget;
     protected int _currentShootPivot = 0;
     private int _abillitiesCount = 0;
@@ -45,16 +42,20 @@ public abstract class BaseTurret : MonoBehaviour
 
     #region Public
 
+    public TurretAim Aim { get; protected set; }
     public bool CanUseAbillity => _abillitiesCount < 3;
     public BaseTurret NextGrade => _nextGrade;
     public TurretCanvas Canvas { get; private set; }
+    public Color RangeColor => _rangeColor;
     public static List<BaseTurret> Turrets { get; private set; } = new List<BaseTurret>();
 
     #endregion
+
+    #region Unity Callbacks
     
     protected virtual void Awake()
     {
-        _aim = GetComponent<TurretAim>();
+        Aim = GetComponent<TurretAim>();
         Canvas = GetComponentInChildren<TurretCanvas>();
         _renderers = GetComponentsInChildren<MeshRenderer>();
         _defaultMaterial = _renderers[0].material;
@@ -66,7 +67,7 @@ public abstract class BaseTurret : MonoBehaviour
     {
         if (Canvas != null && Canvas.Range != null)
         {
-            Canvas.Range.color = _rangeColor;
+           Canvas.InitRange(new Vector3(Aim.AimDistance, Aim.AimDistance, Aim.AimDistance),  _rangeColor);
         }
     }
 
@@ -79,10 +80,10 @@ public abstract class BaseTurret : MonoBehaviour
 
         if (_currentTarget != null)
         {
-            Aim();
+            AimToTarget();
 
             if (_currentTarget.IsDead || Vector3.Distance(_currentTarget.transform.position, transform.position) >
-                _aim.AimDistance)
+                Aim.AimDistance)
             {
                 _currentTarget = null;
                 return;
@@ -104,24 +105,26 @@ public abstract class BaseTurret : MonoBehaviour
 
     private void OnEnable()
     {
-        _aim.SetIdle(false);
+        Aim.SetIdle(false);
     }
 
     private void OnDisable()
     {
-        _aim.SetIdle(true);
+        Aim.SetIdle(true);
     }
 
     private void OnDestroy()
     {
         Turrets.Remove(this);
     }
+    
+    #endregion
 
     #region Aim & Fire
 
     protected Enemy FindTarget()
     {
-        if (TargetPoint.FillBuffer(transform.position, _aim.AimDistance))
+        if (TargetPoint.FillBuffer(transform.position, Aim.AimDistance))
         {
             return TargetPoint.RandomBuffered;
         }
@@ -129,11 +132,11 @@ public abstract class BaseTurret : MonoBehaviour
         return null;
     }
 
-    protected virtual void Aim()
+    protected virtual void AimToTarget()
     {
         if (_currentTarget != null)
         {
-            _aim.SetAim(_currentTarget.transform.position);
+            Aim.SetAim(_currentTarget.transform.position);
         }
     }
 
@@ -148,7 +151,7 @@ public abstract class BaseTurret : MonoBehaviour
 
     protected virtual bool CanFire()
     {
-        return _aim.IsAimed && _fireTimer <= 0f;
+        return Aim.IsAimed && _fireTimer <= 0f;
     }
 
     #endregion
@@ -171,17 +174,7 @@ public abstract class BaseTurret : MonoBehaviour
                 _renderers[i].material = _defaultMaterial;
         }
 
-        SetActiveRangeImage(selected);
-    }
-
-    private void SetActiveRangeImage(bool enabled)
-    {
-        if (Canvas == null || Canvas.Range == null)
-            return;
-
-        Canvas.Range.gameObject.SetActive(enabled);
-        Canvas.Range.transform.DOScale(new Vector3(_aim.AimDistance, _aim.AimDistance, _aim.AimDistance), .3f)
-            .From(Vector3.zero).SetEase(Ease.OutBack);
+        Canvas.SetRangeActive(selected);
     }
 
     #endregion

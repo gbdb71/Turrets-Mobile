@@ -18,7 +18,7 @@ public class MortarTurret : BaseTurret
     {
         base.Start();
 
-        float x = _aim.AimDistance + 0.25001f;
+        float x = base.Aim.AimDistance + 0.25001f;
         float y = -_shootPivot[_currentShootPivot].position.y;
         _launchSpeed = Mathf.Sqrt(9.81f * (y + Mathf.Sqrt(x * x + y * y)));
     }
@@ -38,7 +38,7 @@ public class MortarTurret : BaseTurret
     }
 
 
-    protected override void Aim()
+    protected override void AimToTarget()
     {
         Vector3 launchPoint = _shootPivot[_currentShootPivot].position;
         Vector3 targetPoint = _currentTarget.transform.position;
@@ -65,13 +65,13 @@ public class MortarTurret : BaseTurret
             _aimPos = targetPoint;
             _aimPos.y = tanTheta;
 
-            _aim.SetIdle(false);
-            _aim.SetAim(_aimPos);
+            base.Aim.SetIdle(false);
+            base.Aim.SetAim(_aimPos);
         }
         else
         {
             _launchVelocity = Vector3.zero;
-            _aim.SetIdle(true);
+            base.Aim.SetIdle(true);
         }
 
     }

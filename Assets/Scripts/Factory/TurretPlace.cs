@@ -7,6 +7,7 @@ public class TurretPlace : MonoBehaviour
     [SerializeField] private float _moveTime = 0.5f;
     [SerializeField, NotNull] private Transform _contentTransform;
 
+    public bool ShowRange = false;
     public BaseTurret PlacedTurret;
     public TurretCanvas Canvas { get; private set; }
     public bool HasTurret => PlacedTurret != null;

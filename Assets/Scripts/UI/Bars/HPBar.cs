@@ -9,8 +9,7 @@ using DG.Tweening;
 
 public class HPBar : MonoBehaviour
 {
-    [Inject]
-    private CinemachineVirtualCamera _playerCamera;
+    [Inject] private CinemachineVirtualCamera _playerCamera;
 
     [SerializeField] private Slider fillImage;
     [SerializeField] private TextMeshProUGUI _valueText;
@@ -39,13 +38,6 @@ public class HPBar : MonoBehaviour
         DisableBar();
     }
 
-    [ContextMenu("Enable")]
-    public void EnableBar()
-    {
-        // content.DOLocalMoveY(moveHeight, moveDuration).SetLoops(-1, LoopType.Yoyo);
-        content.gameObject.SetActive(true);
-    }
-
     public void Update()
     {
         if (_playerCamera != null)
@@ -55,8 +47,9 @@ public class HPBar : MonoBehaviour
     public void ChangeValue(float newValue)
     {
         if (!content.gameObject.activeSelf)
-            EnableBar();
+            content.gameObject.SetActive(true);
 
+        newValue = Mathf.Clamp(newValue, 0f, newValue);
         _valueText.text = ((int)newValue).ToString();
 
         newValue *= _hpCoefficient;
@@ -66,7 +59,6 @@ public class HPBar : MonoBehaviour
         s.Append(content.transform.DOLocalRotate(new Vector3(0, 0, rotateStrength), rotateTime));
         s.Append(content.transform.DOLocalRotate(new Vector3(0, 0, -rotateStrength), rotateTime));
         s.Append(content.transform.DOLocalRotate(new Vector3(0, 0, 0), rotateTime));
-
     }
 
     public void DisableBar()

@@ -51,7 +51,7 @@ public class IceTurret : BaseTurret
     }
     private void DamageArea()
     {
-        if (TargetPoint.FillBuffer(_shootPivot[_currentShootPivot].position, _aim.AimDistance))
+        if (TargetPoint.FillBuffer(_shootPivot[_currentShootPivot].position, Aim.AimDistance))
         {
             for (int i = 0; i < TargetPoint.BufferedCount; i++)
             {
@@ -60,9 +60,9 @@ public class IceTurret : BaseTurret
                 if (enemy == null)
                     break;
 
-                Vector3 targetDirection = enemy.transform.position - _aim.ArcRoot.transform.position;
+                Vector3 targetDirection = enemy.transform.position - Aim.ArcRoot.transform.position;
 
-                float angleBetween = Vector3.Angle(_aim.ArcRoot.transform.forward, targetDirection);
+                float angleBetween = Vector3.Angle(Aim.ArcRoot.transform.forward, targetDirection);
 
                 if (angleBetween <= _damageAngle)
                 {
@@ -87,29 +87,29 @@ public class IceTurret : BaseTurret
     // is a pain in the butt so I'd rather not.
     private void OnDrawGizmosSelected()
     {
-        if (_aim == null)
+        if (Aim == null)
         {
-            _aim = GetComponent<TurretAim>();
+            Aim = GetComponent<TurretAim>();
         }
 
-        if (!_aim.DrawDebugArcs)
+        if (!Aim.DrawDebugArcs)
             return;
 
-        if (_aim.TurretBase != null)
+        if (Aim.TurretBase != null)
         {
-            float kArcSize = _aim.AimDistance;
+            float kArcSize = Aim.AimDistance;
 
             Color colorDamage = new Color(1f, .5f, .5f, .1f);
 
             UnityEditor.Handles.color = colorDamage;
 
             UnityEditor.Handles.DrawSolidArc(
-                _aim.ArcRoot.position, _aim.TurretBase.up,
-                 _aim.ArcRoot.transform.forward, _damageAngle,
+                Aim.ArcRoot.position, Aim.TurretBase.up,
+                Aim.ArcRoot.transform.forward, _damageAngle,
                 kArcSize);
             UnityEditor.Handles.DrawSolidArc(
-                _aim.ArcRoot.position, _aim.TurretBase.up,
-                 _aim.ArcRoot.transform.forward, -_damageAngle,
+                Aim.ArcRoot.position, Aim.TurretBase.up,
+                Aim.ArcRoot.transform.forward, -_damageAngle,
                 kArcSize);
         }
     }

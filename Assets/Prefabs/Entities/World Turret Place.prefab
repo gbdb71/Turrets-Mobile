@@ -50,6 +50,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _moveTime: 0.5
   _contentTransform: {fileID: 5324745009981431068}
+  ShowRange: 1
   PlacedTurret: {fileID: 0}
 --- !u!65 &66683862204701038
 BoxCollider:
