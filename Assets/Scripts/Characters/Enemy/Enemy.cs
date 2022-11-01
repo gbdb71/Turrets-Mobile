@@ -221,10 +221,13 @@ public class Enemy : MonoBehaviour
 
             Vector3 targetPoint = transform.position + new Vector3(Mathf.Sin(angle) * r, .5f, Mathf.Cos(angle) * r);
             Transform abillityTransform = abillity.GetTransform();
+            Collider abillityCollider = abillityTransform.GetComponent<Collider>();
 
+            abillityCollider.enabled = false;
+            
             abillityTransform.position = transform.position;
             abillityTransform.DOScale(Vector3.one * 1.6f, .6f).From(Vector3.zero).SetEase(Ease.Linear);
-            abillityTransform.DOJump(targetPoint, 4f, 1, 1f);
+            abillityTransform.DOJump(targetPoint, 4f, 1, 1f).OnComplete((() => abillityCollider.enabled = true));
         }
     }
 

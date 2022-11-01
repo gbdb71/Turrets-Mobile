@@ -41,8 +41,7 @@ public class EnemySpawnSequence
 
         public float Progress(float deltaTime)
         {
-            
-                _cooldown += _count < Sequence._amount ? deltaTime : Sequence._cooldown;
+            _cooldown += _count < Sequence._amount ? deltaTime : Sequence._cooldown;
 
 
             while (_cooldown >= Sequence._cooldown)
@@ -62,7 +61,7 @@ public class EnemySpawnSequence
                 enemy.SpawnOn(_road.Spline);
                 spawnedEnemy[_count] = enemy;
 
-                _count += 1;
+                _count = (_count + 1) % Sequence._amount;
             }
 
             return -1f;
