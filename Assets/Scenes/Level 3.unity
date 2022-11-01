@@ -6913,6 +6913,14 @@ MonoBehaviour:
           _cooldown: 1
         Index: 0
     - _roads:
+      - Road: {fileID: 2103534855}
+        EnemySequences:
+        - _factory: {fileID: 11400000, guid: a34f23d2afe8e2941b77c92b6b3e6609, type: 2}
+          _type: 1
+          _amount: 1
+          _cooldown: 1
+        Index: 0
+    - _roads:
       - Road: {fileID: 375281127}
         EnemySequences:
         - _factory: {fileID: 11400000, guid: 5de74ef778989b94db36a28787ab5f8c, type: 2}
@@ -6938,7 +6946,7 @@ MonoBehaviour:
       - Road: {fileID: 2103534855}
         EnemySequences:
         - _factory: {fileID: 11400000, guid: a34f23d2afe8e2941b77c92b6b3e6609, type: 2}
-          _type: 1
+          _type: 2
           _amount: 1
           _cooldown: 1
         - _factory: {fileID: 11400000, guid: 5de74ef778989b94db36a28787ab5f8c, type: 2}
@@ -6947,42 +6955,16 @@ MonoBehaviour:
           _cooldown: 3
         Index: 0
     - _roads:
-      - Road: {fileID: 375281127}
-        EnemySequences:
-        - _factory: {fileID: 11400000, guid: 5de74ef778989b94db36a28787ab5f8c, type: 2}
-          _type: 0
-          _amount: 5
-          _cooldown: 3
-        - _factory: {fileID: 11400000, guid: 5de74ef778989b94db36a28787ab5f8c, type: 2}
-          _type: 0
-          _amount: 4
-          _cooldown: 2
-        - _factory: {fileID: 11400000, guid: a34f23d2afe8e2941b77c92b6b3e6609, type: 2}
-          _type: 2
-          _amount: 1
-          _cooldown: 3
-        Index: 0
-      - Road: {fileID: 1602508107}
-        EnemySequences:
-        - _factory: {fileID: 11400000, guid: 5de74ef778989b94db36a28787ab5f8c, type: 2}
-          _type: 0
-          _amount: 5
-          _cooldown: 3
-        - _factory: {fileID: 11400000, guid: 5de74ef778989b94db36a28787ab5f8c, type: 2}
-          _type: 0
-          _amount: 5
-          _cooldown: 2
-        - _factory: {fileID: 11400000, guid: a34f23d2afe8e2941b77c92b6b3e6609, type: 2}
-          _type: 2
-          _amount: 1
-          _cooldown: 3
-        Index: 0
       - Road: {fileID: 2103534855}
         EnemySequences:
         - _factory: {fileID: 11400000, guid: a34f23d2afe8e2941b77c92b6b3e6609, type: 2}
+          _type: 2
+          _amount: 3
+          _cooldown: 3
+        - _factory: {fileID: 11400000, guid: a34f23d2afe8e2941b77c92b6b3e6609, type: 2}
           _type: 1
           _amount: 2
-          _cooldown: 8
+          _cooldown: 15
         Index: 0
 --- !u!4 &788864366
 Transform:
