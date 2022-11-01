@@ -61,7 +61,7 @@ public class EnemySpawnSequence
                 enemy.SpawnOn(_road.Spline);
                 spawnedEnemy[_count] = enemy;
 
-                _count = (_count + 1) % Sequence._amount;
+                _count += 1:
             }
 
             return -1f;
