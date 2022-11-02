@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class PlayerInventory : MonoBehaviour
 {
-    private const float _interactCheckTime = .01f;
+    private const float _interactCheckTime = .005f;
 
     #region Serialized
 
@@ -116,6 +116,7 @@ public class PlayerInventory : MonoBehaviour
             {
                 Upgrade();
                 _autoInteractTimer = -.3f;
+                Debug.Log("1");
                 return;
             }
 
@@ -123,12 +124,14 @@ public class PlayerInventory : MonoBehaviour
             {
                 Take();
                 _autoInteractTimer = -.3f;
+                Debug.Log("1");
             }
 
             if (CanPlace)
             {
                 Place();
                 _autoInteractTimer = -.3f;
+                Debug.Log("1");
             }
         }
     }
@@ -374,17 +377,20 @@ public class PlayerInventory : MonoBehaviour
             _takedTurret.transform.DOJump(_nearPlace.transform.position, 1f, 1, .25f).OnComplete(() =>
             {
                 BaseTurret nextGrade = _takedTurret.NextGrade;
-
-                Destroy(_takedTurret.gameObject);
-                Destroy(_nearPlace.PlacedTurret.gameObject);
+                BaseTurret takedTurret = _takedTurret;
+                BaseTurret placedTurret = _nearPlace.PlacedTurret;
+                
                 _takedTurret = null;
-
+                
+                Destroy(takedTurret.gameObject);
+                Destroy(placedTurret.gameObject);
+                
                 BaseTurret newTurret = Instantiate(nextGrade, _nearPlace.transform.position,
                     _nearPlace.PlacedTurret.transform.rotation, null);
 
                 newTurret.transform.DOScale(1, 0.5f).SetEase(Ease.OutBack).From(0);
                 _nearPlace.Place(newTurret);
-
+                
                 newTurret.PlayUpgradeParticle();
             });
         }

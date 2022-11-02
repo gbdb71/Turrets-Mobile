@@ -102,7 +102,7 @@ public class PlayerTraining : MonoBehaviour
 
         while (!_game.IsReady)
         {
-            yield return null;
+            yield return new WaitForEndOfFrame();
         }
 
         _game.SetReady(false);
@@ -132,13 +132,13 @@ public class PlayerTraining : MonoBehaviour
 
         while (!_waveChanged)
         {
-            yield return null;
+            yield return new WaitForEndOfFrame();
         }
         
         _secondPlace.gameObject.SetActive(true);
         _secondPlace.transform.DOScale(1f, .6f).From(0f).SetEase(Ease.Linear);
         
-        yield return null;
+        yield return new WaitForEndOfFrame();
     }
 
     private IEnumerator TakeAndActivateAbillityTrain(IAbillity abillity)
@@ -151,14 +151,14 @@ public class PlayerTraining : MonoBehaviour
 
         while (!_abillityTaked)
         {
-            yield return null;
+            yield return new WaitForEndOfFrame();
         }
 
         ActivateTip(2);
 
         while (!_abillityActivated)
         {
-            yield return null;
+            yield return new WaitForEndOfFrame();
         }
     }
 
@@ -184,21 +184,21 @@ public class PlayerTraining : MonoBehaviour
 
         while (!_turretSpawned)
         {
-            yield return null;
+            yield return new WaitForEndOfFrame();
         }
 
         ActivateTip(1);
 
         while (!_turretTaked)
         {
-            yield return null;
+            yield return new WaitForEndOfFrame();
         }
 
         ActivateTip(2);
 
         while (!_turretPlaced)
         {
-            yield return null;
+            yield return new WaitForEndOfFrame();
         }
     }
 
