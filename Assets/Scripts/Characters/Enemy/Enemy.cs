@@ -33,11 +33,12 @@ public class Enemy : MonoBehaviour
     private List<Vector3> _points;
     private Animator _animator;
     private HPBar _hpBar;
-    [Inject] private Headquarters _headquarters;
-    [Inject] private DiContainer _container;
     private Collider _collider;
     private Renderer _bodyRenderer;
     private SplineFollower _follower;
+    [Inject] private Headquarters _headquarters;
+    [Inject] private GameLogic _game;
+    [Inject] private DiContainer _container;
 
     private bool _damageFlickAnimation = false;
     private float _scale;
@@ -211,6 +212,9 @@ public class Enemy : MonoBehaviour
             reward.transform.DOJump(targetPoint, 1.5f, 1, .6f);
         }
 
+        if(!_game.CanSpawnAbillites)
+            return;
+        
         IAbillity abillity = _rewardSettings.GetAbillity();
 
         if (abillity != null)

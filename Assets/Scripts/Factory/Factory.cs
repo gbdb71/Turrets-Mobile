@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
@@ -35,6 +36,7 @@ public class Factory : MonoBehaviour, IInteractable
     public static List<Factory> Factories { get; private set; } = new List<Factory>();
     public Sprite plateSprite;
     public int CurrencyAmount => _currencyAmount;
+    public static event Action<BaseTurret> OnTurretCreated;
 
     private void Awake()
     {
@@ -69,6 +71,9 @@ public class Factory : MonoBehaviour, IInteractable
 
     public void Interact(Player player)
     {
+        if (!enabled)
+            return;
+        
         _intertactTimer += Time.deltaTime;
 
         if (_intertactTimer >= _interactTime)
@@ -104,7 +109,9 @@ public class Factory : MonoBehaviour, IInteractable
 
     private void CreatingObject(TurretPlace place)
     {
-        BaseTurret newObject = Instantiate(_turretPrefab, _spawPoint.position, Quaternion.identity);
-        place.Place(newObject);
+        BaseTurret turret = Instantiate(_turretPrefab, _spawPoint.position, Quaternion.identity);
+        place.Place(turret);
+        
+        OnTurretCreated?.Invoke(turret);
     }
 }

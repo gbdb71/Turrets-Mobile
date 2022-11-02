@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using DG.Tweening;
 
@@ -10,6 +11,8 @@ public class InteractTrigger : MonoBehaviour
     private bool triggerIsActive;
 
     private float defaultLocalYPosition;
+
+    public static event Action OnTrigger;
 
     private void Awake()
     {
@@ -25,6 +28,8 @@ public class InteractTrigger : MonoBehaviour
             interactable.OnEnter(player);
 
             transform.DOScale(_interactScale, .3f).SetEase(Ease.InOutBack);
+            
+            OnTrigger?.Invoke();
         }
     }
 

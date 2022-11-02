@@ -15,7 +15,7 @@ public class LevelManager : MonoBehaviour
 
         if(_data.User.CurrentLevel >= _levels.Count)
         {
-            _data.User.CurrentLevel = 0;
+            _data.User.CurrentLevel = 1;
         }
     }
 }

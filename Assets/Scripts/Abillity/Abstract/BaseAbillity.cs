@@ -1,3 +1,4 @@
+using System;
 using DG.Tweening;
 using System.Linq;
 using ToolBox.Pools;
@@ -9,9 +10,12 @@ public abstract class BaseAbillity<ConfigType> : MonoBehaviour, IAbillity where 
 {
     [Inject] protected Player _player;
 
+    private bool _isActivated = false;
     protected ConfigType _config;
     protected PopupText _popupPrefab;
     public Collider Collider { get; private set; }
+
+    public event Action OnActivated;
 
     private void Awake()
     {
@@ -34,11 +38,15 @@ public abstract class BaseAbillity<ConfigType> : MonoBehaviour, IAbillity where 
     }
     public virtual void Activate()
     {
+        _isActivated = true;
+        
         PopupText popup = _popupPrefab.gameObject.Reuse<PopupText>(PopupPosition, Quaternion.identity);
         popup.SetColor(_config.TextColor);
         popup.SetText(_config.ActivateText, PopupText.DurationType.Long);
+        
+        OnActivated?.Invoke();
     }
-    public virtual bool CanActivate() => true;
+    public virtual bool CanActivate() => true && !_isActivated;
     public virtual bool HasDelay() => true;
 
     public Transform GetTransform() => transform;

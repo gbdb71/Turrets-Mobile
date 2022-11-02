@@ -14,6 +14,7 @@ public class GameLogic : MonoBehaviour
     public bool GameFinished { get; private set; } = false;
     public bool IsWin { get; private set; } = false;
     public bool IsReady { get; private set; } = false;
+    public bool CanSpawnAbillites = true;
 
     public Headquarters Headquarters => _headquarters;
     public Data Data => _data;

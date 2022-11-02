@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using DG.Tweening;
 using System.Collections.Generic;
@@ -82,6 +83,9 @@ public class PlayerInventory : MonoBehaviour
                    NearPlace.PlacedTurret.NextGrade == TakedTurret.NextGrade;
         }
     }
+
+    public static event Action<BaseTurret> OnTurretTaked;
+    public static event Action<IAbillity> OnAbillityTaked;
 
     #endregion
 
@@ -267,6 +271,8 @@ public class PlayerInventory : MonoBehaviour
         abillityTransform.localRotation = Quaternion.identity;
         abillityTransform.DOLocalMove(endPosition, _objectMoveSpeed);
         abillityTransform.DOScale(Vector3.one, _objectMoveSpeed * .8f).SetEase(Ease.InBack);
+        
+        OnAbillityTaked?.Invoke(abillity);
     }
 
     private void ResetPlaceSelected(TurretPlace place)
@@ -357,6 +363,7 @@ public class PlayerInventory : MonoBehaviour
         s.Append(_takedTurret.transform.DOScale(new Vector3(1f, 1f, 1f), 0.1f));
 
         _takedTurret.enabled = false;
+        OnTurretTaked?.Invoke(_takedTurret);
     }
 
     public void Upgrade()

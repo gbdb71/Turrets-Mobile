@@ -11,6 +11,7 @@ public class TurretPlace : MonoBehaviour
     public BaseTurret PlacedTurret;
     public TurretCanvas Canvas { get; private set; }
     public bool HasTurret => PlacedTurret != null;
+    public static event Action<TurretPlace, BaseTurret> OnTurretPlaced;
 
     private void Awake()
     {
@@ -26,5 +27,7 @@ public class TurretPlace : MonoBehaviour
         
         if(PlacedTurret.Canvas != null && PlacedTurret.Canvas.Range != null)
             PlacedTurret.Canvas.Range.fillAmount = 0;
+        
+        OnTurretPlaced?.Invoke(this, PlacedTurret);
     }
 }
