@@ -6966,6 +6966,7 @@ MonoBehaviour:
           _amount: 2
           _cooldown: 15
         Index: 0
+  CanSpawnAbillites: 1
 --- !u!4 &788864366
 Transform:
   m_ObjectHideFlags: 0
