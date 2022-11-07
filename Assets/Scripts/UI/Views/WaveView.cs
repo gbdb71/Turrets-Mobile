@@ -8,7 +8,7 @@ public class WaveView : BaseView
 {
     [SerializeField] private SerializedDictionary<EnemyType, TextMeshProUGUI> _countText;
 
-    private bool _isShowed = false;
+    public bool IsShowed { get; private set; } = false;
     private Road _road;
     [Inject] private GameLogic _game;
 
@@ -27,22 +27,22 @@ public class WaveView : BaseView
 
             if (!enemiesCount.Any(x => x.Value > 0))
             {
-                if (_isShowed && transform.localScale != Vector3.zero)
+                if (IsShowed && transform.localScale != Vector3.zero)
                 {
                     transform.DOScale(0f, .7f).From(1f).SetEase(Ease.InBack);
                 }
 
-                _isShowed = false;
+                IsShowed = false;
 
                 return;
             }
 
-            if (!_isShowed && transform.localScale != Vector3.one)
+            if (!IsShowed && transform.localScale != Vector3.one)
             {
                 transform.DOScale(1f, .7f).From(0f).SetEase(Ease.OutBack);
             }
 
-            _isShowed = true;
+            IsShowed = true;
 
             foreach (var enemy in enemiesCount)
             {
