@@ -1,6 +1,6 @@
 using System;
-using UnityEngine;
 using DG.Tweening;
+using UnityEngine;
 
 public class InteractTrigger : MonoBehaviour
 {

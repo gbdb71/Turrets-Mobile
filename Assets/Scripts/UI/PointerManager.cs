@@ -80,4 +80,20 @@ public class PointerManager : MonoBehaviour
             default: return Quaternion.identity;
         }
     }
+
+    private void OnDisable()
+    {
+        foreach (var pointer in _dictionary)
+        {
+            pointer.Value.Hide();
+        }
+    }
+
+    private void OnEnable()
+    {
+        foreach (var pointer in _dictionary)
+        {
+            pointer.Value.Show();
+        }
+    }
 }

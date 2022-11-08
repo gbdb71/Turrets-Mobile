@@ -14,6 +14,8 @@ public class PlayerTraining : MonoBehaviour
     [SerializeField] private TurretPlace _secondPlace;
 
     [Inject] private GameLogic _game;
+
+    private Factory _factory;
     private WaveBar _waveBar;
 
     private bool _turretSpawned = false;
@@ -26,7 +28,10 @@ public class PlayerTraining : MonoBehaviour
     private void Awake()
     {
         _waveBar = FindObjectOfType<WaveBar>();
+        _factory = FindObjectOfType<Factory>();
 
+        FindObjectOfType<PointerManager>().enabled = false;
+        
         Factory.OnTurretCreated += SetTurretSpawned;
         PlayerInventory.OnTurretTaked += SetTurretTaked;
         PlayerInventory.OnAbillityTaked += SetAbillityTaked;
@@ -125,6 +130,8 @@ public class PlayerTraining : MonoBehaviour
         yield return TakeAndActivateAbillityTrain(_droneAbillity);
 
         ActivateTip(-1);
+        
+        _factory.enabled = true;
         _game.SetReady(true);
         _game.CanSpawnAbillites = true;
 
@@ -176,6 +183,8 @@ public class PlayerTraining : MonoBehaviour
 
     private IEnumerator CreateAndPlaceTurretTrain()
     {
+        _factory.enabled = true;
+        
         _turretSpawned = false;
         _turretTaked = false;
         _turretPlaced = false;
@@ -186,6 +195,8 @@ public class PlayerTraining : MonoBehaviour
         {
             yield return new WaitForEndOfFrame();
         }
+
+        _factory.enabled = false;
 
         ActivateTip(1);
 
