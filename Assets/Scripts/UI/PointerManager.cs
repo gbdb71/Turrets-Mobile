@@ -29,6 +29,12 @@ public class PointerManager : MonoBehaviour
             WaveView targetView = kvp.Key;
             PointerIcon pointerIcon = kvp.Value;
 
+            if (!targetView.IsShowed)
+            {
+                pointerIcon.Hide();
+                continue;
+            }
+
             Vector3 toEnemy = targetView.transform.position - _player.transform.position;
             Ray ray = new Ray(_player.transform.position, toEnemy);
 
