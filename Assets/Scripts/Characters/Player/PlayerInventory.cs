@@ -9,13 +9,15 @@ public class PlayerInventory : MonoBehaviour
 
     #region Serialized
 
-    [Label("Backpack", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)] [SerializeField]
+    [Label("Backpack", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
+    [SerializeField]
     private Transform _backpackPoint;
 
     [SerializeField] private float _distanceBetweenObjects = 0.25f;
     [SerializeField, Range(.1f, 2f)] private float _objectMoveSpeed = 0.5f;
 
-    [Label("Turrets", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)] [SerializeField, NotNull]
+    [Label("Turrets", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
+    [SerializeField, NotNull]
     private Transform _turretSlot;
 
     [SerializeField, Range(.5f, 3f)] private float _autoInteractionTime = 2f;
@@ -116,7 +118,6 @@ public class PlayerInventory : MonoBehaviour
             {
                 Upgrade();
                 _autoInteractTimer = -.3f;
-                Debug.Log("1");
                 return;
             }
 
@@ -124,14 +125,12 @@ public class PlayerInventory : MonoBehaviour
             {
                 Take();
                 _autoInteractTimer = -.3f;
-                Debug.Log("1");
             }
 
             if (CanPlace)
             {
                 Place();
                 _autoInteractTimer = -.3f;
-                Debug.Log("1");
             }
         }
     }
@@ -384,7 +383,7 @@ public class PlayerInventory : MonoBehaviour
 
             Vector3 targetPos = _nearPlace.transform.position;
             Quaternion targetRot = _nearPlace.PlacedTurret.transform.rotation;
-            
+
             _takedTurret.transform.SetParent(null);
             _takedTurret.transform.DOJump(targetPos, 1f, 1, .25f).OnComplete(() =>
             {
@@ -392,13 +391,13 @@ public class PlayerInventory : MonoBehaviour
 
                 BaseTurret newTurret = Instantiate(takedTurret.NextGrade, targetPos,
                     targetRot, null);
-                
+
                 Destroy(takedTurret.gameObject);
                 Destroy(nearPlace.PlacedTurret.gameObject);
 
                 newTurret.transform.DOScale(1, 0.5f).SetEase(Ease.OutBack).From(0);
                 newTurret.PlayUpgradeParticle();
-                
+
                 nearPlace.Place(newTurret);
             });
         }
