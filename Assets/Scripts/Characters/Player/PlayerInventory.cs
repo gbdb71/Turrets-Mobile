@@ -379,12 +379,13 @@ public class PlayerInventory : MonoBehaviour
     {
         if (CanUpgrade)
         {
+            BaseTurret nextGrade = _takedTurret.NextGrade;
+            BaseTurret takedTurret = _takedTurret;
+            BaseTurret placedTurret = _nearPlace.PlacedTurret;
+            
             _takedTurret.transform.SetParent(null);
             _takedTurret.transform.DOJump(_nearPlace.transform.position, 1f, 1, .25f).OnComplete(() =>
             {
-                BaseTurret nextGrade = _takedTurret.NextGrade;
-                BaseTurret takedTurret = _takedTurret;
-                BaseTurret placedTurret = _nearPlace.PlacedTurret;
 
                 _takedTurret = null;
 

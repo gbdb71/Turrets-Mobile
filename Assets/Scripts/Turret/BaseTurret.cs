@@ -198,10 +198,8 @@ public abstract class BaseTurret : MonoBehaviour
         if (percents < 0f)
             throw new ArgumentException(string.Format("{0} is not an positive number", percents),
                 "value");
-
-        Debug.Log(percents + "1");
-        Debug.Log(_fireDelay + "3");
-        _fireDelay -= _damage.Percent(percents);
+        
+        _fireDelay -= _fireDelay.Percent(percents);
 
         if (_fireDelay < 0.5f)
             _fireDelay = 0.5f;
