@@ -27,6 +27,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2571728855629821353}
   m_RootOrder: 0
@@ -71,6 +72,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4316502812356459416}
   - {fileID: 7217281457540396108}
@@ -145,6 +147,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2571728855629821353}
   m_RootOrder: 1
@@ -169,12 +172,16 @@ MonoBehaviour:
   - sceneReference: {fileID: 102900000, guid: d7c1699cb34b44f4497c11325e61b923, type: 3}
     sceneName: Level 2
     scenePath: Assets/Scenes/Level 2.unity
-    buildIndex: 3
+    buildIndex: 2
   - sceneReference: {fileID: 102900000, guid: c38ca9b681d965a409a3045f2deb1538, type: 3}
     sceneName: Level 3
     scenePath: Assets/Scenes/Level 3.unity
-    buildIndex: 2
+    buildIndex: 3
   - sceneReference: {fileID: 102900000, guid: 0bc0923f91beecf40aa5f2f15bd2749f, type: 3}
     sceneName: Level 4
     scenePath: Assets/Scenes/Level 4.unity
-    buildIndex: -1
+    buildIndex: 4
+  - sceneReference: {fileID: 102900000, guid: cb180f3d1bc6c624bb2588d3a07e4cff, type: 3}
+    sceneName: Level 5
+    scenePath: Assets/Scenes/Level 5.unity
+    buildIndex: 5

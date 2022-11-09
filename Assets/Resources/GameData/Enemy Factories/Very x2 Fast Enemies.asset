@@ -24,7 +24,7 @@ MonoBehaviour:
       _abillities:
       - Abillity:
           typeReference: AttackDroneAbillity, Assembly-CSharp
-        AbillityChance: 0.15
+        AbillityChance: 0
         AbillityPrefab: {fileID: 1253945432546544441, guid: b8a6f791ba8a9474aa06c171e306bd0c, type: 3}
       - Abillity:
           typeReference: TurretDamageAbillity, Assembly-CSharp
@@ -37,24 +37,24 @@ MonoBehaviour:
   _large:
     Prefab: {fileID: -6491075291442993941, guid: b757fc765daab9d41bcd38c74bcee8d0, type: 3}
     Scale: {x: 2, y: 2}
-    Speed: {x: 1.1, y: 1.1}
+    Speed: {x: 1.5, y: 1.5}
     Health: {x: 350, y: 550}
     Damage: 90
     RewardSettings:
       _currencyPrefab: {fileID: 8145354069981301352, guid: 31722adbeecc8d847a5ce18e1e71833f, type: 3}
-      _amount: {x: 20, y: 40}
+      _amount: {x: 10, y: 20}
       _abillities:
       - Abillity:
           typeReference: AttackDroneAbillity, Assembly-CSharp
-        AbillityChance: 0.5
+        AbillityChance: 0
         AbillityPrefab: {fileID: 1253945432546544441, guid: b8a6f791ba8a9474aa06c171e306bd0c, type: 3}
       - Abillity:
           typeReference: TurretDamageAbillity, Assembly-CSharp
-        AbillityChance: 0.8
+        AbillityChance: 0.3
         AbillityPrefab: {fileID: 1253945432546544441, guid: de3aaae0d263dd147872f1460889346a, type: 3}
       - Abillity:
           typeReference: TurretFireAbillity, Assembly-CSharp
-        AbillityChance: 0.8
+        AbillityChance: 0.3
         AbillityPrefab: {fileID: 1253945432546544441, guid: de3aaae0d263dd147872f1460889346a, type: 3}
   _medium:
     Prefab: {fileID: -6491075291442993941, guid: 3a05a58aa452f0e4eaa6588023b54db3, type: 3}
@@ -64,7 +64,7 @@ MonoBehaviour:
     Damage: 60
     RewardSettings:
       _currencyPrefab: {fileID: 8145354069981301352, guid: 31722adbeecc8d847a5ce18e1e71833f, type: 3}
-      _amount: {x: 10, y: 20}
+      _amount: {x: 5, y: 10}
       _abillities:
       - Abillity:
           typeReference: AttackDroneAbillity, Assembly-CSharp

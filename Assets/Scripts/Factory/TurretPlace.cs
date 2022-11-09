@@ -22,12 +22,14 @@ public class TurretPlace : MonoBehaviour
     {
         turret.transform.SetParent(_contentTransform, true);
         turret.transform.DOMove(_contentTransform.position, _moveTime);
-        
+        Debug.Log("a");
         PlacedTurret = turret;
-        
-        if(PlacedTurret.Canvas != null && PlacedTurret.Canvas.Range != null)
+
+        if (PlacedTurret.Canvas != null && PlacedTurret.Canvas.Range != null)
             PlacedTurret.Canvas.Range.fillAmount = 0;
-        
+
         OnTurretPlaced?.Invoke(this, PlacedTurret);
+        Debug.Log("b");
+
     }
 }

@@ -94,7 +94,7 @@ public class Enemy : MonoBehaviour
         {
             _deceleration -= _decelerationDrop * Time.deltaTime;
 
-            if(!_damageFlickAnimation)
+            if (!_damageFlickAnimation)
             {
                 Color targetEmission = Color.LerpUnclamped(Color.black, _iceEmission, _deceleration / .8f);
                 _bodyRenderer.material.SetColor("_EmissionColor", targetEmission);
@@ -212,9 +212,9 @@ public class Enemy : MonoBehaviour
             reward.transform.DOJump(targetPoint, 1.5f, 1, .6f);
         }
 
-        if(!_game.CanSpawnAbillites)
+        if (!_game.CanSpawnAbillites)
             return;
-        
+
         IAbillity abillity = _rewardSettings.GetAbillity();
 
         if (abillity != null)
@@ -228,7 +228,7 @@ public class Enemy : MonoBehaviour
             Collider abillityCollider = abillityTransform.GetComponent<Collider>();
 
             abillityCollider.enabled = false;
-            
+
             abillityTransform.position = transform.position;
             abillityTransform.DOScale(Vector3.one * 1.6f, .6f).From(Vector3.zero).SetEase(Ease.Linear);
             abillityTransform.DOJump(targetPoint, 4f, 1, 1f).OnComplete((() => abillityCollider.enabled = true));
@@ -245,7 +245,9 @@ public class Enemy : MonoBehaviour
         _damageFlickAnimation = false;
         _bodyRenderer.material.SetColor("_EmissionColor", Color.black);
 
-        _damageParticle.Reuse(transform.position, Quaternion.identity);
+        _damageParticle.Reuse(transform.position + new Vector3(0, 0.7f * transform.localScale.x, 0), Quaternion.identity);
+        Debug.Log(transform.localScale);
+        _damageParticle.transform.localScale = transform.localScale;
 
         ShowDamagePopup(damage);
     }

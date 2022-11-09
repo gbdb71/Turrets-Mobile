@@ -1556,8 +1556,8 @@ MonoBehaviour:
   _dashSpeed: 1
   _dashRotationSpeed: 0.25
   _finishOffset: {x: 0, y: -1.5, z: 0}
-  _flickerDuration: 0.25
-  _flickerEmission: {r: 1.5157166, g: 1.5157166, b: 1.5157166, a: 0}
+  _flickerDuration: 0.07
+  _flickerEmission: {r: 0.41956428, g: 1.3753583, b: 0.29193932, a: 0}
   _damageParticle: {fileID: 7605164056796649255, guid: ef825ade180aba44b9355da4f5aca8c3, type: 3}
   _damageTextOffset: 1.8
   _decelerationDrop: 0.35

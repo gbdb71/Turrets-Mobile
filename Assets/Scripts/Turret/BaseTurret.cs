@@ -7,20 +7,20 @@ public abstract class BaseTurret : MonoBehaviour
 {
     #region Serialized
 
-    [Label("Damage", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)] 
+    [Label("Damage", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField, Range(1, 200)] protected float _damage;
 
-    [Label("Shooting", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)] 
+    [Label("Shooting", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField, Range(0f, 5f)] protected float _fireDelay;
 
     [SerializeField] protected Transform[] _shootPivot;
 
-    [Label("Upgrade", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)] 
+    [Label("Upgrade", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField] private BaseTurret _nextGrade = default;
 
     [SerializeField] private ParticleSystem upgradeParticle;
 
-    [Label("Selected settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)] 
+    [Label("Selected settings", skinStyle: SkinStyle.Box, Alignment = TextAnchor.MiddleCenter)]
     [SerializeField] private Color _rangeColor;
 
     [SerializeField, ColorUsage(true, true)] private Color _selectedColor;
@@ -52,7 +52,7 @@ public abstract class BaseTurret : MonoBehaviour
     #endregion
 
     #region Unity Callbacks
-    
+
     protected virtual void Awake()
     {
         Aim = GetComponent<TurretAim>();
@@ -67,7 +67,7 @@ public abstract class BaseTurret : MonoBehaviour
     {
         if (Canvas != null && Canvas.Range != null)
         {
-           Canvas.InitRange(new Vector3(Aim.AimDistance, Aim.AimDistance, Aim.AimDistance),  _rangeColor);
+            Canvas.InitRange(new Vector3(Aim.AimDistance, Aim.AimDistance, Aim.AimDistance), _rangeColor);
         }
     }
 
@@ -117,7 +117,7 @@ public abstract class BaseTurret : MonoBehaviour
     {
         Turrets.Remove(this);
     }
-    
+
     #endregion
 
     #region Aim & Fire
@@ -188,7 +188,7 @@ public abstract class BaseTurret : MonoBehaviour
                 "value");
 
         _damage += _damage.Percent(percents);
-        
+
         Canvas.AddStar();
         _abillitiesCount++;
     }
@@ -199,11 +199,13 @@ public abstract class BaseTurret : MonoBehaviour
             throw new ArgumentException(string.Format("{0} is not an positive number", percents),
                 "value");
 
+        Debug.Log(percents + "1");
+        Debug.Log(_fireDelay + "3");
         _fireDelay -= _damage.Percent(percents);
 
         if (_fireDelay < 0.5f)
             _fireDelay = 0.5f;
-        
+
         Canvas.AddStar();
         _abillitiesCount++;
     }
