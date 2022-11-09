@@ -382,23 +382,25 @@ public class PlayerInventory : MonoBehaviour
             BaseTurret nextGrade = _takedTurret.NextGrade;
             BaseTurret takedTurret = _takedTurret;
             BaseTurret placedTurret = _nearPlace.PlacedTurret;
+
+            Vector3 targetPos = _nearPlace.transform.position;
+            Quaternion targetRot = _nearPlace.PlacedTurret.transform.rotation;
             
             _takedTurret.transform.SetParent(null);
             _takedTurret.transform.DOJump(_nearPlace.transform.position, 1f, 1, .25f).OnComplete(() =>
             {
 
                 _takedTurret = null;
-
                 Destroy(takedTurret.gameObject);
                 Destroy(placedTurret.gameObject);
 
-                BaseTurret newTurret = Instantiate(nextGrade, _nearPlace.transform.position,
-                    _nearPlace.PlacedTurret.transform.rotation, null);
+                BaseTurret newTurret = Instantiate(nextGrade, targetPos,
+                    targetRot, null);
 
                 newTurret.transform.DOScale(1, 0.5f).SetEase(Ease.OutBack).From(0);
-                _nearPlace.Place(newTurret);
-
                 newTurret.PlayUpgradeParticle();
+                
+                _nearPlace.Place(newTurret);
             });
         }
     }
